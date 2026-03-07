@@ -1,0 +1,10 @@
+{
+  "name": "AGROINCOL — Fumigación y Control de Plagas",
+  "short_name": "AGROINCOL",
+  "description": "Empresa de fumigación y control de plagas en Bucaramanga, Santander",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#174634",
+  "icons": []
+}

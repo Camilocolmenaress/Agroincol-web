@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * FUENTES LOCALES
+ * Los archivos .ttf se cargarán desde /public/fonts/
+ * Por ahora usan fallback sans-serif hasta que se suban los archivos
+ * next/font/local se encarga de esto en layout.tsx
+ */
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply font-body text-brand-black bg-brand-white antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-section-mobile md:py-section;
+  }
+  .container-custom {
+    @apply max-w-content mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
