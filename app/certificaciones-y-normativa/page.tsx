@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { CheckCircle, AlertCircle, Shield, Users, FileCheck, Heart } from 'lucide-react';
 import Hero from '@/components/sections/Hero';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
-import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
@@ -160,12 +160,15 @@ export default function CertificacionesPage() {
             Este certificado es válido como soporte ante la Secretaría de Salud de Santander y el INVIMA para visitas
             de inspección sanitaria.
           </p>
-          <ImagePlaceholder
-            description="FOTO: Ejemplo de certificado de fumigación AGROINCOL (datos sensibles censurados)"
-            width="w-full"
-            height="h-64 md:h-96"
-            className="max-w-2xl"
-          />
+          <div className="relative w-full h-64 md:h-96 max-w-2xl rounded-2xl overflow-hidden">
+            <Image
+              src="/images/certificaciones/entrega-certificado.jpg"
+              alt="Entrega de certificado de fumigación AGROINCOL a cliente en Bucaramanga"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 672px"
+            />
+          </div>
         </div>
       </section>
 

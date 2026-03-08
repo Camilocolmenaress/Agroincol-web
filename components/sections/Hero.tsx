@@ -1,10 +1,10 @@
+import Image from 'next/image';
 import { Clock } from 'lucide-react';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
-import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
 import type { HeroProps } from '@/lib/types';
 
-export default function Hero({ title, subtitle, badgeText, primaryCta, secondaryCta, imagePlaceholder, centeredText = false }: HeroProps) {
+export default function Hero({ title, subtitle, badgeText, primaryCta, secondaryCta, imageSrc, imageAlt, centeredText = false }: HeroProps) {
   if (centeredText) {
     return (
       <section className="bg-brand-green pt-24 md:pt-32">
@@ -65,12 +65,15 @@ export default function Hero({ title, subtitle, badgeText, primaryCta, secondary
           </div>
 
           {/* Image — 40% */}
-          {imagePlaceholder && (
-            <div className="lg:col-span-2">
-              <ImagePlaceholder
-                description={imagePlaceholder}
-                width="w-full"
-                height="aspect-video"
+          {imageSrc && (
+            <div className="lg:col-span-2 relative aspect-video rounded-2xl overflow-hidden">
+              <Image
+                src={imageSrc}
+                alt={imageAlt || title}
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 40vw"
               />
             </div>
           )}

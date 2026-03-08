@@ -27,6 +27,8 @@ export interface HeroProps {
     href: string;
   };
   imagePlaceholder?: string;
+  imageSrc?: string;
+  imageAlt?: string;
   centeredText?: boolean;
 }
 

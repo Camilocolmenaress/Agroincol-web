@@ -47,7 +47,8 @@ export default function HomePage() {
         badgeText="Respuesta en menos de 2 horas"
         primaryCta={{ text: 'Solicitar Cotización', href: '#contacto' }}
         secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        imagePlaceholder="FOTO: Técnico AGROINCOL realizando fumigación profesional con equipo de bioseguridad"
+        imageSrc="/images/hero/hero-home.jpg"
+        imageAlt="Técnico de AGROINCOL realizando fumigación profesional en Bucaramanga"
       />
 
       {/* 2. Trust Bar */}

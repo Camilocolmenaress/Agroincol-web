@@ -94,7 +94,8 @@ export default function RestaurantesPage() {
         badgeText="Certificado válido ante INVIMA y Secretaría de Salud"
         primaryCta={{ text: 'Proteja su Restaurante', href: '#contacto' }}
         secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        imagePlaceholder="FOTO: Técnico AGROINCOL inspeccionando cocina de restaurante en Bucaramanga"
+        imageSrc="/images/hero/hero-restaurantes.jpg"
+        imageAlt="Técnico de AGROINCOL inspeccionando cocina de restaurante en Bucaramanga"
       />
 
       {/* 2. The Problem */}

@@ -1,5 +1,5 @@
+import Image from 'next/image';
 import { CheckCircle, Shield, Leaf, Clock, MapPin, FileCheck } from 'lucide-react';
-import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
 
 const benefits = [
   { icon: CheckCircle, text: 'Más de 40 años de experiencia comprobada en Santander' },
@@ -19,11 +19,15 @@ export default function WhyUs() {
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Image */}
-          <ImagePlaceholder
-            description="FOTO: Equipo completo AGROINCOL con uniformes y equipos de bioseguridad"
-            width="w-full"
-            height="aspect-square"
-          />
+          <div className="relative aspect-square rounded-2xl overflow-hidden">
+            <Image
+              src="/images/equipo/equipo-agroincol.jpg"
+              alt="Equipo completo de AGROINCOL con uniformes y equipos de bioseguridad"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
 
           {/* Benefits */}
           <div className="flex flex-col gap-4">

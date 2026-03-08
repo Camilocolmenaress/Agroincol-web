@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { MapPin, Phone, MessageCircle, Clock } from 'lucide-react';
 import { BUSINESS, SERVICES } from '@/lib/constants';
 
@@ -9,8 +10,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Column 1 — Brand */}
           <div>
-            <Link href="/" className="font-heading text-2xl font-bold text-white">
-              AGROINCOL
+            <Link href="/" className="inline-block">
+              <Image
+                src="/images/logos/logo-horizontal.png"
+                alt="AGROINCOL"
+                width={160}
+                height={36}
+                className="h-9 w-auto"
+              />
             </Link>
             <p className="text-brand-gray text-body-sm mt-2">{BUSINESS.slogan}</p>
             <p className="text-gray-400 text-body-sm mt-4">

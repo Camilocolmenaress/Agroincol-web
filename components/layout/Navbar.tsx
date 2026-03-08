@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { NAV_LINKS } from '@/lib/constants';
@@ -32,8 +33,15 @@ export default function Navbar() {
     >
       <div className="container-custom flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
-        <Link href="/" className="font-heading text-2xl font-bold text-white">
-          AGROINCOL
+        <Link href="/" className="relative shrink-0">
+          <Image
+            src="/images/logos/logo-horizontal.png"
+            alt="AGROINCOL — Fumigaci&oacute;n y Control de Plagas"
+            width={180}
+            height={40}
+            priority
+            className="h-8 md:h-10 w-auto"
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -75,8 +83,14 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 bg-brand-green-dark flex flex-col md:hidden">
           <div className="flex items-center justify-between h-16 px-4">
-            <Link href="/" className="font-heading text-2xl font-bold text-white">
-              AGROINCOL
+            <Link href="/" className="relative shrink-0">
+              <Image
+                src="/images/logos/logo-horizontal.png"
+                alt="AGROINCOL"
+                width={180}
+                height={40}
+                className="h-8 w-auto"
+              />
             </Link>
             <button
               onClick={() => setMobileOpen(false)}
