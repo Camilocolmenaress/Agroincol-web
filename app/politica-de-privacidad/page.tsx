@@ -27,7 +27,7 @@ const sections = [
           <strong>AGROINCOL</strong>
         </p>
         <ul className="list-none space-y-1 text-brand-black text-body leading-relaxed mt-2">
-          <li><strong>NIT:</strong> [PLACEHOLDER — completar por el propietario]</li>
+          <li><strong>NIT:</strong> 1.095.786.836-1</li>
           <li><strong>Dirección:</strong> Cra 9 #3-34, Floridablanca, Santander, Colombia</li>
           <li><strong>Teléfono:</strong> +57 310 789 1948</li>
           <li><strong>Correo electrónico:</strong> agroincol.1985@gmail.com</li>
