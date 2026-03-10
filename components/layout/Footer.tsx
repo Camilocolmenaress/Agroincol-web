@@ -61,6 +61,11 @@ export default function Footer() {
               <li>
                 <span className="text-gray-400 text-body-sm">Resolución 2674 de 2013</span>
               </li>
+              <li>
+                <Link href="/politica-de-privacidad" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                  Política de Privacidad
+                </Link>
+              </li>
             </ul>
           </div>
 

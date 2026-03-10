@@ -20,5 +20,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: 'https://agroincol.com/politica-de-privacidad',
+      lastModified: new Date('2026-03-07'),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
   ];
 }

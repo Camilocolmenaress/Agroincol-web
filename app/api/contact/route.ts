@@ -44,6 +44,10 @@ export async function POST(request: NextRequest) {
       source: 'agroincol-web',
       timestamp: new Date().toISOString(),
       page: page || '/',
+      aceptaTerminos: true,
+      ipAddress: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
+      userAgent: request.headers.get('user-agent') || 'unknown',
+      politicaVersion: '2026-03-07',
     };
 
     const webhookUrl = process.env.WEBHOOK_URL;

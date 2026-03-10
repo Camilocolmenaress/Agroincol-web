@@ -15,6 +15,7 @@ export default function ContactForm({ preselectedService, formId }: ContactFormP
     direccion: '',
     mensaje: '',
     website: '', // honeypot anti-spam
+    aceptaTerminos: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -32,6 +33,9 @@ export default function ContactForm({ preselectedService, formId }: ContactFormP
     }
     if (!formData.tipoServicio) {
       newErrors.tipoServicio = 'Seleccione un servicio';
+    }
+    if (!formData.aceptaTerminos) {
+      newErrors.aceptaTerminos = 'Debe autorizar el tratamiento de sus datos para continuar';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -250,6 +254,39 @@ export default function ContactForm({ preselectedService, formId }: ContactFormP
           />
         </div>
 
+        {/* Checkbox Habeas Data — Ley 1581 de 2012 */}
+        <div className="flex items-start gap-3">
+          <input
+            type="checkbox"
+            id={`${formId}-aceptaTerminos`}
+            name="aceptaTerminos"
+            checked={formData.aceptaTerminos}
+            onChange={(e) => {
+              setFormData((prev) => ({ ...prev, aceptaTerminos: e.target.checked }));
+              if (errors.aceptaTerminos) {
+                setErrors((prev) => {
+                  const next = { ...prev };
+                  delete next.aceptaTerminos;
+                  return next;
+                });
+              }
+            }}
+            className="mt-1 h-4 w-4 rounded border-brand-gray-light text-brand-orange focus:ring-brand-orange cursor-pointer shrink-0"
+          />
+          <label htmlFor={`${formId}-aceptaTerminos`} className="text-xs text-brand-gray leading-relaxed cursor-pointer">
+            Autorizo a AGROINCOL para el tratamiento de mis datos personales según la{' '}
+            <a
+              href="/politica-de-privacidad"
+              target="_blank"
+              className="text-brand-orange underline hover:text-brand-orange-dark"
+            >
+              Política de Tratamiento de Datos Personales
+            </a>
+            . <span className="text-red-500">*</span>
+          </label>
+        </div>
+        {errors.aceptaTerminos && <p className="text-red-500 text-xs font-body">{errors.aceptaTerminos}</p>}
+
         {/* Submit */}
         <Button
           variant="primary"
@@ -269,6 +306,13 @@ export default function ContactForm({ preselectedService, formId }: ContactFormP
             </>
           )}
         </Button>
+
+        {/* Aviso de privacidad */}
+        <p className="text-xs text-brand-gray text-center mt-3 leading-relaxed">
+          AGROINCOL tratará tus datos para enviarte cotizaciones, agendar servicios de fumigación y comunicarnos
+          contigo con fines comerciales. Puedes ejercer tus derechos de actualización o eliminación en cualquier
+          momento escribiendo a agroincol.1985@gmail.com
+        </p>
       </form>
     </div>
   );
