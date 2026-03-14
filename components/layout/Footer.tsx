@@ -71,6 +71,11 @@ export default function Footer() {
                   Calculadora de Fumigación
                 </Link>
               </li>
+              <li>
+                <Link href="/blog" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                  Blog
+                </Link>
+              </li>
             </ul>
           </div>
 

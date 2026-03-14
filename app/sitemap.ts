@@ -21,6 +21,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: 'https://agroincol.com/blog',
+      lastModified: new Date('2026-03-14'),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://agroincol.com/blog/auditoria-invima-como-preparar-restaurante',
+      lastModified: new Date('2026-03-14'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://agroincol.com/blog/vi-cucaracha-en-mi-casa-que-hacer',
+      lastModified: new Date('2026-03-14'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://agroincol.com/blog/plagas-temporada-lluvias-bucaramanga',
+      lastModified: new Date('2026-03-14'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://agroincol.com/blog/cuanto-cuesta-multa-invima-restaurante',
+      lastModified: new Date('2026-03-14'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: 'https://agroincol.com/herramientas/calculadora-fumigacion',
       lastModified: new Date('2026-03-14'),
       changeFrequency: 'monthly',

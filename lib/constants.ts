@@ -78,6 +78,7 @@ export const NAV_LINKS = [
   { label: 'Fumigación Restaurantes', href: '/servicios/fumigacion-restaurantes' },
   { label: 'Certificaciones', href: '/certificaciones-y-normativa' },
   { label: 'Herramientas', href: '/herramientas/calculadora-fumigacion' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '#contacto' },
 ] as const;
 
@@ -117,3 +118,44 @@ export const FAQS_RESTAURANTES = [
     answer: 'Sí. Tenemos planes trimestrales, bimestrales y mensuales diseñados específicamente para el sector de alimentos. Cada plan incluye inspecciones programadas, aplicaciones preventivas, certificados actualizados y un informe de seguimiento.',
   },
 ] as const;
+
+export const BLOG_POSTS = [
+  {
+    slug: 'auditoria-invima-como-preparar-restaurante',
+    title: 'Auditoría del INVIMA: Cómo Preparar su Restaurante para Pasar sin Problemas',
+    description: 'Guía completa para que su restaurante en Bucaramanga pase la auditoría del INVIMA sin sanciones. Checklist, normativa y errores comunes.',
+    category: 'Restaurantes',
+    publishDate: '2026-03-14',
+    readTime: '8 min',
+    image: '/images/hero/hero-restaurantes.jpg',
+  },
+  {
+    slug: 'vi-cucaracha-en-mi-casa-que-hacer',
+    title: '¿Vi una Cucaracha en mi Casa: Significa que Hay Más?',
+    description: 'Qué hacer cuando ve una cucaracha en su hogar en Bucaramanga. Por qué aparecen, dónde se esconden y cuándo llamar a un profesional.',
+    category: 'Hogares',
+    publishDate: '2026-03-14',
+    readTime: '6 min',
+    image: '/images/servicios/fumigacion-interior.jpg',
+  },
+  {
+    slug: 'plagas-temporada-lluvias-bucaramanga',
+    title: 'Temporada de Lluvias en Bucaramanga: Las Plagas que Aparecen y Cómo Prevenirlas',
+    description: 'Las lluvias en Santander disparan la aparición de mosquitos, cucarachas y roedores. Aprenda a proteger su hogar y negocio durante esta temporada.',
+    category: 'Prevención',
+    publishDate: '2026-03-14',
+    readTime: '7 min',
+    image: '/images/hero/hero-home.jpg',
+  },
+  {
+    slug: 'cuanto-cuesta-multa-invima-restaurante',
+    title: '¿Cuánto Cuesta una Multa del INVIMA por Plagas? Lo que Todo Restaurante Debe Saber',
+    description: 'Las sanciones del INVIMA por problemas sanitarios pueden ir de 5 a 1,000 SMMLV. Conozca los costos reales y cómo evitarlos.',
+    category: 'Restaurantes',
+    publishDate: '2026-03-14',
+    readTime: '5 min',
+    image: '/images/certificaciones/entrega-certificado.jpg',
+  },
+] as const;
+
+export const BLOG_CATEGORIES = ['Restaurantes', 'Hogares', 'Prevención', 'Normativa'] as const;
