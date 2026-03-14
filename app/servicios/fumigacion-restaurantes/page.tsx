@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { AlertTriangle, Bug, TrendingDown, DollarSign, AlertCircle } from 'lucide-react';
 import Hero from '@/components/sections/Hero';
 import ProcessTimeline from '@/components/sections/ProcessTimeline';
@@ -159,6 +160,14 @@ export default function RestaurantesPage() {
           <Button variant="primary" href="#contacto">
             Evite sanciones — Cotice ahora
           </Button>
+          <p className="mt-4">
+            <Link
+              href="/herramientas/calculadora-fumigacion"
+              className="text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body-sm underline transition-colors"
+            >
+              Calcule la frecuencia ideal para su restaurante con nuestra herramienta gratuita →
+            </Link>
+          </p>
         </div>
       </section>
 

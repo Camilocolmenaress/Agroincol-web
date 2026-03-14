@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Shield, Award, Clock, MapPin } from 'lucide-react';
 import Hero from '@/components/sections/Hero';
 import ServicesGrid from '@/components/sections/ServicesGrid';
@@ -73,6 +74,18 @@ export default function HomePage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Calculator CTA */}
+      <section className="bg-white py-6">
+        <div className="container-custom text-center">
+          <Link
+            href="/herramientas/calculadora-fumigacion"
+            className="inline-flex items-center gap-2 text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body transition-colors"
+          >
+            ¿No sabe cada cuánto fumigar? Use nuestra calculadora gratuita →
+          </Link>
         </div>
       </section>
 

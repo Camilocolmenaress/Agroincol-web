@@ -46,7 +46,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 — Legal */}
+          {/* Column 3 — Legal & Tools */}
           <div>
             <h3 className="text-white font-heading font-semibold text-lg mb-4">Normativa</h3>
             <ul className="space-y-2">
@@ -64,6 +64,11 @@ export default function Footer() {
               <li>
                 <Link href="/politica-de-privacidad" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
                   Política de Privacidad
+                </Link>
+              </li>
+              <li>
+                <Link href="/herramientas/calculadora-fumigacion" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                  Calculadora de Fumigación
                 </Link>
               </li>
             </ul>
