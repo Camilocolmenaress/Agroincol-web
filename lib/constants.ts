@@ -78,6 +78,7 @@ export const NAV_LINKS = [
   { label: 'Fumigación Restaurantes', href: '/servicios/fumigacion-restaurantes' },
   { label: 'Certificaciones', href: '/certificaciones-y-normativa' },
   { label: 'Herramientas', href: '/herramientas/calculadora-fumigacion' },
+  { label: 'Precios', href: '/precios' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '#contacto' },
 ] as const;

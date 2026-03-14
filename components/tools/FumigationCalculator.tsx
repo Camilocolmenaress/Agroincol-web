@@ -298,8 +298,18 @@ export default function FumigationCalculator() {
             </div>
           </div>
 
+          {/* Pricing link */}
+          <div className="text-center mt-6">
+            <a
+              href="/precios"
+              className="inline-flex items-center gap-2 text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body transition-colors"
+            >
+              Vea nuestros precios y programas de protección →
+            </a>
+          </div>
+
           {/* Recalcular */}
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-4">
             <button
               onClick={handleReset}
               className="flex items-center gap-2 text-brand-gray hover:text-brand-orange transition-colors font-body font-semibold text-body-sm"

@@ -43,6 +43,11 @@ export default function Footer() {
                   </li>
                 )
               )}
+              <li>
+                <Link href="/precios" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                  Precios
+                </Link>
+              </li>
             </ul>
           </div>
 

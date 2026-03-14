@@ -77,14 +77,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Calculator CTA */}
+      {/* Calculator & Pricing CTAs */}
       <section className="bg-white py-6">
-        <div className="container-custom text-center">
+        <div className="container-custom text-center space-y-2">
           <Link
             href="/herramientas/calculadora-fumigacion"
             className="inline-flex items-center gap-2 text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body transition-colors"
           >
             ¿No sabe cada cuánto fumigar? Use nuestra calculadora gratuita →
+          </Link>
+          <br />
+          <Link
+            href="/precios"
+            className="inline-flex items-center gap-2 text-brand-green hover:text-brand-orange font-body font-semibold text-body-sm transition-colors"
+          >
+            Conozca nuestros precios →
           </Link>
         </div>
       </section>
