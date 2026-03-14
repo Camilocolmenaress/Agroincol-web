@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ImageIcon, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 import Hero from '@/components/sections/Hero';
 import Button from '@/components/ui/Button';
 import { BUSINESS, BLOG_POSTS } from '@/lib/constants';
@@ -57,9 +58,15 @@ export default function BlogPage() {
 
               return (
                 <article key={post.slug} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
-                  {/* Image placeholder */}
-                  <div className="bg-gray-100 aspect-video flex items-center justify-center">
-                    <ImageIcon size={40} className="text-gray-300" />
+                  {/* Image */}
+                  <div className="overflow-hidden rounded-t-xl">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      width={600}
+                      height={340}
+                      className="object-cover w-full h-48 md:h-52"
+                    />
                   </div>
 
                   <div className="p-5 md:p-6">
