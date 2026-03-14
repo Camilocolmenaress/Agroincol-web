@@ -40,6 +40,7 @@ export const metadata: Metadata = {
   description: 'Empresa de fumigación y control de plagas con más de 40 años de experiencia en Bucaramanga, Santander.',
   icons: {
     icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
   manifest: '/manifest.json',
 };

@@ -20,6 +20,14 @@ export const metadata: Metadata = {
     siteName: 'AGROINCOL',
     locale: 'es_CO',
     type: 'website',
+    images: [
+      {
+        url: 'https://agroincol.com/images/certificaciones/entrega-certificado.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'AGROINCOL — Certificaciones y Normativa de Fumigación',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
