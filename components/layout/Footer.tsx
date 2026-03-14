@@ -46,7 +46,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 — Legal & Tools */}
+          {/* Column 3 — Legal, Tools & Zones */}
           <div>
             <h3 className="text-white font-heading font-semibold text-lg mb-4">Normativa</h3>
             <ul className="space-y-2">
@@ -74,6 +74,25 @@ export default function Footer() {
               <li>
                 <Link href="/blog" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
                   Blog
+                </Link>
+              </li>
+            </ul>
+
+            <h3 className="text-white font-heading font-semibold text-lg mb-4 mt-6">Zonas de Servicio</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/zonas/fumigacion-floridablanca" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                  Fumigación en Floridablanca
+                </Link>
+              </li>
+              <li>
+                <Link href="/zonas/fumigacion-piedecuesta" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                  Fumigación en Piedecuesta
+                </Link>
+              </li>
+              <li>
+                <Link href="/zonas/fumigacion-giron" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                  Fumigación en Girón
                 </Link>
               </li>
             </ul>

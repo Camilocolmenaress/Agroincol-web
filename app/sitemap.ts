@@ -57,6 +57,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: 'https://agroincol.com/zonas/fumigacion-floridablanca',
+      lastModified: new Date('2026-03-14'),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: 'https://agroincol.com/zonas/fumigacion-piedecuesta',
+      lastModified: new Date('2026-03-14'),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: 'https://agroincol.com/zonas/fumigacion-giron',
+      lastModified: new Date('2026-03-14'),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
       url: 'https://agroincol.com/politica-de-privacidad',
       lastModified: new Date('2026-03-07'),
       changeFrequency: 'yearly',
