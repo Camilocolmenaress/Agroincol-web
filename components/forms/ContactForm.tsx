@@ -65,6 +65,15 @@ export default function ContactForm({ preselectedService, formId }: ContactFormP
 
       if (res.ok) {
         setStatus('success');
+        // GTM: disparar evento de conversión de formulario
+        if (typeof window !== 'undefined' && window.dataLayer) {
+          window.dataLayer.push({
+            event: 'form_submission',
+            form_id: formId,
+            form_page: window.location.pathname,
+            form_service: formData.tipoServicio,
+          });
+        }
       } else {
         setStatus('error');
       }
