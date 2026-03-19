@@ -5,6 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
+import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/analytics/GoogleTagManager';
 
 const heading = localFont({
   src: [
@@ -89,7 +90,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${heading.variable} ${body.variable}`}>
+      <head>
+        <GoogleTagManager />
+      </head>
       <body>
+        <GoogleTagManagerNoscript />
         <SchemaMarkup schema={globalSchema} />
         <Navbar />
         <main>{children}</main>
