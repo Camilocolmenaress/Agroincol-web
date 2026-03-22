@@ -157,6 +157,33 @@ export const BLOG_POSTS = [
     readTime: '5 min',
     image: '/images/certificaciones/entrega-certificado.jpg',
   },
+  {
+    slug: 'como-eliminar-cucarachas-bucaramanga',
+    title: 'Cómo Eliminar Cucarachas en Bucaramanga: Guía Profesional 2026',
+    description: 'Guía profesional para eliminar cucarachas en Bucaramanga. Tipos, tratamientos efectivos y cuándo llamar a un profesional.',
+    category: 'Plagas',
+    publishDate: '2026-03-21',
+    readTime: '8 min',
+    image: '/images/servicios/fumigacion-interior.jpg',
+  },
+  {
+    slug: 'fumigacion-restaurantes-bucaramanga-norma',
+    title: 'Fumigación para Restaurantes en Bucaramanga: Norma y Costos 2026',
+    description: 'Todo sobre fumigación para restaurantes en Bucaramanga: Resolución 2674, certificado INVIMA, frecuencia y costos.',
+    category: 'Restaurantes',
+    publishDate: '2026-03-21',
+    readTime: '9 min',
+    image: '/images/hero/hero-restaurantes.jpg',
+  },
+  {
+    slug: 'comejen-termitas-bucaramanga',
+    title: 'Comején y Termitas en Bucaramanga: Cómo Identificar y Eliminar',
+    description: 'Guía para identificar y eliminar comején y termitas en Bucaramanga. Señales de daño, tipos y tratamiento profesional.',
+    category: 'Plagas',
+    publishDate: '2026-03-21',
+    readTime: '7 min',
+    image: '/images/hero/hero-home.jpg',
+  },
 ] as const;
 
-export const BLOG_CATEGORIES = ['Restaurantes', 'Hogares', 'Prevención', 'Normativa'] as const;
+export const BLOG_CATEGORIES = ['Restaurantes', 'Hogares', 'Prevención', 'Normativa', 'Plagas'] as const;

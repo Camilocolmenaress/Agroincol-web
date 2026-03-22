@@ -57,6 +57,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: 'https://agroincol.com/blog/como-eliminar-cucarachas-bucaramanga',
+      lastModified: new Date('2026-03-21'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://agroincol.com/blog/fumigacion-restaurantes-bucaramanga-norma',
+      lastModified: new Date('2026-03-21'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://agroincol.com/blog/comejen-termitas-bucaramanga',
+      lastModified: new Date('2026-03-21'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: 'https://agroincol.com/herramientas/calculadora-fumigacion',
       lastModified: new Date('2026-03-14'),
       changeFrequency: 'monthly',
