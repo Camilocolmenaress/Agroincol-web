@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
@@ -42,7 +43,13 @@ export default function MultaInvimaPage() {
   return (
     <>
       <SchemaMarkup schema={articleSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Blog', href: '/blog' },
+        { name: '¿Cuánto Cuesta una Multa del INVIMA?' },
+      ]} />
       <ArticleLayout
+        withBreadcrumbs
         title="¿Cuánto Cuesta una Multa del INVIMA por Plagas? Lo que Todo Restaurante Debe Saber"
         description="Las sanciones del INVIMA por problemas sanitarios pueden ir de 5 a 1,000 SMMLV."
         publishDate="2026-03-14"

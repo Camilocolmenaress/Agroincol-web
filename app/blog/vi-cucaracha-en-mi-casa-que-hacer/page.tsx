@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
@@ -42,7 +43,13 @@ export default function CucarachaEnCasaPage() {
   return (
     <>
       <SchemaMarkup schema={articleSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Blog', href: '/blog' },
+        { name: '¿Vi una Cucaracha en mi Casa?' },
+      ]} />
       <ArticleLayout
+        withBreadcrumbs
         title="¿Vi una Cucaracha en mi Casa: Significa que Hay Más?"
         description="Qué hacer cuando ve una cucaracha en su hogar en Bucaramanga."
         publishDate="2026-03-14"

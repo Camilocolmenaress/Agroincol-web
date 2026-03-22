@@ -13,6 +13,7 @@ interface ArticleLayoutProps {
   readTime: string;
   currentSlug: string;
   children: React.ReactNode;
+  withBreadcrumbs?: boolean;
 }
 
 export default function ArticleLayout({
@@ -22,6 +23,7 @@ export default function ArticleLayout({
   readTime,
   currentSlug,
   children,
+  withBreadcrumbs = false,
 }: ArticleLayoutProps) {
   const relatedPosts = BLOG_POSTS.filter((p) => p.slug !== currentSlug).slice(0, 3);
 
@@ -34,7 +36,7 @@ export default function ArticleLayout({
   return (
     <>
       {/* Hero */}
-      <section className="bg-brand-green pt-24 md:pt-32">
+      <section className={`bg-brand-green ${withBreadcrumbs ? '' : 'pt-24 md:pt-32'}`}>
         <div className="container-custom section-padding text-center">
           <div className="mb-4">
             <Badge icon={<Calendar size={14} />}>{category}</Badge>

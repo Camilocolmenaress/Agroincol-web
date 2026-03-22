@@ -4,10 +4,12 @@ import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import type { HeroProps } from '@/lib/types';
 
-export default function Hero({ title, subtitle, badgeText, primaryCta, secondaryCta, imageSrc, imageAlt, centeredText = false }: HeroProps) {
+export default function Hero({ title, subtitle, badgeText, primaryCta, secondaryCta, imageSrc, imageAlt, centeredText = false, withBreadcrumbs = false }: HeroProps) {
+  const topPadding = withBreadcrumbs ? '' : 'pt-24 md:pt-32';
+
   if (centeredText) {
     return (
-      <section className="bg-brand-green pt-24 md:pt-32">
+      <section className={`bg-brand-green ${topPadding}`}>
         <div className="container-custom section-padding text-center">
           {badgeText && (
             <div className="mb-6">
@@ -36,7 +38,7 @@ export default function Hero({ title, subtitle, badgeText, primaryCta, secondary
   }
 
   return (
-    <section className="bg-brand-green pt-24 md:pt-32">
+    <section className={`bg-brand-green ${topPadding}`}>
       <div className="container-custom section-padding">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           {/* Text — 60% */}

@@ -14,6 +14,7 @@ import {
   CheckCircle,
   ArrowRight,
 } from 'lucide-react';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
@@ -149,9 +150,15 @@ export default function FumigacionGironPage() {
   return (
     <>
       <SchemaMarkup schema={localBusinessSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Zonas', href: '/' },
+        { name: 'Fumigación en Girón' },
+      ]} />
 
       {/* Hero */}
       <Hero
+        withBreadcrumbs
         title="Fumigación y Control de Plagas en Girón"
         subtitle="Cobertura completa en Girón y zona industrial de Chimitá. 40+ años protegiendo hogares, restaurantes e industrias en Santander."
         badgeText="Cobertura en Girón y Chimitá"

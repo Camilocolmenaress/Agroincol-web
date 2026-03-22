@@ -30,6 +30,7 @@ export interface HeroProps {
   imageSrc?: string;
   imageAlt?: string;
   centeredText?: boolean;
+  withBreadcrumbs?: boolean;
 }
 
 export interface ServiceCardData {

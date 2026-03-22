@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CheckCircle, AlertCircle, Shield, Users, FileCheck, Heart } from 'lucide-react';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
@@ -65,8 +66,14 @@ const compromisos = [
 export default function CertificacionesPage() {
   return (
     <>
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Certificaciones y Normativa' },
+      ]} />
+
       {/* 1. Hero */}
       <Hero
+        withBreadcrumbs
         title="Certificaciones y Normativa de Fumigación en Colombia"
         subtitle="En AGROINCOL cumplimos con toda la normativa colombiana vigente en materia de control de plagas y manejo de plaguicidas. Más de 40 años operando bajo los más altos estándares de calidad y seguridad."
         primaryCta={{ text: 'Solicitar Cotización', href: '#contacto' }}

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 
 export const metadata: Metadata = {
@@ -113,7 +114,12 @@ const sections = [
 export default function PoliticaPrivacidadPage() {
   return (
     <>
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Política de Privacidad' },
+      ]} />
       <Hero
+        withBreadcrumbs
         title="Política de Tratamiento de Datos Personales"
         subtitle="Conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013"
         primaryCta={{ text: 'Volver al Inicio', href: '/' }}

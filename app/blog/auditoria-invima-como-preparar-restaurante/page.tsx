@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
@@ -42,7 +43,13 @@ export default function AuditoriaInvimaPage() {
   return (
     <>
       <SchemaMarkup schema={articleSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Blog', href: '/blog' },
+        { name: 'Auditoría del INVIMA: Cómo Preparar su Restaurante' },
+      ]} />
       <ArticleLayout
+        withBreadcrumbs
         title="Auditoría del INVIMA: Cómo Preparar su Restaurante para Pasar sin Problemas"
         description="Guía completa para que su restaurante en Bucaramanga pase la auditoría del INVIMA sin sanciones."
         publishDate="2026-03-14"

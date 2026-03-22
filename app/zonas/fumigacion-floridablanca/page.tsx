@@ -13,6 +13,7 @@ import {
   CheckCircle,
   ArrowRight,
 } from 'lucide-react';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
@@ -148,9 +149,15 @@ export default function FumigacionFloridablancaPage() {
   return (
     <>
       <SchemaMarkup schema={localBusinessSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Zonas', href: '/' },
+        { name: 'Fumigación en Floridablanca' },
+      ]} />
 
       {/* Hero */}
       <Hero
+        withBreadcrumbs
         title="Fumigación y Control de Plagas en Floridablanca"
         subtitle="Sede principal de AGROINCOL. Más de 40 años protegiendo hogares, restaurantes y empresas en Floridablanca, Santander."
         badgeText="Respuesta en menos de 1 hora"

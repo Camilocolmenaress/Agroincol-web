@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import FumigationCalculator from '@/components/tools/FumigationCalculator';
@@ -55,9 +56,15 @@ export default function CalculadoraFumigacionPage() {
   return (
     <>
       <SchemaMarkup schema={appSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Herramientas', href: '/' },
+        { name: 'Calculadora de Fumigación' },
+      ]} />
 
       {/* Hero */}
       <Hero
+        withBreadcrumbs
         title="Calculadora de Frecuencia de Fumigación"
         subtitle="Descubra cada cuánto debe fumigar su propiedad según la normativa colombiana y las condiciones de su zona. Herramienta 100% gratuita."
         primaryCta={{ text: 'Comenzar Cálculo', href: '#calculadora' }}

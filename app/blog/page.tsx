@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import Button from '@/components/ui/Button';
 import { BUSINESS, BLOG_POSTS } from '@/lib/constants';
@@ -38,7 +39,12 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <>
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Blog' },
+      ]} />
       <Hero
+        withBreadcrumbs
         title="Blog — Control de Plagas y Fumigación"
         subtitle="Consejos de expertos con más de 40 años de experiencia protegiendo Bucaramanga y Santander"
         primaryCta={{ text: 'Ver Artículos', href: '#articulos' }}

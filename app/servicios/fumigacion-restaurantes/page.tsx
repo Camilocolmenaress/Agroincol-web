@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AlertTriangle, Bug, TrendingDown, DollarSign, AlertCircle } from 'lucide-react';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import ProcessTimeline from '@/components/sections/ProcessTimeline';
 import PestCards from '@/components/sections/PestCards';
@@ -95,9 +96,15 @@ export default function RestaurantesPage() {
     <>
       <SchemaMarkup schema={serviceSchema} />
       <SchemaMarkup schema={faqSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Servicios', href: '/' },
+        { name: 'Fumigación para Restaurantes' },
+      ]} />
 
       {/* 1. Hero */}
       <Hero
+        withBreadcrumbs
         title="Control de Plagas para Restaurantes en Bucaramanga"
         subtitle="Cumpla con la Resolución 2674 del INVIMA y proteja su establecimiento. Servicio certificado con más de 40 años de experiencia en el sector de alimentos."
         badgeText="Certificado válido ante INVIMA y Secretaría de Salud"

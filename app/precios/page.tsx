@@ -12,6 +12,7 @@ import {
   Users,
   FileText,
 } from 'lucide-react';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import PricingTabs from '@/components/pricing/PricingTabs';
 import ContactForm from '@/components/forms/ContactForm';
@@ -118,9 +119,14 @@ export default function PreciosPage() {
   return (
     <>
       <SchemaMarkup schema={pageSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Precios' },
+      ]} />
 
       {/* Hero */}
       <Hero
+        withBreadcrumbs
         title="¿Cuánto Cuesta Fumigar en Bucaramanga?"
         subtitle="Precios transparentes para restaurantes y hogares. Todos nuestros precios incluyen IVA, productos certificados INVIMA y técnicos profesionales."
         badgeText="Precios actualizados — Marzo 2026"

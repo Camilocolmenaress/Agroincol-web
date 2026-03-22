@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
@@ -42,7 +43,13 @@ export default function PlagasLluviasPage() {
   return (
     <>
       <SchemaMarkup schema={articleSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Blog', href: '/blog' },
+        { name: 'Plagas en Temporada de Lluvias' },
+      ]} />
       <ArticleLayout
+        withBreadcrumbs
         title="Temporada de Lluvias en Bucaramanga: Las Plagas que Aparecen y Cómo Prevenirlas"
         description="Guía de prevención contra plagas durante la temporada de lluvias en Santander."
         publishDate="2026-03-14"

@@ -13,6 +13,7 @@ import {
   CheckCircle,
   ArrowRight,
 } from 'lucide-react';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
@@ -148,9 +149,15 @@ export default function FumigacionPiedecuestaPage() {
   return (
     <>
       <SchemaMarkup schema={localBusinessSchema} />
+      <Breadcrumbs items={[
+        { name: 'Inicio', href: '/' },
+        { name: 'Zonas', href: '/' },
+        { name: 'Fumigación en Piedecuesta' },
+      ]} />
 
       {/* Hero */}
       <Hero
+        withBreadcrumbs
         title="Fumigación y Control de Plagas en Piedecuesta"
         subtitle="Cobertura completa en Piedecuesta: desde el casco urbano hasta la Mesa de los Santos. 40+ años de experiencia en control de plagas."
         badgeText="Cobertura completa en Piedecuesta"
