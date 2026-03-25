@@ -5,13 +5,13 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Comején y Termitas en Bucaramanga: Cómo Identificar y Eliminar | AGROINCOL',
+  title: 'Comején y Termitas Bucaramanga | AGROINCOL',
   description: 'Guía para identificar y eliminar comején y termitas en Bucaramanga. Señales de daño, tipos de termitas en Santander y cuándo actuar antes de que sea tarde.',
   alternates: {
     canonical: 'https://agroincol.com/blog/comejen-termitas-bucaramanga',
   },
   openGraph: {
-    title: 'Comején y Termitas en Bucaramanga: Cómo Identificar y Eliminar | AGROINCOL',
+    title: 'Comején y Termitas Bucaramanga | AGROINCOL',
     description: 'Guía para identificar y eliminar comején y termitas en Bucaramanga. Señales de daño, tipos y tratamiento profesional.',
     url: 'https://agroincol.com/blog/comejen-termitas-bucaramanga',
     siteName: 'AGROINCOL',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Comején y Termitas en Bucaramanga: Cómo Identificar y Eliminar | AGROINCOL',
+    title: 'Comején y Termitas Bucaramanga | AGROINCOL',
     description: 'Guía para identificar y eliminar comején y termitas en Bucaramanga. Señales de daño, tipos y tratamiento profesional.',
   },
 };

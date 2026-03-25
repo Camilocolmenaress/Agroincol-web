@@ -21,7 +21,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: '¿Cuánto Cuesta Fumigar en Bucaramanga? Precios 2026 | AGROINCOL',
+  title: 'Precios Fumigación Bucaramanga 2026 | AGROINCOL',
   description:
     'Precios reales de fumigación en Bucaramanga para restaurantes y hogares. Desde $90.000. Programas mensuales desde $80.000/mes. Cotización gratis.',
   alternates: {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   robots: 'index, follow',
   openGraph: {
-    title: '¿Cuánto Cuesta Fumigar en Bucaramanga? Precios 2026 | AGROINCOL',
+    title: 'Precios Fumigación Bucaramanga 2026 | AGROINCOL',
     description:
       'Precios reales de fumigación en Bucaramanga para restaurantes y hogares. Desde $90.000. Programas mensuales desde $80.000/mes.',
     url: 'https://agroincol.com/precios',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '¿Cuánto Cuesta Fumigar en Bucaramanga? Precios 2026 | AGROINCOL',
+    title: 'Precios Fumigación Bucaramanga 2026 | AGROINCOL',
     description:
       'Precios reales de fumigación en Bucaramanga para restaurantes y hogares. Desde $90.000. Programas mensuales desde $80.000/mes.',
   },

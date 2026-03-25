@@ -5,13 +5,13 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Fumigación para Restaurantes en Bucaramanga: Norma y Costos 2026 | AGROINCOL',
+  title: 'Fumigación Restaurantes: Norma 2026 | AGROINCOL',
   description: 'Todo lo que un restaurante en Bucaramanga necesita saber sobre fumigación: Resolución 2674, certificado INVIMA, frecuencia, costos y cómo cumplir.',
   alternates: {
     canonical: 'https://agroincol.com/blog/fumigacion-restaurantes-bucaramanga-norma',
   },
   openGraph: {
-    title: 'Fumigación para Restaurantes en Bucaramanga: Norma y Costos 2026 | AGROINCOL',
+    title: 'Fumigación Restaurantes: Norma 2026 | AGROINCOL',
     description: 'Todo sobre fumigación para restaurantes en Bucaramanga: Resolución 2674, certificado INVIMA, frecuencia y costos.',
     url: 'https://agroincol.com/blog/fumigacion-restaurantes-bucaramanga-norma',
     siteName: 'AGROINCOL',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fumigación para Restaurantes en Bucaramanga: Norma y Costos 2026 | AGROINCOL',
+    title: 'Fumigación Restaurantes: Norma 2026 | AGROINCOL',
     description: 'Todo sobre fumigación para restaurantes en Bucaramanga: Resolución 2674, certificado INVIMA, frecuencia y costos.',
   },
 };

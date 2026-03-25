@@ -12,13 +12,13 @@ import { BUSINESS, FAQS_RESTAURANTES } from '@/lib/constants';
 import FAQAccordion from './FAQAccordion';
 
 export const metadata: Metadata = {
-  title: 'Fumigación para Restaurantes en Bucaramanga | AGROINCOL',
+  title: 'Fumigación Restaurantes Bucaramanga | AGROINCOL',
   description: 'Servicio especializado de control de plagas para restaurantes en Bucaramanga. Cumpla con la Resolución 2674 del INVIMA. Certificación válida. Cotización gratis.',
   alternates: {
     canonical: 'https://agroincol.com/servicios/fumigacion-restaurantes',
   },
   openGraph: {
-    title: 'Fumigación para Restaurantes en Bucaramanga | AGROINCOL',
+    title: 'Fumigación Restaurantes Bucaramanga | AGROINCOL',
     description: 'Servicio especializado de control de plagas para restaurantes en Bucaramanga. Cumpla con la Resolución 2674 del INVIMA.',
     url: 'https://agroincol.com/servicios/fumigacion-restaurantes',
     siteName: 'AGROINCOL',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fumigación para Restaurantes en Bucaramanga | AGROINCOL',
+    title: 'Fumigación Restaurantes Bucaramanga | AGROINCOL',
     description: 'Servicio especializado de control de plagas para restaurantes en Bucaramanga. Cumpla con la Resolución 2674 del INVIMA.',
   },
 };

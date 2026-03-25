@@ -3,7 +3,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 
 export const metadata: Metadata = {
-  title: 'Política de Tratamiento de Datos Personales | AGROINCOL',
+  title: 'Política de Privacidad | AGROINCOL',
   description: 'Política de tratamiento de datos personales de AGROINCOL conforme a la Ley 1581 de 2012.',
   alternates: {
     canonical: 'https://agroincol.com/politica-de-privacidad',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Política de Tratamiento de Datos Personales | AGROINCOL',
+    title: 'Política de Privacidad | AGROINCOL',
     description: 'Política de tratamiento de datos personales de AGROINCOL conforme a la Ley 1581 de 2012.',
   },
 };

@@ -21,14 +21,14 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Fumigación en Floridablanca | Control de Plagas — AGROINCOL',
+  title: 'Fumigación en Floridablanca | AGROINCOL',
   description:
     'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra 9 #3-34. Certificación INVIMA. Respuesta en menos de 1 hora.',
   alternates: {
     canonical: 'https://agroincol.com/zonas/fumigacion-floridablanca',
   },
   openGraph: {
-    title: 'Fumigación en Floridablanca | Control de Plagas — AGROINCOL',
+    title: 'Fumigación en Floridablanca | AGROINCOL',
     description:
       'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra 9 #3-34. Certificación INVIMA.',
     url: 'https://agroincol.com/zonas/fumigacion-floridablanca',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fumigación en Floridablanca | Control de Plagas — AGROINCOL',
+    title: 'Fumigación en Floridablanca | AGROINCOL',
     description:
       'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra 9 #3-34. Certificación INVIMA.',
   },

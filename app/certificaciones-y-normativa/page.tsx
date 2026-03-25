@@ -9,13 +9,13 @@ import Button from '@/components/ui/Button';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Certificaciones y Normativa de Fumigación en Colombia | AGROINCOL',
+  title: 'Certificaciones y Normativa | AGROINCOL',
   description: 'AGROINCOL cumple con el Decreto 1843 de 1991 y la Resolución 2674 de 2013. Certificación de fumigación válida ante INVIMA y Secretaría de Salud en Santander.',
   alternates: {
     canonical: 'https://agroincol.com/certificaciones-y-normativa',
   },
   openGraph: {
-    title: 'Certificaciones y Normativa de Fumigación en Colombia | AGROINCOL',
+    title: 'Certificaciones y Normativa | AGROINCOL',
     description: 'AGROINCOL cumple con el Decreto 1843 de 1991 y la Resolución 2674 de 2013. Certificación válida ante INVIMA y Secretaría de Salud.',
     url: 'https://agroincol.com/certificaciones-y-normativa',
     siteName: 'AGROINCOL',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Certificaciones y Normativa de Fumigación en Colombia | AGROINCOL',
+    title: 'Certificaciones y Normativa | AGROINCOL',
     description: 'AGROINCOL cumple con el Decreto 1843 de 1991 y la Resolución 2674 de 2013. Certificación válida ante INVIMA y Secretaría de Salud en Santander.',
   },
 };

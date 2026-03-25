@@ -5,13 +5,13 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Vi una Cucaracha en mi Casa: ¿Significa que Hay Más? | AGROINCOL',
+  title: 'Vi una Cucaracha: ¿Hay Más? | AGROINCOL',
   description: 'Qué hacer cuando encuentra una cucaracha en su hogar. Por qué aparecen, dónde se esconden y cuándo es momento de llamar a un profesional.',
   alternates: {
     canonical: 'https://agroincol.com/blog/vi-cucaracha-en-mi-casa-que-hacer',
   },
   openGraph: {
-    title: 'Vi una Cucaracha en mi Casa: ¿Significa que Hay Más? | AGROINCOL',
+    title: 'Vi una Cucaracha: ¿Hay Más? | AGROINCOL',
     description: 'Qué hacer cuando encuentra una cucaracha en su hogar en Bucaramanga.',
     url: 'https://agroincol.com/blog/vi-cucaracha-en-mi-casa-que-hacer',
     siteName: 'AGROINCOL',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vi una Cucaracha en mi Casa: ¿Significa que Hay Más? | AGROINCOL',
+    title: 'Vi una Cucaracha: ¿Hay Más? | AGROINCOL',
     description: 'Qué hacer cuando encuentra una cucaracha en su hogar en Bucaramanga.',
   },
 };

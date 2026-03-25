@@ -22,14 +22,14 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Fumigación en Girón | Control de Plagas — AGROINCOL',
+  title: 'Fumigación en Girón | AGROINCOL',
   description:
     'Servicio de fumigación y control de plagas en Girón, Santander. Cobertura en zona industrial de Chimitá. 40+ años de experiencia. Certificación INVIMA.',
   alternates: {
     canonical: 'https://agroincol.com/zonas/fumigacion-giron',
   },
   openGraph: {
-    title: 'Fumigación en Girón | Control de Plagas — AGROINCOL',
+    title: 'Fumigación en Girón | AGROINCOL',
     description:
       'Servicio de fumigación y control de plagas en Girón, Santander. Cobertura en zona industrial de Chimitá. 40+ años de experiencia.',
     url: 'https://agroincol.com/zonas/fumigacion-giron',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fumigación en Girón | Control de Plagas — AGROINCOL',
+    title: 'Fumigación en Girón | AGROINCOL',
     description:
       'Servicio de fumigación y control de plagas en Girón, Santander. Cobertura en zona industrial de Chimitá. 40+ años de experiencia.',
   },

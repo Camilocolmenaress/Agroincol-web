@@ -5,13 +5,13 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: '¿Cuánto Cuesta una Multa del INVIMA por Plagas? | AGROINCOL',
+  title: 'Multas INVIMA por Plagas: Costos | AGROINCOL',
   description: 'Las sanciones del INVIMA por problemas sanitarios pueden ir de 5 a 1,000 SMMLV. Conozca los costos reales y cómo evitar sanciones en su restaurante.',
   alternates: {
     canonical: 'https://agroincol.com/blog/cuanto-cuesta-multa-invima-restaurante',
   },
   openGraph: {
-    title: '¿Cuánto Cuesta una Multa del INVIMA por Plagas? | AGROINCOL',
+    title: 'Multas INVIMA por Plagas: Costos | AGROINCOL',
     description: 'Las sanciones del INVIMA por problemas sanitarios pueden ir de 5 a 1,000 SMMLV.',
     url: 'https://agroincol.com/blog/cuanto-cuesta-multa-invima-restaurante',
     siteName: 'AGROINCOL',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '¿Cuánto Cuesta una Multa del INVIMA por Plagas? | AGROINCOL',
+    title: 'Multas INVIMA por Plagas: Costos | AGROINCOL',
     description: 'Las sanciones del INVIMA por problemas sanitarios pueden ir de 5 a 1,000 SMMLV.',
   },
 };

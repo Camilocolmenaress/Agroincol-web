@@ -5,13 +5,13 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Temporada de Lluvias en Bucaramanga: Plagas que Aparecen y Cómo Prevenirlas | AGROINCOL',
+  title: 'Plagas en Temporada de Lluvias | AGROINCOL',
   description: 'Las lluvias en Santander disparan mosquitos, cucarachas y roedores. Guía de prevención para hogares y negocios en el Área Metropolitana de Bucaramanga.',
   alternates: {
     canonical: 'https://agroincol.com/blog/plagas-temporada-lluvias-bucaramanga',
   },
   openGraph: {
-    title: 'Temporada de Lluvias en Bucaramanga: Plagas que Aparecen y Cómo Prevenirlas | AGROINCOL',
+    title: 'Plagas en Temporada de Lluvias | AGROINCOL',
     description: 'Las lluvias en Santander disparan mosquitos, cucarachas y roedores.',
     url: 'https://agroincol.com/blog/plagas-temporada-lluvias-bucaramanga',
     siteName: 'AGROINCOL',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Temporada de Lluvias en Bucaramanga: Plagas que Aparecen y Cómo Prevenirlas | AGROINCOL',
+    title: 'Plagas en Temporada de Lluvias | AGROINCOL',
     description: 'Las lluvias en Santander disparan mosquitos, cucarachas y roedores.',
   },
 };

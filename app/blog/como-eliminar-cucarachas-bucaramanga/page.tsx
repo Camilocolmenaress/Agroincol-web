@@ -5,13 +5,13 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Cómo Eliminar Cucarachas en Bucaramanga: Guía Profesional 2026 | AGROINCOL',
+  title: 'Eliminar Cucarachas Bucaramanga 2026 | AGROINCOL',
   description: 'Guía profesional para eliminar cucarachas en Bucaramanga. Tipos de cucarachas, por qué aparecen, tratamientos efectivos y cuándo llamar a un profesional.',
   alternates: {
     canonical: 'https://agroincol.com/blog/como-eliminar-cucarachas-bucaramanga',
   },
   openGraph: {
-    title: 'Cómo Eliminar Cucarachas en Bucaramanga: Guía Profesional 2026 | AGROINCOL',
+    title: 'Eliminar Cucarachas Bucaramanga 2026 | AGROINCOL',
     description: 'Guía profesional para eliminar cucarachas en Bucaramanga. Tipos, tratamientos efectivos y cuándo llamar a un profesional.',
     url: 'https://agroincol.com/blog/como-eliminar-cucarachas-bucaramanga',
     siteName: 'AGROINCOL',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Cómo Eliminar Cucarachas en Bucaramanga: Guía Profesional 2026 | AGROINCOL',
+    title: 'Eliminar Cucarachas Bucaramanga 2026 | AGROINCOL',
     description: 'Guía profesional para eliminar cucarachas en Bucaramanga. Tipos, tratamientos efectivos y cuándo llamar a un profesional.',
   },
 };

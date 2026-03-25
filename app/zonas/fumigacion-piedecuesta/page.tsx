@@ -21,14 +21,14 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Fumigación en Piedecuesta | Control de Plagas — AGROINCOL',
+  title: 'Fumigación en Piedecuesta | AGROINCOL',
   description:
     'Servicio de fumigación y control de plagas en Piedecuesta, Santander. 40+ años de experiencia. Certificación INVIMA. Respuesta en menos de 2 horas.',
   alternates: {
     canonical: 'https://agroincol.com/zonas/fumigacion-piedecuesta',
   },
   openGraph: {
-    title: 'Fumigación en Piedecuesta | Control de Plagas — AGROINCOL',
+    title: 'Fumigación en Piedecuesta | AGROINCOL',
     description:
       'Servicio de fumigación y control de plagas en Piedecuesta, Santander. 40+ años de experiencia. Certificación INVIMA.',
     url: 'https://agroincol.com/zonas/fumigacion-piedecuesta',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fumigación en Piedecuesta | Control de Plagas — AGROINCOL',
+    title: 'Fumigación en Piedecuesta | AGROINCOL',
     description:
       'Servicio de fumigación y control de plagas en Piedecuesta, Santander. 40+ años de experiencia. Certificación INVIMA.',
   },
