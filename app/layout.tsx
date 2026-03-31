@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import { Partytown } from '@builder.io/partytown/react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
@@ -94,7 +95,9 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${heading.variable} ${body.variable}`}>
       <head>
+        <Partytown debug={false} forward={['dataLayer.push', 'gtag']} />
         <GoogleTagManager />
+        <GoogleAnalytics />
       </head>
       <body>
         <GoogleTagManagerNoscript />
@@ -103,7 +106,6 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <WhatsAppButton />
-        <GoogleAnalytics />
         <Analytics />
         <SpeedInsights />
       </body>

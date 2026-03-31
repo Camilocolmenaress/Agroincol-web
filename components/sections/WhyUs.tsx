@@ -21,11 +21,12 @@ export default function WhyUs() {
           {/* Image */}
           <div className="relative aspect-square rounded-2xl overflow-hidden">
             <Image
-              src="/images/equipo/equipo-agroincol.jpg"
+              src="/images/equipo/equipo-agroincol.webp"
               alt="Equipo completo de AGROINCOL con uniformes y equipos de bioseguridad"
-              fill
+              width={800}
+              height={800}
               priority
-              className="object-cover"
+              className="object-cover w-full h-full"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>

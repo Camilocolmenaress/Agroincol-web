@@ -1,14 +1,9 @@
-'use client';
-
-import Script from 'next/script';
-
 const GTM_ID = 'GTM-NLH5NQRR';
 
 export function GoogleTagManager() {
   return (
-    <Script
-      id="gtm-script"
-      strategy="lazyOnload"
+    <script
+      type="text/partytown"
       dangerouslySetInnerHTML={{
         __html: `
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
