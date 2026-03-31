@@ -24,8 +24,9 @@ export default function WhyUs() {
               src="/images/equipo/equipo-agroincol.jpg"
               alt="Equipo completo de AGROINCOL con uniformes y equipos de bioseguridad"
               fill
+              priority
               className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
 
