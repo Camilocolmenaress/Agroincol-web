@@ -6,6 +6,9 @@ import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/analytics/GoogleTagManager';
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const heading = localFont({
   src: [
@@ -100,6 +103,9 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <WhatsAppButton />
+        <GoogleAnalytics />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
