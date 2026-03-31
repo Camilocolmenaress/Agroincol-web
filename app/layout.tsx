@@ -95,7 +95,29 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${heading.variable} ${body.variable}`}>
       <head>
-        <Partytown debug={false} forward={['dataLayer.push', 'gtag']} />
+        <Partytown
+          debug={false}
+          forward={[
+            'dataLayer.push',
+            'gtag',
+            'google_tag_manager',
+            'google_tag_data.ics.entry',
+          ]}
+          resolveUrl={(url, location) => {
+            const proxyDomains = [
+              'www.googletagmanager.com',
+              'www.google-analytics.com',
+              'analytics.google.com',
+              'stats.g.doubleclick.net',
+            ];
+            if (proxyDomains.includes(url.hostname)) {
+              const proxyUrl = new URL('/api/partytown-proxy', location.origin);
+              proxyUrl.searchParams.set('url', url.href);
+              return proxyUrl;
+            }
+            return url;
+          }}
+        />
         <GoogleTagManager />
         <GoogleAnalytics />
       </head>
