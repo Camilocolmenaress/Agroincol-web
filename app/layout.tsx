@@ -8,6 +8,7 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/analytics/GoogleTagManager';
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics';
+import WhatsAppClickTracker from '@/components/analytics/WhatsAppClickTracker';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -95,6 +96,21 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${heading.variable} ${body.variable}`}>
       <head>
+        {/* Pre-populate dataLayer on main thread before Partytown loads GTM.
+            This ensures page_location (including gclid) is available in the
+            worker when GA4 fires its first page_view, fixing Direct attribution. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({
+                page_location: window.location.href,
+                page_path: window.location.pathname + window.location.search,
+                page_referrer: document.referrer,
+              });
+            `,
+          }}
+        />
         <Partytown
           debug={false}
           forward={[
@@ -128,6 +144,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <WhatsAppButton />
+        <WhatsAppClickTracker />
         <Analytics />
         <SpeedInsights />
       </body>

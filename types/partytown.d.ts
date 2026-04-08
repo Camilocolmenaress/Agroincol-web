@@ -9,3 +9,9 @@ declare module '@builder.io/partytown/react' {
 
   export function Partytown(props: PartytownProps): JSX.Element;
 }
+
+declare global {
+  interface Window {
+    dataLayer: Record<string, unknown>[];
+  }
+}
