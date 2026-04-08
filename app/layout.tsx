@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import { Partytown } from '@builder.io/partytown/react';
+import { GoogleTagManager } from '@next/third-parties/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
-import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/analytics/GoogleTagManager';
-import GoogleAnalytics from '@/components/analytics/GoogleAnalytics';
 import WhatsAppClickTracker from '@/components/analytics/WhatsAppClickTracker';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -95,35 +93,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${heading.variable} ${body.variable}`}>
-      <head>
-        <Partytown
-          debug={false}
-          forward={[
-            'dataLayer.push',
-            'gtag',
-            'google_tag_manager',
-            'google_tag_data.ics.entry',
-          ]}
-          resolveUrl={(url, location) => {
-            const proxyDomains = [
-              'www.googletagmanager.com',
-              'www.google-analytics.com',
-              'analytics.google.com',
-              'stats.g.doubleclick.net',
-            ];
-            if (proxyDomains.includes(url.hostname)) {
-              const proxyUrl = new URL('/api/partytown-proxy', location.origin);
-              proxyUrl.searchParams.set('url', url.href);
-              return proxyUrl;
-            }
-            return url;
-          }}
-        />
-        <GoogleTagManager />
-        <GoogleAnalytics />
-      </head>
       <body>
-        <GoogleTagManagerNoscript />
         <SchemaMarkup schema={globalSchema} />
         <Navbar />
         <main>{children}</main>
@@ -133,6 +103,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
       </body>
+      <GoogleTagManager gtmId="GTM-NLH5NQRR" />
     </html>
   );
 }
