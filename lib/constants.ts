@@ -120,60 +120,6 @@ export const FAQS_RESTAURANTES = [
   },
 ] as const;
 
-export const FAQS_DESRATIZACION = [
-  {
-    question: '¿Cuánto tiempo toma ver resultados después del servicio de desratización?',
-    answer: 'Los primeros resultados se observan entre 24 y 72 horas después del tratamiento. Sin embargo, la eliminación completa de la infestación, incluyendo roedores que puedan estar en zonas no tratadas directamente, puede tomar entre 7 y 14 días. Realizamos visitas de seguimiento para verificar la efectividad del tratamiento.',
-  },
-  {
-    question: '¿Es seguro el servicio de desratización si tengo mascotas o niños en casa?',
-    answer: 'Sí, siempre y cuando se sigan las indicaciones del técnico. Los productos que utilizamos están registrados ante el ICA y son de uso controlado. Recomendamos mantener mascotas y niños fuera del área tratada durante el tiempo indicado por el técnico, que generalmente es de 2 a 4 horas.',
-  },
-  {
-    question: '¿Cómo sé si tengo una infestación de roedores o solo fue un ratón ocasional?',
-    answer: 'Las señales de infestación incluyen: heces de roedores (pequeñas y oscuras), marcas de dientes en cables, madera o alimentos, ruidos nocturnos en paredes o techos, olores a orina, y avistamiento de roedores durante el día. Si observa dos o más de estas señales, es probable que tenga una infestación activa.',
-  },
-  {
-    question: '¿En qué consiste el sellado de puntos de entrada?',
-    answer: 'El sellado de puntos de entrada es una parte fundamental de nuestro servicio. Identificamos todas las grietas, huecos alrededor de tuberías, espacios bajo puertas y otras vías de acceso que usan los roedores. Luego los cerramos con materiales resistentes a roedores como malla metálica, cemento o espuma selladora especial. Esto evita que nuevos roedores entren una vez eliminados los existentes.',
-  },
-  {
-    question: '¿Cuánto cuesta un servicio de desratización en Bucaramanga?',
-    answer: 'El costo varía según el tamaño de la propiedad, el nivel de infestación y el tipo de tratamiento necesario. Ofrecemos diagnóstico gratuito y sin compromiso para dar un presupuesto exacto. En general, un servicio básico para una vivienda parte desde precios accesibles, con planes de seguimiento disponibles para casos más severos.',
-  },
-  {
-    question: '¿Con qué frecuencia se debe hacer desratización preventiva?',
-    answer: 'Para propiedades residenciales en zonas urbanas de Bucaramanga, recomendamos un servicio preventivo cada 6 meses. Para establecimientos comerciales, bodegas o propiedades cercanas a alcantarillados o mercados, lo ideal es cada trimestre. Un programa preventivo regular es mucho más económico que tratar una infestación avanzada.',
-  },
-] as const;
-
-export const FAQS_INSECTOS_VOLADORES = [
-  {
-    question: '¿Cuánto tiempo toma ver resultados después del tratamiento contra mosquitos?',
-    answer: 'Los adultos son eliminados en las primeras 24 horas después del tratamiento. Sin embargo, el ciclo completo de control (incluyendo larvicidas para huevos y larvas) toma entre 7 y 14 días. Realizamos visita de seguimiento para verificar la efectividad y tratar posibles criaderos residuales.',
-  },
-  {
-    question: '¿El tratamiento es seguro si tengo niños pequeños o mascotas en casa?',
-    answer: 'Sí. Los productos que utilizamos están registrados ante el ICA y aprobados por la OMS para uso en áreas residenciales. Recomendamos mantener niños y mascotas fuera del área tratada durante 2 a 3 horas mientras los productos se secan. Después de ese tiempo, el espacio es completamente seguro.',
-  },
-  {
-    question: '¿Con qué frecuencia se debe hacer el control de mosquitos en Bucaramanga?',
-    answer: 'En el Área Metropolitana de Bucaramanga, recomendamos tratamientos preventivos cada 2 a 3 meses, con énfasis especial antes y durante las temporadas de lluvias (marzo-junio y septiembre-octubre). Para empresas, restaurantes o establecimientos con alta exposición, un plan mensual garantiza mayor efectividad.',
-  },
-  {
-    question: '¿Pueden eliminar un nido de abejas o avispas en mi propiedad?',
-    answer: 'Sí. AGROINCOL realiza retiro seguro de nidos de abejas y avispas con equipos de protección especializado. No intente eliminarlo por su cuenta: algunas especies reaccionan agresivamente ante perturbaciones y pueden representar un riesgo serio. Contáctenos para una evaluación y retiro seguro.',
-  },
-  {
-    question: '¿El tratamiento también elimina huevos y larvas, o solo los adultos?',
-    answer: 'Nuestro servicio es de ciclo completo: incluye adulticidas para eliminar los mosquitos adultos visibles, y larvicidas aplicados en posibles criaderos (recipientes con agua, canales, zonas húmedas) para interrumpir el ciclo de reproducción. Esto es clave para evitar que la población se recupere en pocos días.',
-  },
-  {
-    question: '¿Qué debo hacer para preparar mi hogar o negocio antes del tratamiento?',
-    answer: 'Retire o cubra alimentos y utensilios de cocina expuestos. Si tiene peceras, apague el aireador y cubra el tanque. Aleje mascotas y plantas del área de tratamiento. Deje acceso a todas las áreas interiores y exteriores donde haya actividad de insectos. El técnico le dará instrucciones específicas según las características de su propiedad.',
-  },
-] as const;
-
 export const BLOG_POSTS = [
   {
     slug: 'auditoria-invima-como-preparar-restaurante',
