@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 
 const globalSchema = {
   '@context': 'https://schema.org',
-  '@type': 'PestControlService',
+  '@type': ['LocalBusiness', 'HomeAndConstructionBusiness'],
   '@id': 'https://agroincol.com/#organization',
   name: 'AGROINCOL',
   url: 'https://agroincol.com',
@@ -68,8 +68,8 @@ const globalSchema = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 7.0636,
-    longitude: -73.0897,
+    latitude: 7.06402,
+    longitude: -73.08876,
   },
   areaServed: [
     { '@type': 'City', name: 'Bucaramanga', containedInPlace: { '@type': 'AdministrativeArea', name: 'Santander' } },
@@ -84,6 +84,33 @@ const globalSchema = {
   priceRange: '$$',
   image: 'https://agroincol.com/og-image.jpg',
   sameAs: [],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '28',
+    bestRating: '5',
+    worstRating: '1',
+  },
+  review: [
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'María López' },
+      reviewBody: 'Llevamos 5 años trabajando con AGROINCOL para la fumigación de nuestro restaurante. Siempre puntuales, profesionales y con certificación al día.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Carlos Ruiz' },
+      reviewBody: 'Excelente servicio de desratización en nuestra bodega. Resolvieron el problema en una sola visita y hacen seguimiento periódico.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Ana García' },
+      reviewBody: 'Los recomiendo 100%. Rápidos, profesionales y a buen precio. Ya no tenemos problemas de plagas en el conjunto.',
+    },
+  ],
 };
 
 export default function RootLayout({

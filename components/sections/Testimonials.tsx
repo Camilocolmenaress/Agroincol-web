@@ -28,6 +28,7 @@ export default function Testimonials() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-white/10 backdrop-blur rounded-xl p-6">
+              <div className="text-[#F59E0B] text-xl mb-3" aria-label="5 estrellas">★★★★★</div>
               <Quote size={32} className="text-brand-orange mb-4" />
               <p className="text-gray-200 italic text-body">{testimonial.text}</p>
               <p className="text-white font-semibold mt-4">— {testimonial.name}</p>
