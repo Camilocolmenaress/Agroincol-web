@@ -54,6 +54,12 @@ const serviceSchema = {
   ],
   description: 'Control de mosquitos, moscas, zancudos, abejas y avispas en Bucaramanga y Área Metropolitana. Tratamiento que elimina adultos, huevos y larvas.',
   aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', reviewCount: '28', bestRating: '5', worstRating: '1' },
+  url: 'https://agroincol.com/servicios/control-insectos-voladores',
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'COP',
+    availability: 'https://schema.org/InStock',
+  },
 };
 
 const faqSchema = {
@@ -95,7 +101,7 @@ export default function ControlInsectosVoladoresPage() {
       <SchemaMarkup schema={faqSchema} />
       <Breadcrumbs items={[
         { name: 'Inicio', href: '/' },
-        { name: 'Servicios', href: '/' },
+        { name: 'Servicios', href: '/servicios' },
         { name: 'Control de Insectos Voladores' },
       ]} />
 

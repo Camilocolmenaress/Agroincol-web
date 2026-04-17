@@ -54,6 +54,12 @@ const serviceSchema = {
   ],
   description: 'Servicio profesional de desratización en Bucaramanga. Diagnóstico de puntos de entrada, eliminación de roedores y sellado de accesos con seguimiento post-servicio.',
   aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', reviewCount: '28', bestRating: '5', worstRating: '1' },
+  url: 'https://agroincol.com/servicios/desratizacion',
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'COP',
+    availability: 'https://schema.org/InStock',
+  },
 };
 
 const faqSchema = {
@@ -83,7 +89,7 @@ export default function DesratizacionPage() {
       <SchemaMarkup schema={faqSchema} />
       <Breadcrumbs items={[
         { name: 'Inicio', href: '/' },
-        { name: 'Servicios', href: '/' },
+        { name: 'Servicios', href: '/servicios' },
         { name: 'Desratización' },
       ]} />
 

@@ -105,7 +105,7 @@ export default function RestaurantesPage() {
       <SchemaMarkup schema={faqSchema} />
       <Breadcrumbs items={[
         { name: 'Inicio', href: '/' },
-        { name: 'Servicios', href: '/' },
+        { name: 'Servicios', href: '/servicios' },
         { name: 'Fumigación para Restaurantes' },
       ]} />
 

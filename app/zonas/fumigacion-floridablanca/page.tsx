@@ -93,6 +93,26 @@ const localBusinessSchema = {
       closes: '12:00',
     },
   ],
+  review: [
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Carlos Ruiz' },
+      reviewBody: 'Llevamos 3 años con AGROINCOL para el control de roedores en nuestra bodega en Cañaveral, Floridablanca. Respuesta rápida, viven cerca.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Ana García' },
+      reviewBody: 'Excelente servicio en el Conjunto Residencial Lagos del Cacique, Floridablanca. Resolvieron el problema de cucarachas en nuestras zonas comunes.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Pedro Martínez' },
+      reviewBody: 'Restaurante en el centro de Floridablanca. Certificado listo para la inspección de Secretaría de Salud. Muy profesionales.',
+    },
+  ],
 };
 
 const services = [
@@ -402,6 +422,41 @@ export default function FumigacionFloridablancaPage() {
               Girón
             </Link>
           </p>
+        </div>
+      </section>
+
+      {/* Testimonios */}
+      <section className="section-padding bg-brand-green">
+        <div className="container-custom">
+          <h2 className="font-heading text-h2-mobile md:text-h2 text-white text-center mb-12">
+            Lo Que Dicen en Floridablanca
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                text: 'Llevamos 3 años con AGROINCOL para el control de roedores en nuestra bodega. Respuesta rápida, viven cerca.',
+                name: 'Carlos Ruiz',
+                business: 'Distribuidora del Oriente, Cañaveral',
+              },
+              {
+                text: 'Excelente servicio, resolvieron el problema de cucarachas en nuestras zonas comunes.',
+                name: 'Ana García',
+                business: 'Conjunto Residencial Lagos del Cacique',
+              },
+              {
+                text: 'Certificado listo para la inspección de Secretaría de Salud. Muy profesionales.',
+                name: 'Pedro Martínez',
+                business: 'Restaurante, centro de Floridablanca',
+              },
+            ].map((t, i) => (
+              <div key={t.name} className="bg-white/10 backdrop-blur rounded-xl p-6">
+                <div role="img" className="text-[#F59E0B] text-xl mb-3" aria-label="Calificación: 5 de 5 estrellas">★★★★★</div>
+                <p className="text-gray-200 italic text-body">{t.text}</p>
+                <p className="text-white font-semibold mt-4">— {t.name}</p>
+                <p className="text-gray-400 text-body-sm">{t.business}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -82,6 +82,12 @@ const serviceSchema = {
     bestRating: '5',
     worstRating: '1',
   },
+  url: 'https://agroincol.com/servicios/fumigacion-residencial',
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'COP',
+    availability: 'https://schema.org/InStock',
+  },
 };
 
 const faqSchema = {
@@ -123,7 +129,7 @@ export default function ResidencialPage() {
       <SchemaMarkup schema={faqSchema} />
       <Breadcrumbs items={[
         { name: 'Inicio', href: '/' },
-        { name: 'Servicios', href: '/' },
+        { name: 'Servicios', href: '/servicios' },
         { name: 'Fumigación Residencial' },
       ]} />
 

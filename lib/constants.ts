@@ -33,6 +33,8 @@ export const SERVICES = [
     shortDescription: 'Proteja su hogar y familia de plagas con nuestro servicio certificado para casas y apartamentos.',
     icon: 'Home',
     keywords: ['fumigación residencial Bucaramanga', 'fumigar casa Bucaramanga'],
+    hasPage: true,
+    href: '/servicios/fumigacion-residencial',
   },
   {
     slug: 'control-plagas-comercial',
@@ -40,6 +42,8 @@ export const SERVICES = [
     shortDescription: 'Soluciones integrales para oficinas, locales y establecimientos comerciales en el área metropolitana.',
     icon: 'Building2',
     keywords: ['control plagas comercial Bucaramanga', 'fumigación oficinas Santander'],
+    hasPage: true,
+    href: '/servicios/control-plagas-comercial',
   },
   {
     slug: 'fumigacion-restaurantes',
@@ -56,6 +60,8 @@ export const SERVICES = [
     shortDescription: 'Eliminación profesional de roedores con métodos seguros y seguimiento garantizado.',
     icon: 'MousePointer2',
     keywords: ['desratización Bucaramanga', 'control roedores Santander'],
+    hasPage: true,
+    href: '/servicios/desratizacion',
   },
   {
     slug: 'control-insectos-voladores',
@@ -63,6 +69,8 @@ export const SERVICES = [
     shortDescription: 'Control efectivo de mosquitos, moscas y zancudos. Prevención de dengue y enfermedades vectoriales.',
     icon: 'Bug',
     keywords: ['control mosquitos Bucaramanga', 'fumigación dengue Santander'],
+    hasPage: true,
+    href: '/servicios/control-insectos-voladores',
   },
   {
     slug: 'fumigacion-industrial',
@@ -70,6 +78,8 @@ export const SERVICES = [
     shortDescription: 'Servicio de control de plagas para bodegas, plantas de producción y zonas industriales.',
     icon: 'Factory',
     keywords: ['fumigación industrial Santander', 'control plagas bodegas'],
+    hasPage: true,
+    href: '/servicios/fumigacion-industrial',
   },
 ] as const;
 

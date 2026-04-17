@@ -94,6 +94,26 @@ const localBusinessSchema = {
       closes: '12:00',
     },
   ],
+  review: [
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Ricardo Peña' },
+      reviewBody: 'Restaurante en el Malecón de Girón. Imprescindible para cumplir con sanidad. Siempre puntuales y con certificado.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Diana Torres' },
+      reviewBody: 'Bodega en Chimitá, zona industrial de Girón. Programa mensual de desratización. Sin interrupciones en operación.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Fernando Castro' },
+      reviewBody: 'Casa en el Centro Histórico de Girón. Tratamiento cuidadoso para no dañar la estructura colonial. Muy recomendados.',
+    },
+  ],
 };
 
 const services = [
@@ -447,6 +467,41 @@ export default function FumigacionGironPage() {
               Piedecuesta
             </Link>
           </p>
+        </div>
+      </section>
+
+      {/* Testimonios */}
+      <section className="section-padding bg-brand-green">
+        <div className="container-custom">
+          <h2 className="font-heading text-h2-mobile md:text-h2 text-white text-center mb-12">
+            Lo Que Dicen en Girón
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                text: 'Imprescindible para cumplir con sanidad. Siempre puntuales y con certificado.',
+                name: 'Ricardo Peña',
+                business: 'Restaurante, Malecón de Girón',
+              },
+              {
+                text: 'Programa mensual de desratización. Sin interrupciones en operación.',
+                name: 'Diana Torres',
+                business: 'Bodega en Chimitá, zona industrial',
+              },
+              {
+                text: 'Tratamiento cuidadoso para no dañar la estructura colonial. Muy recomendados.',
+                name: 'Fernando Castro',
+                business: 'Casa en el Centro Histórico de Girón',
+              },
+            ].map((t, i) => (
+              <div key={t.name} className="bg-white/10 backdrop-blur rounded-xl p-6">
+                <div role="img" className="text-[#F59E0B] text-xl mb-3" aria-label="Calificación: 5 de 5 estrellas">★★★★★</div>
+                <p className="text-gray-200 italic text-body">{t.text}</p>
+                <p className="text-white font-semibold mt-4">— {t.name}</p>
+                <p className="text-gray-400 text-body-sm">{t.business}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

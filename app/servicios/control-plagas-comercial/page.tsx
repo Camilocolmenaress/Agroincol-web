@@ -64,6 +64,12 @@ const serviceSchema = {
     bestRating: '5',
     worstRating: '1',
   },
+  url: 'https://agroincol.com/servicios/control-plagas-comercial',
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'COP',
+    availability: 'https://schema.org/InStock',
+  },
 };
 
 const faqSchema = {
@@ -105,7 +111,7 @@ export default function ControlPlagasComercialPage() {
       <SchemaMarkup schema={faqSchema} />
       <Breadcrumbs items={[
         { name: 'Inicio', href: '/' },
-        { name: 'Servicios', href: '/' },
+        { name: 'Servicios', href: '/servicios' },
         { name: 'Control de Plagas Comercial' },
       ]} />
 
