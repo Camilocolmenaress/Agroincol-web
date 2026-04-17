@@ -120,6 +120,60 @@ export const FAQS_RESTAURANTES = [
   },
 ] as const;
 
+export const FAQS_DESRATIZACION = [
+  {
+    question: '¿Cuánto tiempo toma ver resultados después del servicio de desratización?',
+    answer: 'Los primeros resultados se observan entre 24 y 72 horas después del tratamiento. Sin embargo, la eliminación completa de la infestación, incluyendo roedores que puedan estar en zonas no tratadas directamente, puede tomar entre 7 y 14 días. Realizamos visitas de seguimiento para verificar la efectividad del tratamiento.',
+  },
+  {
+    question: '¿Es seguro el servicio de desratización si tengo mascotas o niños en casa?',
+    answer: 'Sí, siempre y cuando se sigan las indicaciones del técnico. Los productos que utilizamos están registrados ante el ICA y son de uso controlado. Recomendamos mantener mascotas y niños fuera del área tratada durante el tiempo indicado por el técnico, que generalmente es de 2 a 4 horas.',
+  },
+  {
+    question: '¿Cómo sé si tengo una infestación de roedores o solo fue un ratón ocasional?',
+    answer: 'Las señales de infestación incluyen: heces de roedores (pequeñas y oscuras), marcas de dientes en cables, madera o alimentos, ruidos nocturnos en paredes o techos, olores a orina, y avistamiento de roedores durante el día. Si observa dos o más de estas señales, es probable que tenga una infestación activa.',
+  },
+  {
+    question: '¿En qué consiste el sellado de puntos de entrada?',
+    answer: 'El sellado de puntos de entrada es una parte fundamental de nuestro servicio. Identificamos todas las grietas, huecos alrededor de tuberías, espacios bajo puertas y otras vías de acceso que usan los roedores. Luego los cerramos con materiales resistentes a roedores como malla metálica, cemento o espuma selladora especial. Esto evita que nuevos roedores entren una vez eliminados los existentes.',
+  },
+  {
+    question: '¿Cuánto cuesta un servicio de desratización en Bucaramanga?',
+    answer: 'El costo varía según el tamaño de la propiedad, el nivel de infestación y el tipo de tratamiento necesario. Ofrecemos diagnóstico gratuito y sin compromiso para dar un presupuesto exacto. En general, un servicio básico para una vivienda parte desde precios accesibles, con planes de seguimiento disponibles para casos más severos.',
+  },
+  {
+    question: '¿Con qué frecuencia se debe hacer desratización preventiva?',
+    answer: 'Para propiedades residenciales en zonas urbanas de Bucaramanga, recomendamos un servicio preventivo cada 6 meses. Para establecimientos comerciales, bodegas o propiedades cercanas a alcantarillados o mercados, lo ideal es cada trimestre. Un programa preventivo regular es mucho más económico que tratar una infestación avanzada.',
+  },
+] as const;
+
+export const FAQS_INSECTOS_VOLADORES = [
+  {
+    question: '¿Cuánto tiempo toma ver resultados después del tratamiento contra mosquitos?',
+    answer: 'Los adultos son eliminados en las primeras 24 horas después del tratamiento. Sin embargo, el ciclo completo de control (incluyendo larvicidas para huevos y larvas) toma entre 7 y 14 días. Realizamos visita de seguimiento para verificar la efectividad y tratar posibles criaderos residuales.',
+  },
+  {
+    question: '¿El tratamiento es seguro si tengo niños pequeños o mascotas en casa?',
+    answer: 'Sí. Los productos que utilizamos están registrados ante el ICA y aprobados por la OMS para uso en áreas residenciales. Recomendamos mantener niños y mascotas fuera del área tratada durante 2 a 3 horas mientras los productos se secan. Después de ese tiempo, el espacio es completamente seguro.',
+  },
+  {
+    question: '¿Con qué frecuencia se debe hacer el control de mosquitos en Bucaramanga?',
+    answer: 'En el Área Metropolitana de Bucaramanga, recomendamos tratamientos preventivos cada 2 a 3 meses, con énfasis especial antes y durante las temporadas de lluvias (marzo-junio y septiembre-octubre). Para empresas, restaurantes o establecimientos con alta exposición, un plan mensual garantiza mayor efectividad.',
+  },
+  {
+    question: '¿Pueden eliminar un nido de abejas o avispas en mi propiedad?',
+    answer: 'Sí. AGROINCOL realiza retiro seguro de nidos de abejas y avispas con equipos de protección especializado. No intente eliminarlo por su cuenta: algunas especies reaccionan agresivamente ante perturbaciones y pueden representar un riesgo serio. Contáctenos para una evaluación y retiro seguro.',
+  },
+  {
+    question: '¿El tratamiento también elimina huevos y larvas, o solo los adultos?',
+    answer: 'Nuestro servicio es de ciclo completo: incluye adulticidas para eliminar los mosquitos adultos visibles, y larvicidas aplicados en posibles criaderos (recipientes con agua, canales, zonas húmedas) para interrumpir el ciclo de reproducción. Esto es clave para evitar que la población se recupere en pocos días.',
+  },
+  {
+    question: '¿Qué debo hacer para preparar mi hogar o negocio antes del tratamiento?',
+    answer: 'Retire o cubra alimentos y utensilios de cocina expuestos. Si tiene peceras, apague el aireador y cubra el tanque. Aleje mascotas y plantas del área de tratamiento. Deje acceso a todas las áreas interiores y exteriores donde haya actividad de insectos. El técnico le dará instrucciones específicas según las características de su propiedad.',
+  },
+] as const;
+
 export const BLOG_POSTS = [
   {
     slug: 'auditoria-invima-como-preparar-restaurante',
@@ -187,3 +241,118 @@ export const BLOG_POSTS = [
 ] as const;
 
 export const BLOG_CATEGORIES = ['Restaurantes', 'Hogares', 'Prevención', 'Normativa', 'Plagas'] as const;
+
+export const FAQS_RESIDENCIAL = [
+  {
+    question: '¿Cuánto tiempo debo salir de la casa después de fumigar?',
+    answer: 'Recomendamos ausentarse del hogar entre 2 y 4 horas después de la aplicación, dependiendo del tipo de tratamiento. Para familias con niños pequeños, adultos mayores o mascotas, podemos coordinar el servicio en un horario conveniente y utilizamos productos de baja toxicidad aprobados por la OMS.',
+  },
+  {
+    question: '¿Es seguro para mascotas y niños?',
+    answer: 'Sí. Utilizamos productos registrados ante el ICA y aprobados por la OMS específicamente para uso en zonas residenciales. Son de baja toxicidad para humanos y animales domésticos. Recomendamos mantener mascotas y niños fuera del área tratada durante el tiempo indicado y ventilar bien antes de regresar.',
+  },
+  {
+    question: '¿Cada cuánto se recomienda fumigar una vivienda?',
+    answer: 'Para una vivienda en Bucaramanga y el Área Metropolitana, recomendamos fumigación preventiva cada 3 a 6 meses dependiendo de la zona, el historial de plagas y las características del inmueble. Propiedades cercanas a zonas verdes, quebradas o con historial de infestaciones pueden requerir mayor frecuencia.',
+  },
+  {
+    question: '¿Qué debo hacer antes de la fumigación?',
+    answer: 'Le recomendamos: guardar o cubrir alimentos y utensilios de cocina, retirar mascotas y sus accesorios del área a tratar, cubrir peceras o terrarios, limpiar pisos y superficies para mejorar el contacto de los productos, y despejar debajo de muebles y camas para facilitar el acceso del técnico.',
+  },
+  {
+    question: '¿El servicio incluye certificado?',
+    answer: 'Sí. AGROINCOL emite un certificado de fumigación que detalla los productos utilizados, las áreas tratadas y la fecha del servicio. Este documento es válido para conjuntos residenciales, arrendadores, o cualquier entidad que lo requiera como soporte sanitario.',
+  },
+] as const;
+
+export const FAQS_COMERCIAL = [
+  {
+    question: '¿Debo cerrar el negocio durante la fumigación?',
+    answer: 'Depende del tipo de tratamiento y del negocio. En la mayoría de los casos programamos el servicio en horario de baja actividad (antes de la apertura, durante el cierre o en días no laborales) para no interrumpir su operación. Coordinamos con usted el momento más conveniente.',
+  },
+  {
+    question: '¿El servicio incluye certificado para inspecciones?',
+    answer: 'Sí. Emitimos un certificado de fumigación que cumple con los requisitos del Decreto 1843 de 1991, válido como soporte ante inspecciones de la Secretaría de Salud de Santander y del INVIMA. El certificado incluye fecha, productos utilizados, áreas tratadas y firma del técnico responsable.',
+  },
+  {
+    question: '¿Cada cuánto se recomienda el servicio para un negocio?',
+    answer: 'Para establecimientos comerciales en Bucaramanga recomendamos un mínimo de cada 3 meses. Negocios con mayor riesgo (restaurantes, panaderías, tiendas de alimentos) pueden requerir frecuencia mensual o bimestral. Diseñamos el plan según el tipo de negocio y sus necesidades específicas.',
+  },
+  {
+    question: '¿Trabajan fuera de horario comercial?',
+    answer: 'Sí. Ofrecemos servicios en horarios flexibles incluyendo antes de la apertura (desde las 6 AM), después del cierre y los sábados en la mañana. Para negocios con operación continua coordinamos ventanas de tiempo que minimicen el impacto en sus actividades.',
+  },
+  {
+    question: '¿Tienen programa de mantenimiento mensual?',
+    answer: 'Sí. Contamos con planes de mantenimiento mensual, bimestral y trimestral diseñados para negocios. Cada plan incluye visitas programadas, aplicaciones preventivas, monitoreo continuo, certificados actualizados e informes de seguimiento para su archivo.',
+  },
+] as const;
+
+export const FAQS_DESRATIZACION = [
+  {
+    question: '¿Cómo sé si tengo ratas o ratones?',
+    answer: 'Las señales más comunes son: heces pequeñas en cajones, alacenas o detrás de electrodomésticos; marcas de mordeduras en cables, madera o alimentos; ruidos nocturnos en paredes o cielos rasos; manchas de grasa a lo largo de paredes (causadas por el pelaje de los roedores); y nidos hechos con materiales blandos. Si detecta alguna de estas señales, contáctenos para un diagnóstico.',
+  },
+  {
+    question: '¿Usan veneno o trampas?',
+    answer: 'Usamos la combinación más efectiva según el diagnóstico. Para infestaciones activas combinamos cebos rodenticidas de segunda generación (en estaciones de cebado seguras) con trampas mecánicas en puntos estratégicos. El método específico depende del nivel de infestación, el tipo de propiedad y si hay niños o mascotas presentes.',
+  },
+  {
+    question: '¿Es peligroso el tratamiento para personas o mascotas?',
+    answer: 'Los cebos rodenticidas se colocan en estaciones cerradas específicamente diseñadas para que solo los roedores puedan acceder. Esto los hace seguros en presencia de mascotas y niños cuando se instalan correctamente. Usamos productos registrados ante el ICA y seguimos protocolos de seguridad estrictos.',
+  },
+  {
+    question: '¿Cuánto tiempo tarda en hacer efecto?',
+    answer: 'Los primeros resultados visibles se observan entre 3 y 7 días después del tratamiento. La eliminación completa de la infestación puede tomar entre 2 y 4 semanas dependiendo del nivel de la misma. Realizamos visitas de seguimiento para verificar la efectividad y ajustar el tratamiento si es necesario.',
+  },
+  {
+    question: '¿Incluye sellado de puntos de entrada?',
+    answer: 'Sí. Nuestro servicio de desratización incluye la identificación de todos los puntos de acceso utilizados por los roedores y recomendaciones específicas de sellado. Para propiedades donde es posible, realizamos el sellado directamente durante el servicio. Esto es fundamental para evitar que la infestación regrese.',
+  },
+] as const;
+
+export const FAQS_INSECTOS_VOLADORES = [
+  {
+    question: '¿Por qué hay más zancudos en temporada de lluvias?',
+    answer: 'Las lluvias crean agua estancada en recipientes, canales, materas y cualquier superficie cóncava. El mosquito Aedes aegypti, principal vector del dengue en Bucaramanga, solo necesita agua limpia para reproducirse y completa su ciclo de larva a adulto en 7-10 días. Por eso las temporadas de lluvias (marzo-junio y septiembre-octubre) son el período de mayor riesgo en Santander.',
+  },
+  {
+    question: '¿El tratamiento elimina también huevos y larvas?',
+    answer: 'Sí. A diferencia de los insecticidas domésticos que solo eliminan adultos, nuestro tratamiento profesional incluye la aplicación de larvicidas en posibles criaderos y productos con efecto residual que interrumpen el ciclo reproductivo. Esto evita que nuevas generaciones emerjan y garantiza resultados duraderos.',
+  },
+  {
+    question: '¿Cada cuánto se necesita el servicio?',
+    answer: 'Para hogares y negocios sin historial severo de mosquitos, recomendamos tratamiento preventivo antes de cada temporada de lluvias (febrero y agosto). Para propiedades con mayor exposición (cercanas a quebradas, con jardines grandes o historial de dengue en el barrio) puede ser necesario un mantenimiento trimestral o bimestral.',
+  },
+  {
+    question: '¿Qué hago si tengo un nido de abejas o avispas?',
+    answer: 'No intente eliminarlo por su cuenta. Las abejas africanizadas, comunes en Bucaramanga, pueden atacar en grupo al sentirse amenazadas. AGROINCOL realiza el retiro seguro de nidos de abejas y avispas con equipos de protección especializados, minimizando el riesgo para usted, su familia o sus clientes.',
+  },
+  {
+    question: '¿El tratamiento es seguro cerca de alimentos?',
+    answer: 'Sí, utilizamos productos aprobados por la OMS y registrados ante el ICA para uso en áreas donde hay alimentos. Para restaurantes y cocinas comerciales seguimos protocolos específicos que garantizan la seguridad alimentaria. Recomendamos cubrir alimentos expuestos durante la aplicación y esperar el tiempo de secado indicado antes de reanudar actividades.',
+  },
+] as const;
+
+export const FAQS_INDUSTRIAL = [
+  {
+    question: '¿El servicio incluye documentación para auditorías?',
+    answer: 'Sí. Entregamos un expediente completo que incluye: fichas técnicas de todos los productos utilizados, registros de cada intervención firmados por técnico certificado, mapas de ubicación de trampas y estaciones de cebado, e informes de seguimiento periódicos. Esta documentación cumple con los requisitos del Decreto 1843 de 1991 y es válida para auditorías de INVIMA, Secretaría de Salud e ISO 22000.',
+  },
+  {
+    question: '¿Trabajan en plantas de producción activas?',
+    answer: 'Sí. Tenemos experiencia trabajando en plantas con producción activa, coordinando los tratamientos en horarios que minimicen la interferencia con sus procesos. Para áreas críticas como líneas de producción y salas blancas, utilizamos métodos y productos específicamente aprobados para estas condiciones.',
+  },
+  {
+    question: '¿Qué normativas cubre el certificado?',
+    answer: 'Nuestros certificados cumplen con el Decreto 1843 de 1991 (regulación de plaguicidas en Colombia), la Resolución 2674 de 2013 del INVIMA (para establecimientos de alimentos), y son compatibles con los requisitos de BPM (Buenas Prácticas de Manufactura) e ISO 22000 para gestión de seguridad alimentaria.',
+  },
+  {
+    question: '¿Tienen experiencia en sector agroindustrial?',
+    answer: 'Sí. AGROINCOL lleva más de 40 años atendiendo empresas del sector agroindustrial en Santander, incluyendo plantas procesadoras de alimentos, empresas lácteas, avícolas y bodegas de almacenamiento. Conocemos los requisitos específicos del sector y adaptamos nuestros protocolos a las normas de cada tipo de industria.',
+  },
+  {
+    question: '¿Ofrecen programa de mantenimiento con visitas periódicas?',
+    answer: 'Sí. Para industria recomendamos especialmente los planes de mantenimiento con visitas mensuales o bimestrales. Cada visita incluye inspección, monitoreo de trampas y estaciones, aplicaciones preventivas según necesidad, actualización de registros y entrega de informe. La frecuencia y el alcance se definen en el diagnóstico inicial según las características de su planta.',
+  },
+] as const;

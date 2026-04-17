@@ -126,7 +126,7 @@ const plagas = [
   {
     name: 'Termitas',
     detail:
-      'Piedecuesta presenta alta incidencia de termitas subterráneas y de madera seca, especialmente en las construcciones más antiguas del centro y en casas campestres de la vía a la Mesa de los Santos. El suelo arcilloso del municipio favorece las colonias subterráneas.',
+      'Piedecuesta presenta alta incidencia de comején y termitas en dos frentes: en las construcciones más antiguas del centro histórico con maderas deterioradas, y en urbanizaciones y conjuntos residenciales nuevos donde la madera de construcción reciente es especialmente vulnerable antes de secarse completamente. La temperatura cálida del municipio, superior a Bucaramanga, acelera los ciclos de reproducción de las colonias.',
   },
   {
     name: 'Cucarachas',
@@ -143,6 +143,19 @@ const plagas = [
     detail:
       'En las zonas rurales y semirrurales de Piedecuesta (veredas, fincas y la vía a Mensulí), las garrapatas y pulgas son plagas frecuentes que afectan tanto animales como personas en propiedades con áreas verdes extensas.',
   },
+];
+
+const barrios = [
+  'El Diviso',
+  'Guatiguará',
+  'La Estación',
+  'Alfonso López',
+  'Mensulí',
+  'Villabel',
+  'Centro de Piedecuesta',
+  'Tablanca',
+  'La Palma',
+  'Zona Industrial Sur',
 ];
 
 export default function FumigacionPiedecuestaPage() {
@@ -239,6 +252,30 @@ export default function FumigacionPiedecuestaPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Barrios */}
+      <section className="section-padding bg-brand-light">
+        <div className="container-custom">
+          <div className="text-center mb-8">
+            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              Barrios de Piedecuesta que Atendemos
+            </h2>
+            <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto">
+              Desde nuestra sede en Floridablanca llegamos a todo Piedecuesta, incluyendo zona urbana, zona industrial y área rural.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {barrios.map((barrio) => (
+              <span key={barrio} className="bg-white text-brand-green font-semibold px-4 py-2 rounded-full text-body-sm border border-brand-green/20">
+                {barrio}
+              </span>
+            ))}
+          </div>
+          <p className="text-center text-brand-gray text-body-sm mt-6">
+            ¿No encuentra su barrio? Llamenos — atendemos todo Piedecuesta incluyendo veredas y zona rural.
+          </p>
         </div>
       </section>
 

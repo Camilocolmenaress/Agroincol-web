@@ -132,7 +132,7 @@ const plagas = [
   {
     name: 'Cucarachas',
     detail:
-      'Las temperaturas cálidas de Girón (25-28°C) y la humedad del río de Oro favorecen las poblaciones de cucarachas americanas. Son especialmente problemáticas en restaurantes del centro histórico y en bodegas industriales.',
+      'Con temperaturas de 28-32°C, Girón es el municipio más cálido del Área Metropolitana, lo que acelera el ciclo reproductivo de las cucarachas y genera presión de plagas durante todo el año. Son especialmente críticas en los restaurantes y hoteles del Centro Histórico, donde el cumplimiento INVIMA es obligatorio, y en las bodegas industriales de la zona de Chimitá.',
   },
   {
     name: 'Mosquitos y dengue',
@@ -144,6 +144,19 @@ const plagas = [
     detail:
       'Las bodegas de almacenamiento y centros de distribución en Chimitá son vulnerables a polillas, gorgojos y otros insectos que atacan productos almacenados como granos, textiles y materiales orgánicos.',
   },
+];
+
+const barrios = [
+  'El Poblado',
+  'San Juan Bosco',
+  'Malpaso',
+  'La Bacota',
+  'Centro Histórico',
+  'Rincón de Girón',
+  'Portal de los Santos',
+  'Chimitá',
+  'La Victoria',
+  'El Pantano',
 ];
 
 export default function FumigacionGironPage() {
@@ -207,6 +220,30 @@ export default function FumigacionGironPage() {
               })}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Barrios */}
+      <section className="section-padding bg-brand-light">
+        <div className="container-custom">
+          <div className="text-center mb-8">
+            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              Barrios de Girón que Atendemos
+            </h2>
+            <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto">
+              Cobertura completa en Girón: desde el Centro Histórico Patrimonio Nacional hasta la zona industrial de Chimitá.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {barrios.map((barrio) => (
+              <span key={barrio} className="bg-white text-brand-green font-semibold px-4 py-2 rounded-full text-body-sm border border-brand-green/20">
+                {barrio}
+              </span>
+            ))}
+          </div>
+          <p className="text-center text-brand-gray text-body-sm mt-6">
+            ¿No encuentra su barrio? Llamenos — atendemos todo Girón incluyendo zona rural y vía al aeropuerto.
+          </p>
         </div>
       </section>
 

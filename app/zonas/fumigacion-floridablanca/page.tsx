@@ -136,13 +136,26 @@ const plagas = [
   {
     name: 'Mosquitos y zancudos',
     detail:
-      'La humedad y las lluvias frecuentes en Floridablanca generan criaderos de mosquitos Aedes aegypti, vector del dengue. Las zonas cercanas a quebradas como La Cascada son especialmente vulnerables.',
+      'La humedad alta de Floridablanca (24°C promedio) y su cercanía al río Frío y quebradas como La Cascada generan criaderos permanentes del mosquito Aedes aegypti, vector del dengue, zika y chikungunya. Los barrios más afectados son los ubicados en zonas bajas cercanas a fuentes hídricas.',
   },
   {
     name: 'Roedores',
     detail:
       'Ratas y ratones afectan tanto viviendas como negocios, especialmente en sectores con mayor densidad comercial como el centro de Floridablanca y la vía al Anillo Vial.',
   },
+];
+
+const barrios = [
+  'Cañaveral',
+  'Lagos del Cacique',
+  'La Cumbre',
+  'Provenza',
+  'Villabel',
+  'El Bosque',
+  'Bucarica',
+  'Centro de Floridablanca',
+  'La Joya',
+  'Rincón de Girón',
 ];
 
 export default function FumigacionFloridablancaPage() {
@@ -238,6 +251,30 @@ export default function FumigacionFloridablancaPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Barrios */}
+      <section className="section-padding">
+        <div className="container-custom">
+          <div className="text-center mb-8">
+            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              Barrios de Floridablanca que Atendemos
+            </h2>
+            <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto">
+              Con sede principal en Floridablanca, llegamos en menos de 1 hora a todos los barrios del municipio.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {barrios.map((barrio) => (
+              <span key={barrio} className="bg-brand-light text-brand-green font-semibold px-4 py-2 rounded-full text-body-sm border border-brand-green/20">
+                {barrio}
+              </span>
+            ))}
+          </div>
+          <p className="text-center text-brand-gray text-body-sm mt-6">
+            ¿No encuentra su barrio? Llamenos — atendemos todo Floridablanca y municipios vecinos.
+          </p>
         </div>
       </section>
 
