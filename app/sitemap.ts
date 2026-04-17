@@ -15,6 +15,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: 'https://agroincol.com/servicios/fumigacion-residencial',
+      lastModified: new Date('2026-04-17'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://agroincol.com/servicios/control-plagas-comercial',
+      lastModified: new Date('2026-04-17'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://agroincol.com/servicios/desratizacion',
+      lastModified: new Date('2026-04-17'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://agroincol.com/servicios/control-insectos-voladores',
+      lastModified: new Date('2026-04-17'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://agroincol.com/servicios/fumigacion-industrial',
+      lastModified: new Date('2026-04-17'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
       url: 'https://agroincol.com/precios',
       lastModified: new Date('2026-03-14'),
       changeFrequency: 'monthly',
