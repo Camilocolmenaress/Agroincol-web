@@ -5,7 +5,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Auditoría INVIMA: Preparar Restaurante | AGROINCOL',
+  title: 'Auditoría INVIMA: Preparar Restaurante',
   description: 'Guía paso a paso para preparar su restaurante en Bucaramanga ante una auditoría del INVIMA. Checklist completo, normativa y cómo evitar sanciones.',
   alternates: {
     canonical: 'https://agroincol.com/blog/auditoria-invima-como-preparar-restaurante',

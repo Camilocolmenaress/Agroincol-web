@@ -5,7 +5,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Vi una Cucaracha: ¿Hay Más? | AGROINCOL',
+  title: 'Vi una Cucaracha: ¿Hay Más?',
   description: 'Qué hacer cuando encuentra una cucaracha en su hogar. Por qué aparecen, dónde se esconden y cuándo es momento de llamar a un profesional.',
   alternates: {
     canonical: 'https://agroincol.com/blog/vi-cucaracha-en-mi-casa-que-hacer',

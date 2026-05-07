@@ -14,8 +14,8 @@ const iconMap: Record<string, LucideIcon> = {
 export default function ServiceCard({ service }: { service: ServiceCardData }) {
   const IconComponent = iconMap[service.icon] || Bug;
 
-  return (
-    <div className="border border-brand-gray-light rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+  const content = (
+    <>
       <div className="bg-brand-orange/10 w-14 h-14 rounded-lg flex items-center justify-center">
         <IconComponent size={40} className="text-brand-orange" />
       </div>
@@ -26,13 +26,27 @@ export default function ServiceCard({ service }: { service: ServiceCardData }) {
         {service.shortDescription}
       </p>
       {service.hasPage && service.href && (
-        <Link
-          href={service.href}
-          className="text-brand-orange font-semibold hover:underline mt-4 inline-block"
-        >
+        <span className="text-brand-orange font-semibold mt-4 inline-block">
           Más información →
-        </Link>
+        </span>
       )}
+    </>
+  );
+
+  if (service.hasPage && service.href) {
+    return (
+      <Link
+        href={service.href}
+        className="block border border-brand-gray-light rounded-xl p-6 hover:shadow-lg transition-shadow duration-300"
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <div className="border border-brand-gray-light rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+      {content}
     </div>
   );
 }

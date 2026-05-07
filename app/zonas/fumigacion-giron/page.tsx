@@ -22,7 +22,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Fumigación en Girón | AGROINCOL',
+  title: 'Fumigación en Girón',
   description:
     'Servicio de fumigación y control de plagas en Girón, Santander. Cobertura en zona industrial de Chimitá. 40+ años de experiencia. Certificación INVIMA.',
   alternates: {

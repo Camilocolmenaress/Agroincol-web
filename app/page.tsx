@@ -8,10 +8,11 @@ import ServiceAreas from '@/components/sections/ServiceAreas';
 import Testimonials from '@/components/sections/Testimonials';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
+import LazyMap from '@/components/ui/LazyMap';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Control de Plagas en Bucaramanga | AGROINCOL',
+  title: 'Control de Plagas en Bucaramanga',
   description: '40+ años en fumigación y control de plagas en Bucaramanga. Servicio certificado para hogares, restaurantes e industrias. Cotice gratis.',
   alternates: {
     canonical: 'https://agroincol.com',
@@ -146,19 +147,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Google Maps */}
-          <div className="mt-10 rounded-xl overflow-hidden shadow-sm">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.533050839392!2d-73.088757224765!3d7.064019492938516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e683f1b468e8eff%3A0x48e4d9481746a1df!2sAGROINCOL!5e0!3m2!1sen!2sco!4v1776444477179!5m2!1sen!2sco"
-              width="100%"
-              height="300"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="AGROINCOL en Google Maps"
-            />
-          </div>
+          {/* Google Maps — deferred 5s to protect INP */}
+          <LazyMap />
         </div>
       </section>
     </>

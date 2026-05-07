@@ -5,7 +5,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Eliminar Cucarachas Bucaramanga 2026 | AGROINCOL',
+  title: 'Eliminar Cucarachas Bucaramanga 2026',
   description: 'Guía profesional para eliminar cucarachas en Bucaramanga. Tipos de cucarachas, por qué aparecen, tratamientos efectivos y cuándo llamar a un profesional.',
   alternates: {
     canonical: 'https://agroincol.com/blog/como-eliminar-cucarachas-bucaramanga',

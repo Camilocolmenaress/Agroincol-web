@@ -5,7 +5,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Comején y Termitas Bucaramanga | AGROINCOL',
+  title: 'Comején y Termitas Bucaramanga',
   description: 'Guía para identificar y eliminar comején y termitas en Bucaramanga. Señales de daño, tipos de termitas en Santander y cuándo actuar antes de que sea tarde.',
   alternates: {
     canonical: 'https://agroincol.com/blog/comejen-termitas-bucaramanga',

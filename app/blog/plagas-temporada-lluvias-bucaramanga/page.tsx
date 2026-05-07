@@ -5,7 +5,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Plagas en Temporada de Lluvias | AGROINCOL',
+  title: 'Plagas en Temporada de Lluvias',
   description: 'Las lluvias en Santander disparan mosquitos, cucarachas y roedores. Guía de prevención para hogares y negocios en el Área Metropolitana de Bucaramanga.',
   alternates: {
     canonical: 'https://agroincol.com/blog/plagas-temporada-lluvias-bucaramanga',

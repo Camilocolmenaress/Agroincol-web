@@ -8,7 +8,7 @@ import Button from '@/components/ui/Button';
 import { BUSINESS, BLOG_POSTS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Blog de Fumigación y Control de Plagas | AGROINCOL',
+  title: 'Blog de Fumigación y Control de Plagas',
   description: 'Consejos de expertos sobre fumigación, control de plagas y normativa sanitaria en Bucaramanga y Santander. Más de 40 años de experiencia.',
   alternates: {
     canonical: 'https://agroincol.com/blog',

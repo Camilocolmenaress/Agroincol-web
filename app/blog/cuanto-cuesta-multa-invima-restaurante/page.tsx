@@ -5,7 +5,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Multas INVIMA por Plagas: Costos | AGROINCOL',
+  title: 'Multas INVIMA por Plagas: Costos',
   description: 'Las sanciones del INVIMA por problemas sanitarios pueden ir de 5 a 1,000 SMMLV. Conozca los costos reales y cómo evitar sanciones en su restaurante.',
   alternates: {
     canonical: 'https://agroincol.com/blog/cuanto-cuesta-multa-invima-restaurante',

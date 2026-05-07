@@ -21,7 +21,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Fumigación en Piedecuesta | AGROINCOL',
+  title: 'Fumigación en Piedecuesta',
   description:
     'Servicio de fumigación y control de plagas en Piedecuesta, Santander. 40+ años de experiencia. Certificación INVIMA. Respuesta en menos de 2 horas.',
   alternates: {

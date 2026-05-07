@@ -6,7 +6,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { SERVICES } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Servicios de Fumigación y Control de Plagas | AGROINCOL Bucaramanga',
+  title: 'Servicios de Fumigación y Control de Plagas en Bucaramanga',
   description:
     'Control profesional de cucarachas, termitas, roedores, moscas e insectos. Certificados INVIMA para restaurantes. Servicio en Bucaramanga y área metropolitana.',
   alternates: {

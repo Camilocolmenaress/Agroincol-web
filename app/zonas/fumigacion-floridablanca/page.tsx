@@ -21,7 +21,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Fumigación en Floridablanca | AGROINCOL',
+  title: 'Fumigación en Floridablanca',
   description:
     'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra 9 #3-34. Certificación INVIMA. Respuesta en menos de 1 hora.',
   alternates: {

@@ -5,7 +5,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import ArticleLayout from '@/components/blog/ArticleLayout';
 
 export const metadata: Metadata = {
-  title: 'Fumigación Restaurantes: Norma 2026 | AGROINCOL',
+  title: 'Fumigación Restaurantes: Norma 2026',
   description: 'Todo lo que un restaurante en Bucaramanga necesita saber sobre fumigación: Resolución 2674, certificado INVIMA, frecuencia, costos y cómo cumplir.',
   alternates: {
     canonical: 'https://agroincol.com/blog/fumigacion-restaurantes-bucaramanga-norma',
