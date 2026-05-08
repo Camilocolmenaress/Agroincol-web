@@ -21,7 +21,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Precios Fumigación Bucaramanga 2026 | AGROINCOL',
+  title: 'Precios Fumigación Bucaramanga 2026',
   description:
     'Precios reales de fumigación en Bucaramanga para restaurantes y hogares. Desde $90.000. Programas mensuales desde $80.000/mes. Cotización gratis.',
   alternates: {

@@ -9,7 +9,7 @@ import Button from '@/components/ui/Button';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Certificaciones y Normativa | AGROINCOL',
+  title: 'Certificaciones y Normativa',
   description: 'AGROINCOL cumple con el Decreto 1843 de 1991 y la Resolución 2674 de 2013. Certificación de fumigación válida ante INVIMA y Secretaría de Salud en Santander.',
   alternates: {
     canonical: 'https://agroincol.com/certificaciones-y-normativa',

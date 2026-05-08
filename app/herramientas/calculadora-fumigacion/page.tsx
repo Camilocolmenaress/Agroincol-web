@@ -6,7 +6,7 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import FumigationCalculator from '@/components/tools/FumigationCalculator';
 
 export const metadata: Metadata = {
-  title: 'Calculadora de Fumigación | AGROINCOL',
+  title: 'Calculadora de Fumigación',
   description: 'Calcule gratis cada cuánto debe fumigar su hogar, restaurante o negocio según la normativa colombiana. Herramienta basada en el Decreto 1843 y la Resolución 2674.',
   alternates: {
     canonical: 'https://agroincol.com/herramientas/calculadora-fumigacion',
