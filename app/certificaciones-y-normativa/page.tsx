@@ -9,8 +9,8 @@ import Button from '@/components/ui/Button';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Certificaciones y Normativa',
-  description: 'AGROINCOL cumple con el Decreto 1843 de 1991 y la Resolución 2674 de 2013. Certificación de fumigación válida ante INVIMA y Secretaría de Salud en Santander.',
+  title: 'Certificado Fumigación INVIMA Bucaramanga',
+  description: 'Certificado de fumigación válido ante INVIMA en Bucaramanga. AGROINCOL cumple Decreto 1843 y Res. 2674. Lo emitimos el mismo día del servicio.',
   alternates: {
     canonical: 'https://agroincol.com/certificaciones-y-normativa',
   },

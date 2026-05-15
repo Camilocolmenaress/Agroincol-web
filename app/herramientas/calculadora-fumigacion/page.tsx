@@ -6,8 +6,8 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import FumigationCalculator from '@/components/tools/FumigationCalculator';
 
 export const metadata: Metadata = {
-  title: 'Calculadora de Fumigación',
-  description: 'Calcule gratis cada cuánto debe fumigar su hogar, restaurante o negocio según la normativa colombiana. Herramienta basada en el Decreto 1843 y la Resolución 2674.',
+  title: 'Calculadora Precio Fumigación Bucaramanga',
+  description: 'Calcula gratis el precio estimado de fumigación para tu hogar o negocio en Bucaramanga. Basado en normativa colombiana. Resultado inmediato y sin registro.',
   alternates: {
     canonical: 'https://agroincol.com/herramientas/calculadora-fumigacion',
   },
