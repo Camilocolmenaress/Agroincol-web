@@ -32,7 +32,9 @@ const body = localFont({
   variable: '--font-body',
   display: 'swap',
   fallback: ['sans-serif'],
-  preload: true,
+  // No preload: el texto body usa display:swap (fallback sans-serif de métricas similares).
+  // Evita ~200KB de TTF compitiendo con la imagen LCP del hero en el burst de preload.
+  preload: false,
 });
 
 export const metadata: Metadata = {

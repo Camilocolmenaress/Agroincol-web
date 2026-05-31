@@ -25,7 +25,7 @@ export default function WhyUs() {
               alt="Equipo completo de AGROINCOL con uniformes y equipos de bioseguridad"
               width={800}
               height={800}
-              priority
+              loading="lazy"
               className="object-cover w-full h-full"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
