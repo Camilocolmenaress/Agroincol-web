@@ -6,7 +6,7 @@ import { SERVICE_TYPE_OPTIONS, BUSINESS } from '@/lib/constants';
 import Button from '@/components/ui/Button';
 import type { ContactFormProps } from '@/lib/types';
 
-export default function ContactForm({ preselectedService, formId }: ContactFormProps) {
+export default function ContactForm({ preselectedService, formId, compact = false }: ContactFormProps) {
   const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
@@ -179,22 +179,24 @@ export default function ContactForm({ preselectedService, formId }: ContactFormP
           {errors.telefono && <p className="text-red-500 text-xs mt-1 font-body">{errors.telefono}</p>}
         </div>
 
-        {/* Email */}
-        <div className="flex flex-col gap-1">
-          <label htmlFor={`${formId}-email`} className="font-body font-semibold text-brand-black text-body-sm">
-            Correo electrónico
-          </label>
-          <input
-            type="email"
-            id={`${formId}-email`}
-            name="email"
-            placeholder="Ej: juan@empresa.com"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg border border-brand-gray-light bg-white text-brand-black font-body focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all"
-          />
-          {errors.email && <p className="text-red-500 text-xs mt-1 font-body">{errors.email}</p>}
-        </div>
+        {/* Email — oculto en versión compacta */}
+        {!compact && (
+          <div className="flex flex-col gap-1">
+            <label htmlFor={`${formId}-email`} className="font-body font-semibold text-brand-black text-body-sm">
+              Correo electrónico
+            </label>
+            <input
+              type="email"
+              id={`${formId}-email`}
+              name="email"
+              placeholder="Ej: juan@empresa.com"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-brand-gray-light bg-white text-brand-black font-body focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all"
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1 font-body">{errors.email}</p>}
+          </div>
+        )}
 
         {/* Tipo de servicio */}
         <div className="flex flex-col gap-1">
@@ -216,38 +218,41 @@ export default function ContactForm({ preselectedService, formId }: ContactFormP
           {errors.tipoServicio && <p className="text-red-500 text-xs mt-1 font-body">{errors.tipoServicio}</p>}
         </div>
 
-        {/* Dirección */}
-        <div className="flex flex-col gap-1">
-          <label htmlFor={`${formId}-direccion`} className="font-body font-semibold text-brand-black text-body-sm">
-            Dirección del servicio
-          </label>
-          <input
-            type="text"
-            id={`${formId}-direccion`}
-            name="direccion"
-            placeholder="Ej: Cra 15 #30-45, Bucaramanga"
-            value={formData.direccion}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg border border-brand-gray-light bg-white text-brand-black font-body focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all"
-          />
-        </div>
+        {/* Dirección y Mensaje — ocultos en versión compacta */}
+        {!compact && (
+          <>
+            <div className="flex flex-col gap-1">
+              <label htmlFor={`${formId}-direccion`} className="font-body font-semibold text-brand-black text-body-sm">
+                Dirección del servicio
+              </label>
+              <input
+                type="text"
+                id={`${formId}-direccion`}
+                name="direccion"
+                placeholder="Ej: Cra 15 #30-45, Bucaramanga"
+                value={formData.direccion}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border border-brand-gray-light bg-white text-brand-black font-body focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all"
+              />
+            </div>
 
-        {/* Mensaje */}
-        <div className="flex flex-col gap-1">
-          <label htmlFor={`${formId}-mensaje`} className="font-body font-semibold text-brand-black text-body-sm">
-            Cuéntenos su situación
-          </label>
-          <textarea
-            id={`${formId}-mensaje`}
-            name="mensaje"
-            placeholder="Descríbanos su problema de plagas o el servicio que necesita..."
-            value={formData.mensaje}
-            onChange={handleChange}
-            maxLength={500}
-            rows={4}
-            className="w-full px-4 py-3 rounded-lg border border-brand-gray-light bg-white text-brand-black font-body focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all resize-none"
-          />
-        </div>
+            <div className="flex flex-col gap-1">
+              <label htmlFor={`${formId}-mensaje`} className="font-body font-semibold text-brand-black text-body-sm">
+                Cuéntenos su situación
+              </label>
+              <textarea
+                id={`${formId}-mensaje`}
+                name="mensaje"
+                placeholder="Descríbanos su problema de plagas o el servicio que necesita..."
+                value={formData.mensaje}
+                onChange={handleChange}
+                maxLength={500}
+                rows={4}
+                className="w-full px-4 py-3 rounded-lg border border-brand-gray-light bg-white text-brand-black font-body focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all resize-none"
+              />
+            </div>
+          </>
+        )}
 
         {/* Honeypot anti-spam — campo oculto, si se llena es bot */}
         <div className="absolute opacity-0 pointer-events-none h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>

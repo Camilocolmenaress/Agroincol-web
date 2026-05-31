@@ -143,7 +143,7 @@ export default function HomePage() {
 
             {/* Right column — 60% */}
             <div className="lg:col-span-3">
-              <ContactForm formId="home-contact" />
+              <ContactForm formId="home-contact" compact />
             </div>
           </div>
 

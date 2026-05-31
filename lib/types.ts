@@ -12,6 +12,8 @@ export interface ContactFormData {
 export interface ContactFormProps {
   preselectedService?: string;
   formId: string;
+  /** Versión reducida a 3 campos (Nombre, Teléfono, Servicio) para maximizar conversión. */
+  compact?: boolean;
 }
 
 export interface HeroProps {
