@@ -12,13 +12,13 @@ import LazyMap from '@/components/ui/LazyMap';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Control de Plagas en Bucaramanga',
+  title: 'Fumigación y Control de Plagas en Bucaramanga',
   description: '40+ años en fumigación y control de plagas en Bucaramanga. Servicio certificado para hogares, restaurantes e industrias. Cotice gratis.',
   alternates: {
     canonical: 'https://agroincol.com',
   },
   openGraph: {
-    title: 'Control de Plagas en Bucaramanga | AGROINCOL',
+    title: 'Fumigación y Control de Plagas en Bucaramanga | AGROINCOL',
     description: '40+ años en fumigación y control de plagas en Bucaramanga. Servicio certificado para hogares, restaurantes e industrias. Cotice gratis.',
     url: 'https://agroincol.com',
     siteName: 'AGROINCOL',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Control de Plagas en Bucaramanga | AGROINCOL',
+    title: 'Fumigación y Control de Plagas en Bucaramanga | AGROINCOL',
     description: '40+ años en fumigación y control de plagas en Bucaramanga. Servicio certificado para hogares, restaurantes e industrias. Cotice gratis.',
   },
 };

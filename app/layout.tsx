@@ -53,7 +53,7 @@ export const metadata: Metadata = {
 
 const globalSchema = {
   '@context': 'https://schema.org',
-  '@type': ['LocalBusiness', 'HomeAndConstructionBusiness'],
+  '@type': 'LocalBusiness',
   '@id': 'https://agroincol.com/#organization',
   name: 'AGROINCOL',
   url: 'https://agroincol.com',
@@ -62,7 +62,7 @@ const globalSchema = {
   description: 'Empresa de fumigación y control de plagas con más de 40 años de experiencia en el Área Metropolitana de Bucaramanga, Santander, Colombia.',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Cra 9 #3-34',
+    streetAddress: 'Cra. 36 #197-30 local A11, Paseo Comercial Paraguitas, Casco Antiguo',
     addressLocality: 'Floridablanca',
     addressRegion: 'Santander',
     postalCode: '681003',
@@ -70,8 +70,8 @@ const globalSchema = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 7.06402,
-    longitude: -73.08876,
+    latitude: 7.0650746,
+    longitude: -73.0848828,
   },
   areaServed: [
     { '@type': 'City', name: 'Bucaramanga', containedInPlace: { '@type': 'AdministrativeArea', name: 'Santander' } },
@@ -85,7 +85,12 @@ const globalSchema = {
   ],
   priceRange: '$$',
   image: 'https://agroincol.com/og-image.jpg',
-  sameAs: [],
+  // aggregateRating verificado contra el Google Business Profile real (4.9 / 28 reseñas).
+  // Los testimonios con nombres inventados se eliminaron; reemplazar por reseñas reales del GBP.
+  sameAs: [
+    'https://www.instagram.com/agroincolcorp',
+    'https://maps.google.com/?cid=5252561969072218591',
+  ],
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.9',
@@ -93,26 +98,6 @@ const globalSchema = {
     bestRating: '5',
     worstRating: '1',
   },
-  review: [
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'María López' },
-      reviewBody: 'Llevamos 5 años trabajando con AGROINCOL para la fumigación de nuestro restaurante. Siempre puntuales, profesionales y con certificación al día.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Carlos Ruiz' },
-      reviewBody: 'Excelente servicio de desratización en nuestra bodega. Resolvieron el problema en una sola visita y hacen seguimiento periódico.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Ana García' },
-      reviewBody: 'Los recomiendo 100%. Rápidos, profesionales y a buen precio. Ya no tenemos problemas de plagas en el conjunto.',
-    },
-  ],
 };
 
 export default function RootLayout({

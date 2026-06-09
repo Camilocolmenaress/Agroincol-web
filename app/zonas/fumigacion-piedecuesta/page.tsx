@@ -54,65 +54,22 @@ export const metadata: Metadata = {
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
-  '@type': 'PestControlService',
-  name: 'AGROINCOL — Fumigación en Piedecuesta',
+  '@type': 'Service',
+  serviceType: 'Fumigación y control de plagas',
+  name: 'Fumigación y Control de Plagas en Piedecuesta',
   description:
     'Empresa de fumigación y control de plagas con cobertura completa en Piedecuesta, Santander. Más de 40 años de experiencia.',
   url: 'https://agroincol.com/zonas/fumigacion-piedecuesta',
-  telephone: BUSINESS.phoneRaw,
-  email: BUSINESS.email,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Cra 9 #3-34',
-    addressLocality: 'Floridablanca',
-    addressRegion: 'Santander',
-    addressCountry: 'CO',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 6.9908,
-    longitude: -73.0522,
+  provider: {
+    '@type': 'LocalBusiness',
+    '@id': 'https://agroincol.com/#organization',
+    name: 'AGROINCOL',
+    telephone: BUSINESS.phoneRaw,
   },
   areaServed: {
     '@type': 'City',
     name: 'Piedecuesta',
   },
-  foundingDate: '1985',
-  priceRange: '$$',
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '07:00',
-      closes: '17:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Saturday',
-      opens: '07:00',
-      closes: '12:00',
-    },
-  ],
-  review: [
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'María López' },
-      reviewBody: 'Finca en la vía a Mesa de los Santos, Piedecuesta. AGROINCOL fue el único que nos atendió en zona rural. Controlaron las garrapatas en el gallinero.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Jorge Ramírez' },
-      reviewBody: 'Local comercial en El Diviso, Piedecuesta. Rápidos y con los papeles en orden para INVIMA.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Laura Sánchez' },
-      reviewBody: 'Conjunto nuevo en Guatiguará, Piedecuesta. Tenían termitas en la estructura, las eliminaron en dos visitas.',
-    },
-  ],
 };
 
 const services = [

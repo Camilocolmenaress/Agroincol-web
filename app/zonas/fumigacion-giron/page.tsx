@@ -55,65 +55,22 @@ export const metadata: Metadata = {
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
-  '@type': 'PestControlService',
-  name: 'AGROINCOL — Fumigación en Girón',
+  '@type': 'Service',
+  serviceType: 'Fumigación y control de plagas',
+  name: 'Fumigación y Control de Plagas en Girón',
   description:
     'Empresa de fumigación y control de plagas con cobertura completa en Girón y zona industrial de Chimitá, Santander. Más de 40 años de experiencia.',
   url: 'https://agroincol.com/zonas/fumigacion-giron',
-  telephone: BUSINESS.phoneRaw,
-  email: BUSINESS.email,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Cra 9 #3-34',
-    addressLocality: 'Floridablanca',
-    addressRegion: 'Santander',
-    addressCountry: 'CO',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 7.0686,
-    longitude: -73.1714,
+  provider: {
+    '@type': 'LocalBusiness',
+    '@id': 'https://agroincol.com/#organization',
+    name: 'AGROINCOL',
+    telephone: BUSINESS.phoneRaw,
   },
   areaServed: {
     '@type': 'City',
     name: 'Girón',
   },
-  foundingDate: '1985',
-  priceRange: '$$',
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '07:00',
-      closes: '17:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Saturday',
-      opens: '07:00',
-      closes: '12:00',
-    },
-  ],
-  review: [
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Ricardo Peña' },
-      reviewBody: 'Restaurante en el Malecón de Girón. Imprescindible para cumplir con sanidad. Siempre puntuales y con certificado.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Diana Torres' },
-      reviewBody: 'Bodega en Chimitá, zona industrial de Girón. Programa mensual de desratización. Sin interrupciones en operación.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Fernando Castro' },
-      reviewBody: 'Casa en el Centro Histórico de Girón. Tratamiento cuidadoso para no dañar la estructura colonial. Muy recomendados.',
-    },
-  ],
 };
 
 const services = [

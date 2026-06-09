@@ -5,15 +5,15 @@ export const BUSINESS = {
   phone: '+57 310 789 1948',
   phoneRaw: '+573107891948',
   whatsappLink: 'https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n',
-  email: 'info@agroincol.com',
+  email: 'agroincol.1985@gmail.com',
   address: {
-    street: 'Cra 9 #3-34',
+    street: 'Cra. 36 #197-30 local A11',
     city: 'Floridablanca',
     region: 'Santander',
     country: 'Colombia',
-    full: 'Cra 9 #3-34, Floridablanca, Santander, Colombia',
+    full: 'Cra. 36 #197-30 local A11, Paseo Comercial Paraguitas, Casco Antiguo, Floridablanca, Santander',
   },
-  geo: { lat: 7.0636, lng: -73.0897 },
+  geo: { lat: 7.0650746, lng: -73.0848828 },
   founded: 1985,
   experience: '40+',
   hours: {
@@ -23,7 +23,7 @@ export const BUSINESS = {
   },
   serviceAreas: ['Bucaramanga', 'Floridablanca', 'Piedecuesta', 'Girón'],
   slogan: '40 años protegiendo Santander',
-  googleMapsLink: 'https://maps.google.com/?q=7.0636,-73.0897',
+  googleMapsLink: 'https://maps.google.com/?cid=5252561969072218591',
 } as const;
 
 export const SERVICES = [
@@ -85,6 +85,7 @@ export const SERVICES = [
 
 export const NAV_LINKS = [
   { label: 'Inicio', href: '/' },
+  { label: 'Servicios', href: '/servicios' },
   { label: 'Fumigación Restaurantes', href: '/servicios/fumigacion-restaurantes' },
   { label: 'Certificaciones', href: '/certificaciones-y-normativa' },
   { label: 'Herramientas', href: '/herramientas/calculadora-fumigacion' },

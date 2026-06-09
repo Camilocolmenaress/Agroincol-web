@@ -1,0 +1,36 @@
+# AGROINCOL
+
+> Empresa de fumigación y control de plagas con más de 40 años de experiencia
+> en el Área Metropolitana de Bucaramanga, Santander, Colombia. Fundada en 1985.
+> Atiende Bucaramanga, Floridablanca, Piedecuesta y Girón. Servicio certificado
+> conforme al Decreto 1843 de 1991 y la Resolución 2674 de 2013 (INVIMA).
+> Contacto: +57 310 789 1948 | https://agroincol.com
+
+## Servicios
+- [Fumigación Residencial](https://agroincol.com/servicios/fumigacion-residencial): tratamiento certificado para casas y apartamentos en Bucaramanga y el área metropolitana.
+- [Control de Plagas Comercial](https://agroincol.com/servicios/control-plagas-comercial): oficinas, locales y establecimientos comerciales.
+- [Fumigación para Restaurantes](https://agroincol.com/servicios/fumigacion-restaurantes): cumplimiento de la Resolución 2674 del INVIMA, con certificado válido ante inspecciones.
+- [Desratización](https://agroincol.com/servicios/desratizacion): eliminación de roedores con cebado seguro y seguimiento.
+- [Control de Insectos Voladores](https://agroincol.com/servicios/control-insectos-voladores): mosquitos, moscas y zancudos; prevención de dengue.
+- [Fumigación Industrial](https://agroincol.com/servicios/fumigacion-industrial): bodegas, plantas de producción y sector agroindustrial.
+
+## Zonas de servicio
+- [Fumigación en Floridablanca](https://agroincol.com/zonas/fumigacion-floridablanca)
+- [Fumigación en Piedecuesta](https://agroincol.com/zonas/fumigacion-piedecuesta)
+- [Fumigación en Girón](https://agroincol.com/zonas/fumigacion-giron)
+
+## Precios y herramientas
+- [Precios de fumigación en Bucaramanga](https://agroincol.com/precios): planes y rangos de precio por tipo de servicio.
+- [Calculadora de fumigación](https://agroincol.com/herramientas/calculadora-fumigacion): estimador según tipo de propiedad y plaga.
+
+## Normativa y certificaciones
+- [Certificaciones y normativa](https://agroincol.com/certificaciones-y-normativa): Decreto 1843 de 1991, Resolución 2674 de 2013 (INVIMA), registro ICA.
+
+## Artículos de referencia
+- [Cómo eliminar cucarachas en Bucaramanga](https://agroincol.com/blog/como-eliminar-cucarachas-bucaramanga)
+- [Vi una cucaracha en mi casa: ¿hay más?](https://agroincol.com/blog/vi-cucaracha-en-mi-casa-que-hacer)
+- [Plagas en temporada de lluvias en Bucaramanga](https://agroincol.com/blog/plagas-temporada-lluvias-bucaramanga)
+- [Comején y termitas en Bucaramanga](https://agroincol.com/blog/comejen-termitas-bucaramanga)
+- [Fumigación para restaurantes: norma y costos](https://agroincol.com/blog/fumigacion-restaurantes-bucaramanga-norma)
+- [Auditoría del INVIMA: cómo preparar su restaurante](https://agroincol.com/blog/auditoria-invima-como-preparar-restaurante)
+- [¿Cuánto cuesta una multa del INVIMA por plagas?](https://agroincol.com/blog/cuanto-cuesta-multa-invima-restaurante)

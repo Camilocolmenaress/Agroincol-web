@@ -23,14 +23,14 @@ import { BUSINESS } from '@/lib/constants';
 export const metadata: Metadata = {
   title: 'Fumigación en Floridablanca',
   description:
-    'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra 9 #3-34. Certificación INVIMA. Respuesta en menos de 1 hora.',
+    'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra. 36 #197-30. Certificación INVIMA. Respuesta en menos de 1 hora.',
   alternates: {
     canonical: 'https://agroincol.com/zonas/fumigacion-floridablanca',
   },
   openGraph: {
     title: 'Fumigación en Floridablanca | AGROINCOL',
     description:
-      'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra 9 #3-34. Certificación INVIMA.',
+      'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra. 36 #197-30. Certificación INVIMA.',
     url: 'https://agroincol.com/zonas/fumigacion-floridablanca',
     siteName: 'AGROINCOL',
     locale: 'es_CO',
@@ -48,71 +48,28 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Fumigación en Floridablanca | AGROINCOL',
     description:
-      'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra 9 #3-34. Certificación INVIMA.',
+      'Servicio de fumigación y control de plagas en Floridablanca, Santander. Sede principal en Cra. 36 #197-30. Certificación INVIMA.',
   },
 };
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
-  '@type': 'PestControlService',
-  name: 'AGROINCOL — Fumigación en Floridablanca',
+  '@type': 'Service',
+  serviceType: 'Fumigación y control de plagas',
+  name: 'Fumigación y Control de Plagas en Floridablanca',
   description:
     'Empresa de fumigación y control de plagas con sede principal en Floridablanca, Santander. Más de 40 años de experiencia.',
   url: 'https://agroincol.com/zonas/fumigacion-floridablanca',
-  telephone: BUSINESS.phoneRaw,
-  email: BUSINESS.email,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Cra 9 #3-34',
-    addressLocality: 'Floridablanca',
-    addressRegion: 'Santander',
-    addressCountry: 'CO',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 7.0636,
-    longitude: -73.0897,
+  provider: {
+    '@type': 'LocalBusiness',
+    '@id': 'https://agroincol.com/#organization',
+    name: 'AGROINCOL',
+    telephone: BUSINESS.phoneRaw,
   },
   areaServed: {
     '@type': 'City',
     name: 'Floridablanca',
   },
-  foundingDate: '1985',
-  priceRange: '$$',
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '07:00',
-      closes: '17:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Saturday',
-      opens: '07:00',
-      closes: '12:00',
-    },
-  ],
-  review: [
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Carlos Ruiz' },
-      reviewBody: 'Llevamos 3 años con AGROINCOL para el control de roedores en nuestra bodega en Cañaveral, Floridablanca. Respuesta rápida, viven cerca.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Ana García' },
-      reviewBody: 'Excelente servicio en el Conjunto Residencial Lagos del Cacique, Floridablanca. Resolvieron el problema de cucarachas en nuestras zonas comunes.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Pedro Martínez' },
-      reviewBody: 'Restaurante en el centro de Floridablanca. Certificado listo para la inspección de Secretaría de Salud. Muy profesionales.',
-    },
-  ],
 };
 
 const services = [
@@ -209,7 +166,7 @@ export default function FumigacionFloridablancaPage() {
                 Nuestra Sede en Floridablanca
               </h2>
               <p className="text-brand-gray text-body mt-4 leading-relaxed">
-                AGROINCOL tiene su <strong>sede principal en la Cra 9 #3-34, Floridablanca</strong>, lo que nos permite
+                AGROINCOL tiene su <strong>sede principal en la Cra. 36 #197-30, Floridablanca</strong>, lo que nos permite
                 ofrecer el tiempo de respuesta más rápido del Área Metropolitana de Bucaramanga. Desde aquí coordinamos
                 todos nuestros servicios de fumigación y control de plagas para el municipio y sus alrededores.
               </p>
@@ -222,7 +179,7 @@ export default function FumigacionFloridablancaPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { icon: MapPin, label: 'Cra 9 #3-34', sublabel: 'Sede Principal' },
+                { icon: MapPin, label: 'Cra. 36 #197-30', sublabel: 'Sede Principal' },
                 { icon: Clock, label: '< 1 Hora', sublabel: 'Tiempo de respuesta' },
                 { icon: Shield, label: '40+ Años', sublabel: 'De experiencia' },
                 { icon: Award, label: 'Certificados', sublabel: 'INVIMA y Sec. Salud' },
