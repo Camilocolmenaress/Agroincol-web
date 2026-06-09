@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { MapPin } from 'lucide-react';
 
 const areas = [
-  { name: 'Bucaramanga', description: 'Capital de Santander', href: '/' },
+  { name: 'Bucaramanga', description: 'Capital de Santander', href: '/zonas/fumigacion-bucaramanga' },
   { name: 'Floridablanca', description: 'Sede principal — Cra. 36 #197-30', href: '/zonas/fumigacion-floridablanca' },
   { name: 'Piedecuesta', description: 'Cobertura completa', href: '/zonas/fumigacion-piedecuesta' },
   { name: 'Girón', description: 'Cobertura completa', href: '/zonas/fumigacion-giron' },

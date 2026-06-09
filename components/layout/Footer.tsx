@@ -86,6 +86,11 @@ export default function Footer() {
             <h3 className="text-white font-heading font-semibold text-lg mb-4 mt-6">Zonas de Servicio</h3>
             <ul className="space-y-2">
               <li>
+                <Link href="/zonas/fumigacion-bucaramanga" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                  Fumigación en Bucaramanga
+                </Link>
+              </li>
+              <li>
                 <Link href="/zonas/fumigacion-floridablanca" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
                   Fumigación en Floridablanca
                 </Link>

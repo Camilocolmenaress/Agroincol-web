@@ -361,7 +361,7 @@ export default function FumigacionFloridablancaPage() {
         <div className="container-custom text-center">
           <p className="text-brand-gray text-body">
             También atendemos en:{' '}
-            <Link href="/" className="text-brand-orange hover:text-brand-orange-dark font-semibold transition-colors">
+            <Link href="/zonas/fumigacion-bucaramanga" className="text-brand-orange hover:text-brand-orange-dark font-semibold transition-colors">
               Bucaramanga
             </Link>
             {', '}
