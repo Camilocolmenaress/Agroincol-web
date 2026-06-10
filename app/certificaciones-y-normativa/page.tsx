@@ -6,11 +6,52 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
+import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
+// FAQ visible en página — alineado con el cluster de queries "certificado fumigación"
+// detectado en Search Console (posiciones 19-48: oportunidad de subir con contenido directo).
+const FAQS_CERTIFICADO = [
+  {
+    question: '¿Qué debe incluir un certificado de fumigación válido en Colombia?',
+    answer:
+      'Un certificado válido debe incluir: fecha y hora del servicio, productos utilizados con sus registros ICA, concentraciones y métodos de aplicación, áreas tratadas, plagas objetivo, recomendaciones post-servicio, firma del técnico responsable y datos completos de la empresa (NIT, dirección y teléfono). El certificado de AGROINCOL cumple todos estos requisitos conforme al Decreto 1843 de 1991.',
+  },
+  {
+    question: '¿El certificado de fumigación es válido ante el INVIMA y la Secretaría de Salud?',
+    answer:
+      'Sí. El certificado que emite AGROINCOL cumple con los requisitos del Decreto 1843 de 1991 y es válido como soporte documental ante visitas de inspección del INVIMA y de la Secretaría de Salud de Santander, tanto para restaurantes y establecimientos de alimentos como para comercios e industrias.',
+  },
+  {
+    question: '¿Cuánto tiempo de validez tiene el certificado de fumigación?',
+    answer:
+      'La vigencia depende de la frecuencia del plan de control: para establecimientos de alimentos la normativa recomienda fumigar como mínimo cada 3 meses, por lo que el certificado se renueva con cada servicio. Mantener certificados consecutivos y sin vacíos es lo que revisan los inspectores en una auditoría.',
+  },
+  {
+    question: '¿Cuándo recibo el certificado después del servicio?',
+    answer:
+      'El mismo día. AGROINCOL entrega el certificado de fumigación al finalizar el servicio, junto con las fichas técnicas de los productos utilizados si su establecimiento las requiere para auditorías.',
+  },
+  {
+    question: '¿Qué pasa si no tengo certificado de fumigación en una inspección?',
+    answer:
+      'Para establecimientos de alimentos, no contar con soporte de control de plagas puede derivar en sanciones del INVIMA que van desde multas (de 5 hasta 1.000 SMMLV según la gravedad) hasta el cierre temporal del establecimiento. El certificado vigente es la evidencia documental que exigen los inspectores.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS_CERTIFICADO.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+};
+
 export const metadata: Metadata = {
-  title: 'Certificado Fumigación INVIMA Bucaramanga',
-  description: 'Certificado de fumigación válido ante INVIMA en Bucaramanga. AGROINCOL cumple Decreto 1843 y Res. 2674. Lo emitimos el mismo día del servicio.',
+  title: 'Certificado de Fumigación INVIMA el Mismo Día',
+  description: 'Certificado de fumigación válido ante INVIMA y Secretaría de Salud en Bucaramanga ✓ Entregado el mismo día ✓ Decreto 1843 y Res. 2674 ✓ Pase su inspección sin sanciones.',
   alternates: {
     canonical: 'https://agroincol.com/certificaciones-y-normativa',
   },
@@ -208,7 +249,24 @@ export default function CertificacionesPage() {
         </div>
       </section>
 
-      {/* 6. CTA + Form */}
+      {/* 6. Preguntas frecuentes sobre el certificado */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-10">
+            Preguntas Frecuentes sobre el Certificado de Fumigación
+          </h2>
+          <div className="max-w-3xl mx-auto space-y-6">
+            {FAQS_CERTIFICADO.map((faq) => (
+              <div key={faq.question} className="bg-brand-light rounded-2xl p-6">
+                <h3 className="font-heading font-bold text-brand-green text-lg">{faq.question}</h3>
+                <p className="text-brand-gray text-body mt-2 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. CTA + Form */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -232,6 +290,8 @@ export default function CertificacionesPage() {
           </div>
         </div>
       </section>
+
+      <SchemaMarkup schema={faqSchema} />
     </>
   );
 }

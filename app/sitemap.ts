@@ -51,6 +51,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: 'https://agroincol.com/servicios/control-comejen-termitas',
+      lastModified: new Date('2026-06-09'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://agroincol.com/servicios/eliminacion-abejas-avispas',
+      lastModified: new Date('2026-06-09'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://agroincol.com/servicios/control-chinches',
+      lastModified: new Date('2026-06-09'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
       url: 'https://agroincol.com/precios',
       lastModified: new Date('2026-03-14'),
       changeFrequency: 'monthly',

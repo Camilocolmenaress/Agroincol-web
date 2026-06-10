@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
+import Testimonials from '@/components/sections/Testimonials';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
@@ -383,40 +384,8 @@ export default function FumigacionPiedecuestaPage() {
         </div>
       </section>
 
-      {/* Testimonios */}
-      <section className="section-padding bg-brand-green">
-        <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-white text-center mb-12">
-            Lo Que Dicen en Piedecuesta
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                text: 'AGROINCOL fue el único que nos atendió en zona rural. Controlaron las garrapatas en el gallinero.',
-                name: 'María López',
-                business: 'Finca, vía a Mesa de los Santos',
-              },
-              {
-                text: 'Rápidos y con los papeles en orden para INVIMA.',
-                name: 'Jorge Ramírez',
-                business: 'Local comercial, El Diviso',
-              },
-              {
-                text: 'Tenían termitas en la estructura, las eliminaron en dos visitas.',
-                name: 'Laura Sánchez',
-                business: 'Conjunto nuevo, Guatiguará',
-              },
-            ].map((t, i) => (
-              <div key={t.name} className="bg-white/10 backdrop-blur rounded-xl p-6">
-                <div role="img" className="text-[#F59E0B] text-xl mb-3" aria-label="Calificación: 5 de 5 estrellas">★★★★★</div>
-                <p className="text-gray-200 italic text-body">{t.text}</p>
-                <p className="text-white font-semibold mt-4">— {t.name}</p>
-                <p className="text-gray-400 text-body-sm">{t.business}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Reseñas reales en Google */}
+      <Testimonials />
 
       {/* Contact CTA */}
       <section className="section-padding bg-brand-light" id="contacto-zona">

@@ -81,6 +81,33 @@ export const SERVICES = [
     hasPage: true,
     href: '/servicios/fumigacion-industrial',
   },
+  {
+    slug: 'control-comejen-termitas',
+    title: 'Control de Comején y Termitas',
+    shortDescription: 'Detección y eliminación de comején y termitas antes de que dañen la estructura de su propiedad.',
+    icon: 'Bug',
+    keywords: ['comején Bucaramanga', 'termitas Bucaramanga'],
+    hasPage: true,
+    href: '/servicios/control-comejen-termitas',
+  },
+  {
+    slug: 'eliminacion-abejas-avispas',
+    title: 'Retiro de Abejas y Avispas',
+    shortDescription: 'Retiro seguro de nidos de abejas y avispas con equipos especializados. Atención de urgencia.',
+    icon: 'Bug',
+    keywords: ['nido de abejas Bucaramanga', 'avispas Bucaramanga'],
+    hasPage: true,
+    href: '/servicios/eliminacion-abejas-avispas',
+  },
+  {
+    slug: 'control-chinches',
+    title: 'Control de Chinches de Cama',
+    shortDescription: 'Eliminación profesional de chinches en hogares, hoteles y hospedajes con tratamiento de seguimiento.',
+    icon: 'Bug',
+    keywords: ['chinches de cama Bucaramanga', 'eliminar chinches'],
+    hasPage: true,
+    href: '/servicios/control-chinches',
+  },
 ] as const;
 
 export const NAV_LINKS = [
