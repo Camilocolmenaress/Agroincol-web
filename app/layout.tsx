@@ -111,7 +111,7 @@ export default function RootLayout({
       <body>
         <SchemaMarkup schema={globalSchema} />
         <Navbar />
-        <main className="pb-[60px] md:pb-0">{children}</main>
+        <main className="pb-[calc(env(safe-area-inset-bottom)+84px)] md:pb-0">{children}</main>
         <Footer />
         {/* Botón flotante WhatsApp solo en desktop; en móvil lo cubre la barra fija inferior */}
         <div className="hidden md:block">

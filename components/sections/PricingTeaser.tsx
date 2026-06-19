@@ -3,8 +3,8 @@ import { Calculator, ArrowRight } from 'lucide-react';
 
 // "Desde $X" califica leads y filtra curiosos antes del contacto.
 const tiers = [
-  { label: 'Hogares', from: '$90.000', detail: 'servicio puntual · IVA incl.' },
-  { label: 'Negocios y restaurantes', from: '$80.000', detail: '/mes · certificado INVIMA' },
+  { label: 'Hogares', from: '$140.000', detail: 'Servicio puntual · IVA incluido' },
+  { label: 'Negocios y restaurantes', from: '$80.000', detail: 'Desde / mes · Certificado INVIMA' },
 ];
 
 export default function PricingTeaser() {
@@ -18,15 +18,18 @@ export default function PricingTeaser() {
               <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-3">
                 Sin sorpresas ni letra pequeña
               </h2>
-              <div className="flex flex-wrap gap-6 mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
                 {tiers.map((t) => (
-                  <div key={t.label}>
-                    <p className="text-brand-gray text-body-sm">{t.label}</p>
-                    <p className="font-heading text-brand-green">
-                      <span className="text-brand-gray text-body-sm">desde </span>
-                      <span className="text-3xl md:text-4xl font-bold">{t.from}</span>
+                  <div
+                    key={t.label}
+                    className="rounded-2xl border border-brand-gray-light/70 bg-brand-cream/60 p-5"
+                  >
+                    <p className="font-heading font-semibold text-brand-green text-body">{t.label}</p>
+                    <p className="mt-2 flex items-baseline gap-1.5">
+                      <span className="text-brand-gray text-body-sm">desde</span>
+                      <span className="font-heading text-3xl md:text-4xl font-bold text-brand-green">{t.from}</span>
                     </p>
-                    <p className="text-brand-gray text-xs mt-0.5">{t.detail}</p>
+                    <p className="text-brand-gray text-xs mt-1.5">{t.detail}</p>
                   </div>
                 ))}
               </div>

@@ -25,6 +25,14 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
+  // Bloquea el scroll del body mientras el menú está abierto (evita scroll fantasma detrás).
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -81,9 +89,12 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer — fondo sólido por estilo inline para que NUNCA se vea transparente */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 bg-brand-green-dark flex flex-col md:hidden">
+        <div
+          className="fixed inset-0 z-[60] flex flex-col md:hidden animate-fade-in-up"
+          style={{ backgroundColor: '#0D2B20' }}
+        >
           <div className="flex items-center justify-between h-16 px-4">
             <Link href="/" className="relative shrink-0">
               <Image
