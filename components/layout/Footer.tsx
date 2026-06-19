@@ -6,6 +6,7 @@ import { BUSINESS, SERVICES } from '@/lib/constants';
 export default function Footer() {
   return (
     <footer className="bg-brand-green-dark">
+      <div className="h-1 w-full bg-orange-gradient" aria-hidden />
       <div className="container-custom py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Column 1 — Brand */}

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Shield, Award, Clock, MapPin } from 'lucide-react';
+import { Shield, Award, Clock, MapPin, Phone } from 'lucide-react';
 import Hero from '@/components/sections/Hero';
 import ServicesGrid from '@/components/sections/ServicesGrid';
 import WhyUs from '@/components/sections/WhyUs';
@@ -62,15 +62,20 @@ export default function HomePage() {
       />
 
       {/* 2. Trust Bar */}
-      <section className="bg-brand-light py-6 md:py-8">
+      <section className="bg-brand-light py-8 md:py-10">
         <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
             {trustItems.map((item, index) => {
               const Icon = item.icon;
               return (
-                <div key={index} className="flex items-center justify-center gap-3">
-                  <Icon size={24} className="text-brand-orange shrink-0" />
-                  <span className="text-brand-green font-semibold text-body-sm">{item.text}</span>
+                <div
+                  key={index}
+                  className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-soft"
+                >
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-soft">
+                    <Icon size={20} className="text-brand-orange" />
+                  </span>
+                  <span className="text-brand-green font-semibold text-body-sm leading-tight">{item.text}</span>
                 </div>
               );
             })}
@@ -108,6 +113,36 @@ export default function HomePage() {
 
       {/* 6. Testimonials */}
       <Testimonials />
+
+      {/* 6.5 Gradient CTA Band — impulsa llamadas inmediatas */}
+      <section className="bg-brand-light pt-section-mobile md:pt-section">
+        <div className="container-custom">
+          <div className="reveal relative overflow-hidden rounded-3xl bg-orange-gradient px-6 py-10 md:px-12 md:py-14 shadow-premium">
+            <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-30" aria-hidden />
+            <div className="relative flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left">
+              <div>
+                <h2 className="font-heading text-h2-mobile md:text-h2 text-white text-balance">
+                  ¿Tiene una plaga ahora? Respondemos en menos de 2 horas
+                </h2>
+                <p className="text-white/85 text-body-lg mt-3 text-pretty">
+                  Atención en Bucaramanga, Floridablanca, Piedecuesta y Girón. Cotización gratis y sin compromiso.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                <a
+                  href={`tel:${BUSINESS.phoneRaw}`}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 font-heading font-semibold text-brand-orange shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover"
+                >
+                  <Phone size={18} /> Llamar ahora
+                </a>
+                <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
+                  Escribir por WhatsApp
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 7. CTA + Contact Form */}
       <section className="section-padding bg-brand-light">

@@ -28,7 +28,9 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-brand-green-dark/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+        scrolled
+          ? 'bg-brand-green-dark/90 backdrop-blur-md shadow-premium border-b border-white/10'
+          : 'bg-transparent'
       }`}
     >
       <div className="container-custom flex items-center justify-between h-16 md:h-20">
