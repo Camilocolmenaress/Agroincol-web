@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { CheckCircle, Shield, Leaf, Clock, MapPin, FileCheck } from 'lucide-react';
+import Carousel from '@/components/ui/Carousel';
 
 const benefits = [
   { icon: CheckCircle, text: 'Más de 40 años de experiencia comprobada en Santander' },
@@ -35,22 +36,30 @@ export default function WhyUs() {
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-green-dark/30 to-transparent" aria-hidden />
           </div>
 
-          {/* Benefits */}
-          <div className="reveal flex flex-col gap-3">
-            {benefits.map((benefit, index) => {
-              const Icon = benefit.icon;
-              return (
-                <div
-                  key={index}
-                  className="flex items-start gap-4 rounded-2xl bg-white p-4 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card"
-                >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-soft">
-                    <Icon size={22} className="text-brand-orange" />
-                  </span>
-                  <p className="text-brand-black text-body self-center text-pretty">{benefit.text}</p>
-                </div>
-              );
-            })}
+          {/* Benefits — carrusel auto-rotando (1 tarjeta a la vez, arrastrable) */}
+          <div className="reveal">
+            <Carousel
+              autoPlay
+              align="start"
+              controls="both"
+              itemClassName="basis-[86%] sm:basis-[60%] lg:basis-full"
+              ariaLabel="Razones para elegir AGROINCOL"
+            >
+              {benefits.map((benefit, index) => {
+                const Icon = benefit.icon;
+                return (
+                  <div
+                    key={index}
+                    className="flex h-full items-start gap-4 rounded-2xl bg-white p-6 shadow-card"
+                  >
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-soft">
+                      <Icon size={24} className="text-brand-orange" />
+                    </span>
+                    <p className="text-brand-black text-body-lg self-center text-pretty">{benefit.text}</p>
+                  </div>
+                );
+              })}
+            </Carousel>
           </div>
         </div>
       </div>

@@ -150,3 +150,12 @@
     }
   }
 }
+
+/* ── Carrusel: ocultar la barra de scroll nativa sin perder el arrastre ── */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
