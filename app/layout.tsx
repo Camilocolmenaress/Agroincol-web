@@ -5,6 +5,7 @@ import { GoogleTagManager } from '@next/third-parties/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
+import MobileCTABar from '@/components/ui/MobileCTABar';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import WhatsAppClickTracker from '@/components/analytics/WhatsAppClickTracker';
 import { Analytics } from '@vercel/analytics/react';
@@ -110,9 +111,13 @@ export default function RootLayout({
       <body>
         <SchemaMarkup schema={globalSchema} />
         <Navbar />
-        <main>{children}</main>
+        <main className="pb-[60px] md:pb-0">{children}</main>
         <Footer />
-        <WhatsAppButton />
+        {/* Botón flotante WhatsApp solo en desktop; en móvil lo cubre la barra fija inferior */}
+        <div className="hidden md:block">
+          <WhatsAppButton />
+        </div>
+        <MobileCTABar />
         <WhatsAppClickTracker />
         <Analytics />
         <SpeedInsights />

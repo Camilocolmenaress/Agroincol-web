@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { Shield, Award, Clock, MapPin, Phone } from 'lucide-react';
 import Hero from '@/components/sections/Hero';
+import AudienceSelector from '@/components/sections/AudienceSelector';
+import HomeProcess from '@/components/sections/HomeProcess';
 import ServicesGrid from '@/components/sections/ServicesGrid';
 import WhyUs from '@/components/sections/WhyUs';
 import ServiceAreas from '@/components/sections/ServiceAreas';
 import Testimonials from '@/components/sections/Testimonials';
+import PricingTeaser from '@/components/sections/PricingTeaser';
+import HomeFAQ from '@/components/sections/HomeFAQ';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
 import LazyMap from '@/components/ui/LazyMap';
@@ -55,8 +58,8 @@ export default function HomePage() {
         title="Fumigación y Control de Plagas en Bucaramanga"
         subtitle="Más de 40 años protegiendo hogares, restaurantes e industrias en Bucaramanga, Floridablanca, Piedecuesta y Girón."
         badgeText="Respuesta en menos de 2 horas"
-        primaryCta={{ text: 'Solicitar Cotización', href: '#contacto' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
+        primaryCta={{ text: 'Cotizar por WhatsApp', href: BUSINESS.whatsappLink }}
+        secondaryCta={{ text: 'Llamar ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL realizando fumigación profesional en Bucaramanga"
       />
@@ -83,36 +86,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Calculator & Pricing CTAs */}
-      <section className="bg-white py-6">
-        <div className="container-custom text-center space-y-2">
-          <Link
-            href="/herramientas/calculadora-fumigacion"
-            className="inline-flex items-center gap-2 text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body transition-colors"
-          >
-            ¿No sabe cada cuánto fumigar? Use nuestra calculadora gratuita →
-          </Link>
-          <br />
-          <Link
-            href="/precios"
-            className="inline-flex items-center gap-2 text-brand-green hover:text-brand-orange font-body font-semibold text-body-sm transition-colors"
-          >
-            Conozca nuestros precios →
-          </Link>
-        </div>
-      </section>
+      {/* 3. Selector de público — cada visitante encuentra su caso */}
+      <AudienceSelector />
 
-      {/* 3. Services */}
+      {/* 4. Cómo trabajamos — baja la ansiedad antes de pedir contacto */}
+      <HomeProcess />
+
+      {/* 5. Services */}
       <ServicesGrid />
 
-      {/* 4. Why Us */}
+      {/* 6. Why Us */}
       <WhyUs />
 
-      {/* 5. Service Areas */}
+      {/* 7. Service Areas */}
       <ServiceAreas />
 
-      {/* 6. Testimonials */}
+      {/* 8. Prueba social — reseñas reales de Google */}
       <Testimonials />
+
+      {/* 9. Precio orientativo — califica leads */}
+      <PricingTeaser />
+
+      {/* 10. FAQ — resuelve objeciones que frenan la conversión */}
+      <HomeFAQ />
 
       {/* 6.5 Gradient CTA Band — impulsa llamadas inmediatas */}
       <section className="bg-brand-light pt-section-mobile md:pt-section">
