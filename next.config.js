@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: false,
+  images: {
+    // AVIF primero (≈20% más liviano que webp); webp como respaldo.
+    formats: ['image/avif', 'image/webp'],
+  },
   async redirects() {
     return [
       {
