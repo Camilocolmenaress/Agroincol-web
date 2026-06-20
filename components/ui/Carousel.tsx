@@ -108,7 +108,7 @@ export default function Carousel({
     >
       <div
         ref={trackRef}
-        className="no-scrollbar flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1"
+        className="no-scrollbar flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pt-4 pb-2"
         onPointerDown={pause}
         onPointerEnter={pause}
         onPointerLeave={resume}

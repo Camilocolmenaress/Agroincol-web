@@ -13,9 +13,9 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const heading = localFont({
   src: [
-    { path: '../public/fonts/LeagueSpartan-Bold.ttf', weight: '700', style: 'normal' },
-    { path: '../public/fonts/LeagueSpartan-SemiBold.ttf', weight: '600', style: 'normal' },
-    { path: '../public/fonts/LeagueSpartan-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../public/fonts/LeagueSpartan-Bold.woff2', weight: '700', style: 'normal' },
+    { path: '../public/fonts/LeagueSpartan-SemiBold.woff2', weight: '600', style: 'normal' },
+    { path: '../public/fonts/LeagueSpartan-Medium.woff2', weight: '500', style: 'normal' },
   ],
   variable: '--font-heading',
   display: 'swap',
@@ -25,10 +25,10 @@ const heading = localFont({
 
 const body = localFont({
   src: [
-    { path: '../public/fonts/Nunito-Regular.ttf', weight: '400', style: 'normal' },
-    { path: '../public/fonts/Nunito-SemiBold.ttf', weight: '600', style: 'normal' },
-    { path: '../public/fonts/Nunito-Bold.ttf', weight: '700', style: 'normal' },
-    { path: '../public/fonts/Nunito-Light.ttf', weight: '300', style: 'normal' },
+    { path: '../public/fonts/Nunito-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../public/fonts/Nunito-SemiBold.woff2', weight: '600', style: 'normal' },
+    { path: '../public/fonts/Nunito-Bold.woff2', weight: '700', style: 'normal' },
+    { path: '../public/fonts/Nunito-Light.woff2', weight: '300', style: 'normal' },
   ],
   variable: '--font-body',
   display: 'swap',
