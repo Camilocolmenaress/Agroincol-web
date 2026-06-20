@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { Shield, Award, Clock, MapPin } from 'lucide-react';
+import { Shield, Award, Clock, MapPin, Phone } from 'lucide-react';
 import Hero from '@/components/sections/Hero';
+import AudienceSelector from '@/components/sections/AudienceSelector';
+import HomeProcess from '@/components/sections/HomeProcess';
 import ServicesGrid from '@/components/sections/ServicesGrid';
 import WhyUs from '@/components/sections/WhyUs';
 import ServiceAreas from '@/components/sections/ServiceAreas';
 import Testimonials from '@/components/sections/Testimonials';
+import PricingTeaser from '@/components/sections/PricingTeaser';
+import HomeFAQ from '@/components/sections/HomeFAQ';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
 import LazyMap from '@/components/ui/LazyMap';
@@ -55,22 +58,27 @@ export default function HomePage() {
         title="Fumigación y Control de Plagas en Bucaramanga"
         subtitle="Más de 40 años protegiendo hogares, restaurantes e industrias en Bucaramanga, Floridablanca, Piedecuesta y Girón."
         badgeText="Respuesta en menos de 2 horas"
-        primaryCta={{ text: 'Solicitar Cotización', href: '#contacto' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
+        primaryCta={{ text: 'Cotizar por WhatsApp', href: BUSINESS.whatsappLink }}
+        secondaryCta={{ text: 'Llamar ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL realizando fumigación profesional en Bucaramanga"
       />
 
       {/* 2. Trust Bar */}
-      <section className="bg-brand-light py-6 md:py-8">
+      <section className="bg-brand-light py-8 md:py-10">
         <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
             {trustItems.map((item, index) => {
               const Icon = item.icon;
               return (
-                <div key={index} className="flex items-center justify-center gap-3">
-                  <Icon size={24} className="text-brand-orange shrink-0" />
-                  <span className="text-brand-green font-semibold text-body-sm">{item.text}</span>
+                <div
+                  key={index}
+                  className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-soft"
+                >
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-soft">
+                    <Icon size={20} className="text-brand-orange" />
+                  </span>
+                  <span className="text-brand-green font-semibold text-body-sm leading-tight">{item.text}</span>
                 </div>
               );
             })}
@@ -78,36 +86,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Calculator & Pricing CTAs */}
-      <section className="bg-white py-6">
-        <div className="container-custom text-center space-y-2">
-          <Link
-            href="/herramientas/calculadora-fumigacion"
-            className="inline-flex items-center gap-2 text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body transition-colors"
-          >
-            ¿No sabe cada cuánto fumigar? Use nuestra calculadora gratuita →
-          </Link>
-          <br />
-          <Link
-            href="/precios"
-            className="inline-flex items-center gap-2 text-brand-green hover:text-brand-orange font-body font-semibold text-body-sm transition-colors"
-          >
-            Conozca nuestros precios →
-          </Link>
-        </div>
-      </section>
+      {/* 3. Selector de público — cada visitante encuentra su caso */}
+      <AudienceSelector />
 
-      {/* 3. Services */}
+      {/* 4. Cómo trabajamos — baja la ansiedad antes de pedir contacto */}
+      <HomeProcess />
+
+      {/* 5. Services */}
       <ServicesGrid />
 
-      {/* 4. Why Us */}
+      {/* 6. Why Us */}
       <WhyUs />
 
-      {/* 5. Service Areas */}
+      {/* 7. Service Areas */}
       <ServiceAreas />
 
-      {/* 6. Testimonials */}
+      {/* 8. Prueba social — reseñas reales de Google */}
       <Testimonials />
+
+      {/* 9. Precio orientativo — califica leads */}
+      <PricingTeaser />
+
+      {/* 10. FAQ — resuelve objeciones que frenan la conversión */}
+      <HomeFAQ />
+
+      {/* 6.5 Gradient CTA Band — impulsa llamadas inmediatas */}
+      <section className="bg-brand-light pt-section-mobile md:pt-section">
+        <div className="container-custom">
+          <div className="reveal relative overflow-hidden rounded-3xl bg-orange-gradient px-6 py-10 md:px-12 md:py-14 shadow-premium">
+            <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-30" aria-hidden />
+            <div className="relative flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left">
+              <div>
+                <h2 className="font-heading text-h2-mobile md:text-h2 text-white text-balance">
+                  ¿Tiene una plaga ahora? Respondemos en menos de 2 horas
+                </h2>
+                <p className="text-white/85 text-body-lg mt-3 text-pretty">
+                  Atención en Bucaramanga, Floridablanca, Piedecuesta y Girón. Cotización gratis y sin compromiso.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                <a
+                  href={`tel:${BUSINESS.phoneRaw}`}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 font-heading font-semibold text-brand-orange shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover"
+                >
+                  <Phone size={18} /> Llamar ahora
+                </a>
+                <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
+                  Escribir por WhatsApp
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 7. CTA + Contact Form */}
       <section className="section-padding bg-brand-light">

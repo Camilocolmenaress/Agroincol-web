@@ -4,9 +4,8 @@
 
 /*
  * FUENTES LOCALES
- * Los archivos .ttf se cargarán desde /public/fonts/
- * Por ahora usan fallback sans-serif hasta que se suban los archivos
- * next/font/local se encarga de esto en layout.tsx
+ * Archivos .woff2 en /public/fonts/ (convertidos desde TTF: −62% de peso).
+ * next/font/local se encarga del @font-face y el preload en layout.tsx.
  */
 
 @layer base {
@@ -27,6 +26,46 @@
   }
   .container-custom {
     @apply max-w-content mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  /* Eyebrow — etiqueta corta sobre los títulos de sección */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-brand-orange font-heading font-semibold uppercase tracking-[0.14em] text-body-sm;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Dot-grid sutil para fondos oscuros (hero/secciones verdes) */
+  .bg-dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  /* Dot-grid para fondos claros */
+  .bg-dot-grid-dark {
+    background-image: radial-gradient(rgba(13, 43, 32, 0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Borde con gradiente animado (tarjeta destacada / plan recomendado) */
+  .border-animated {
+    position: relative;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+  .border-animated::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(120deg, #f46931, #fb8a5c, #2e7d5b, #f46931);
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 }
 
@@ -60,4 +99,62 @@
 
 .animate-slide-in-left {
   animation: slide-in-left 0.3s ease-out;
+}
+
+/* ── Movimiento premium ───────────────────────────────────────── */
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes border-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.85; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Entrada escalonada del hero (above-the-fold, al cargar) */
+  .animate-rise {
+    opacity: 0;
+    animation: rise-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .anim-d1 { animation-delay: 0.08s; }
+  .anim-d2 { animation-delay: 0.18s; }
+  .anim-d3 { animation-delay: 0.28s; }
+  .anim-d4 { animation-delay: 0.38s; }
+  .anim-d5 { animation-delay: 0.48s; }
+
+  /* Borde animado: solo se mueve cuando el motion está permitido */
+  .border-animated::before {
+    animation: border-flow 7s ease infinite;
+  }
+
+  /* Glow respirando suavemente */
+  .glow-pulse {
+    animation: glow-pulse 6s ease-in-out infinite;
+  }
+
+  /* Scroll-reveal sin JS (degrada a visible si no hay soporte) */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 20%;
+    }
+  }
+}
+
+/* ── Carrusel: ocultar la barra de scroll nativa sin perder el arrastre ── */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

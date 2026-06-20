@@ -193,16 +193,16 @@ const homePlans: PricingPlan[] = [
 function PricingCard({ plan }: { plan: PricingPlan }) {
   return (
     <div
-      className={`relative bg-white rounded-2xl p-6 md:p-8 hover:shadow-lg transition-shadow flex flex-col ${
+      className={`relative bg-white rounded-2xl p-6 md:p-8 flex flex-col transition-all duration-300 ${
         plan.highlighted
-          ? 'border-2 border-brand-orange shadow-xl'
-          : 'border border-gray-200 shadow-sm'
+          ? 'border-animated shadow-premium lg:scale-[1.04] z-10'
+          : 'border border-brand-gray-light/70 shadow-card hover:-translate-y-1.5 hover:shadow-card-hover'
       }`}
     >
       {/* Badge for highlighted plan */}
       {plan.highlighted && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-          <span className="bg-brand-orange text-white text-xs font-heading font-bold px-4 py-1.5 rounded-full whitespace-nowrap flex items-center gap-1">
+          <span className="bg-orange-gradient text-white text-xs font-heading font-bold px-4 py-1.5 rounded-full whitespace-nowrap flex items-center gap-1 shadow-brand ring-1 ring-white/20">
             <Star size={12} fill="white" />
             Más elegido
           </span>

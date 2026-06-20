@@ -5,6 +5,7 @@ import { GoogleTagManager } from '@next/third-parties/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
+import MobileCTABar from '@/components/ui/MobileCTABar';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import WhatsAppClickTracker from '@/components/analytics/WhatsAppClickTracker';
 import { Analytics } from '@vercel/analytics/react';
@@ -12,9 +13,9 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const heading = localFont({
   src: [
-    { path: '../public/fonts/LeagueSpartan-Bold.ttf', weight: '700', style: 'normal' },
-    { path: '../public/fonts/LeagueSpartan-SemiBold.ttf', weight: '600', style: 'normal' },
-    { path: '../public/fonts/LeagueSpartan-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../public/fonts/LeagueSpartan-Bold.woff2', weight: '700', style: 'normal' },
+    { path: '../public/fonts/LeagueSpartan-SemiBold.woff2', weight: '600', style: 'normal' },
+    { path: '../public/fonts/LeagueSpartan-Medium.woff2', weight: '500', style: 'normal' },
   ],
   variable: '--font-heading',
   display: 'swap',
@@ -24,10 +25,10 @@ const heading = localFont({
 
 const body = localFont({
   src: [
-    { path: '../public/fonts/Nunito-Regular.ttf', weight: '400', style: 'normal' },
-    { path: '../public/fonts/Nunito-SemiBold.ttf', weight: '600', style: 'normal' },
-    { path: '../public/fonts/Nunito-Bold.ttf', weight: '700', style: 'normal' },
-    { path: '../public/fonts/Nunito-Light.ttf', weight: '300', style: 'normal' },
+    { path: '../public/fonts/Nunito-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../public/fonts/Nunito-SemiBold.woff2', weight: '600', style: 'normal' },
+    { path: '../public/fonts/Nunito-Bold.woff2', weight: '700', style: 'normal' },
+    { path: '../public/fonts/Nunito-Light.woff2', weight: '300', style: 'normal' },
   ],
   variable: '--font-body',
   display: 'swap',
@@ -110,9 +111,13 @@ export default function RootLayout({
       <body>
         <SchemaMarkup schema={globalSchema} />
         <Navbar />
-        <main>{children}</main>
+        <main className="pb-[calc(env(safe-area-inset-bottom)+84px)] md:pb-0">{children}</main>
         <Footer />
-        <WhatsAppButton />
+        {/* Botón flotante WhatsApp solo en desktop; en móvil lo cubre la barra fija inferior */}
+        <div className="hidden md:block">
+          <WhatsAppButton />
+        </div>
+        <MobileCTABar />
         <WhatsAppClickTracker />
         <Analytics />
         <SpeedInsights />

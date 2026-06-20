@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -11,7 +12,11 @@ import Button from '@/components/ui/Button';
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+
+  // El portal solo puede montar en cliente (document.body no existe en SSR).
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,10 +30,21 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
+  // Bloquea el scroll del body mientras el menú está abierto (evita scroll fantasma detrás).
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
   return (
+    <>
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-brand-green-dark/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+        scrolled
+          ? 'bg-brand-green-dark/90 backdrop-blur-md shadow-premium border-b border-white/10'
+          : 'bg-transparent'
       }`}
     >
       <div className="container-custom flex items-center justify-between h-16 md:h-20">
@@ -78,10 +94,17 @@ export default function Navbar() {
           <Menu size={24} />
         </button>
       </div>
+    </nav>
 
-      {/* Mobile drawer */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-50 bg-brand-green-dark flex flex-col md:hidden">
+    {/* Mobile drawer — vía portal a <body> para escapar del backdrop-filter del <nav>
+        (en iOS, un ancestro con backdrop-filter atrapa el position:fixed del hijo). */}
+    {mounted &&
+      mobileOpen &&
+      createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex flex-col md:hidden animate-fade-in-up"
+          style={{ backgroundColor: '#0D2B20' }}
+        >
           <div className="flex items-center justify-between h-16 px-4">
             <Link href="/" className="relative shrink-0">
               <Image
@@ -122,8 +145,9 @@ export default function Navbar() {
               </Button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
-    </nav>
+    </>
   );
 }
