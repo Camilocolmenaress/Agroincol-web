@@ -143,7 +143,7 @@ export default function FumigacionGironPage() {
       <SchemaMarkup schema={localBusinessSchema} />
       <Breadcrumbs items={[
         { name: 'Inicio', href: '/' },
-        { name: 'Zonas', href: '/' },
+        { name: 'Zonas', href: '/zonas' },
         { name: 'Fumigación en Girón' },
       ]} />
 

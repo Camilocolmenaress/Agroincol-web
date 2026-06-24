@@ -141,6 +141,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: 'https://agroincol.com/zonas',
+      lastModified: new Date('2026-06-24'),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
       url: 'https://agroincol.com/zonas/fumigacion-bucaramanga',
       lastModified: new Date('2026-06-09'),
       changeFrequency: 'monthly',
