@@ -10,14 +10,14 @@ import { BUSINESS } from '@/lib/constants';
 import FAQAccordion from './FAQAccordion';
 
 export const metadata: Metadata = {
-  title: 'Control de Comején y Termitas en Bucaramanga',
+  title: 'Comején y Termitas en Bucaramanga: Colonia Completa',
   description:
     'Eliminamos comején y termitas en Bucaramanga con inspección, inyección y barreras químicas. 40+ años de experiencia. Certificación INVIMA. Cotice gratis.',
   alternates: {
     canonical: 'https://agroincol.com/servicios/control-comejen-termitas',
   },
   openGraph: {
-    title: 'Control de Comején y Termitas en Bucaramanga | AGROINCOL',
+    title: 'Comején y Termitas en Bucaramanga: Colonia Completa | AGROINCOL',
     description:
       'Eliminamos comején y termitas en Bucaramanga con inspección, inyección y barreras químicas. 40+ años de experiencia y certificación INVIMA.',
     url: 'https://agroincol.com/servicios/control-comejen-termitas',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Control de Comején y Termitas en Bucaramanga | AGROINCOL',
+    title: 'Comején y Termitas en Bucaramanga: Colonia Completa | AGROINCOL',
     description:
       'Eliminamos comején y termitas en Bucaramanga con inspección, inyección y barreras químicas. 40+ años de experiencia y certificación INVIMA.',
   },
@@ -79,12 +79,7 @@ const serviceSchema = {
   '@type': 'Service',
   name: 'Control de Comején y Termitas',
   serviceType: 'Control de Comején y Termitas',
-  provider: {
-    '@type': 'LocalBusiness',
-    '@id': 'https://agroincol.com/#organization',
-    name: 'AGROINCOL',
-    telephone: BUSINESS.phoneRaw,
-  },
+  provider: { '@id': 'https://agroincol.com/#organization' },
   areaServed: {
     '@type': 'City',
     name: 'Bucaramanga',

@@ -12,13 +12,13 @@ import { BUSINESS, FAQS_DESRATIZACION } from '@/lib/constants';
 import FAQAccordion from './FAQAccordion';
 
 export const metadata: Metadata = {
-  title: 'Desratización en Bucaramanga',
+  title: 'Desratización en Bucaramanga: Sellado de Accesos',
   description: 'Desratización profesional en Bucaramanga y Área Metropolitana. Diagnóstico de puntos de entrada, sellado de vías de acceso y seguimiento post-servicio. 40+ años de experiencia.',
   alternates: {
     canonical: 'https://agroincol.com/servicios/desratizacion',
   },
   openGraph: {
-    title: 'Desratización en Bucaramanga | AGROINCOL',
+    title: 'Desratización en Bucaramanga: Sellado de Accesos | AGROINCOL',
     description: 'Desratización profesional en Bucaramanga y Área Metropolitana. Diagnóstico de puntos de entrada, sellado de vías de acceso y seguimiento post-servicio. 40+ años de experiencia.',
     url: 'https://agroincol.com/servicios/desratizacion',
     siteName: 'AGROINCOL',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Desratización en Bucaramanga | AGROINCOL',
+    title: 'Desratización en Bucaramanga: Sellado de Accesos | AGROINCOL',
     description: 'Desratización profesional en Bucaramanga y Área Metropolitana. Diagnóstico de puntos de entrada, sellado de vías de acceso y seguimiento post-servicio. 40+ años de experiencia.',
   },
 };

@@ -50,11 +50,18 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   manifest: '/manifest.json',
+  alternates: {
+    canonical: 'https://agroincol.com',
+    languages: {
+      'es-CO': 'https://agroincol.com',
+      'x-default': 'https://agroincol.com',
+    },
+  },
 };
 
 const globalSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': ['LocalBusiness', 'PestControlService'],
   '@id': 'https://agroincol.com/#organization',
   name: 'AGROINCOL',
   url: 'https://agroincol.com',
@@ -86,19 +93,12 @@ const globalSchema = {
   ],
   priceRange: '$$',
   image: 'https://agroincol.com/og-image.jpg',
-  // aggregateRating verificado contra el Google Business Profile real (4.9 / 28 reseñas).
-  // Los testimonios con nombres inventados se eliminaron; reemplazar por reseñas reales del GBP.
+  // Sin aggregateRating: Google no permite reseñas auto-referenciales en el LocalBusiness
+  // propio (riesgo de acción manual y no se renderiza). Las reseñas reales viven en el GBP (sameAs).
   sameAs: [
     'https://www.instagram.com/agroincolcorp',
     'https://maps.google.com/?cid=5252561969072218591',
   ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '28',
-    bestRating: '5',
-    worstRating: '1',
-  },
 };
 
 export default function RootLayout({
@@ -107,7 +107,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${heading.variable} ${body.variable}`}>
+    <html lang="es-CO" className={`${heading.variable} ${body.variable}`}>
       <body>
         <SchemaMarkup schema={globalSchema} />
         <Navbar />

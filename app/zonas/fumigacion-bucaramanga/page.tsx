@@ -22,14 +22,14 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Fumigación en Bucaramanga: Cobertura en Todos los Barrios',
+  title: 'Control de Plagas en Bucaramanga: Todos los Barrios',
   description:
     'Fumigación y control de plagas en Bucaramanga, sector por sector: Cabecera, Centro, Provenza, Real de Minas, zona norte y más. 40+ años, certificación INVIMA, respuesta el mismo día.',
   alternates: {
     canonical: 'https://agroincol.com/zonas/fumigacion-bucaramanga',
   },
   openGraph: {
-    title: 'Fumigación en Bucaramanga: Cobertura en Todos los Barrios | AGROINCOL',
+    title: 'Control de Plagas en Bucaramanga: Todos los Barrios | AGROINCOL',
     description:
       'Control de plagas en toda Bucaramanga: cucarachas, roedores, zancudos y comején. Cobertura en Cabecera, Centro, Provenza, Real de Minas y zona norte. Certificación INVIMA.',
     url: 'https://agroincol.com/zonas/fumigacion-bucaramanga',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fumigación en Bucaramanga: Cobertura en Todos los Barrios | AGROINCOL',
+    title: 'Control de Plagas en Bucaramanga: Todos los Barrios | AGROINCOL',
     description:
       'Control de plagas en toda Bucaramanga: cucarachas, roedores, zancudos y comején. Certificación INVIMA y respuesta el mismo día.',
   },
@@ -61,12 +61,7 @@ const serviceSchema = {
   description:
     'Servicio profesional de fumigación y control de plagas en Bucaramanga, Santander, con cobertura en todos los sectores de la ciudad: cucarachas, roedores, zancudos, comején y más. Más de 40 años de experiencia y certificación conforme al Decreto 1843 de 1991 y la Resolución 2674 de 2013.',
   url: 'https://agroincol.com/zonas/fumigacion-bucaramanga',
-  provider: {
-    '@type': 'LocalBusiness',
-    '@id': 'https://agroincol.com/#organization',
-    name: 'AGROINCOL',
-    telephone: BUSINESS.phoneRaw,
-  },
+  provider: { '@id': 'https://agroincol.com/#organization' },
   areaServed: {
     '@type': 'City',
     name: 'Bucaramanga',
