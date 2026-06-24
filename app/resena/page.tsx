@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Star } from 'lucide-react';
 import ReviewButton from '@/components/ui/ReviewButton';
 import { BUSINESS } from '@/lib/constants';
 
@@ -21,8 +22,10 @@ export default function ResenaPage() {
         </p>
 
         {/* Estrellas */}
-        <div className="mt-6 mb-2 flex justify-center gap-1 text-4xl" aria-hidden>
-          <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+        <div className="mt-6 mb-2 flex justify-center gap-1.5" role="img" aria-label="Calificación de 5 estrellas">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star key={i} className="h-8 w-8 fill-brand-amber text-brand-amber" strokeWidth={1.5} />
+          ))}
         </div>
 
         <h1 className="font-heading text-3xl sm:text-4xl font-bold text-brand-green leading-tight">
@@ -36,7 +39,8 @@ export default function ResenaPage() {
         {/* CTA principal */}
         <div className="mt-8">
           <ReviewButton href={BUSINESS.reviewLink} className="w-full text-lg px-8 py-5">
-            Dejar mi reseña ⭐
+            <Star className="h-5 w-5 fill-current" strokeWidth={0} />
+            Dejar mi reseña
           </ReviewButton>
           <p className="mt-3 text-xs text-brand-gray">
             Se abre directo en Google. Solo necesitas tu cuenta (la del celular ya sirve).
@@ -49,7 +53,7 @@ export default function ResenaPage() {
           <ol className="space-y-2.5 text-sm text-brand-gray">
             <li className="flex gap-3"><span className="font-heading font-bold text-brand-orange">1.</span> Toca el botón de arriba</li>
             <li className="flex gap-3"><span className="font-heading font-bold text-brand-orange">2.</span> Elige las estrellas y escribe una línea</li>
-            <li className="flex gap-3"><span className="font-heading font-bold text-brand-orange">3.</span> Publica. ¡Listo, mil gracias! 🙌</li>
+            <li className="flex gap-3"><span className="font-heading font-bold text-brand-orange">3.</span> Publica. ¡Listo, mil gracias!</li>
           </ol>
         </div>
 
