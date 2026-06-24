@@ -24,6 +24,9 @@ export const BUSINESS = {
   serviceAreas: ['Bucaramanga', 'Floridablanca', 'Piedecuesta', 'Girón'],
   slogan: '40 años protegiendo Santander',
   googleMapsLink: 'https://maps.google.com/?cid=5252561969072218591',
+  // Link DIRECTO a la casilla de reseña de Google (abre el formulario, no el perfil).
+  // Obtenido en Google Business Profile → "Pedir reseñas". Si cambia, edita solo esta línea: el QR apunta a /resena, no aquí.
+  reviewLink: 'https://g.page/r/Cd-hRhdI2eRIEBM/review',
 } as const;
 
 export const SERVICES = [
