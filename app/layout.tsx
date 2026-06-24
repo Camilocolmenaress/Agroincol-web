@@ -122,10 +122,10 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
 
-        {/* GTM diferido (lazyOnload): se inicializa en tiempo de inactividad del navegador,
-            fuera de la ruta crítica de hidratación. Antes pesaba ~150KB en preload y competía
-            con la interactividad. El tracking sigue funcionando, solo arranca ~1-2s después. */}
-        <Script id="gtm-init" strategy="lazyOnload">
+        {/* GTM con afterInteractive: carga justo después de la hidratación, sin bloquear el
+            render inicial, pero a tiempo para no perder conversiones de Google Ads (AW-) ni
+            pageviews de rebotes rápidos. lazyOnload (idle) perdía conversiones de tráfico pagado. */}
+        <Script id="gtm-init" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NLH5NQRR');`}
         </Script>
         <noscript>
