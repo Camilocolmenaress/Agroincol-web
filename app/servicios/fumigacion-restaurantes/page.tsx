@@ -182,6 +182,14 @@ export default function RestaurantesPage() {
               Calcule la frecuencia ideal para su restaurante con nuestra herramienta gratuita →
             </Link>
           </p>
+          <p className="mt-2">
+            <Link
+              href="/certificado-de-fumigacion"
+              className="text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body-sm underline transition-colors"
+            >
+              Conozca el certificado de fumigación que entregamos el mismo día →
+            </Link>
+          </p>
         </div>
       </section>
 

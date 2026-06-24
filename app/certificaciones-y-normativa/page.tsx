@@ -50,8 +50,8 @@ const faqSchema = {
 };
 
 export const metadata: Metadata = {
-  title: 'Certificado de Fumigación INVIMA el Mismo Día',
-  description: 'Certificado de fumigación válido ante INVIMA y Secretaría de Salud en Bucaramanga ✓ Entregado el mismo día ✓ Decreto 1843 y Res. 2674 ✓ Pase su inspección sin sanciones.',
+  title: 'Normativa de Fumigación: Decreto 1843 y Resolución 2674',
+  description: 'Normativa colombiana de control de plagas: Decreto 1843 de 1991 y Resolución 2674 de 2013. Cómo cumple AGROINCOL y qué exige el INVIMA. ¿Solo necesita el certificado? Lo entregamos el mismo día.',
   alternates: {
     canonical: 'https://agroincol.com/certificaciones-y-normativa',
   },
@@ -212,10 +212,16 @@ export default function CertificacionesPage() {
               </li>
             ))}
           </ul>
-          <p className="text-brand-gray text-body mb-8">
+          <p className="text-brand-gray text-body mb-4">
             Este certificado es válido como soporte ante la Secretaría de Salud de Santander y el INVIMA para visitas
             de inspección sanitaria.
           </p>
+          <Link
+            href="/certificado-de-fumigacion"
+            className="text-brand-orange font-semibold hover:underline inline-block mb-8"
+          >
+            ¿Solo necesita el certificado de fumigación? Se lo entregamos el mismo día →
+          </Link>
           <div className="relative w-full h-64 md:h-96 max-w-2xl rounded-2xl overflow-hidden">
             <Image
               src="/images/certificaciones/entrega-certificado.jpg"
