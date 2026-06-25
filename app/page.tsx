@@ -4,6 +4,7 @@ import Hero from '@/components/sections/Hero';
 import AudienceSelector from '@/components/sections/AudienceSelector';
 import HomeProcess from '@/components/sections/HomeProcess';
 import ServicesGrid from '@/components/sections/ServicesGrid';
+import AlivioTeaser from '@/components/sections/AlivioTeaser';
 import WhyUs from '@/components/sections/WhyUs';
 import ServiceAreas from '@/components/sections/ServiceAreas';
 import Testimonials from '@/components/sections/Testimonials';
@@ -94,6 +95,9 @@ export default function HomePage() {
 
       {/* 5. Services */}
       <ServicesGrid />
+
+      {/* 5.5 Alivio — línea hermana (zona /alivio, Multi-Zones) */}
+      <AlivioTeaser />
 
       {/* 6. Why Us */}
       <WhyUs />
