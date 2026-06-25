@@ -49,6 +49,16 @@ export default function Footer() {
                   Precios
                 </Link>
               </li>
+              {/* Alivio — zona externa (/alivio). <a> obligatorio para cruzar de zona. */}
+              <li>
+                <a
+                  href="/alivio"
+                  className="inline-flex items-center gap-2 text-body-sm font-semibold text-[#1FB3A7] transition-colors hover:text-white"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#1FB3A7]" aria-hidden />
+                  Alivio · Lavado de muebles
+                </a>
+              </li>
             </ul>
           </div>
 

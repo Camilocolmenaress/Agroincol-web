@@ -76,6 +76,14 @@ export default function Navbar() {
               </Link>
             );
           })}
+          {/* Alivio — zona externa (/alivio). <a> obligatorio: <Link> rompe el cruce de zonas. */}
+          <a
+            href="/alivio"
+            className="inline-flex items-center gap-1.5 text-sm font-body font-semibold text-[#1FB3A7] transition-colors duration-200 hover:text-white"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#1FB3A7]" aria-hidden />
+            Alivio
+          </a>
         </div>
 
         {/* Desktop CTA */}
@@ -139,6 +147,16 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            {/* Alivio — zona externa (/alivio). <a> obligatorio para cruzar de zona. */}
+            <a
+              href="/alivio"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-2 border-b border-brand-green py-4 text-lg font-body font-semibold text-[#1FB3A7]"
+            >
+              <span className="h-2 w-2 rounded-full bg-[#1FB3A7]" aria-hidden />
+              Alivio
+              <span className="text-body-sm font-semibold text-white/45">· Lavado de muebles</span>
+            </a>
             <div className="mt-6">
               <Button variant="primary" href="#contacto" fullWidth>
                 Cotizar Ahora

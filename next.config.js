@@ -14,6 +14,20 @@ const nextConfig = {
       },
     ];
   },
+  // Multi-Zones: agroincol.com/alivio lo sirve la app Alivio (zona aparte).
+  // ALIVIO_ZONE_URL = URL de producción de la zona Alivio en Vercel
+  // (p.ej. https://alivio-web.vercel.app), SIN slash final.
+  // Si la env no está, no se añade rewrite (el sitio sigue igual).
+  async rewrites() {
+    const alivio = process.env.ALIVIO_ZONE_URL;
+    if (!alivio) return [];
+    const base = alivio.replace(/\/$/, '');
+    return [
+      { source: '/alivio', destination: `${base}/alivio` },
+      // cubre páginas, /api y /_next (assetPrefix también es /alivio)
+      { source: '/alivio/:path+', destination: `${base}/alivio/:path+` },
+    ];
+  },
   async headers() {
     return [
       {
