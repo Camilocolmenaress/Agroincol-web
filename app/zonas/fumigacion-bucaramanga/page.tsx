@@ -20,6 +20,7 @@ import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
+import FAQAccordion from './FAQAccordion';
 
 export const metadata: Metadata = {
   title: 'Control de Plagas en Bucaramanga: Todos los Barrios',
@@ -66,6 +67,54 @@ const serviceSchema = {
     '@type': 'City',
     name: 'Bucaramanga',
   },
+};
+
+// Preguntas frecuentes: derivadas de queries reales de Search Console con
+// impresiones en Bucaramanga y 0 clics (precio, frecuencia, certificado, tiempo).
+const faqs = [
+  {
+    question: '¿Cuánto cuesta una fumigación en Bucaramanga?',
+    answer:
+      'El precio depende del tipo de propiedad, los metros cuadrados y la plaga a controlar. Una fumigación residencial estándar en Bucaramanga suele partir desde un valor accesible por visita, y para restaurantes o empresas el costo se ajusta según el área y la frecuencia del plan. Lo más práctico es pedir una cotización gratis: enviamos el valor exacto el mismo día, sin compromiso.',
+  },
+  {
+    question: '¿Cada cuánto se debe fumigar en Bucaramanga?',
+    answer:
+      'En hogares recomendamos una fumigación preventiva cada 3 a 6 meses, dependiendo del nivel de infestación y del sector. Restaurantes y negocios de alimentos deben fumigar mínimo cada 3 meses para cumplir con la normativa del INVIMA y la Secretaría de Salud. El clima cálido de la meseta de Bucaramanga acelera la reproducción de cucarachas y zancudos, así que la prevención periódica es clave.',
+  },
+  {
+    question: '¿Atienden mi barrio en Bucaramanga?',
+    answer:
+      'Sí. Cubrimos toda la ciudad: Cabecera, Sotomayor, El Prado, Centro, San Francisco, Provenza, La Victoria, Real de Minas, Ciudadela, Mutis, Café Madrid, Kennedy, Colorados y todos los sectores del norte, centro y sur. Desde nuestra sede en Floridablanca llegamos el mismo día a cualquier barrio de Bucaramanga.',
+  },
+  {
+    question: '¿El certificado de fumigación sirve para el INVIMA?',
+    answer:
+      'Sí. Al terminar el servicio entregamos un certificado de fumigación válido para inspecciones del INVIMA y la Secretaría de Salud de Santander, conforme al Decreto 1843 de 1991 y la Resolución 2674 de 2013. Es el documento que exigen a restaurantes, cafeterías y negocios de alimentos durante las visitas de control sanitario.',
+  },
+  {
+    question: '¿En cuánto tiempo llegan a hacer la fumigación?',
+    answer:
+      'Atendemos el mismo día en toda Bucaramanga. Para casos urgentes —una plaga visible en un restaurante o una inspección próxima— priorizamos la visita. Escríbanos por WhatsApp y coordinamos el horario que mejor le convenga.',
+  },
+  {
+    question: '¿Los productos son seguros para niños y mascotas?',
+    answer:
+      'Sí. Usamos productos registrados ante el ICA y aprobados por la OMS, de baja toxicidad y aplicados por técnicos capacitados. Le indicamos el tiempo de reingreso seguro tras cada aplicación para que su familia y sus mascotas no corran ningún riesgo.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
 };
 
 const services = [
@@ -440,6 +489,35 @@ export default function FumigacionBucaramangaPage() {
         </div>
       </section>
 
+      {/* Preguntas frecuentes */}
+      <section className="section-padding">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center">
+              Preguntas Frecuentes sobre Fumigación en Bucaramanga
+            </h2>
+            <p className="text-brand-gray text-body-lg mt-4 mb-8 text-center">
+              Resolvemos las dudas más comunes sobre precios, frecuencia y certificados de fumigación en la ciudad.
+            </p>
+            <FAQAccordion faqs={faqs} />
+            <p className="text-center text-brand-gray text-body-sm mt-8">
+              ¿Necesita el documento para una inspección? Conozca el{' '}
+              <Link href="/certificado-de-fumigacion" className="text-brand-orange hover:text-brand-orange-dark font-semibold transition-colors">
+                certificado de fumigación
+              </Link>
+              , consulte{' '}
+              <Link href="/precios" className="text-brand-orange hover:text-brand-orange-dark font-semibold transition-colors">
+                precios de fumigación
+              </Link>{' '}
+              o calcule{' '}
+              <Link href="/herramientas/calculadora-fumigacion" className="text-brand-orange hover:text-brand-orange-dark font-semibold transition-colors">
+                cada cuánto fumigar su propiedad
+              </Link>.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Contact CTA */}
       <section className="section-padding bg-brand-light" id="contacto-zona">
         <div className="container-custom">
@@ -465,6 +543,7 @@ export default function FumigacionBucaramangaPage() {
       </section>
 
       <SchemaMarkup schema={serviceSchema} />
+      <SchemaMarkup schema={faqSchema} />
     </>
   );
 }

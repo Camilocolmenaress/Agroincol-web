@@ -20,6 +20,7 @@ import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
+import FAQAccordion from './FAQAccordion';
 
 export const metadata: Metadata = {
   title: 'Fumigación en Piedecuesta',
@@ -71,6 +72,52 @@ const localBusinessSchema = {
     '@type': 'City',
     name: 'Piedecuesta',
   },
+};
+
+const faqs = [
+  {
+    question: '¿Cuánto cuesta una fumigación en Piedecuesta?',
+    answer:
+      'El precio depende del tipo de propiedad, los metros cuadrados y la plaga a controlar. Una fumigación residencial estándar en Piedecuesta parte desde un valor accesible por visita; para restaurantes, fincas o galpones el costo se ajusta según el área y la frecuencia. Pida una cotización gratis y le enviamos el valor exacto el mismo día, sin compromiso.',
+  },
+  {
+    question: '¿Cada cuánto se debe fumigar en Piedecuesta?',
+    answer:
+      'En hogares recomendamos fumigar de forma preventiva cada 3 a 6 meses. Restaurantes y negocios de alimentos deben hacerlo mínimo cada 3 meses para cumplir con el INVIMA. En fincas y galpones de la zona rural la frecuencia se define según el cultivo o la actividad. El clima cálido de Piedecuesta acelera los ciclos de termitas y cucarachas, así que la prevención periódica evita infestaciones grandes.',
+  },
+  {
+    question: '¿Atienden la zona rural, fincas y veredas de Piedecuesta?',
+    answer:
+      'Sí. Cubrimos todo Piedecuesta: casco urbano, zona industrial y área rural, incluyendo la vía a la Mesa de los Santos, Mensulí, Guatiguará y las veredas. Atendemos fincas, galpones avícolas y propiedades con áreas verdes extensas, donde son frecuentes las garrapatas, pulgas y termitas.',
+  },
+  {
+    question: '¿El certificado de fumigación sirve para el INVIMA?',
+    answer:
+      'Sí. Al finalizar entregamos un certificado de fumigación válido para inspecciones del INVIMA y la Secretaría de Salud de Santander, conforme al Decreto 1843 de 1991 y la Resolución 2674 de 2013. Es el documento que exigen a restaurantes, panaderías y negocios de alimentos de Piedecuesta durante las visitas de control sanitario.',
+  },
+  {
+    question: '¿En cuánto tiempo llegan a hacer la fumigación?',
+    answer:
+      'Llegamos a Piedecuesta en menos de 2 horas desde nuestra sede en Floridablanca, a solo 15 minutos del centro del municipio. Para casos urgentes —una plaga visible o una inspección próxima— priorizamos la visita. Escríbanos por WhatsApp y coordinamos el horario.',
+  },
+  {
+    question: '¿Los productos son seguros para niños y mascotas?',
+    answer:
+      'Sí. Usamos productos registrados ante el ICA y aprobados por la OMS, de baja toxicidad y seguros incluso para animales de granja. Los aplican técnicos capacitados y le indicamos el tiempo de reingreso seguro tras cada aplicación.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
 };
 
 const services = [
@@ -140,6 +187,7 @@ export default function FumigacionPiedecuestaPage() {
   return (
     <>
       <SchemaMarkup schema={localBusinessSchema} />
+      <SchemaMarkup schema={faqSchema} />
       <Breadcrumbs items={[
         { name: 'Inicio', href: '/' },
         { name: 'Zonas', href: '/zonas' },
@@ -381,6 +429,35 @@ export default function FumigacionPiedecuestaPage() {
               Girón
             </Link>
           </p>
+        </div>
+      </section>
+
+      {/* Preguntas frecuentes */}
+      <section className="section-padding">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center">
+              Preguntas Frecuentes sobre Fumigación en Piedecuesta
+            </h2>
+            <p className="text-brand-gray text-body-lg mt-4 mb-8 text-center">
+              Resolvemos las dudas más comunes sobre precios, frecuencia y certificados de fumigación en el municipio.
+            </p>
+            <FAQAccordion faqs={faqs} />
+            <p className="text-center text-brand-gray text-body-sm mt-8">
+              ¿Necesita el documento para una inspección? Conozca el{' '}
+              <Link href="/certificado-de-fumigacion" className="text-brand-orange hover:text-brand-orange-dark font-semibold transition-colors">
+                certificado de fumigación
+              </Link>
+              , consulte{' '}
+              <Link href="/precios" className="text-brand-orange hover:text-brand-orange-dark font-semibold transition-colors">
+                precios de fumigación
+              </Link>{' '}
+              o calcule{' '}
+              <Link href="/herramientas/calculadora-fumigacion" className="text-brand-orange hover:text-brand-orange-dark font-semibold transition-colors">
+                cada cuánto fumigar su propiedad
+              </Link>.
+            </p>
+          </div>
         </div>
       </section>
 
