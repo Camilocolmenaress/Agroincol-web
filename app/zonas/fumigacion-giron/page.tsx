@@ -154,7 +154,6 @@ export default function FumigacionGironPage() {
         subtitle="Cobertura completa en Girón y zona industrial de Chimitá. 40+ años protegiendo hogares, restaurantes e industrias en Santander."
         badgeText="Cobertura en Girón y Chimitá"
         primaryCta={{ text: 'Cotizar Gratis', href: '#contacto-zona' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Fumigación profesional en Girón, Santander — AGROINCOL"
       />
@@ -177,13 +176,13 @@ export default function FumigacionGironPage() {
                 Con más de 200.000 habitantes y un crecimiento urbano constante en sectores como Rincón de Girón,
                 Portal de los Santos y la vía al aeropuerto, Girón requiere servicios de fumigación que se adapten tanto
                 a las viviendas familiares como a los grandes complejos industriales. AGROINCOL ofrece cobertura total
-                en el municipio con tiempos de respuesta menores a 2 horas.
+                en el municipio: escríbanos por WhatsApp y le respondemos en menos de 5 minutos.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {[
                 { icon: MapPin, label: 'Girón completo', sublabel: 'Urbano + Chimitá' },
-                { icon: Clock, label: '< 2 Horas', sublabel: 'Tiempo de respuesta' },
+                { icon: Clock, label: '< 5 Min', sublabel: 'Respuesta por WhatsApp' },
                 { icon: Shield, label: '40+ Años', sublabel: 'De experiencia' },
                 { icon: Award, label: 'Certificados', sublabel: 'INVIMA y Sec. Salud' },
               ].map((item) => {

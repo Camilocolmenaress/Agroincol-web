@@ -24,7 +24,7 @@ const ZONAS = [
   {
     name: 'Piedecuesta',
     href: '/zonas/fumigacion-piedecuesta',
-    blurb: 'Cobertura en todo el municipio. Respuesta en menos de 2 horas.',
+    blurb: 'Cobertura en todo el municipio. Respondemos por WhatsApp en menos de 5 minutos.',
   },
   {
     name: 'Girón',
@@ -150,8 +150,7 @@ export default function ZonasHubPage() {
             confirmamos cobertura y cotización el mismo día.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" href={`tel:${BUSINESS.phoneRaw}`}>Llamar ahora</Button>
-            <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">WhatsApp</Button>
+            <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">Escríbanos por WhatsApp</Button>
           </div>
         </div>
       </section>

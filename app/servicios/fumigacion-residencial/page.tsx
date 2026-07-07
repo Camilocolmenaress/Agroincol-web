@@ -140,7 +140,6 @@ export default function ResidencialPage() {
         subtitle="Proteja su hogar y familia con productos seguros aprobados por la OMS y el ICA. Sin riesgo para niños ni mascotas. Más de 40 años de experiencia en Bucaramanga, Floridablanca, Piedecuesta y Girón."
         badgeText="Productos seguros para niños y mascotas"
         primaryCta={{ text: 'Proteja su Hogar', href: '#contacto' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL realizando fumigación residencial en Bucaramanga"
       />
@@ -232,14 +231,14 @@ export default function ResidencialPage() {
                 Proteja su Hogar Hoy
               </h2>
               <p className="text-brand-gray text-body mt-4">
-                Solicite una cotización sin compromiso. Nuestro equipo se pondrá en contacto con usted en menos de
-                2 horas para programar su servicio de fumigación.
+                Solicite una cotización sin compromiso. Le respondemos por WhatsApp en menos de
+                5 minutos para programar su servicio de fumigación.
               </p>
               <ul className="mt-6 space-y-3">
                 {[
                   'Cotización gratis y sin compromiso',
                   'Productos seguros para niños y mascotas',
-                  'Respuesta en menos de 2 horas',
+                  'Respuesta por WhatsApp en menos de 5 minutos',
                   '40+ años de experiencia',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brand-black text-body">

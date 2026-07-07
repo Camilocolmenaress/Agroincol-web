@@ -6,7 +6,7 @@ const benefits = [
   { icon: CheckCircle, text: 'Más de 40 años de experiencia comprobada en Santander' },
   { icon: Shield, text: 'Técnicos certificados y capacitados constantemente' },
   { icon: Leaf, text: 'Productos seguros aprobados por la OMS y registrados ante el ICA' },
-  { icon: Clock, text: 'Tiempo de respuesta menor a 2 horas en el Área Metropolitana' },
+  { icon: Clock, text: 'Respuesta por WhatsApp en menos de 5 minutos en el Área Metropolitana' },
   { icon: MapPin, text: 'Cobertura completa: Bucaramanga, Floridablanca, Piedecuesta y Girón' },
   { icon: FileCheck, text: 'Certificado de fumigación válido ante Secretaría de Salud e INVIMA' },
 ];

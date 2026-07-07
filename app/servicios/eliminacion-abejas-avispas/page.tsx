@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { AlertTriangle, ShieldAlert, Flame, Wind, Phone, Leaf, Bug, Eye } from 'lucide-react';
+import { AlertTriangle, ShieldAlert, Flame, Wind, MessageCircle, Leaf, Bug, Eye } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import ProcessTimeline from '@/components/sections/ProcessTimeline';
@@ -168,10 +168,9 @@ export default function AbejasAvispasPage() {
       <Hero
         withBreadcrumbs
         title="Retiro de Abejas y Avispas en Bucaramanga"
-        subtitle="¿Encontró un nido en su casa o negocio? No intente retirarlo: aléjese y llámenos. Retiro seguro con equipos de protección especializados y reubicación con apicultores cuando es viable. Más de 40 años protegiendo Santander."
+        subtitle="¿Encontró un nido en su casa o negocio? No intente retirarlo: aléjese y escríbanos por WhatsApp con una foto. Retiro seguro con equipos de protección especializados y reubicación con apicultores cuando es viable. Más de 40 años protegiendo Santander."
         badgeText="Atención prioritaria en Bucaramanga y Área Metropolitana"
-        primaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        secondaryCta={{ text: 'WhatsApp con foto del nido', href: BUSINESS.whatsappLink }}
+        primaryCta={{ text: 'WhatsApp con foto del nido', href: BUSINESS.whatsappLink }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL con equipo de protección retirando nido de abejas en Bucaramanga"
       />
@@ -181,18 +180,15 @@ export default function AbejasAvispasPage() {
         <div className="container-custom py-6">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="flex items-start gap-3">
-              <Phone size={24} className="text-brand-orange shrink-0 mt-0.5" />
+              <MessageCircle size={24} className="text-brand-orange shrink-0 mt-0.5" />
               <p className="text-brand-black text-body">
                 <strong>¿Tiene el nido frente a usted en este momento?</strong> Aléjese a una distancia segura y
-                contáctenos. Le indicamos qué hacer mientras llega el técnico.
+                escríbanos por WhatsApp con una foto. Le indicamos qué hacer mientras llega el técnico.
               </p>
             </div>
             <div className="flex gap-3 shrink-0">
-              <Button variant="primary" href={`tel:${BUSINESS.phoneRaw}`}>
-                {BUSINESS.phone}
-              </Button>
               <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
-                WhatsApp
+                Escribir por WhatsApp
               </Button>
             </div>
           </div>
@@ -416,9 +412,6 @@ export default function AbejasAvispasPage() {
                 ))}
               </ul>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <Button variant="primary" href={`tel:${BUSINESS.phoneRaw}`}>
-                  Llamar: {BUSINESS.phone}
-                </Button>
                 <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
                   Escribir por WhatsApp
                 </Button>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CheckCircle, Clock, FileCheck, Phone, ShieldCheck, Store } from 'lucide-react';
+import { CheckCircle, Clock, FileCheck, MessageCircle, ShieldCheck, Store } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import ContactForm from '@/components/forms/ContactForm';
@@ -58,7 +58,7 @@ const quienes = [
 ];
 
 const pasos = [
-  { n: '1', title: 'Nos contactas', text: 'Por WhatsApp o llamada. Te cotizamos gratis el mismo día según tu establecimiento.' },
+  { n: '1', title: 'Nos escribes', text: 'Por WhatsApp. Te respondemos en menos de 5 minutos y cotizamos gratis el mismo día según tu establecimiento.' },
   { n: '2', title: 'Hacemos el servicio', text: 'Técnicos certificados, productos registrados ante el ICA y protocolos de seguridad.' },
   { n: '3', title: 'Recibes el certificado', text: 'Firmado y válido ante INVIMA, en mano el mismo día del servicio.' },
 ];
@@ -251,7 +251,7 @@ export default function CertificadoFumigacionPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="primary" href="#contacto">Cotizar gratis</Button>
             <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
-              <Phone size={18} /> Escribir por WhatsApp
+              <MessageCircle size={18} /> Escribir por WhatsApp
             </Button>
           </div>
         </div>

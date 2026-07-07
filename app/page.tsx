@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Shield, Award, Clock, MapPin, Phone } from 'lucide-react';
+import { Shield, Award, Clock, MapPin } from 'lucide-react';
 import Hero from '@/components/sections/Hero';
 import AudienceSelector from '@/components/sections/AudienceSelector';
 import HomeProcess from '@/components/sections/HomeProcess';
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 const trustItems = [
   { icon: Shield, text: '40+ Años de Experiencia' },
   { icon: Award, text: 'Certificación Vigente' },
-  { icon: Clock, text: 'Respuesta < 2 Horas' },
+  { icon: Clock, text: 'Respuesta < 5 Minutos' },
   { icon: MapPin, text: 'Área Metropolitana de Bucaramanga' },
 ];
 
@@ -58,9 +58,8 @@ export default function HomePage() {
       <Hero
         title="Fumigación y Control de Plagas en Bucaramanga"
         subtitle="Más de 40 años protegiendo hogares, restaurantes e industrias en Bucaramanga, Floridablanca, Piedecuesta y Girón."
-        badgeText="Respuesta en menos de 2 horas"
+        badgeText="Respondemos por WhatsApp en menos de 5 minutos"
         primaryCta={{ text: 'Cotizar por WhatsApp', href: BUSINESS.whatsappLink }}
-        secondaryCta={{ text: 'Llamar ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL realizando fumigación profesional en Bucaramanga"
       />
@@ -114,7 +113,7 @@ export default function HomePage() {
       {/* 10. FAQ — resuelve objeciones que frenan la conversión */}
       <HomeFAQ />
 
-      {/* 6.5 Gradient CTA Band — impulsa llamadas inmediatas */}
+      {/* 6.5 Gradient CTA Band — impulsa el contacto inmediato por WhatsApp */}
       <section className="bg-brand-light pt-section-mobile md:pt-section">
         <div className="container-custom">
           <div className="reveal relative overflow-hidden rounded-3xl bg-orange-gradient px-6 py-10 md:px-12 md:py-14 shadow-premium">
@@ -122,19 +121,13 @@ export default function HomePage() {
             <div className="relative flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left">
               <div>
                 <h2 className="font-heading text-h2-mobile md:text-h2 text-white text-balance">
-                  ¿Tiene una plaga ahora? Respondemos en menos de 2 horas
+                  ¿Tiene una plaga ahora? Respondemos por WhatsApp en menos de 5 minutos
                 </h2>
                 <p className="text-white/85 text-body-lg mt-3 text-pretty">
                   Atención en Bucaramanga, Floridablanca, Piedecuesta y Girón. Cotización gratis y sin compromiso.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-                <a
-                  href={`tel:${BUSINESS.phoneRaw}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 font-heading font-semibold text-brand-orange shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover"
-                >
-                  <Phone size={18} /> Llamar ahora
-                </a>
                 <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
                   Escribir por WhatsApp
                 </Button>
@@ -154,13 +147,13 @@ export default function HomePage() {
                 Proteja su Hogar o Negocio Hoy
               </h2>
               <p className="text-brand-gray text-body mt-4">
-                Solicite una cotización sin compromiso. Nuestro equipo se pondrá en contacto con usted en menos de
-                2 horas para programar su servicio de fumigación.
+                Solicite una cotización sin compromiso. Le respondemos por WhatsApp en menos de
+                5 minutos para programar su servicio de fumigación.
               </p>
               <ul className="mt-6 space-y-3">
                 {[
                   'Cotización gratis y sin compromiso',
-                  'Respuesta en menos de 2 horas',
+                  'Respuesta por WhatsApp en menos de 5 minutos',
                   'Certificado válido ante INVIMA',
                   '40+ años de experiencia',
                 ].map((item) => (

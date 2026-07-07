@@ -149,7 +149,7 @@ export default function ArticleLayout({
                 ¿Necesita Control de Plagas?
               </h2>
               <p className="text-brand-gray text-body mt-4">
-                Cotice gratis con AGROINCOL. Respuesta en menos de 2 horas en el Área Metropolitana de Bucaramanga.
+                Cotice gratis con AGROINCOL. Le respondemos por WhatsApp en menos de 5 minutos en el Área Metropolitana de Bucaramanga.
               </p>
               <div className="mt-6">
                 <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">

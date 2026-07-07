@@ -193,7 +193,7 @@ export default function PlagasLluviasPage() {
         {/* CTA */}
         <div className="bg-brand-light rounded-2xl p-6 mt-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
-            <strong>¿La temporada de lluvias ya trajo plagas a su propiedad?</strong> Contáctenos hoy para una inspección y servicio de control profesional. Atendemos todo el Área Metropolitana de Bucaramanga con respuesta en menos de 2 horas.
+            <strong>¿La temporada de lluvias ya trajo plagas a su propiedad?</strong> Contáctenos hoy para una inspección y servicio de control profesional. Atendemos todo el Área Metropolitana de Bucaramanga y respondemos por WhatsApp en menos de 5 minutos.
           </p>
         </div>
       </ArticleLayout>

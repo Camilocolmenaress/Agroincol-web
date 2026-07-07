@@ -93,7 +93,7 @@ const serviceSteps = [
   {
     icon: FileText,
     title: 'Reporte digital',
-    description: 'En menos de 2 horas por WhatsApp',
+    description: 'Le llega por WhatsApp el mismo día',
   },
 ];
 
@@ -276,7 +276,7 @@ export default function PreciosPage() {
                 aprobados por la OMS, y técnicos profesionales capacitados. El valor final puede variar según el tamaño
                 específico de su propiedad, el tipo de plaga, las condiciones del entorno y el nivel de infestación.
                 Por eso, siempre recomendamos solicitar una cotización personalizada: es gratis, sin compromiso, y le
-                respondemos en menos de 2 horas.
+                respondemos por WhatsApp en menos de 5 minutos.
               </p>
             </div>
 
@@ -332,7 +332,7 @@ export default function PreciosPage() {
               <ul className="mt-6 space-y-3">
                 {[
                   'Cotización gratis y sin compromiso',
-                  'Respuesta en menos de 2 horas',
+                  'Respuesta por WhatsApp en menos de 5 minutos',
                   'Precios con IVA incluido',
                   'Certificado INVIMA incluido (programas)',
                 ].map((item) => (

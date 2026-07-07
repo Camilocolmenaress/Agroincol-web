@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: '¿En qué zonas atienden y qué tan rápido?',
-    a: 'Bucaramanga, Floridablanca, Piedecuesta y Girón. Desde nuestra sede en Floridablanca garantizamos respuesta en menos de 2 horas en el Área Metropolitana.',
+    a: 'Bucaramanga, Floridablanca, Piedecuesta y Girón. Escríbanos por WhatsApp: respondemos en menos de 5 minutos y, desde nuestra sede en Floridablanca, coordinamos la visita el mismo día en el Área Metropolitana.',
   },
 ];
 

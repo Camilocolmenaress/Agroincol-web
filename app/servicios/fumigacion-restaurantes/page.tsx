@@ -116,7 +116,6 @@ export default function RestaurantesPage() {
         subtitle="Cumpla con la Resolución 2674 del INVIMA y proteja su establecimiento. Servicio certificado con más de 40 años de experiencia en el sector de alimentos."
         badgeText="Certificado válido ante INVIMA y Secretaría de Salud"
         primaryCta={{ text: 'Proteja su Restaurante', href: '#contacto' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-restaurantes.jpg"
         imageAlt="Técnico de AGROINCOL inspeccionando cocina de restaurante en Bucaramanga"
       />
@@ -220,13 +219,13 @@ export default function RestaurantesPage() {
                 Proteja su Restaurante Hoy Mismo
               </h2>
               <p className="text-brand-gray text-body mt-4">
-                Solicite una cotización sin compromiso. Nuestro equipo se pondrá en contacto con usted en menos de
-                2 horas para programar su servicio de fumigación.
+                Solicite una cotización sin compromiso. Le respondemos por WhatsApp en menos de
+                5 minutos para programar su servicio de fumigación.
               </p>
               <ul className="mt-6 space-y-3">
                 {[
                   'Cotización gratis y sin compromiso',
-                  'Respuesta en menos de 2 horas',
+                  'Respuesta por WhatsApp en menos de 5 minutos',
                   'Certificado válido ante INVIMA',
                   '40+ años de experiencia',
                 ].map((item) => (

@@ -105,8 +105,8 @@ export default function ContactForm({ preselectedService, formId, compact = fals
           <CheckCircle size={48} className="text-green-600 mx-auto mb-4" />
           <h3 className="font-heading font-semibold text-h3 text-brand-green">¡Mensaje enviado con éxito!</h3>
           <p className="text-brand-gray text-body mt-2">
-            Nos pondremos en contacto con usted en menos de 2 horas. Si necesita atención inmediata,
-            puede llamarnos o escribirnos por WhatsApp.
+            Le respondemos por WhatsApp en menos de 5 minutos. Si necesita atención inmediata,
+            escríbanos directamente por WhatsApp.
           </p>
           <div className="mt-6">
             <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
@@ -125,7 +125,7 @@ export default function ContactForm({ preselectedService, formId, compact = fals
           Solicite su Cotización Gratis
         </h2>
         <p className="text-brand-gray text-body-sm mt-2">
-          Respuesta en menos de 2 horas · Sin compromiso · 40+ años de experiencia
+          Respuesta por WhatsApp en menos de 5 minutos · Sin compromiso · 40+ años de experiencia
         </p>
       </div>
 

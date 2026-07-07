@@ -122,7 +122,6 @@ export default function ControlPlagasComercialPage() {
         subtitle="Proteja la imagen y operación de su negocio. Programa MIP documentado, visitas periódicas y certificado válido para inspecciones sanitarias. Más de 40 años de experiencia en el Área Metropolitana."
         badgeText="Certificado válido para inspecciones sanitarias"
         primaryCta={{ text: 'Cotizar Plan Comercial', href: '#contacto' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Control de plagas comercial en Bucaramanga — AGROINCOL"
       />
@@ -219,8 +218,8 @@ export default function ControlPlagasComercialPage() {
                 Proteja su Negocio Hoy
               </h2>
               <p className="text-brand-gray text-body mt-4">
-                Solicite una cotización sin compromiso. Nuestro equipo se pondrá en contacto con usted en menos de
-                2 horas para programar su servicio.
+                Solicite una cotización sin compromiso. Le respondemos por WhatsApp en menos de
+                5 minutos para programar su servicio.
               </p>
               <ul className="mt-6 space-y-3">
                 {[

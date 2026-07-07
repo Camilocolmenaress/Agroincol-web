@@ -19,8 +19,8 @@ export default function ServiceAreas() {
           </h2>
           <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto text-pretty">
             Llevamos más de 40 años ofreciendo servicios de fumigación y control de plagas en los 4 municipios del
-            Área Metropolitana de Bucaramanga. Nuestra ubicación en Floridablanca nos permite garantizar tiempos de
-            respuesta menores a 2 horas.
+            Área Metropolitana de Bucaramanga. Escríbanos por WhatsApp: respondemos en menos de 5 minutos y, desde
+            nuestra sede en Floridablanca, coordinamos la visita el mismo día.
           </p>
         </div>
         <div className="reveal grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">

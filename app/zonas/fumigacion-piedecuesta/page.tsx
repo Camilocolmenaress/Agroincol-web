@@ -25,7 +25,7 @@ import FAQAccordion from './FAQAccordion';
 export const metadata: Metadata = {
   title: 'Fumigación en Piedecuesta',
   description:
-    'Servicio de fumigación y control de plagas en Piedecuesta, Santander. 40+ años de experiencia. Certificación INVIMA. Respuesta en menos de 2 horas.',
+    'Servicio de fumigación y control de plagas en Piedecuesta, Santander. 40+ años de experiencia. Certificación INVIMA. Respondemos por WhatsApp en menos de 5 minutos.',
   alternates: {
     canonical: 'https://agroincol.com/zonas/fumigacion-piedecuesta',
   },
@@ -201,7 +201,6 @@ export default function FumigacionPiedecuestaPage() {
         subtitle="Cobertura completa en Piedecuesta: desde el casco urbano hasta la Mesa de los Santos. 40+ años de experiencia en control de plagas."
         badgeText="Cobertura completa en Piedecuesta"
         primaryCta={{ text: 'Cotizar Gratis', href: '#contacto-zona' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Fumigación profesional en Piedecuesta, Santander — AGROINCOL"
       />
@@ -230,7 +229,7 @@ export default function FumigacionPiedecuestaPage() {
             <div className="grid grid-cols-2 gap-4">
               {[
                 { icon: MapPin, label: 'Piedecuesta', sublabel: 'Cobertura total' },
-                { icon: Clock, label: '< 2 Horas', sublabel: 'Tiempo de respuesta' },
+                { icon: Clock, label: '< 5 Min', sublabel: 'Respuesta por WhatsApp' },
                 { icon: Shield, label: '40+ Años', sublabel: 'De experiencia' },
                 { icon: Award, label: 'Certificados', sublabel: 'INVIMA y Sec. Salud' },
               ].map((item) => {

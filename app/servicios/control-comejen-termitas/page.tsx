@@ -169,7 +169,6 @@ export default function ComejenTermitasPage() {
         subtitle="Eliminamos la colonia completa, no solo los insectos visibles. Inspección, inyección directa y barreras químicas con más de 40 años de experiencia en Santander."
         badgeText="Empresa certificada ante INVIMA — 40+ años en Santander"
         primaryCta={{ text: 'Solicitar Inspección', href: '#contacto' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL inspeccionando madera afectada por comején en Bucaramanga"
       />
@@ -346,13 +345,13 @@ export default function ComejenTermitasPage() {
               </h2>
               <p className="text-brand-gray text-body mt-4">
                 El comején no se detiene solo. Solicite una inspección y reciba un diagnóstico claro con cotización
-                sin compromiso. Nuestro equipo lo contacta en menos de 2 horas.
+                sin compromiso. Le respondemos por WhatsApp en menos de 5 minutos.
               </p>
               <ul className="mt-6 space-y-3">
                 {[
                   'Inspección y diagnóstico del tipo de termita',
                   'Cotización gratis y sin compromiso',
-                  'Respuesta en menos de 2 horas',
+                  'Respuesta por WhatsApp en menos de 5 minutos',
                   '40+ años de experiencia en Santander',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brand-black text-body">

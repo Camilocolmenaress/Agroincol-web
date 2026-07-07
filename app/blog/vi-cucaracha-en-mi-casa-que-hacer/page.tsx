@@ -190,7 +190,7 @@ export default function CucarachaEnCasaPage() {
         {/* CTA */}
         <div className="bg-brand-light rounded-2xl p-6 mt-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
-            <strong>Si está viendo cucarachas en su casa</strong> en Bucaramanga, Floridablanca, Piedecuesta o Girón, contáctenos. Diagnosticamos su situación sin costo y le damos una cotización para resolver el problema de forma definitiva. Respuesta en menos de 2 horas.
+            <strong>Si está viendo cucarachas en su casa</strong> en Bucaramanga, Floridablanca, Piedecuesta o Girón, contáctenos. Diagnosticamos su situación sin costo y le damos una cotización para resolver el problema de forma definitiva. Respondemos por WhatsApp en menos de 5 minutos.
           </p>
         </div>
       </ArticleLayout>

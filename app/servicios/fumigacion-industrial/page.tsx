@@ -100,7 +100,6 @@ export default function FumigacionIndustrialPage() {
         subtitle="Protocolo MIP documentado para plantas de producción, bodegas y zonas industriales. Certificados válidos ante INVIMA y Secretaría de Salud. Registros para auditorías de calidad."
         badgeText="Documentación completa para auditorías"
         primaryCta={{ text: 'Solicitar Diagnóstico Industrial', href: '#contacto' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Fumigación industrial en Bucaramanga — AGROINCOL"
       />
@@ -191,8 +190,8 @@ export default function FumigacionIndustrialPage() {
                 Proteja su Empresa Hoy
               </h2>
               <p className="text-brand-gray text-body mt-4">
-                Solicite un diagnóstico sin compromiso. Nuestro equipo se pondrá en contacto con usted en menos de
-                2 horas para programar la evaluación de sus instalaciones.
+                Solicite un diagnóstico sin compromiso. Le respondemos por WhatsApp en menos de
+                5 minutos para programar la evaluación de sus instalaciones.
               </p>
               <ul className="mt-6 space-y-3">
                 {[

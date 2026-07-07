@@ -188,7 +188,7 @@ export default function AuditoriaInvimaPage() {
             'Certificado de fumigación válido ante INVIMA y Secretaría de Salud de Santander, emitido el mismo día del servicio',
             'Reportes técnicos detallados después de cada visita con hallazgos y recomendaciones',
             'Soporte documental completo para auditorías: fichas técnicas, hojas de seguridad, registros ICA',
-            'Respuesta en menos de 2 horas ante emergencias en el Área Metropolitana de Bucaramanga',
+            'Respuesta por WhatsApp en menos de 5 minutos ante emergencias en el Área Metropolitana de Bucaramanga',
           ].map((item) => (
             <li key={item} className="flex items-start gap-2 text-brand-black text-body-lg leading-relaxed">
               <span className="text-brand-orange mt-1 shrink-0">✓</span>

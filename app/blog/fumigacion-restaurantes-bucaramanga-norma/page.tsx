@@ -302,7 +302,7 @@ export default function FumigacionRestaurantesNormaPage() {
         {/* CTA */}
         <div className="bg-brand-light rounded-2xl p-6 mt-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
-            <strong>Proteja su restaurante.</strong> Cotice un programa de control de plagas con certificación INVIMA incluida. Le respondemos en menos de 2 horas y podemos programar su primer servicio en las próximas 24 horas. Más de 40 años protegiendo restaurantes en Bucaramanga y el Área Metropolitana.
+            <strong>Proteja su restaurante.</strong> Cotice un programa de control de plagas con certificación INVIMA incluida. Le respondemos por WhatsApp en menos de 5 minutos y podemos programar su primer servicio en las próximas 24 horas. Más de 40 años protegiendo restaurantes en Bucaramanga y el Área Metropolitana.
           </p>
         </div>
       </ArticleLayout>
