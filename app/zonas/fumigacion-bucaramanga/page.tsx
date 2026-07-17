@@ -221,6 +221,7 @@ export default function FumigacionBucaramangaPage() {
         subtitle="Cobertura en toda la ciudad — del Centro a Cabecera, de Provenza a la zona norte. Más de 40 años eliminando plagas en la capital de Santander."
         badgeText="Atención el mismo día en toda Bucaramanga"
         primaryCta={{ text: 'Cotizar Gratis', href: '#contacto-zona' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Fumigación profesional en Bucaramanga, Santander — AGROINCOL"
       />

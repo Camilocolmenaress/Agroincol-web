@@ -154,6 +154,7 @@ export default function FumigacionGironPage() {
         subtitle="Cobertura completa en Girón y zona industrial de Chimitá. 40+ años protegiendo hogares, restaurantes e industrias en Santander."
         badgeText="Cobertura en Girón y Chimitá"
         primaryCta={{ text: 'Cotizar Gratis', href: '#contacto-zona' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Fumigación profesional en Girón, Santander — AGROINCOL"
       />

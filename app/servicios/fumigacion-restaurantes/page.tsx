@@ -116,6 +116,7 @@ export default function RestaurantesPage() {
         subtitle="Cumpla con la Resolución 2674 del INVIMA y proteja su establecimiento. Servicio certificado con más de 40 años de experiencia en el sector de alimentos."
         badgeText="Certificado válido ante INVIMA y Secretaría de Salud"
         primaryCta={{ text: 'Proteja su Restaurante', href: '#contacto' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-restaurantes.jpg"
         imageAlt="Técnico de AGROINCOL inspeccionando cocina de restaurante en Bucaramanga"
       />

@@ -118,6 +118,7 @@ export default function CertificacionesPage() {
         title="Certificaciones y Normativa de Fumigación en Colombia"
         subtitle="En AGROINCOL cumplimos con toda la normativa colombiana vigente en materia de control de plagas y manejo de plaguicidas. Más de 40 años operando bajo los más altos estándares de calidad y seguridad."
         primaryCta={{ text: 'Solicitar Cotización', href: '#contacto' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         centeredText
       />
 

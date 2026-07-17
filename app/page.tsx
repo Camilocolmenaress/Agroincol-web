@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Shield, Award, Clock, MapPin } from 'lucide-react';
+import { Shield, Award, Clock, MapPin, Phone } from 'lucide-react';
 import Hero from '@/components/sections/Hero';
 import AudienceSelector from '@/components/sections/AudienceSelector';
 import HomeProcess from '@/components/sections/HomeProcess';
@@ -60,6 +60,7 @@ export default function HomePage() {
         subtitle="Más de 40 años protegiendo hogares, restaurantes e industrias en Bucaramanga, Floridablanca, Piedecuesta y Girón."
         badgeText="Respondemos por WhatsApp en menos de 5 minutos"
         primaryCta={{ text: 'Cotizar por WhatsApp', href: BUSINESS.whatsappLink }}
+        secondaryCta={{ text: 'Llamar ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL realizando fumigación profesional en Bucaramanga"
       />
@@ -131,6 +132,12 @@ export default function HomePage() {
                 <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
                   Escribir por WhatsApp
                 </Button>
+                <a
+                  href={`tel:${BUSINESS.phoneRaw}`}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/15 px-6 py-3 font-heading font-semibold text-white ring-1 ring-white/40 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white hover:text-brand-orange"
+                >
+                  <Phone size={18} /> Llamar ahora
+                </a>
               </div>
             </div>
           </div>

@@ -151,6 +151,7 @@ export default function ZonasHubPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">Escríbanos por WhatsApp</Button>
+            <Button variant="secondary" href={`tel:${BUSINESS.phoneRaw}`}>Llamar ahora</Button>
           </div>
         </div>
       </section>

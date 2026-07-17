@@ -196,6 +196,7 @@ export default function ControlChinchesPage() {
         subtitle="Eliminación profesional con inspección minuciosa, tratamiento certificado y segunda visita para romper el ciclo de huevos. Más de 40 años protegiendo hogares y hoteles en Santander."
         badgeText="Servicio certificado INVIMA — 40+ años de experiencia"
         primaryCta={{ text: 'Elimine las Chinches Hoy', href: '#contacto' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL realizando control de chinches de cama en Bucaramanga"
       />
