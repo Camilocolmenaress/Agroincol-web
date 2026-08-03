@@ -2,9 +2,9 @@ export const BUSINESS = {
   name: 'AGROINCOL',
   legalName: 'AGROINCOL',
   domain: 'https://agroincol.com',
-  phone: '+57 301 999 1426',
-  phoneRaw: '+573019991426',
-  whatsappLink: 'https://wa.me/573019991426?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n',
+  phone: '+57 310 789 1948',
+  phoneRaw: '+573107891948',
+  whatsappLink: 'https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n',
   email: 'agroincol.1985@gmail.com',
   address: {
     street: 'Cra. 36 #197-30 local A11',

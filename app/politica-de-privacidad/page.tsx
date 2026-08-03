@@ -30,7 +30,7 @@ const sections = [
         <ul className="list-none space-y-1 text-brand-black text-body leading-relaxed mt-2">
           <li><strong>NIT:</strong> 1.095.786.836-1</li>
           <li><strong>Dirección:</strong> Cra. 36 #197-30 local A11, Paseo Comercial Paraguitas, Casco Antiguo, Floridablanca, Santander</li>
-          <li><strong>Teléfono:</strong> +57 301 999 1426</li>
+          <li><strong>Teléfono:</strong> +57 310 789 1948</li>
           <li><strong>Correo electrónico:</strong> agroincol.1985@gmail.com</li>
           <li><strong>Correo para PQRS de datos personales:</strong> agroincol.1985@gmail.com</li>
         </ul>
@@ -92,7 +92,7 @@ const sections = [
         </p>
         <ul className="list-disc list-inside space-y-2 text-brand-black text-body leading-relaxed mt-3">
           <li><strong>Correo electrónico:</strong> agroincol.1985@gmail.com (asunto: &ldquo;PQRS Datos Personales&rdquo;)</li>
-          <li><strong>WhatsApp:</strong> +57 301 999 1426 (mensaje: &ldquo;BAJA&rdquo; para solicitar eliminación)</li>
+          <li><strong>WhatsApp:</strong> +57 310 789 1948 (mensaje: &ldquo;BAJA&rdquo; para solicitar eliminación)</li>
           <li><strong>Dirección física:</strong> Cra. 36 #197-30 local A11, Paseo Comercial Paraguitas, Casco Antiguo, Floridablanca, Santander</li>
         </ul>
         <p className="text-brand-black text-body leading-relaxed mt-3">
