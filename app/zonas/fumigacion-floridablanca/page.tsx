@@ -153,7 +153,6 @@ export default function FumigacionFloridablancaPage() {
         subtitle="Sede principal de AGROINCOL. Más de 40 años protegiendo hogares, restaurantes y empresas en Floridablanca, Santander."
         badgeText="Respuesta en menos de 1 hora"
         primaryCta={{ text: 'Cotizar Gratis', href: '#contacto-zona' }}
-        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Fumigación profesional en Floridablanca, Santander — AGROINCOL"
       />
