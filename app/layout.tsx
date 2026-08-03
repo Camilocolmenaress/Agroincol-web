@@ -65,7 +65,7 @@ const globalSchema = {
   '@id': 'https://agroincol.com/#organization',
   name: 'AGROINCOL',
   url: 'https://agroincol.com',
-  telephone: '+573107891948',
+  telephone: '+573019991426',
   foundingDate: '1985',
   description: 'Empresa de fumigación y control de plagas con más de 40 años de experiencia en el Área Metropolitana de Bucaramanga, Santander, Colombia.',
   address: {
