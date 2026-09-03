@@ -7,7 +7,7 @@ import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import MobileCTABar from '@/components/ui/MobileCTABar';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
-import WhatsAppClickTracker from '@/components/analytics/WhatsAppClickTracker';
+import CTAClickTracker from '@/components/analytics/CTAClickTracker';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -118,7 +118,7 @@ export default function RootLayout({
           <WhatsAppButton />
         </div>
         <MobileCTABar />
-        <WhatsAppClickTracker />
+        <CTAClickTracker />
         <Analytics />
         <SpeedInsights />
 

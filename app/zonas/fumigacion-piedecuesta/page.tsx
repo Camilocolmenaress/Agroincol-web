@@ -201,6 +201,7 @@ export default function FumigacionPiedecuestaPage() {
         subtitle="Cobertura completa en Piedecuesta: desde el casco urbano hasta la Mesa de los Santos. 40+ años de experiencia en control de plagas."
         badgeText="Cobertura completa en Piedecuesta"
         primaryCta={{ text: 'Cotizar Gratis', href: '#contacto-zona' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Fumigación profesional en Piedecuesta, Santander — AGROINCOL"
       />

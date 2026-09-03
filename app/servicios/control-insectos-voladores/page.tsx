@@ -112,6 +112,7 @@ export default function ControlInsectosVoladoresPage() {
         subtitle="Prevención de dengue, zika y chikungunya en el Área Metropolitana. Tratamiento profesional que elimina adultos, huevos y larvas. Especialmente efectivo en temporada de lluvias (mar-jun, sep-oct)."
         badgeText="Prevención de dengue, zika y chikungunya"
         primaryCta={{ text: 'Solicitar Control Urgente', href: '#contacto' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Control de mosquitos y zancudos en Bucaramanga — AGROINCOL"
       />

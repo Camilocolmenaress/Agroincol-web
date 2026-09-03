@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { MapPin, MessageCircle, Clock } from 'lucide-react';
+import { MapPin, Phone, MessageCircle, Clock } from 'lucide-react';
 import { BUSINESS, SERVICES } from '@/lib/constants';
 
 export default function Footer() {
@@ -128,9 +128,15 @@ export default function Footer() {
                 <span className="text-gray-400 text-body-sm">{BUSINESS.address.full}</span>
               </li>
               <li>
+                <a href={`tel:${BUSINESS.phoneRaw}`} className="flex items-center gap-3 text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                  <Phone size={18} className="text-brand-orange shrink-0" />
+                  {BUSINESS.phone}
+                </a>
+              </li>
+              <li>
                 <a href={BUSINESS.whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
                   <MessageCircle size={18} className="text-brand-orange shrink-0" />
-                  {BUSINESS.phone} · WhatsApp
+                  WhatsApp
                 </a>
               </li>
               <li className="flex items-start gap-3">

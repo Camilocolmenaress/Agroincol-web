@@ -140,6 +140,7 @@ export default function ResidencialPage() {
         subtitle="Proteja su hogar y familia con productos seguros aprobados por la OMS y el ICA. Sin riesgo para niños ni mascotas. Más de 40 años de experiencia en Bucaramanga, Floridablanca, Piedecuesta y Girón."
         badgeText="Productos seguros para niños y mascotas"
         primaryCta={{ text: 'Proteja su Hogar', href: '#contacto' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL realizando fumigación residencial en Bucaramanga"
       />

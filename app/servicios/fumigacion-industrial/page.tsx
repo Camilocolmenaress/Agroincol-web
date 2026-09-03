@@ -100,6 +100,7 @@ export default function FumigacionIndustrialPage() {
         subtitle="Protocolo MIP documentado para plantas de producción, bodegas y zonas industriales. Certificados válidos ante INVIMA y Secretaría de Salud. Registros para auditorías de calidad."
         badgeText="Documentación completa para auditorías"
         primaryCta={{ text: 'Solicitar Diagnóstico Industrial', href: '#contacto' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Fumigación industrial en Bucaramanga — AGROINCOL"
       />

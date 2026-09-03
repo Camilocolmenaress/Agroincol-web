@@ -169,6 +169,7 @@ export default function ComejenTermitasPage() {
         subtitle="Eliminamos la colonia completa, no solo los insectos visibles. Inspección, inyección directa y barreras químicas con más de 40 años de experiencia en Santander."
         badgeText="Empresa certificada ante INVIMA — 40+ años en Santander"
         primaryCta={{ text: 'Solicitar Inspección', href: '#contacto' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL inspeccionando madera afectada por comején en Bucaramanga"
       />

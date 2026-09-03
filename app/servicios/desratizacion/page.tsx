@@ -100,6 +100,7 @@ export default function DesratizacionPage() {
         subtitle="Eliminamos ratas y ratones identificando y sellando sus vías de entrada. Diagnóstico profesional, tratamiento efectivo y seguimiento para garantizar que no regresen."
         badgeText="Diagnóstico + eliminación + sellado de accesos"
         primaryCta={{ text: 'Solicitar Diagnóstico Gratis', href: '#contacto' }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Desratización profesional en Bucaramanga — AGROINCOL"
       />

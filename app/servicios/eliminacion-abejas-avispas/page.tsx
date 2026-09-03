@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { AlertTriangle, ShieldAlert, Flame, Wind, MessageCircle, Leaf, Bug, Eye } from 'lucide-react';
+import { AlertTriangle, ShieldAlert, Flame, Wind, MessageCircle, Phone, Leaf, Bug, Eye } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import Hero from '@/components/sections/Hero';
 import ProcessTimeline from '@/components/sections/ProcessTimeline';
@@ -171,6 +171,7 @@ export default function AbejasAvispasPage() {
         subtitle="¿Encontró un nido en su casa o negocio? No intente retirarlo: aléjese y escríbanos por WhatsApp con una foto. Retiro seguro con equipos de protección especializados y reubicación con apicultores cuando es viable. Más de 40 años protegiendo Santander."
         badgeText="Atención prioritaria en Bucaramanga y Área Metropolitana"
         primaryCta={{ text: 'WhatsApp con foto del nido', href: BUSINESS.whatsappLink }}
+        secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
         imageSrc="/images/hero/hero-home.jpg"
         imageAlt="Técnico de AGROINCOL con equipo de protección retirando nido de abejas en Bucaramanga"
       />
@@ -189,6 +190,9 @@ export default function AbejasAvispasPage() {
             <div className="flex gap-3 shrink-0">
               <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
                 Escribir por WhatsApp
+              </Button>
+              <Button variant="secondary" href={`tel:${BUSINESS.phoneRaw}`}>
+                <Phone size={18} /> {BUSINESS.phone}
               </Button>
             </div>
           </div>
@@ -414,6 +418,9 @@ export default function AbejasAvispasPage() {
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
                   Escribir por WhatsApp
+                </Button>
+                <Button variant="secondary" href={`tel:${BUSINESS.phoneRaw}`}>
+                  <Phone size={18} /> Llamar: {BUSINESS.phone}
                 </Button>
               </div>
               <p className="mt-6">
