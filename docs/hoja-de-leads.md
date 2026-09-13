@@ -258,7 +258,9 @@ function alMarcarCerrado(e) {
       }),
     })
 
-    let cuerpo = {}
+    // `var` y no `let`: un proyecto de Apps Script puede quedar con el motor
+    // Rhino, que entiende const pero no let y rechaza el script entero.
+    var cuerpo = {}
     try { cuerpo = JSON.parse(respuesta.getContentText()) } catch (_) { /* no era JSON */ }
 
     if (respuesta.getResponseCode() === 200 && cuerpo.ok) {
