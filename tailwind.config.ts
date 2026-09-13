@@ -21,6 +21,9 @@ const config: Config = {
           white: '#FFFFFF',
           light: '#F5F5F0',
           cream: '#FBFBF7',
+          // Menta del fondo del logo. Muestreado del PNG para que la franja de cabecera
+          // de las landings empalme sin que se note el borde de la imagen.
+          mint: '#E1EAE2',
           gray: '#6B7280',
           'gray-light': '#E5E5E5',
           black: '#1A1A1A',

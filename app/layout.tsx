@@ -8,6 +8,7 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import MobileCTABar from '@/components/ui/MobileCTABar';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import CTAClickTracker from '@/components/analytics/CTAClickTracker';
+import SiteChrome from '@/components/layout/SiteChrome';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -110,14 +111,18 @@ export default function RootLayout({
     <html lang="es-CO" className={`${heading.variable} ${body.variable}`}>
       <body>
         <SchemaMarkup schema={globalSchema} />
-        <Navbar />
+        <SiteChrome>
+          <Navbar />
+        </SiteChrome>
         <main className="pb-[calc(env(safe-area-inset-bottom)+84px)] md:pb-0">{children}</main>
-        <Footer />
-        {/* Botón flotante WhatsApp solo en desktop; en móvil lo cubre la barra fija inferior */}
-        <div className="hidden md:block">
-          <WhatsAppButton />
-        </div>
-        <MobileCTABar />
+        <SiteChrome>
+          <Footer />
+          {/* Botón flotante WhatsApp solo en desktop; en móvil lo cubre la barra fija inferior */}
+          <div className="hidden md:block">
+            <WhatsAppButton />
+          </div>
+          <MobileCTABar />
+        </SiteChrome>
         <CTAClickTracker />
         <Analytics />
         <SpeedInsights />
