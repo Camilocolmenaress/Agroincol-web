@@ -5,6 +5,45 @@ import { resolverFbc } from '@/lib/meta/fbc';
 import { FBP_DURACION_S, resolverFbp } from '@/lib/meta/fbp';
 import { capiConfigurada, enviarEventoAMeta } from '@/lib/meta/capi';
 
+const HOJA_URL = process.env.HOJA_LEADS_URL ?? '';
+const HOJA_SECRETO = process.env.HOJA_LEADS_SECRETO ?? '';
+
+/**
+ * Guarda el lead como una fila en la hoja de Google Sheets.
+ *
+ * La hoja ES la base de datos: da trazabilidad, permite contar los leads para
+ * las compuertas del tramo 1, y es desde donde se marca un cliente como cerrado
+ * para que salga el Purchase hacia Meta (ver /api/cierre).
+ *
+ * Escribe también los identificadores técnicos (eventId, fbp, fbc, externalId,
+ * navegador, url). Sin ellos el Purchase posterior no se enlaza al clic del
+ * anuncio y vale la mitad.
+ *
+ * No lanza hacia afuera: si la hoja falla, el lead ya se recibió y el visitante
+ * debe ver éxito igual. El error queda en los logs del servidor.
+ */
+async function guardarEnHoja(fila: Record<string, unknown>): Promise<void> {
+  if (!HOJA_URL || !HOJA_SECRETO) return;
+
+  const respuesta = await fetch(HOJA_URL, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ secreto: HOJA_SECRETO, fila }),
+    // Apps Script escribe la fila y RESPONDE 302 hacia googleusercontent.com.
+    // Seguir esa redirección solo trae una página HTML inútil, y en un arranque
+    // en frío tarda lo suficiente como para agotar el tiempo límite DESPUÉS de
+    // que la fila ya quedó escrita: reportaría un fallo inexistente y haría
+    // creer que se están perdiendo leads.
+    redirect: 'manual',
+    signal: AbortSignal.timeout(10000),
+  });
+
+  // 302 es la respuesta normal tras un doPost exitoso.
+  if (respuesta.status !== 200 && respuesta.status !== 302) {
+    throw new Error(`la hoja respondió ${respuesta.status}`);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -100,15 +139,56 @@ export async function POST(request: NextRequest) {
     // rendimiento y contaminaría la señal con la que optimiza.
     const esLandingDePauta = typeof formId === 'string' && formId.startsWith('lp-');
 
+    // Identificadores técnicos. Se resuelven una sola vez porque los usan los
+    // dos caminos: el evento a Meta y la fila de la hoja, que los guarda para
+    // poder enlazar el Purchase cuando el lead se cierre.
+    const ip =
+      request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+      request.headers.get('x-real-ip') ||
+      '';
+    const navegador = request.headers.get('user-agent') ?? '';
+    const url =
+      typeof sourceUrl === 'string' && sourceUrl ? sourceUrl : `https://agroincol.com${page || '/'}`;
+    const { fbp, generado } = resolverFbp(request.cookies.get('_fbp')?.value);
+    const fbc = resolverFbc(request.cookies.get('_fbc')?.value, url);
+    const idDelEvento = typeof eventId === 'string' && eventId.length >= 8 ? eventId : nuevoEventId();
+
+    // Fecha en hora de Bogotá, no en UTC: quien lea la hoja piensa en hora local.
+    const fechaLocal = new Intl.DateTimeFormat('sv-SE', {
+      timeZone: 'America/Bogota',
+      dateStyle: 'short',
+      timeStyle: 'medium',
+    }).format(new Date());
+
+    await guardarEnHoja({
+      // Las tres primeras las maneja quien vende; el resto las escribe el servidor.
+      cerrado: false,
+      valor: '',
+      metaCierre: '',
+      fecha: fechaLocal,
+      plaga: categoria || '',
+      nombre,
+      telefono,
+      municipio: municipio || '',
+      franja: franjaHoraria || '',
+      servicio: tipoServicio,
+      origen: formId || 'sitio',
+      autoriza: aceptaTerminos !== false ? 'sí' : 'no',
+      politicaVersion: '2026-03-07',
+      ip,
+      eventId: idDelEvento,
+      fbp,
+      fbc: fbc ?? '',
+      externalId: typeof externalId === 'string' ? externalId : '',
+      navegador,
+      url,
+    }).catch((error) => {
+      // El lead ya se recibió: un fallo de la hoja no puede tumbar la respuesta.
+      console.error('[hoja] no se pudo guardar el lead:', error instanceof Error ? error.message : error);
+    });
+
     if (esLandingDePauta && capiConfigurada()) {
       try {
-        const ip =
-          request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-          request.headers.get('x-real-ip') ||
-          '';
-        const url = typeof sourceUrl === 'string' && sourceUrl ? sourceUrl : `https://agroincol.com${page || '/'}`;
-        const { fbp, generado } = resolverFbp(request.cookies.get('_fbp')?.value);
-        const fbc = resolverFbc(request.cookies.get('_fbc')?.value, url);
 
         const userData = await userDataParaMeta(
           {
@@ -124,7 +204,7 @@ export async function POST(request: NextRequest) {
         const envio = await enviarEventoAMeta({
           event_name: 'Lead',
           event_time: Math.floor(Date.now() / 1000),
-          event_id: typeof eventId === 'string' && eventId.length >= 8 ? eventId : nuevoEventId(),
+          event_id: idDelEvento,
           action_source: 'website',
           event_source_url: url,
           ...(categoria === 'chinches' || categoria === 'comejen'
@@ -133,7 +213,7 @@ export async function POST(request: NextRequest) {
           user_data: {
             ...userData,
             client_ip_address: ip || undefined,
-            client_user_agent: request.headers.get('user-agent') ?? undefined,
+            client_user_agent: navegador || undefined,
             fbp,
             fbc,
           },
