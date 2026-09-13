@@ -8,8 +8,6 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import MobileCTABar from '@/components/ui/MobileCTABar';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import CTAClickTracker from '@/components/analytics/CTAClickTracker';
-import MetaPixel from '@/components/analytics/MetaPixel';
-import PostHogInit from '@/components/analytics/PostHogInit';
 import SiteChrome from '@/components/layout/SiteChrome';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -126,8 +124,6 @@ export default function RootLayout({
           <MobileCTABar />
         </SiteChrome>
         <CTAClickTracker />
-        <MetaPixel />
-        <PostHogInit />
         <Analytics />
         <SpeedInsights />
 

@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const { nombre, telefono, tipoServicio, email, direccion, mensaje, formId, page, website, municipio, franjaHoraria, aceptaTerminos, eventId, externalId, sourceUrl } = body;
+    const { nombre, telefono, tipoServicio, email, direccion, mensaje, formId, page, website, municipio, franjaHoraria, aceptaTerminos, eventId, externalId, sourceUrl, categoria } = body;
 
     // Honeypot check — si tiene valor, es bot, retornar éxito falso
     if (website) {
@@ -94,7 +94,13 @@ export async function POST(request: NextRequest) {
     // ---------------------------------------------------------------------
     const respuesta = NextResponse.json({ success: true, message: 'Datos recibidos correctamente' });
 
-    if (capiConfigurada()) {
+    // Solo los formularios de las landings de pauta (formId "lp-*") mandan Lead
+    // a Meta. Este endpoint lo usa también el formulario del sitio orgánico, y
+    // esos leads los trae Google o la búsqueda: atribuírselos a Meta inflaría su
+    // rendimiento y contaminaría la señal con la que optimiza.
+    const esLandingDePauta = typeof formId === 'string' && formId.startsWith('lp-');
+
+    if (esLandingDePauta && capiConfigurada()) {
       try {
         const ip =
           request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
@@ -121,6 +127,9 @@ export async function POST(request: NextRequest) {
           event_id: typeof eventId === 'string' && eventId.length >= 8 ? eventId : nuevoEventId(),
           action_source: 'website',
           event_source_url: url,
+          ...(categoria === 'chinches' || categoria === 'comejen'
+            ? { custom_data: { content_category: categoria } }
+            : {}),
           user_data: {
             ...userData,
             client_ip_address: ip || undefined,

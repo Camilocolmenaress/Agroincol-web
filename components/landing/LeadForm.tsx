@@ -13,6 +13,8 @@ import { idDeVisitante } from '@/lib/meta/visitante';
 // Solo los tres campos que el formulario necesita de verdad. Pasar el config completo
 // serializaría las FAQ, los pasos y las señales dentro del HTML sin que nadie los use.
 interface Props {
+  /** 'chinches' o 'comejen': separa las dos landings dentro del mismo pixel. */
+  categoria: string;
   /** Tipo de servicio que viaja al webhook. */
   serviceType: string;
   /** Texto con el que se abre WhatsApp desde la confirmación. */
@@ -23,7 +25,7 @@ interface Props {
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
-export default function LeadForm({ serviceType, whatsappText, formId }: Props) {
+export default function LeadForm({ categoria, serviceType, whatsappText, formId }: Props) {
   const [step, setStep] = useState<1 | 2>(1);
   const [municipio, setMunicipio] = useState('');
   const [nombre, setNombre] = useState('');
@@ -64,7 +66,7 @@ export default function LeadForm({ serviceType, whatsappText, formId }: Props) {
     // los datos hasheados. Meta deduplica por (event_name, event_id), así que
     // la conversión cuenta una sola vez aunque salga por los dos caminos.
     // Devuelve null si ya hubo un Lead en esta sesión.
-    const eventId = soloPixel('Lead');
+    const eventId = soloPixel('Lead', { categoria });
 
     try {
       const res = await fetch('/api/contact', {
@@ -83,6 +85,7 @@ export default function LeadForm({ serviceType, whatsappText, formId }: Props) {
           // Medición. Si el Pixel está bloqueado, eventId llega null y el
           // servidor genera el suyo: el evento sale igual por CAPI.
           eventId,
+          categoria,
           externalId: idDeVisitante(),
           sourceUrl: typeof window !== 'undefined' ? window.location.href : '',
         }),

@@ -6,6 +6,7 @@ import LandingVideo from '@/components/landing/LandingVideo';
 import LandingFAQ from '@/components/landing/LandingFAQ';
 import { LandingFooter } from '@/components/landing/LandingChrome';
 import FloatingContact from '@/components/landing/FloatingContact';
+import LandingContactTracker from '@/components/landing/LandingContactTracker';
 import {
   SignsSection,
   TreatmentSection,
@@ -42,6 +43,7 @@ export default function ComejenLandingPage() {
       <LandingFAQ config={COMEJEN} />
       <LandingFooter />
       <FloatingContact whatsappText={COMEJEN.whatsappText} />
+      <LandingContactTracker categoria="comejen" />
     </>
   );
 }

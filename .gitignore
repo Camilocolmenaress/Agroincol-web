@@ -33,3 +33,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Credenciales locales. .env.example sí se versiona: es la plantilla vacía
+# que documenta qué variables hay que configurar en Vercel.
+.env*
+!.env.example

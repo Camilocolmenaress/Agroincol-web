@@ -42,6 +42,8 @@ export function registrarClienteAnalitica(c: Capturador): void {
 export interface DatosEmbudo {
   eventId: string;
   valor?: number;
+  /** 'chinches' o 'comejen': permite segmentar el embudo por plaga. */
+  categoria?: string;
 }
 
 /**
@@ -53,6 +55,7 @@ export function registrarEnEmbudo(evento: NombreEvento, datos: DatosEmbudo): voi
   if (evento === 'PageView') return;
 
   const propiedades: Record<string, unknown> = { event_id: datos.eventId };
+  if (datos.categoria) propiedades.plaga = datos.categoria;
   if (datos.valor !== undefined) {
     propiedades.valor = datos.valor;
     propiedades.moneda = MONEDA;

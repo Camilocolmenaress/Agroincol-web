@@ -53,6 +53,7 @@ export default function LandingHero({ config }: { config: LandingConfig }) {
           </p>
 
           <LeadForm
+            categoria={config.slug}
             serviceType={config.serviceType}
             whatsappText={config.whatsappText}
             formId={`lp-${config.slug}`}

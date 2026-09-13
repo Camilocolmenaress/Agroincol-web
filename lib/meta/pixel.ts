@@ -62,6 +62,16 @@ function marcarDisparado(evento: NombreEvento): void {
 
 interface DatosEvento {
   valor?: number;
+  /**
+   * Qué landing generó el evento: 'chinches' o 'comejen'.
+   *
+   * Un solo pixel para las dos landings, porque Meta no deja que un conjunto de
+   * anuncios optimice hacia dos pixeles y el presupuesto solo alcanza para un
+   * conjunto. Este parámetro es lo que permite separarlas igual: con él se
+   * crean conversiones personalizadas por plaga en el Administrador de eventos,
+   * y PostHog puede segmentar el embudo, sin partir el historial del pixel.
+   */
+  categoria?: string;
 }
 
 function saneaValor(valor: number | undefined): number | undefined {
@@ -89,6 +99,7 @@ export function soloPixel(evento: NombreEvento, datos: DatosEvento = {}): string
     parametros.value = valor;
     parametros.currency = MONEDA;
   }
+  if (datos.categoria) parametros.content_category = datos.categoria;
 
   // 1) Pixel del navegador.
   try {
@@ -98,7 +109,7 @@ export function soloPixel(evento: NombreEvento, datos: DatosEvento = {}): string
   }
 
   // 2) Embudo en PostHog, con el mismo event_id para poder cruzarlos.
-  registrarEnEmbudo(evento, { eventId, valor });
+  registrarEnEmbudo(evento, { eventId, valor, categoria: datos.categoria });
 
   marcarDisparado(evento);
   return eventId;
@@ -113,7 +124,7 @@ export function soloPixel(evento: NombreEvento, datos: DatosEvento = {}): string
 export function rastrear(evento: NombreEvento, datos: DatosEvento = {}): void {
   const eventId = soloPixel(evento, datos);
   if (!eventId) return;
-  enviarACapi('/api/meta', { evento, eventId, valor: saneaValor(datos.valor) });
+  enviarACapi('/api/meta', { evento, eventId, valor: saneaValor(datos.valor), categoria: datos.categoria });
 }
 
 /**

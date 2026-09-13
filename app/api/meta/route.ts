@@ -96,12 +96,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, motivo: 'json' }, { status: 400 });
   }
 
-  const { evento, eventId, valor, externalId, sourceUrl } = cuerpo as {
+  const { evento, eventId, valor, externalId, sourceUrl, categoria } = cuerpo as {
     evento?: unknown;
     eventId?: unknown;
     valor?: unknown;
     externalId?: unknown;
     sourceUrl?: unknown;
+    categoria?: unknown;
   };
 
   if (
@@ -145,8 +146,16 @@ export async function POST(req: NextRequest) {
     },
   };
 
-  if (valorNumerico !== undefined) {
-    datos.custom_data = { value: valorNumerico, currency: MONEDA };
+  // Lista cerrada: solo las dos plagas de la campaña. Nada que venga del
+  // navegador llega crudo a Meta.
+  const categoriaValida =
+    categoria === 'chinches' || categoria === 'comejen' ? categoria : undefined;
+
+  if (valorNumerico !== undefined || categoriaValida) {
+    datos.custom_data = {
+      ...(valorNumerico !== undefined ? { value: valorNumerico, currency: MONEDA } : {}),
+      ...(categoriaValida ? { content_category: categoriaValida } : {}),
+    };
   }
 
   const resultado = await enviarEventoAMeta(datos);
