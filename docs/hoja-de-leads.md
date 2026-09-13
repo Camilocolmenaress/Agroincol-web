@@ -42,11 +42,11 @@ En la hoja: **Extensiones → Apps Script**. Borra lo que haya y pega esto:
 //  - cuando alguien marca la casilla "cerrado" de una fila, le avisa a la
 //    página para que mande el Purchase a Meta.
 
-const SECRETO = 'CAMBIA-ESTO-POR-TU-SECRETO'
+const SECRETO = 'CAMBIA-ESTO-POR-TU-SECRETO';
 // La página, sin barra al final.
-const APP_URL = 'https://agroincol.com'
+const APP_URL = 'https://agroincol.com';
 // A dónde llega el aviso de lead nuevo. Varios correos: separados por coma.
-const CORREO_AVISOS = 'agroincol.1985@gmail.com'
+const CORREO_AVISOS = 'agroincol.1985@gmail.com';
 
 // El orden manda: así llegan los datos desde el servidor.
 // Si algún día se agrega una columna aquí, la hoja se ajusta sola.
@@ -54,40 +54,58 @@ const CORREO_AVISOS = 'agroincol.1985@gmail.com'
 // Las tres primeras van al frente a propósito: en el celular son lo único que
 // se ve sin desplazar, y son las únicas celdas que alguien toca a mano.
 const COLUMNAS = [
-  'cerrado', 'valor', 'metaCierre',
-  'fecha', 'plaga', 'nombre', 'telefono', 'municipio', 'franja',
-  'servicio', 'origen', 'autoriza', 'politicaVersion', 'ip',
-  'eventId', 'fbp', 'fbc', 'externalId', 'navegador', 'url',
-]
+  'cerrado',
+  'valor',
+  'metaCierre',
+  'fecha',
+  'plaga',
+  'nombre',
+  'telefono',
+  'municipio',
+  'franja',
+  'servicio',
+  'origen',
+  'autoriza',
+  'politicaVersion',
+  'ip',
+  'eventId',
+  'fbp',
+  'fbc',
+  'externalId',
+  'navegador',
+  'url',
+];
 
 function hojaLeads() {
-  return SpreadsheetApp.getActiveSpreadsheet().getSheets()[0]
+  return SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
 }
 
 function doPost(e) {
   try {
-    const datos = JSON.parse(e.postData.contents)
+    const datos = JSON.parse(e.postData.contents);
     if (datos.secreto !== SECRETO) {
-      return ContentService.createTextOutput('no')
+      return ContentService.createTextOutput('no');
     }
 
-    const hoja = hojaLeads()
-    sincronizarEncabezados(hoja)
+    const hoja = hojaLeads();
+    sincronizarEncabezados(hoja);
 
-    hoja.appendRow(COLUMNAS.map(function (columna) {
-      const valor = datos.fila[columna]
-      return valor === undefined || valor === null ? '' : valor
-    }))
+    hoja.appendRow(
+      COLUMNAS.map(function (columna) {
+        const valor = datos.fila[columna];
+        return valor === undefined || valor === null ? '' : valor;
+      }),
+    );
     // La casilla va SOLO en la fila del lead. Ponerla en toda la columna parece
     // cómodo, pero una casilla desmarcada cuenta como contenido y appendRow se
     // salta todas esas filas: los leads aparecerían en la fila 991.
-    hoja.getRange(hoja.getLastRow(), 1).setDataValidation(casilla())
+    hoja.getRange(hoja.getLastRow(), 1).setDataValidation(casilla());
 
-    avisarPorCorreo(datos.fila)
+    avisarPorCorreo(datos.fila);
 
-    return ContentService.createTextOutput('ok')
+    return ContentService.createTextOutput('ok');
   } catch (error) {
-    return ContentService.createTextOutput('error: ' + error.message)
+    return ContentService.createTextOutput('error: ' + error.message);
   }
 }
 
@@ -102,13 +120,15 @@ function doPost(e) {
 // algún día se queda corto, el error queda en el registro de ejecuciones de
 // Apps Script y los leads se siguen guardando igual.
 function avisarPorCorreo(fila) {
-  if (!CORREO_AVISOS) return
+  if (!CORREO_AVISOS) return;
   try {
-    const plaga = fila.plaga ? String(fila.plaga) : 'sin especificar'
-    const asunto = 'Nuevo lead: ' + (fila.nombre || 'sin nombre') + ' — ' + plaga
+    const plaga = fila.plaga ? String(fila.plaga) : 'sin especificar';
+    const asunto = 'Nuevo lead: ' + (fila.nombre || 'sin nombre') + ' — ' + plaga;
 
     const cuerpo = [
-      'Llamar a ' + (fila.franja ? String(fila.franja).toLowerCase() : 'cuando se pueda') + '.',
+      'Llamar a ' +
+        (fila.franja ? String(fila.franja).toLowerCase() : 'cuando se pueda') +
+        '.',
       '',
       'Nombre:     ' + (fila.nombre || ''),
       'WhatsApp:   ' + (fila.telefono || ''),
@@ -124,12 +144,12 @@ function avisarPorCorreo(fila) {
       'escribe el valor facturado. Eso le avisa a Meta que el lead se convirtió',
       'en venta, que es lo que hace que los anuncios busquen clientes y no solo',
       'gente que deja datos.',
-    ].join('\n')
+    ].join('\n');
 
-    MailApp.sendEmail(CORREO_AVISOS, asunto, cuerpo)
+    MailApp.sendEmail(CORREO_AVISOS, asunto, cuerpo);
   } catch (error) {
     // El lead ya quedó guardado. Que falle el aviso no puede romper nada.
-    console.error('aviso por correo: ' + error.message)
+    console.error('aviso por correo: ' + error.message);
   }
 }
 
@@ -144,28 +164,28 @@ function sincronizarEncabezados(hoja) {
   const actuales =
     hoja.getLastRow() === 0
       ? []
-      : hoja.getRange(1, 1, 1, Math.max(hoja.getLastColumn(), 1)).getValues()[0]
+      : hoja.getRange(1, 1, 1, Math.max(hoja.getLastColumn(), 1)).getValues()[0];
 
-  if (actuales.join('|') === COLUMNAS.join('|')) return
+  if (actuales.join('|') === COLUMNAS.join('|')) return;
 
   // Una hoja a la que le borraron columnas sobrantes no tiene sitio para las
   // nuevas; getRange lanzaría dentro de doPost y el lead no se guardaría.
   if (hoja.getMaxColumns() < COLUMNAS.length) {
-    hoja.insertColumnsAfter(hoja.getMaxColumns(), COLUMNAS.length - hoja.getMaxColumns())
+    hoja.insertColumnsAfter(hoja.getMaxColumns(), COLUMNAS.length - hoja.getMaxColumns());
   }
 
-  hoja.getRange(1, 1, 1, COLUMNAS.length).setValues([COLUMNAS])
-  hoja.getRange(1, 1, 1, COLUMNAS.length).setFontWeight('bold')
-  hoja.setFrozenRows(1)
+  hoja.getRange(1, 1, 1, COLUMNAS.length).setValues([COLUMNAS]);
+  hoja.getRange(1, 1, 1, COLUMNAS.length).setFontWeight('bold');
+  hoja.setFrozenRows(1);
 
   // Casilla en las filas que YA tienen lead (las nuevas la reciben en doPost).
   // Nunca en filas vacías: ver el comentario en doPost.
-  const ultima = hoja.getLastRow()
-  if (ultima >= 2) hoja.getRange(2, 1, ultima - 1, 1).setDataValidation(casilla())
+  const ultima = hoja.getLastRow();
+  if (ultima >= 2) hoja.getRange(2, 1, ultima - 1, 1).setDataValidation(casilla());
 }
 
 function casilla() {
-  return SpreadsheetApp.newDataValidation().requireCheckbox().build()
+  return SpreadsheetApp.newDataValidation().requireCheckbox().build();
 }
 
 // ---------------------------------------------------------------------------
@@ -177,62 +197,66 @@ function casilla() {
 // pueden llamar a UrlFetchApp.
 function instalarTrigger() {
   ScriptApp.getProjectTriggers()
-    .filter(function (t) { return t.getHandlerFunction() === 'alMarcarCerrado' })
-    .forEach(function (t) { ScriptApp.deleteTrigger(t) })
+    .filter(function (t) {
+      return t.getHandlerFunction() === 'alMarcarCerrado';
+    })
+    .forEach(function (t) {
+      ScriptApp.deleteTrigger(t);
+    });
 
   ScriptApp.newTrigger('alMarcarCerrado')
     .forSpreadsheet(SpreadsheetApp.getActiveSpreadsheet())
     .onEdit()
-    .create()
+    .create();
 
   // La migración de encabezados se hace aquí, de una vez, y no en el primer
   // lead que llegue: así se ve en el momento de instalar que quedó bien.
-  sincronizarEncabezados(hojaLeads())
+  sincronizarEncabezados(hojaLeads());
 }
 
 function alMarcarCerrado(e) {
-  const rango = e.range
+  const rango = e.range;
   // Solo la columna A, solo una celda, solo cuando se MARCA.
-  if (rango.getColumn() !== 1 || rango.getRow() === 1) return
-  if (rango.getNumRows() !== 1 || rango.getNumColumns() !== 1) return
-  if (rango.getValue() !== true) return
+  if (rango.getColumn() !== 1 || rango.getRow() === 1) return;
+  if (rango.getNumRows() !== 1 || rango.getNumColumns() !== 1) return;
+  if (rango.getValue() !== true) return;
 
-  const hoja = rango.getSheet()
+  const hoja = rango.getSheet();
   // Otra pestaña del mismo archivo con una casilla en la columna A no es un lead.
-  if (hoja.getSheetId() !== hojaLeads().getSheetId()) return
+  if (hoja.getSheetId() !== hojaLeads().getSheetId()) return;
 
-  const numeroFila = rango.getRow()
-  const fila = leerFila(hoja, numeroFila)
-  const celdaEstado = hoja.getRange(numeroFila, COLUMNAS.indexOf('metaCierre') + 1)
+  const numeroFila = rango.getRow();
+  const fila = leerFila(hoja, numeroFila);
+  const celdaEstado = hoja.getRange(numeroFila, COLUMNAS.indexOf('metaCierre') + 1);
 
   // Ya se envió: no se repite. Meta solo deduplica 48 horas.
-  if (String(fila.metaCierre).indexOf('✓') === 0) return
+  if (String(fila.metaCierre).indexOf('✓') === 0) return;
 
   if (!fila.eventId) {
-    celdaEstado.setValue('error: lead anterior a esta versión, sin eventId')
-    return
+    celdaEstado.setValue('error: lead anterior a esta versión, sin eventId');
+    return;
   }
 
   // El valor lo escribe quien cierra. Un Purchase en 0 no le enseña nada a Meta
   // sobre cuánto vale un cliente, así que se frena aquí con un mensaje claro en
   // vez de mandar un evento inútil.
-  const valor = Number(fila.valor)
+  const valor = Number(fila.valor);
   if (!valor || valor <= 0) {
-    celdaEstado.setValue('error: escribe primero el valor en la columna B')
-    return
+    celdaEstado.setValue('error: escribe primero el valor en la columna B');
+    return;
   }
 
   // Dos toques rápidos no deben mandar dos veces.
-  const candado = LockService.getScriptLock()
+  const candado = LockService.getScriptLock();
   if (!candado.tryLock(10000)) {
-    celdaEstado.setValue('error: ocupado, desmarca y vuelve a marcar')
-    return
+    celdaEstado.setValue('error: ocupado, desmarca y vuelve a marcar');
+    return;
   }
 
   try {
     // Se vuelve a leer con el candado tomado: dos toques seguidos pasaban la
     // comprobación de arriba antes de que el primero escribiera el ✓.
-    if (String(celdaEstado.getValue()).indexOf('✓') === 0) return
+    if (String(celdaEstado.getValue()).indexOf('✓') === 0) return;
 
     const respuesta = UrlFetchApp.fetch(APP_URL + '/api/cierre', {
       method: 'post',
@@ -256,36 +280,44 @@ function alMarcarCerrado(e) {
         navegador: texto(fila.navegador).slice(0, 500),
         url: texto(fila.url),
       }),
-    })
+    });
 
     // `var` y no `let`: un proyecto de Apps Script puede quedar con el motor
     // Rhino, que entiende const pero no let y rechaza el script entero.
-    var cuerpo = {}
-    try { cuerpo = JSON.parse(respuesta.getContentText()) } catch (_) { /* no era JSON */ }
+    var cuerpo = {};
+    try {
+      cuerpo = JSON.parse(respuesta.getContentText());
+    } catch (_) {
+      /* no era JSON */
+    }
 
     if (respuesta.getResponseCode() === 200 && cuerpo.ok) {
-      celdaEstado.setValue('✓ ' + Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM HH:mm'))
+      celdaEstado.setValue(
+        '✓ ' + Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM HH:mm'),
+      );
     } else {
-      celdaEstado.setValue('error: ' + (cuerpo.motivo || respuesta.getResponseCode()))
+      celdaEstado.setValue('error: ' + (cuerpo.motivo || respuesta.getResponseCode()));
     }
   } catch (error) {
-    celdaEstado.setValue('error: ' + error.message)
+    celdaEstado.setValue('error: ' + error.message);
   } finally {
-    candado.releaseLock()
+    candado.releaseLock();
   }
 }
 
 function leerFila(hoja, numero) {
-  const valores = hoja.getRange(numero, 1, 1, COLUMNAS.length).getValues()[0]
-  const fila = {}
-  COLUMNAS.forEach(function (columna, i) { fila[columna] = valores[i] })
-  return fila
+  const valores = hoja.getRange(numero, 1, 1, COLUMNAS.length).getValues()[0];
+  const fila = {};
+  COLUMNAS.forEach(function (columna, i) {
+    fila[columna] = valores[i];
+  });
+  return fila;
 }
 
 // Sheets guarda el celular como número y una celda vacía como ''. Todo viaja
 // como texto; la página se encarga de normalizar.
 function texto(valor) {
-  return valor === undefined || valor === null ? '' : String(valor)
+  return valor === undefined || valor === null ? '' : String(valor);
 }
 ```
 
