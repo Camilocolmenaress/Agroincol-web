@@ -1,6 +1,6 @@
 'use client';
 
-import { money, totalPedido, type Segmento } from '@/lib/ecogel';
+import { GARANTIA, money, totalPedido, type Segmento } from '@/lib/ecogel';
 import { urlPedido, useTier } from './TierContext';
 
 // Sección 4 de Lummia: CTA fijo abajo desde el primer píxel. Solo en móvil; en
@@ -15,7 +15,7 @@ export default function BarraSticky({ segmento }: { segmento: Segmento }) {
           <p className="text-body-sm font-semibold text-brand-black">
             {unidades} {unidades === 1 ? 'unidad' : 'unidades'}
           </p>
-          <p className="text-body-sm text-brand-black/60">{money(total)} · garantía 30 días</p>
+          <p className="text-body-sm text-brand-black/60">{money(total)} · garantía {GARANTIA.dias} días</p>
         </div>
         <a
           href={urlPedido(unidades, segmento)}

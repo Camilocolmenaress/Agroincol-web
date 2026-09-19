@@ -1,6 +1,6 @@
 'use client';
 
-import { TIERS, money, type Unidades } from '@/lib/ecogel';
+import { TIERS, money } from '@/lib/ecogel';
 import { useTier } from './TierContext';
 
 // Reemplaza la caja de cuotas Addi de Lummia. Es el elemento más importante de
@@ -19,7 +19,7 @@ export default function SelectorTier({ compacto = false }: { compacto?: boolean 
               key={t.unidades}
               type="button"
               aria-pressed={activo}
-              onClick={() => setUnidades(t.unidades as Unidades)}
+              onClick={() => setUnidades(t.unidades)}
               className={`relative rounded-xl border-2 px-3 py-3 text-left transition-colors ${
                 activo ? 'border-brand-green bg-brand-green/5' : 'border-brand-gray-light hover:border-brand-green/50'
               }`}
