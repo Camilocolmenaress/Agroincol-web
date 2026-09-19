@@ -150,7 +150,7 @@ const PREGUNTAS_ENVIO_PAGO: Pregunta[] = [
 
 export const HOGAR: EcogelConfig = {
   segmento: 'hogar',
-  metaTitle: 'EcoGel: cocina sin cucarachas en 48 horas | AGROINCOL',
+  metaTitle: 'EcoGel: cocina sin cucarachas en 48 horas',
   metaDescription:
     'Gel profesional para cucarachas, seguro con niños y mascotas. Envío a todo Colombia, paga en línea o al recibir. Garantía de 30 días.',
   titulo: 'Cocina sin cucarachas en 48 horas, sin fumigar ni salir de casa',
@@ -210,7 +210,7 @@ export const HOGAR: EcogelConfig = {
 
 export const RESTAURANTES: EcogelConfig = {
   segmento: 'restaurantes',
-  metaTitle: 'EcoGel: cero cucarachas en tu cocina antes de sanidad | AGROINCOL',
+  metaTitle: 'EcoGel: cero cucarachas en tu cocina antes de sanidad',
   metaDescription:
     'Gel profesional para cucarachas apto para zona de alimentos, con registro INVIMA. Sin cerrar el local. Envío a todo Colombia.',
   titulo: 'Cero cucarachas en tu cocina antes de la próxima visita de sanidad',
