@@ -96,13 +96,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, motivo: 'json' }, { status: 400 });
   }
 
-  const { evento, eventId, valor, externalId, sourceUrl, categoria } = cuerpo as {
+  const { evento, eventId, valor, externalId, sourceUrl, categoria, contenido } = cuerpo as {
     evento?: unknown;
     eventId?: unknown;
     valor?: unknown;
     externalId?: unknown;
     sourceUrl?: unknown;
     categoria?: unknown;
+    contenido?: unknown;
   };
 
   if (
@@ -146,15 +147,26 @@ export async function POST(req: NextRequest) {
     },
   };
 
-  // Lista cerrada: solo las dos plagas de la campaña. Nada que venga del
-  // navegador llega crudo a Meta.
+  // Lista cerrada: nada que venga del navegador llega crudo a Meta.
+  const CATEGORIAS = ['chinches', 'comejen', 'ecogel-hogar', 'ecogel-restaurantes'];
   const categoriaValida =
-    categoria === 'chinches' || categoria === 'comejen' ? categoria : undefined;
+    typeof categoria === 'string' && CATEGORIAS.includes(categoria) ? categoria : undefined;
 
-  if (valorNumerico !== undefined || categoriaValida) {
+  // content_ids solo puede ser 'ecogel' por ahora; num_items entre 1 y 3.
+  let contenidoValido: { content_ids: string[]; content_type: 'product'; num_items?: number } | undefined;
+  if (contenido && typeof contenido === 'object') {
+    const { ids, numItems } = contenido as { ids?: unknown; numItems?: unknown };
+    if (Array.isArray(ids) && ids.length === 1 && ids[0] === 'ecogel') {
+      contenidoValido = { content_ids: ['ecogel'], content_type: 'product' };
+      if (numItems === 1 || numItems === 2 || numItems === 3) contenidoValido.num_items = numItems;
+    }
+  }
+
+  if (valorNumerico !== undefined || categoriaValida || contenidoValido) {
     datos.custom_data = {
       ...(valorNumerico !== undefined ? { value: valorNumerico, currency: MONEDA } : {}),
       ...(categoriaValida ? { content_category: categoriaValida } : {}),
+      ...(contenidoValido ?? {}),
     };
   }
 

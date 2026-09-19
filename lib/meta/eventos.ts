@@ -22,8 +22,14 @@
  *
  * Si los dos fueran `Lead`, Meta optimizaría hacia el más barato y barato aquí
  * significa peor.
+ *
+ * Los tres de compra son del e-commerce de EcoGel (/ecogel): `ViewContent` en
+ * la página de producto, `InitiateCheckout` al abrir el checkout y `Purchase`
+ * al crear el pedido. `Purchase` sale por el servidor desde /api/ecogel/pedido
+ * (lleva datos hasheados) y por el Pixel desde /ecogel/gracias, con el mismo
+ * event_id.
  */
-export const EVENTOS = ['PageView', 'Lead', 'Contact'] as const;
+export const EVENTOS = ['PageView', 'Lead', 'Contact', 'ViewContent', 'InitiateCheckout', 'Purchase'] as const;
 
 export type NombreEvento = (typeof EVENTOS)[number];
 

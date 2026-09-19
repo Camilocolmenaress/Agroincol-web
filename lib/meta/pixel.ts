@@ -29,8 +29,8 @@ declare global {
 export const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '';
 export const pixelActivo = PIXEL_ID.length > 0;
 
-/** Eventos de conversión: uno por sesión y por visitante. PageView no. */
-const UNA_VEZ_POR_SESION: NombreEvento[] = ['Lead', 'Contact'];
+/** Eventos de conversión: uno por sesión y por visitante. PageView y ViewContent no. */
+const UNA_VEZ_POR_SESION: NombreEvento[] = ['Lead', 'Contact', 'InitiateCheckout', 'Purchase'];
 
 /**
  * ¿Este visitante ya disparó este evento en esta sesión?
@@ -60,6 +60,13 @@ function marcarDisparado(evento: NombreEvento): void {
   }
 }
 
+export interface ContenidoEvento {
+  /** `content_ids` de Meta. Para EcoGel siempre ['ecogel']. */
+  ids: string[];
+  /** Unidades del pedido. */
+  numItems?: number;
+}
+
 interface DatosEvento {
   valor?: number;
   /**
@@ -72,6 +79,12 @@ interface DatosEvento {
    * y PostHog puede segmentar el embudo, sin partir el historial del pixel.
    */
   categoria?: string;
+  contenido?: ContenidoEvento;
+  /**
+   * Event id ya generado por otro lado (p. ej. el que guardó el checkout para
+   * que /gracias dispare el Purchase con el mismo id que usó el servidor).
+   */
+  eventId?: string;
 }
 
 function saneaValor(valor: number | undefined): number | undefined {
@@ -91,7 +104,7 @@ export function soloPixel(evento: NombreEvento, datos: DatosEvento = {}): string
   if (!pixelActivo || typeof window === 'undefined') return null;
   if (yaSeDisparo(evento)) return null;
 
-  const eventId = nuevoEventId();
+  const eventId = datos.eventId ?? nuevoEventId();
   const valor = saneaValor(datos.valor);
 
   const parametros: Record<string, unknown> = {};
@@ -100,6 +113,11 @@ export function soloPixel(evento: NombreEvento, datos: DatosEvento = {}): string
     parametros.currency = MONEDA;
   }
   if (datos.categoria) parametros.content_category = datos.categoria;
+  if (datos.contenido) {
+    parametros.content_ids = datos.contenido.ids;
+    parametros.content_type = 'product';
+    if (datos.contenido.numItems !== undefined) parametros.num_items = datos.contenido.numItems;
+  }
 
   // 1) Pixel del navegador.
   try {
@@ -124,7 +142,13 @@ export function soloPixel(evento: NombreEvento, datos: DatosEvento = {}): string
 export function rastrear(evento: NombreEvento, datos: DatosEvento = {}): void {
   const eventId = soloPixel(evento, datos);
   if (!eventId) return;
-  enviarACapi('/api/meta', { evento, eventId, valor: saneaValor(datos.valor), categoria: datos.categoria });
+  enviarACapi('/api/meta', {
+    evento,
+    eventId,
+    valor: saneaValor(datos.valor),
+    categoria: datos.categoria,
+    contenido: datos.contenido,
+  });
 }
 
 /**
