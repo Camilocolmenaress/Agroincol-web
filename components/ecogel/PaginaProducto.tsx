@@ -5,6 +5,7 @@ import { TierProvider } from './TierContext';
 import BarraPromo from './BarraPromo';
 import CabeceraEcogel from './CabeceraEcogel';
 import Galeria, { type FotosEcogel } from './Galeria';
+import MarqueeResenas from './MarqueeResenas';
 import CajaCompra from './CajaCompra';
 import BarraSticky from './BarraSticky';
 import BloqueGarantia from './BloqueGarantia';
@@ -19,14 +20,16 @@ import PreguntasEcogel from './PreguntasEcogel';
 import Resenas from './Resenas';
 import PieEcogel from './PieEcogel';
 import RastreoVista from './RastreoVista';
+import WhatsAppFlotante from './WhatsAppFlotante';
 
 // Orden = página de producto de Lummia, sección por sección (ver spec §3).
 export default function PaginaProducto({ config, fotos, video }: { config: EcogelConfig; fotos: FotosEcogel; video?: string }) {
   return (
     <TierProvider>
       <BarraPromo />
-      <CabeceraEcogel whatsappTexto={config.whatsappTexto} />
+      <CabeceraEcogel segmento={config.segmento} />
       <Galeria fotos={fotos} />
+      <MarqueeResenas />
       <CajaCompra config={config} />
       <BloqueGarantia />
       <AntesDespues antes={fotos.antes} despues={fotos.despues} />
@@ -40,6 +43,7 @@ export default function PaginaProducto({ config, fotos, video }: { config: Ecoge
       <Resenas />
       <PieEcogel />
       <BarraSticky segmento={config.segmento} />
+      <WhatsAppFlotante texto={config.whatsappTexto} />
       <RastreoVista segmento={config.segmento} />
       <LandingContactTracker categoria={`ecogel-${config.segmento}`} />
     </TierProvider>

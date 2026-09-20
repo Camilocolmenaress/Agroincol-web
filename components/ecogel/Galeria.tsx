@@ -1,9 +1,13 @@
+'use client';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Marcador from './Marcador';
 import { GARANTIA } from '@/lib/ecogel';
 
-// Sección 3 de Lummia: foto grande con sello de garantía encima y miniaturas.
-// Sin carrusel con JavaScript: en móvil el 90 % no pasa de la primera foto y el
-// resto de encuadres está justo debajo, en el orden en que importan.
+// Sección 3 de Lummia: carrusel de 12 encuadres a ancho completo, con scroll-snap
+// nativo (sin librería). El JavaScript solo sigue el scroll para marcar el punto
+// activo y mueve la pista con las flechas; deslizar con el dedo no depende de él.
 
 export interface FotosEcogel {
   enUso?: string;
@@ -13,27 +17,105 @@ export interface FotosEcogel {
   equipo?: string;
 }
 
+interface Slide {
+  etiqueta: string;
+  alt: string;
+  foto?: keyof FotosEcogel;
+}
+
+const SLIDES: Slide[] = [
+  { etiqueta: 'Gel aplicándose en la rendija de una cocina', alt: 'Aplicación de EcoGel en una rendija de cocina', foto: 'enUso' },
+  { etiqueta: 'Jeringa sobre fondo neutro', alt: 'Jeringa de EcoGel', foto: 'producto' },
+  { etiqueta: 'Detrás de la nevera', alt: 'Aplicación de EcoGel detrás de la nevera' },
+  { etiqueta: 'Bajo el lavaplatos', alt: 'Aplicación de EcoGel bajo el lavaplatos' },
+  { etiqueta: 'Esquina de gabinete', alt: 'Aplicación de EcoGel en la esquina de un gabinete' },
+  { etiqueta: 'Zócalo de cocina de restaurante', alt: 'Aplicación de EcoGel en el zócalo de una cocina de restaurante' },
+  { etiqueta: 'Antes (cocina)', alt: 'Cocina con cucarachas, antes', foto: 'antes' },
+  { etiqueta: 'Después · día 7', alt: 'La misma cocina, día 7', foto: 'despues' },
+  { etiqueta: 'Técnico de AGROINCOL aplicando', alt: 'Técnico de AGROINCOL aplicando EcoGel', foto: 'equipo' },
+  { etiqueta: 'Caja / kit con la guía', alt: 'Kit de EcoGel con la guía de aplicación' },
+  { etiqueta: 'Puntos del tamaño de un grano de arroz (macro)', alt: 'Puntos de gel del tamaño de un grano de arroz' },
+  { etiqueta: 'Cliente mostrando la jeringa (UGC)', alt: 'Cliente mostrando la jeringa de EcoGel' },
+];
+
 export default function Galeria({ fotos }: { fotos: FotosEcogel }) {
+  const pista = useRef<HTMLDivElement>(null);
+  const [activo, setActivo] = useState(0);
+
+  // Punto activo = slide más cercano al borde izquierdo. Se lee en cada scroll;
+  // es una división, no hace falta throttling.
+  useEffect(() => {
+    const el = pista.current;
+    if (!el) return;
+    const onScroll = () => setActivo(Math.round(el.scrollLeft / el.clientWidth));
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const irA = useCallback((i: number) => {
+    const el = pista.current;
+    if (!el) return;
+    const destino = Math.max(0, Math.min(SLIDES.length - 1, i));
+    el.scrollTo({ left: destino * el.clientWidth, behavior: 'smooth' });
+  }, []);
+
   return (
-    <section className="container-custom pt-4">
+    <section className="container-custom pt-4" aria-roledescription="carrusel" aria-label="Fotos de EcoGel">
       <div className="relative">
-        <Marcador
-          etiqueta="Gel aplicándose en la rendija de una cocina"
-          medidas="1200×1200"
-          src={fotos.enUso}
-          alt="Aplicación de EcoGel en una rendija de cocina"
-          prioridad
-        />
-        <div className="absolute right-3 top-3 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-brand-orange text-center text-white shadow-brand">
-          <span className="font-heading text-2xl font-bold leading-none">{GARANTIA.dias}</span>
-          <span className="text-[10px] font-semibold uppercase leading-tight">días de garantía</span>
+        <div
+          ref={pista}
+          className="flex snap-x snap-mandatory overflow-x-auto rounded-2xl [&::-webkit-scrollbar]:hidden"
+          style={{ scrollbarWidth: 'none' }}
+        >
+          {SLIDES.map((s, i) => (
+            <div key={s.etiqueta} className="relative w-full flex-none snap-start" aria-roledescription="diapositiva" aria-label={`${i + 1} de ${SLIDES.length}`}>
+              <Marcador
+                etiqueta={s.etiqueta}
+                medidas="1200×1200"
+                src={s.foto ? fotos[s.foto] : undefined}
+                alt={s.alt}
+                prioridad={i === 0}
+              />
+              {i === 0 && (
+                <div className="absolute right-3 top-3 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-brand-orange text-center text-white shadow-brand">
+                  <span className="font-heading text-2xl font-bold leading-none">{GARANTIA.dias}</span>
+                  <span className="text-[10px] font-semibold uppercase leading-tight">días de garantía</span>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
+
+        <button
+          type="button"
+          onClick={() => irA(activo - 1)}
+          aria-label="Foto anterior"
+          className="absolute left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-brand-green shadow-soft"
+        >
+          <ChevronLeft size={22} aria-hidden />
+        </button>
+        <button
+          type="button"
+          onClick={() => irA(activo + 1)}
+          aria-label="Foto siguiente"
+          className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-brand-green shadow-soft"
+        >
+          <ChevronRight size={22} aria-hidden />
+        </button>
       </div>
-      <div className="mt-3 grid grid-cols-4 gap-2">
-        <Marcador etiqueta="Jeringa" medidas="600×600" src={fotos.producto} alt="Jeringa EcoGel" className="!rounded-xl" />
-        <Marcador etiqueta="Antes" medidas="600×600" src={fotos.antes} alt="Cocina antes" className="!rounded-xl" />
-        <Marcador etiqueta="Después" medidas="600×600" src={fotos.despues} alt="Cocina después" className="!rounded-xl" />
-        <Marcador etiqueta="Equipo" medidas="600×600" src={fotos.equipo} alt="Técnico de AGROINCOL aplicando" className="!rounded-xl" />
+
+      <div className="mt-3 flex justify-center gap-1.5" role="tablist" aria-label="Ir a la foto">
+        {SLIDES.map((s, i) => (
+          <button
+            key={s.etiqueta}
+            type="button"
+            role="tab"
+            aria-selected={i === activo}
+            aria-label={`Foto ${i + 1}`}
+            onClick={() => irA(i)}
+            className={`h-2 rounded-full transition-all ${i === activo ? 'w-5 bg-brand-green' : 'w-2 bg-brand-gray-light'}`}
+          />
+        ))}
       </div>
     </section>
   );

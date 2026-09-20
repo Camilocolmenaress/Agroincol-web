@@ -3,6 +3,7 @@ import { CheckCircle2, Clock, MessageCircle, XCircle } from 'lucide-react';
 import CabeceraEcogel from '@/components/ecogel/CabeceraEcogel';
 import PieEcogel from '@/components/ecogel/PieEcogel';
 import RastreoCompra from '@/components/ecogel/RastreoCompra';
+import WhatsAppFlotante from '@/components/ecogel/WhatsAppFlotante';
 import { GARANTIA, whatsappEcogel } from '@/lib/ecogel';
 
 export const metadata: Metadata = { title: 'Pedido recibido | AGROINCOL', robots: { index: false, follow: false } };
@@ -29,7 +30,8 @@ export default function GraciasPage({ searchParams }: { searchParams: { pedido?:
 
   return (
     <>
-      <CabeceraEcogel whatsappTexto={whatsappTexto} />
+      {/* Sin segmento: el pedido ya está hecho, el carrito no aplica. */}
+      <CabeceraEcogel />
       <main className="container-custom max-w-xl py-12 text-center">
         <Icono size={52} className={`mx-auto ${estado === 'failure' ? 'text-brand-orange-dark' : 'text-brand-green'}`} aria-hidden />
         <h1 className="font-heading text-h2-mobile text-brand-green mt-4 md:text-h2">{t.titulo}</h1>
@@ -41,6 +43,7 @@ export default function GraciasPage({ searchParams }: { searchParams: { pedido?:
         <p className="mt-8 text-body-sm text-brand-black/55">Guarda el número de pedido: es lo que necesitas para cualquier reclamo o para la garantía de {GARANTIA.dias} días.</p>
       </main>
       <PieEcogel />
+      <WhatsAppFlotante texto={whatsappTexto} />
       {pedido && <RastreoCompra pedidoId={pedido} estado={estado} />}
     </>
   );

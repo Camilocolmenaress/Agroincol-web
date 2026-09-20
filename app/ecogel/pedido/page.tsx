@@ -3,6 +3,7 @@ import CabeceraEcogel from '@/components/ecogel/CabeceraEcogel';
 import FormularioPedido from '@/components/ecogel/FormularioPedido';
 import PieEcogel from '@/components/ecogel/PieEcogel';
 import { TierProvider } from '@/components/ecogel/TierContext';
+import WhatsAppFlotante from '@/components/ecogel/WhatsAppFlotante';
 import { TIER_POR_DEFECTO, configDe, esSegmento, esUnidades } from '@/lib/ecogel';
 
 export const metadata: Metadata = {
@@ -16,9 +17,10 @@ export default function PedidoPage({ searchParams }: { searchParams: { u?: strin
   const segmento = esSegmento(searchParams.de) ? searchParams.de : 'hogar';
   return (
     <TierProvider inicial={unidades}>
-      <CabeceraEcogel whatsappTexto={configDe(segmento).whatsappTexto} />
+      <CabeceraEcogel segmento={segmento} />
       <FormularioPedido segmento={segmento} unidadesIniciales={unidades} />
       <PieEcogel />
+      <WhatsAppFlotante texto={configDe(segmento).whatsappTexto} />
     </TierProvider>
   );
 }
