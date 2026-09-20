@@ -29,8 +29,8 @@ interface Slide {
 }
 
 const SLIDES: Slide[] = [
-  { etiqueta: 'Gel aplicándose en la rendija de una cocina', alt: 'Aplicación de EcoGel en una rendija de cocina', foto: 'enUso' },
   { etiqueta: 'Jeringa sobre fondo neutro', alt: 'Jeringa de EcoGel', foto: 'producto' },
+  { etiqueta: 'Gel aplicándose en la rendija de una cocina', alt: 'Aplicación de EcoGel en una rendija de cocina', foto: 'enUso' },
   { etiqueta: 'Detrás de la nevera', alt: 'Aplicación de EcoGel detrás de la nevera', foto: 'nevera' },
   { etiqueta: 'Bajo el lavaplatos', alt: 'Aplicación de EcoGel bajo el lavaplatos', foto: 'lavaplatos' },
   { etiqueta: 'Esquina de gabinete', alt: 'Aplicación de EcoGel en la esquina de un gabinete', foto: 'gabinete' },
