@@ -8,6 +8,8 @@ import { construirUserData, sha256 } from '@/lib/meta/hash';
 import { resolverFbc } from '@/lib/meta/fbc';
 import { FBP_DURACION_S, resolverFbp } from '@/lib/meta/fbp';
 import { capiConfigurada, enviarEventoAMeta } from '@/lib/meta/capi';
+import { secretoValido } from '@/lib/meta/cierre';
+import { firmaDePedido } from './firma';
 
 // Mismo formato que nuevoPedidoId() en lib/ecogel-pedido.ts.
 const PEDIDO_ID_RE = /^EG-\d{6}-[A-Z0-9]{4}$/;
@@ -43,8 +45,20 @@ export async function POST(req: NextRequest) {
   const totales = totalPedido(pedido.unidades, pedido.metodo);
   // Si el envío anterior falló en Mercado Pago, el servidor ya guardó una fila
   // con este id: se reutiliza y se actualiza en vez de crear una duplicada.
-  const pedidoAnterior =
+  // Pero el formato del id no prueba nada: cualquiera puede adivinar
+  // "EG-######-XXXX" y pedir que se sobreescriba el estado/método/total de un
+  // pedido ajeno. Por eso solo se honra `pedidoAnterior` cuando viene con la
+  // firma que el propio servidor entregó en el 502 del intento anterior (ver
+  // más abajo); sin firma válida, este envío se trata como un pedido nuevo.
+  const candidatoPedidoAnterior =
     typeof cuerpo.pedidoAnterior === 'string' && PEDIDO_ID_RE.test(cuerpo.pedidoAnterior) ? cuerpo.pedidoAnterior : undefined;
+  const firmaAnterior = typeof cuerpo.firmaAnterior === 'string' ? cuerpo.firmaAnterior : undefined;
+  const pedidoAnterior =
+    candidatoPedidoAnterior !== undefined &&
+    firmaAnterior !== undefined &&
+    secretoValido(firmaAnterior, (await firmaDePedido(candidatoPedidoAnterior)) ?? '')
+      ? candidatoPedidoAnterior
+      : undefined;
   const pedidoId = pedidoAnterior ?? nuevoPedidoId();
   const base = `${req.nextUrl.protocol}//${req.nextUrl.host}`;
 
@@ -170,7 +184,15 @@ export async function POST(req: NextRequest) {
 
   let ir = `/ecogel/gracias?pedido=${pedidoId}&estado=cod`;
   if (pedido.metodo === 'online') {
-    if (!mpConfigurado()) return conCookieFbp(NextResponse.json({ ok: false, motivo: 'mp' }, { status: 502 }));
+    if (!mpConfigurado()) {
+      // La firma va en el 502 para que, si la persona reintenta, el próximo
+      // envío pueda probar que este pedidoId es el suyo (ver pedidoAnterior
+      // arriba) sin necesitar su propio secreto en el cliente.
+      const firma = await firmaDePedido(pedidoId);
+      return conCookieFbp(
+        NextResponse.json({ ok: false, motivo: 'mp', pedidoId, ...(firma ? { firma } : {}) }, { status: 502 }),
+      );
+    }
     const pref = await crearPreferencia(
       construirPreferencia({ pedidoId, unidades: pedido.unidades, total: totales.total, nombre: pedido.nombre, correo: pedido.correo, celular: pedido.celular, segmento: pedido.de, base }),
     );
@@ -179,7 +201,10 @@ export async function POST(req: NextRequest) {
       // respuesta de Mercado Pago y puede traer de vuelta el nombre/correo/celular
       // del comprador (payer) que se le mandó en la preferencia.
       console.error('[mp] no se pudo crear la preferencia', pedidoId, pref.detalle.slice(0, 200));
-      return conCookieFbp(NextResponse.json({ ok: false, motivo: 'mp', pedidoId }, { status: 502 }));
+      const firma = await firmaDePedido(pedidoId);
+      return conCookieFbp(
+        NextResponse.json({ ok: false, motivo: 'mp', pedidoId, ...(firma ? { firma } : {}) }, { status: 502 }),
+      );
     }
     ir = pref.initPoint;
   }

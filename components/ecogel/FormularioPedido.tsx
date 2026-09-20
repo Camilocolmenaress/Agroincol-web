@@ -31,10 +31,12 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
   // MISMO event_id: Meta deduplica el Purchase por (event_name, event_id), así
   // que un reintento no cuenta como dos compras.
   const eventIdRef = useRef(nuevoEventId());
-  // Si Mercado Pago falla, el servidor ya guardó una fila con este pedidoId. El
-  // siguiente envío lo manda como `pedidoAnterior` para que el servidor actualice
-  // esa fila en vez de crear una nueva (y una duplicada en la hoja).
-  const [pedidoAnterior, setPedidoAnterior] = useState<string | undefined>(undefined);
+  // Si Mercado Pago falla, el servidor ya guardó una fila con este pedidoId y
+  // manda de vuelta una firma que lo prueba. El siguiente envío manda ambos
+  // como `pedidoAnterior`/`firmaAnterior` para que el servidor actualice esa
+  // fila en vez de crear una nueva (y una duplicada en la hoja); sin la firma
+  // el servidor no reutiliza el id, así que sin ella no vale la pena guardarlo.
+  const [pedidoAnterior, setPedidoAnterior] = useState<{ pedidoId: string; firma: string } | undefined>(undefined);
 
   useEffect(() => {
     // El tier inicial ya lo fija TierProvider (prop `inicial`); aquí solo se mide.
@@ -74,10 +76,17 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           eventId: eventIdRef.current,
           externalId: idDeVisitante(),
           sourceUrl: window.location.href,
-          ...(pedidoAnterior ? { pedidoAnterior } : {}),
+          ...(pedidoAnterior ? { pedidoAnterior: pedidoAnterior.pedidoId, firmaAnterior: pedidoAnterior.firma } : {}),
         }),
       });
-      const json = (await res.json()) as { ok: boolean; pedidoId?: string; ir?: string; errores?: Record<string, string>; motivo?: string };
+      const json = (await res.json()) as {
+        ok: boolean;
+        pedidoId?: string;
+        ir?: string;
+        errores?: Record<string, string>;
+        motivo?: string;
+        firma?: string;
+      };
       if (!res.ok || !json.ok) {
         const hayErroresPorCampo = json.errores && Object.keys(json.errores).length > 0;
         if (hayErroresPorCampo) {
@@ -85,7 +94,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           setEstado('idle');
         } else {
           setEstado(json.motivo === 'mp' ? 'error-mp' : 'error');
-          if (json.motivo === 'mp' && json.pedidoId) setPedidoAnterior(json.pedidoId);
+          if (json.motivo === 'mp' && json.pedidoId && json.firma) setPedidoAnterior({ pedidoId: json.pedidoId, firma: json.firma });
         }
         return;
       }
