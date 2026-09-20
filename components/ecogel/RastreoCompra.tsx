@@ -11,7 +11,10 @@ import { soloPixel } from '@/lib/meta/pixel';
  */
 export default function RastreoCompra({ pedidoId, estado }: { pedidoId: string; estado: string }) {
   useEffect(() => {
-    if (estado !== 'cod' && estado !== 'approved') return;
+    // Como en contraentrega, estos métodos cuentan la compra al crear el pedido
+    // (el servidor ya mandó el Purchase por CAPI ahí): sin webhook que confirme,
+    // esperar a un pago que nunca se sabrá si llegó dejaría el evento sin mandar.
+    if (!['cod', 'approved', 'bancolombia', 'nequi', 'breb'].includes(estado)) return;
     try {
       const crudo = window.sessionStorage.getItem('ecogel_compra');
       if (!crudo) return;

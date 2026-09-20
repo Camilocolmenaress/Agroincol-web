@@ -7,7 +7,7 @@
 import { BUSINESS } from './constants';
 
 export type Unidades = 1 | 2 | 3;
-export type MetodoPago = 'online' | 'contraentrega';
+export type MetodoPago = 'online' | 'bancolombia' | 'nequi' | 'breb' | 'contraentrega';
 export type Segmento = 'hogar' | 'restaurantes';
 
 export interface Tier {
@@ -23,9 +23,16 @@ export interface Tier {
 
 export const PRECIO_UNIDAD = 39_900;
 export const ENVIO_BASE = 20_000;
-/** Descuento por pedido cuando paga en línea: neutraliza el costo del rechazo contraentrega. */
+/** Descuento por pedido cuando NO es contraentrega: neutraliza el costo del rechazo contraentrega. */
 export const DESCUENTO_ONLINE = 5_000;
 export const TIER_POR_DEFECTO: Unidades = 3;
+
+/** Cuentas reales para los métodos de pago manuales (sin pasarela: alguien confirma a mano en la hoja). */
+export const CUENTAS_MANUALES = {
+  bancolombia: { banco: 'Bancolombia', tipo: 'Ahorros', numero: '799-114544-54', titular: 'Erwing Andrés Colmenares Tuirán', cedula: '1095786836' },
+  nequi: { numero: '3150642289', titular: 'Erwing Camilo Colmenares Gomez' },
+  breb: { llave: '@ECG611', banco: 'Nu', titular: 'Erwing Camilo Colmenares Gomez' },
+} as const;
 
 export const TIERS: readonly Tier[] = [
   { unidades: 1, producto: PRECIO_UNIDAD, envio: ENVIO_BASE, etiqueta: 'Para probar', masVendido: false },
@@ -45,7 +52,7 @@ export function tierDe(unidades: number): Tier {
 
 export function totalPedido(unidades: Unidades, metodo: MetodoPago) {
   const tier = tierDe(unidades);
-  const descuento = metodo === 'online' ? DESCUENTO_ONLINE : 0;
+  const descuento = metodo === 'contraentrega' ? 0 : DESCUENTO_ONLINE;
   return {
     producto: tier.producto,
     envio: tier.envio,

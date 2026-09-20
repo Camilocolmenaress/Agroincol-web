@@ -35,7 +35,8 @@ export function validarPedido(entrada: unknown): Resultado {
   const errores: Record<string, string> = {};
 
   if (!esUnidades(e.unidades)) errores.unidades = 'Escoge 1, 2 o 3 unidades';
-  const metodo = e.metodo === 'online' || e.metodo === 'contraentrega' ? e.metodo : null;
+  const METODOS = ['online', 'bancolombia', 'nequi', 'breb', 'contraentrega'] as const;
+  const metodo = typeof e.metodo === 'string' && (METODOS as readonly string[]).includes(e.metodo) ? (e.metodo as MetodoPago) : null;
   if (!metodo) errores.metodo = 'Escoge cómo vas a pagar';
   if (!esSegmento(e.de)) errores.de = 'Origen inválido';
 
@@ -47,7 +48,7 @@ export function validarPedido(entrada: unknown): Resultado {
 
   const correo = texto(e.correo).toLowerCase();
   if (correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) errores.correo = 'Ese correo no parece válido';
-  if (metodo === 'online' && !correo) errores.correo = 'Para pagar en línea necesitamos tu correo';
+  if (metodo && metodo !== 'contraentrega' && !correo) errores.correo = 'Para este método de pago necesitamos tu correo';
 
   const direccion = texto(e.direccion);
   if (direccion.length < 5) errores.direccion = 'Escribe la dirección de entrega';

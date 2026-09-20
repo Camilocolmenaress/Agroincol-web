@@ -29,6 +29,12 @@ test('pago en línea descuenta $5.000 por pedido', () => {
   assert.equal(totalPedido(3, 'online').total, 114_700);
 });
 
+test('los métodos manuales (bancolombia, nequi, breb) descuentan igual que en línea', () => {
+  for (const metodo of ['bancolombia', 'nequi', 'breb'] as const) {
+    assert.deepEqual(totalPedido(2, metodo), { producto: 79_800, envio: 10_000, descuento: 5_000, total: 84_800 });
+  }
+});
+
 test('tierDe rechaza cantidades fuera de 1-3', () => {
   assert.throws(() => tierDe(0));
   assert.throws(() => tierDe(4));

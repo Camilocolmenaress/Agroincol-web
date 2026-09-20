@@ -190,7 +190,11 @@ export async function POST(req: NextRequest) {
 
   await Promise.all([escrituraFila, envioMeta]);
 
-  let ir = `/ecogel/gracias?pedido=${pedidoId}&estado=cod`;
+  // Contraentrega y los métodos manuales (transferencia sin pasarela) van
+  // directo a "gracias" con su propio estado: cada uno tiene su instrucción
+  // ahí (ver TEXTOS en app/ecogel/gracias/page.tsx). Solo "online" pasa por
+  // Mercado Pago.
+  let ir = `/ecogel/gracias?pedido=${pedidoId}&estado=${pedido.metodo === 'contraentrega' ? 'cod' : pedido.metodo}`;
   if (pedido.metodo === 'online') {
     if (!mpConfigurado()) {
       // La firma va en el 502 para que, si la persona reintenta, el próximo

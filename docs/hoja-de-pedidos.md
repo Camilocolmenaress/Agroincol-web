@@ -55,7 +55,11 @@ function doPost(e) {
       var v = datos.fila[c];
       return v === undefined || v === null ? '' : v;
     }));
-    avisarPorCorreo(datos.fila);
+    // Contraentrega: el pedido queda confirmado apenas se crea (la persona ya
+    // ve "pedido recibido"), así que el aviso va de una. En línea puede fallar
+    // en Mercado Pago después de esto, así que el aviso espera a que
+    // actualizar() confirme "pagado" — ver más abajo.
+    if (datos.fila.metodoPago !== 'online') avisarPorCorreo(datos.fila);
     return ContentService.createTextOutput('ok');
   } catch (error) {
     return ContentService.createTextOutput('error: ' + error.message);
@@ -86,15 +90,26 @@ function actualizar(h, pedidoId, cambios) {
   var ids = h.getRange(2, col, h.getLastRow() - 1, 1).getValues();
   for (var i = 0; i < ids.length; i++) {
     if (ids[i][0] === pedidoId) {
-      var fila = i + 2;
+      var numeroFila = i + 2;
       Object.keys(cambios).forEach(function (c) {
         var idx = COLUMNAS.indexOf(c);
-        if (idx >= 0) h.getRange(fila, idx + 1).setValue(cambios[c]);
+        if (idx >= 0) h.getRange(numeroFila, idx + 1).setValue(cambios[c]);
       });
+      // Único momento en que un pedido en línea avisa por correo: cuando el
+      // webhook de Mercado Pago (app/api/ecogel/mp/route.ts) confirma el pago.
+      // Antes de esto nadie debe despachar nada.
+      if (cambios.estado === 'pagado') avisarPorCorreo(leerFila(h, numeroFila));
       return;
     }
   }
   throw new Error('pedido no encontrado: ' + pedidoId);
+}
+
+function leerFila(h, numeroFila) {
+  var valores = h.getRange(numeroFila, 1, 1, COLUMNAS.length).getValues()[0];
+  var fila = {};
+  COLUMNAS.forEach(function (c, i) { fila[c] = valores[i]; });
+  return fila;
 }
 
 function avisarPorCorreo(fila) {

@@ -31,10 +31,14 @@ test('el celular debe tener 10 dígitos y empezar por 3', () => {
   if (!r.ok) assert.match(r.errores.celular, /celular/i);
 });
 
-test('el correo es obligatorio solo al pagar en línea', () => {
+test('el correo es obligatorio salvo en contraentrega', () => {
   assert.equal(validarPedido({ ...base, correo: '' }).ok, false);
   assert.equal(validarPedido({ ...base, correo: '', metodo: 'contraentrega' }).ok, true);
   assert.equal(validarPedido({ ...base, correo: 'no-es-correo' }).ok, false);
+  for (const metodo of ['bancolombia', 'nequi', 'breb']) {
+    assert.equal(validarPedido({ ...base, correo: '', metodo }).ok, false);
+    assert.equal(validarPedido({ ...base, metodo }).ok, true);
+  }
 });
 
 test('rechaza tier, método, segmento y departamento inválidos', () => {

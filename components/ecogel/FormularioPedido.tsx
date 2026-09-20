@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
-import { DESCUENTO_ONLINE, GARANTIA, money, totalPedido, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
+import { CUENTAS_MANUALES, DESCUENTO_ONLINE, GARANTIA, money, totalPedido, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
 import { DEPARTAMENTOS, validarPedido } from '@/lib/ecogel-pedido';
 import { nuevoEventId } from '@/lib/meta/eventos';
 import { rastrear } from '@/lib/meta/pixel';
@@ -16,9 +16,65 @@ import { useTier } from './TierContext';
 const campo =
   'mt-1 w-full rounded-xl border border-brand-gray-light px-4 py-3 text-body focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/25';
 
+const B = CUENTAS_MANUALES.bancolombia;
+const N = CUENTAS_MANUALES.nequi;
+const R = CUENTAS_MANUALES.breb;
+
+// Una opción por cada forma real de pagar, no por MetodoPago: tarjeta y PSE se
+// ven distintas pero las dos redirigen a Mercado Pago (mismo `metodo: 'online'`).
+// Los logos faltantes (pse/nequi/bancolombia/breb) van en public/ecogel/pagos/;
+// mientras no estén, el <img> del navegador simplemente no muestra nada.
+const OPCIONES_PAGO = [
+  {
+    id: 'tarjeta',
+    metodo: 'online' as MetodoPago,
+    titulo: 'Tarjeta Crédito/Débito',
+    logos: ['visa.svg', 'mastercard.svg', 'amex.svg', 'diners.svg'],
+    nota: 'Se te redirigirá a Mercado Pago para completar tu compra.',
+  },
+  {
+    id: 'pse',
+    metodo: 'online' as MetodoPago,
+    titulo: 'PSE - Billetera Mercado Pago',
+    logos: ['pse.svg'],
+    nota: 'Se te redirigirá a Mercado Pago para completar tu compra.',
+  },
+  {
+    id: 'bancolombia',
+    metodo: 'bancolombia' as MetodoPago,
+    titulo: 'Bancolombia (Transferencias y consignaciones)',
+    logos: ['bancolombia.svg'],
+    nota: `Cuenta de ${B.tipo} Bancolombia ${B.numero}, a nombre de ${B.titular} (C.C. ${B.cedula}). Transfiere el total y manda el comprobante por WhatsApp.`,
+  },
+  {
+    id: 'nequi',
+    metodo: 'nequi' as MetodoPago,
+    titulo: 'Nequi',
+    logos: ['nequi.svg'],
+    nota: `Nequi ${N.numero}, a nombre de ${N.titular}. Transfiere el total y manda el comprobante por WhatsApp.`,
+  },
+  {
+    id: 'breb',
+    metodo: 'breb' as MetodoPago,
+    titulo: 'Bre-B',
+    logos: ['breb.svg'],
+    nota: `Llave Bre-B ${R.llave} (${R.banco}), a nombre de ${R.titular}. Transfiere el total y manda el comprobante por WhatsApp.`,
+  },
+  {
+    id: 'contraentrega',
+    metodo: 'contraentrega' as MetodoPago,
+    titulo: 'Pago Contraentrega',
+    logos: [],
+    nota: 'Pagas en efectivo cuando te llega el pedido.',
+  },
+] as const;
+
 export default function FormularioPedido({ segmento, unidadesIniciales }: { segmento: Segmento; unidadesIniciales: Unidades }) {
   const { unidades } = useTier();
-  const [metodo, setMetodo] = useState<MetodoPago>('online');
+  // opcion es la elección visual (tarjeta vs PSE se ven distintas); metodo es
+  // lo que realmente viaja al servidor. Las dos primeras opciones comparten metodo.
+  const [opcion, setOpcion] = useState<(typeof OPCIONES_PAGO)[number]['id']>('tarjeta');
+  const metodo: MetodoPago = OPCIONES_PAGO.find((o) => o.id === opcion)!.metodo;
   const [datos, setDatos] = useState({ nombre: '', celular: '', correo: '', direccion: '', barrio: '', ciudad: '', departamento: '' });
   const [ofertas, setOfertas] = useState(true);
   const [website, setWebsite] = useState('');
@@ -122,7 +178,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           <div className="flex justify-between"><dt>EcoGel x{unidades}</dt><dd>{money(t.producto)}</dd></div>
           <div className="flex justify-between"><dt>Envío</dt><dd>{t.envio === 0 ? 'Gratis' : money(t.envio)}</dd></div>
           {t.descuento > 0 && (
-            <div className="flex justify-between text-brand-green"><dt>Descuento por pago en línea</dt><dd>−{money(t.descuento)}</dd></div>
+            <div className="flex justify-between text-brand-green"><dt>Descuento por no pagar contraentrega</dt><dd>−{money(t.descuento)}</dd></div>
           )}
           <div className="flex justify-between border-t border-brand-gray-light pt-2 font-heading text-body font-bold"><dt>Total</dt><dd>{money(t.total)}</dd></div>
         </dl>
@@ -139,7 +195,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           [
             ['nombre', 'Nombre completo', 'text', 'name'],
             ['celular', 'Celular (WhatsApp)', 'tel', 'tel'],
-            ['correo', metodo === 'online' ? 'Correo' : 'Correo (opcional)', 'email', 'email'],
+            ['correo', metodo !== 'contraentrega' ? 'Correo' : 'Correo (opcional)', 'email', 'email'],
             ['direccion', 'Dirección', 'text', 'street-address'],
             ['barrio', 'Barrio', 'text', 'address-level3'],
             ['ciudad', 'Ciudad / municipio', 'text', 'address-level2'],
@@ -169,19 +225,24 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
       <fieldset className="mt-6">
         <legend className="font-heading text-h3 text-brand-green">Método de pago</legend>
         <div className="mt-3 space-y-2">
-          {(
-            [
-              ['online', 'Pagar ahora — PSE, Nequi, tarjeta', `${money(DESCUENTO_ONLINE)} menos`],
-              ['contraentrega', 'Pagar al recibir', 'solo efectivo'],
-            ] as const
-          ).map(([valor, titulo, nota]) => (
-            <label key={valor} className={`flex cursor-pointer items-center gap-3 rounded-xl border-2 px-4 py-3 ${metodo === valor ? 'border-brand-green bg-brand-green/5' : 'border-brand-gray-light'}`}>
-              <input type="radio" name="metodo" value={valor} checked={metodo === valor} onChange={() => setMetodo(valor)} className="h-4 w-4 text-brand-green" />
-              <span className="flex-1">
-                <span className="block font-semibold text-brand-black">{titulo}</span>
-                <span className="block text-body-sm text-brand-black/60">{nota}</span>
-              </span>
-            </label>
+          {OPCIONES_PAGO.map((o) => (
+            <div key={o.id} className={`rounded-xl border-2 ${opcion === o.id ? 'border-brand-green bg-brand-green/5' : 'border-brand-gray-light'}`}>
+              <label className="flex cursor-pointer items-center gap-3 px-4 py-3">
+                <input type="radio" name="opcionPago" value={o.id} checked={opcion === o.id} onChange={() => setOpcion(o.id)} className="h-4 w-4 shrink-0 text-brand-green" />
+                <span className="flex-1">
+                  <span className="block font-semibold text-brand-black">{o.titulo}</span>
+                  {o.metodo !== 'contraentrega' && <span className="block text-body-sm text-brand-black/60">{money(DESCUENTO_ONLINE)} menos</span>}
+                </span>
+                {o.logos.length > 0 && (
+                  <span className="flex shrink-0 items-center gap-1.5">
+                    {o.logos.map((archivo) => (
+                      <img key={archivo} src={`/ecogel/pagos/${archivo}`} alt="" className="h-5 w-auto" />
+                    ))}
+                  </span>
+                )}
+              </label>
+              {opcion === o.id && <p className="border-t border-brand-gray-light/70 px-4 py-2.5 text-body-sm text-brand-black/70">{o.nota}</p>}
+            </div>
           ))}
         </div>
       </fieldset>

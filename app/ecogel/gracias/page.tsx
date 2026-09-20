@@ -4,9 +4,13 @@ import CabeceraEcogel from '@/components/ecogel/CabeceraEcogel';
 import PieEcogel from '@/components/ecogel/PieEcogel';
 import RastreoCompra from '@/components/ecogel/RastreoCompra';
 import WhatsAppFlotante from '@/components/ecogel/WhatsAppFlotante';
-import { GARANTIA, whatsappEcogel } from '@/lib/ecogel';
+import { CUENTAS_MANUALES, GARANTIA, whatsappEcogel } from '@/lib/ecogel';
 
 export const metadata: Metadata = { title: 'Pedido recibido | AGROINCOL', robots: { index: false, follow: false } };
+
+const B = CUENTAS_MANUALES.bancolombia;
+const N = CUENTAS_MANUALES.nequi;
+const R = CUENTAS_MANUALES.breb;
 
 const TEXTOS = {
   cod: {
@@ -17,6 +21,21 @@ const TEXTOS = {
   approved: { icono: CheckCircle2, titulo: 'Pago recibido', texto: 'Tu pedido sale en las próximas 24 horas. Te enviamos la guía de la transportadora por WhatsApp.' },
   pending: { icono: Clock, titulo: 'Pago en proceso', texto: 'PSE puede tardar unos minutos en confirmar. Te avisamos por correo y WhatsApp apenas entre.' },
   failure: { icono: XCircle, titulo: 'El pago no se completó', texto: 'No se cobró nada. Escríbenos y lo resolvemos: puedes volver a intentar en línea o pagar al recibir.' },
+  bancolombia: {
+    icono: Clock,
+    titulo: 'Falta tu transferencia',
+    texto: `Transfiere a la cuenta de ${B.tipo} Bancolombia ${B.numero}, a nombre de ${B.titular} (C.C. ${B.cedula}), y manda el comprobante por WhatsApp para que despachemos.`,
+  },
+  nequi: {
+    icono: Clock,
+    titulo: 'Falta tu transferencia',
+    texto: `Transfiere por Nequi al ${N.numero} (${N.titular}) y manda el comprobante por WhatsApp para que despachemos.`,
+  },
+  breb: {
+    icono: Clock,
+    titulo: 'Falta tu transferencia',
+    texto: `Transfiere por Bre-B a la llave ${R.llave} (${R.banco}, a nombre de ${R.titular}) y manda el comprobante por WhatsApp para que despachemos.`,
+  },
 } as const;
 
 export default function GraciasPage({ searchParams }: { searchParams: { pedido?: string; estado?: string } }) {
