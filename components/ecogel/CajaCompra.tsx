@@ -13,7 +13,9 @@ import { urlPedido, useTier } from './TierContext';
 
 const ICONOS = { ShieldCheck, Wind, Timer, Bug, Store, Utensils, FileCheck } as const;
 
-const PAGOS = ['PSE', 'Nequi', 'Tarjeta', 'Contraentrega'];
+// Logos reales de los métodos aceptados (mismos archivos que el checkout,
+// public/ecogel/pagos/). Contraentrega no tiene logo: es efectivo, no una marca.
+const LOGOS_PAGO = ['visa.svg', 'mastercard.svg', 'amex.svg', 'diners.svg', 'pse.svg', 'nequi.svg', 'bancolombia.svg', 'breb.svg'];
 
 export default function CajaCompra({ config }: { config: EcogelConfig }) {
   const { unidades } = useTier();
@@ -104,12 +106,15 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
         Pagando en línea: {money(totalPedido(unidades, 'online').total)}
       </p>
 
-      <ul className="mt-3 flex flex-wrap justify-center gap-2" aria-label="Métodos de pago">
-        {PAGOS.map((p) => (
-          <li key={p} className="rounded-md border border-brand-gray-light px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-brand-black/70">
-            {p}
+      <ul className="mt-3 flex flex-wrap items-center justify-center gap-2" aria-label="Métodos de pago">
+        {LOGOS_PAGO.map((archivo) => (
+          <li key={archivo} className="flex h-11 items-center justify-center rounded-lg border border-brand-gray-light bg-white px-3.5">
+            <img src={`/ecogel/pagos/${archivo}`} alt="" className="h-6 w-auto max-w-[68px] object-contain" />
           </li>
         ))}
+        <li className="flex h-11 items-center justify-center rounded-lg border border-brand-gray-light px-3.5 text-[11px] font-bold uppercase tracking-wide text-brand-black/70">
+          Contraentrega
+        </li>
       </ul>
 
       <div className="mt-4 grid grid-cols-3 gap-2 rounded-xl bg-brand-light p-3 text-center text-body-sm font-semibold text-brand-green">
