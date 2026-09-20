@@ -41,3 +41,17 @@ export function fotosEcogel(segmento: Segmento): FotosEcogel {
 export function videoEcogel(): string | undefined {
   return publicFileExists('/ecogel/aplicacion.jpg') ? '/ecogel/aplicacion.jpg' : undefined;
 }
+
+export interface VideoAprender {
+  src: string;
+  poster: string;
+}
+
+/** Los 3 videos de "Aprende a usarlo": mismo para hogar y restaurantes. */
+export function videosAprenderAUsarlo(): (VideoAprender | undefined)[] {
+  return [1, 2, 3].map((i) => {
+    const src = `/ecogel/aprende-${i}.mp4`;
+    const poster = `/ecogel/aprende-${i}-poster.webp`;
+    return publicFileExists(src) && publicFileExists(poster) ? { src, poster } : undefined;
+  });
+}

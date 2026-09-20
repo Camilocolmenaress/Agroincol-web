@@ -1,4 +1,5 @@
 import type { EcogelConfig } from '@/lib/ecogel';
+import type { VideoAprender } from '@/app/ecogel/fotos';
 import { RESENAS_ECOGEL } from '@/lib/ecogel-resenas';
 import LandingContactTracker from '@/components/landing/LandingContactTracker';
 import { TierProvider } from './TierContext';
@@ -23,7 +24,17 @@ import RastreoVista from './RastreoVista';
 import WhatsAppFlotante from './WhatsAppFlotante';
 
 // Orden = página de producto de Lummia, sección por sección (iteración 3 §3).
-export default function PaginaProducto({ config, fotos, video }: { config: EcogelConfig; fotos: FotosEcogel; video?: string }) {
+export default function PaginaProducto({
+  config,
+  fotos,
+  video,
+  videosAprender,
+}: {
+  config: EcogelConfig;
+  fotos: FotosEcogel;
+  video?: string;
+  videosAprender: (VideoAprender | undefined)[];
+}) {
   return (
     <TierProvider>
       <BarraPromo />
@@ -32,7 +43,7 @@ export default function PaginaProducto({ config, fotos, video }: { config: Ecoge
       <MarqueeResenas />
       <CajaCompra config={config} />
       <BloqueGarantia />
-      <AprendeAUsarlo />
+      <AprendeAUsarlo videos={videosAprender} />
       <Objeciones objeciones={config.objeciones} video={video} />
       <AntesDespues antes={fotos.antes} despues={fotos.despues} resena={RESENAS_ECOGEL[0]} />
       <Evidencia segmento={config.segmento} />

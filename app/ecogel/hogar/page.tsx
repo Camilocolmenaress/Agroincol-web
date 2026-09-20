@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import PaginaProducto from '@/components/ecogel/PaginaProducto';
 import { HOGAR } from '@/lib/ecogel';
-import { fotosEcogel, videoEcogel } from '../fotos';
+import { fotosEcogel, videoEcogel, videosAprenderAUsarlo } from '../fotos';
 
 export const metadata: Metadata = {
   title: HOGAR.metaTitle,
@@ -11,5 +11,12 @@ export const metadata: Metadata = {
 };
 
 export default function EcogelHogarPage() {
-  return <PaginaProducto config={HOGAR} fotos={fotosEcogel('hogar')} video={videoEcogel()} />;
+  return (
+    <PaginaProducto
+      config={HOGAR}
+      fotos={fotosEcogel('hogar')}
+      video={videoEcogel()}
+      videosAprender={videosAprenderAUsarlo()}
+    />
+  );
 }
