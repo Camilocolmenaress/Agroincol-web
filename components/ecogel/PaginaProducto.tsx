@@ -1,5 +1,5 @@
 import type { EcogelConfig } from '@/lib/ecogel';
-import { CASOS_ECOGEL, RESENAS_ECOGEL } from '@/lib/ecogel-resenas';
+import { RESENAS_ECOGEL } from '@/lib/ecogel-resenas';
 import LandingContactTracker from '@/components/landing/LandingContactTracker';
 import { TierProvider } from './TierContext';
 import BarraPromo from './BarraPromo';
@@ -14,7 +14,6 @@ import AntesDespues from './AntesDespues';
 import Objeciones from './Objeciones';
 import Evidencia from './Evidencia';
 import Beneficios from './Beneficios';
-import Casos from './Casos';
 import Comparativa from './Comparativa';
 import SinRiesgo from './SinRiesgo';
 import PreguntasEcogel from './PreguntasEcogel';
@@ -38,7 +37,6 @@ export default function PaginaProducto({ config, fotos, video }: { config: Ecoge
       <AntesDespues antes={fotos.antes} despues={fotos.despues} resena={RESENAS_ECOGEL[0]} />
       <Evidencia segmento={config.segmento} />
       <Beneficios bloques={config.beneficiosLargos} />
-      <Casos casos={CASOS_ECOGEL[config.segmento]} />
       <Comparativa />
       <SinRiesgo />
       <PreguntasEcogel preguntas={config.preguntas} />

@@ -9,8 +9,6 @@
 // `texto` va sin comillas ni prefijo "Ejemplo:": las comillas las pone cada
 // tarjeta y la etiqueta "Ejemplo" sale de `placeholder`, no del texto.
 
-import type { Caso, Segmento } from './ecogel';
-
 export interface ResenaEcogel {
   nombre: string;
   ciudad: string;
@@ -84,55 +82,6 @@ export const RESENAS_ECOGEL: ResenaEcogel[] = [
     placeholder: false,
   },
 ];
-
-export const CASOS_ECOGEL: Record<Segmento, Caso[]> = {
-  hogar: [
-    {
-      nombre: 'Nombre de ejemplo',
-      ciudad: 'Ciudad',
-      problema: 'Cucarachas alemanas detrás de la nevera desde hace 3 meses',
-      cita: 'Ejemplo de cita del cliente sobre el resultado.',
-      placeholder: true,
-    },
-    {
-      nombre: 'Nombre de ejemplo',
-      ciudad: 'Ciudad',
-      problema: 'Apartamento nuevo con cucarachas que venían del ducto',
-      cita: 'Ejemplo de cita del cliente sobre el resultado.',
-      placeholder: true,
-    },
-    {
-      nombre: 'Nombre de ejemplo',
-      ciudad: 'Ciudad',
-      problema: 'Bebé en casa: no quería usar aerosol',
-      cita: 'Ejemplo de cita del cliente sobre el resultado.',
-      placeholder: true,
-    },
-  ],
-  restaurantes: [
-    {
-      nombre: 'Nombre de ejemplo',
-      ciudad: 'Ciudad',
-      problema: 'Visita de sanidad en 10 días y cucarachas bajo la plancha',
-      cita: 'Ejemplo de cita del cliente sobre el resultado.',
-      placeholder: true,
-    },
-    {
-      nombre: 'Nombre de ejemplo',
-      ciudad: 'Ciudad',
-      problema: 'No podía cerrar el local para fumigar',
-      cita: 'Ejemplo de cita del cliente sobre el resultado.',
-      placeholder: true,
-    },
-    {
-      nombre: 'Nombre de ejemplo',
-      ciudad: 'Ciudad',
-      problema: 'Prevención entre fumigaciones trimestrales',
-      cita: 'Ejemplo de cita del cliente sobre el resultado.',
-      placeholder: true,
-    },
-  ],
-};
 
 export function resumenResenas() {
   const conEstrellas = RESENAS_ECOGEL.filter((r): r is ResenaEcogel & { estrellas: 1 | 2 | 3 | 4 | 5 } => r.estrellas != null);

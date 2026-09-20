@@ -74,14 +74,6 @@ export interface Pregunta {
   respuesta: string;
 }
 
-export interface Caso {
-  nombre: string;
-  ciudad: string;
-  problema: string;
-  cita: string;
-  placeholder: boolean;
-}
-
 export interface EcogelConfig {
   segmento: Segmento;
   metaTitle: string;
