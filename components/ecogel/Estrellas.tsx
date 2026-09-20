@@ -4,7 +4,8 @@ import { BadgeCheck, Star } from 'lucide-react';
 // nombre con sello de verificado. Las usan el marquee, el antes/después y la
 // lista de reseñas para que las tres se vean iguales.
 
-export function Estrellas({ n, size = 16 }: { n: number; size?: number }) {
+export function Estrellas({ n, size = 16 }: { n?: number; size?: number }) {
+  if (n == null) return null;
   return (
     <span className="flex text-brand-amber" role="img" aria-label={`${n} de 5 estrellas`}>
       {[1, 2, 3, 4, 5].map((s) => (

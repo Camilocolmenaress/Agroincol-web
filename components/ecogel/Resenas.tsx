@@ -27,27 +27,34 @@ export default function Resenas() {
         </p>
       )}
 
-      {/* (a) Resumen */}
-      <div className="mt-4 flex items-center gap-5 rounded-2xl bg-brand-light p-4">
-        <div className="text-center">
-          <p className="font-heading text-5xl font-bold leading-none text-brand-green">{r.promedio}</p>
-          <div className="mt-1.5 flex justify-center">
-            <Estrellas n={Math.round(r.promedio)} size={14} />
+      {/* (a) Resumen — sin calificación en estrellas no se muestra un promedio inventado */}
+      {r.hayCalificaciones ? (
+        <div className="mt-4 flex items-center gap-5 rounded-2xl bg-brand-light p-4">
+          <div className="text-center">
+            <p className="font-heading text-5xl font-bold leading-none text-brand-green">{r.promedio}</p>
+            <div className="mt-1.5 flex justify-center">
+              <Estrellas n={Math.round(r.promedio)} size={14} />
+            </div>
+            <p className="mt-1 text-body-sm text-brand-black/60">{r.total} opiniones</p>
           </div>
-          <p className="mt-1 text-body-sm text-brand-black/60">{r.total} opiniones</p>
+          <ul className="flex-1 space-y-1">
+            {niveles.map((n) => (
+              <li key={n} className="flex items-center gap-2 text-body-sm">
+                <span className="w-8">{n} ★</span>
+                <span className="h-2 flex-1 overflow-hidden rounded bg-brand-gray-light">
+                  <span
+                    className="block h-full bg-brand-amber"
+                    style={{ width: `${r.totalConEstrellas ? (r.distribucion[n] / r.totalConEstrellas) * 100 : 0}%` }}
+                  />
+                </span>
+                <span className="w-6 text-right text-brand-black/60">{r.distribucion[n]}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="flex-1 space-y-1">
-          {niveles.map((n) => (
-            <li key={n} className="flex items-center gap-2 text-body-sm">
-              <span className="w-8">{n} ★</span>
-              <span className="h-2 flex-1 overflow-hidden rounded bg-brand-gray-light">
-                <span className="block h-full bg-brand-amber" style={{ width: `${r.total ? (r.distribucion[n] / r.total) * 100 : 0}%` }} />
-              </span>
-              <span className="w-6 text-right text-brand-black/60">{r.distribucion[n]}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      ) : (
+        <p className="mt-4 text-body-sm text-brand-black/60">{r.total} opiniones recogidas por WhatsApp</p>
+      )}
 
       {/* (b) Fotos de clientes */}
       <div className={`mt-4 ${OCULTAR_SCROLL}`} style={{ scrollbarWidth: 'none' }} aria-label="Fotos enviadas por clientes">

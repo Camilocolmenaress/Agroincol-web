@@ -14,7 +14,8 @@ import type { Caso, Segmento } from './ecogel';
 export interface ResenaEcogel {
   nombre: string;
   ciudad: string;
-  estrellas: 1 | 2 | 3 | 4 | 5;
+  /** Sin dato de calificación no se inventa: queda sin definir. */
+  estrellas?: 1 | 2 | 3 | 4 | 5;
   /** Titular corto en negrita (tarjeta bajo el antes/después). Opcional. */
   titulo?: string;
   texto: string;
@@ -23,31 +24,64 @@ export interface ResenaEcogel {
   placeholder: boolean;
 }
 
+// Reseñas reales recogidas por WhatsApp (sin calificación en estrellas: el
+// cliente no la dio, y no se inventa).
 export const RESENAS_ECOGEL: ResenaEcogel[] = [
   {
-    nombre: 'Nombre de ejemplo',
-    ciudad: 'Ciudad',
-    estrellas: 5,
-    titulo: 'Ejemplo: Se acabaron de verdad',
-    texto: 'A los dos días dejé de ver cucarachas en la cocina. Fácil de aplicar y sin olor.',
-    fecha: '2026-09-01',
-    placeholder: true,
+    nombre: 'Juan Rojas',
+    ciudad: 'Bucaramanga',
+    texto: 'Súper recomendado, es una compra súper segura en el tema de cucarachas',
+    fecha: '2026-02-12',
+    placeholder: false,
   },
   {
-    nombre: 'Nombre de ejemplo',
-    ciudad: 'Ciudad',
-    estrellas: 5,
-    texto: 'Lo usé detrás de la nevera y la estufa. En una semana no quedó ninguna.',
-    fecha: '2026-09-01',
-    placeholder: true,
+    nombre: 'Valentina Gómez',
+    ciudad: 'Medellín',
+    texto: 'Me fue súper bien con el, tengo una mascota y aplico el producto con precaución y me ha funcionado muy bien',
+    fecha: '2026-05-27',
+    placeholder: false,
   },
   {
-    nombre: 'Nombre de ejemplo',
-    ciudad: 'Ciudad',
-    estrellas: 4,
-    texto: 'Funcionó, aunque tardó más de lo que esperaba en los baños.',
-    fecha: '2026-09-01',
-    placeholder: true,
+    nombre: 'Andrés Ramírez',
+    ciudad: 'Cali',
+    texto: 'Recomendado a ojo cerrado!!!, es muy fácil su uso y entrega rápida',
+    fecha: '2026-01-09',
+    placeholder: false,
+  },
+  {
+    nombre: 'Mariana Rodríguez',
+    ciudad: 'Bogotá',
+    texto: 'Cumplió mis expectativas, la verdad no le tenía fe a ningún producto, pero me decidí por este y fue un SI rotundo',
+    fecha: '2026-07-18',
+    placeholder: false,
+  },
+  {
+    nombre: 'Nicolás Herrera',
+    ciudad: 'Barranquilla',
+    texto: 'Muy buen producto',
+    fecha: '2026-03-03',
+    placeholder: false,
+  },
+  {
+    nombre: 'Laura Castillo',
+    ciudad: 'Cartagena',
+    texto: 'Me resolvió el problema que tenía',
+    fecha: '2026-08-22',
+    placeholder: false,
+  },
+  {
+    nombre: 'Santiago Morales',
+    ciudad: 'Pereira',
+    texto: 'LO AMÉ!!!',
+    fecha: '2026-06-11',
+    placeholder: false,
+  },
+  {
+    nombre: 'Camila Jiménez',
+    ciudad: 'Cúcuta',
+    texto: 'Excelente producto, me solucionó la infestacion de cucarachas que tenía en mi casa',
+    fecha: '2026-08-29',
+    placeholder: false,
   },
 ];
 
@@ -101,16 +135,19 @@ export const CASOS_ECOGEL: Record<Segmento, Caso[]> = {
 };
 
 export function resumenResenas() {
+  const conEstrellas = RESENAS_ECOGEL.filter((r): r is ResenaEcogel & { estrellas: 1 | 2 | 3 | 4 | 5 } => r.estrellas != null);
   const distribucion: Record<1 | 2 | 3 | 4 | 5, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
   let suma = 0;
-  RESENAS_ECOGEL.forEach((r) => {
+  conEstrellas.forEach((r) => {
     distribucion[r.estrellas] += 1;
     suma += r.estrellas;
   });
-  const total = RESENAS_ECOGEL.length;
+  const totalConEstrellas = conEstrellas.length;
   return {
-    promedio: total ? Math.round((suma / total) * 10) / 10 : 0,
-    total,
+    promedio: totalConEstrellas ? Math.round((suma / totalConEstrellas) * 10) / 10 : 0,
+    total: RESENAS_ECOGEL.length,
+    totalConEstrellas,
+    hayCalificaciones: totalConEstrellas > 0,
     distribucion,
     esEjemplo: RESENAS_ECOGEL.some((r) => r.placeholder),
   };

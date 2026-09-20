@@ -47,13 +47,16 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
       </div>
 
       <div className="mt-2 flex items-center gap-2 text-body-sm">
-        <span className="flex text-brand-amber" aria-hidden>
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Star key={i} size={16} fill={i <= Math.round(resenas.promedio) ? 'currentColor' : 'none'} />
-          ))}
-        </span>
+        {resenas.hayCalificaciones && (
+          <span className="flex text-brand-amber" aria-hidden>
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Star key={i} size={16} fill={i <= Math.round(resenas.promedio) ? 'currentColor' : 'none'} />
+            ))}
+          </span>
+        )}
         <a href="#resenas" className="text-brand-black/70 underline underline-offset-2">
-          {resenas.promedio} · {resenas.total} reseñas
+          {resenas.hayCalificaciones ? `${resenas.promedio} · ` : ''}
+          {resenas.total} reseñas
         </a>
         {resenas.esEjemplo && (
           <span className="rounded bg-brand-orange/15 px-1.5 py-0.5 text-[11px] font-semibold text-brand-orange-dark">
