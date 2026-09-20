@@ -111,18 +111,6 @@ export const AUTORIDAD = {
   restaurantes: '+N',
 } as const;
 
-/**
- * Figura de prueba social del bloque "Recomendado por" (el "Aida Victoria" de
- * Lummia). PLACEHOLDER: mientras `placeholder` sea true, la tarjeta lleva una
- * etiqueta visible. Se reemplaza solo con una persona real que lo haya probado.
- */
-export const FIGURA = {
-  nombre: 'Nombre de la figura',
-  usuario: '@usuario',
-  titulo: 'Lo probó en su casa y lo recomienda',
-  placeholder: true,
-} as const;
-
 const OBJECIONES_COMUNES: Pregunta[] = [
   {
     pregunta: '¿Cuándo hace efecto?',

@@ -12,7 +12,7 @@ import BloqueGarantia from './BloqueGarantia';
 import AprendeAUsarlo from './AprendeAUsarlo';
 import AntesDespues from './AntesDespues';
 import Objeciones from './Objeciones';
-import Autoridad from './Autoridad';
+import Evidencia from './Evidencia';
 import Beneficios from './Beneficios';
 import Casos from './Casos';
 import Comparativa from './Comparativa';
@@ -23,7 +23,7 @@ import PieEcogel from './PieEcogel';
 import RastreoVista from './RastreoVista';
 import WhatsAppFlotante from './WhatsAppFlotante';
 
-// Orden = página de producto de Lummia, sección por sección (spec §3, iteración 2 §7).
+// Orden = página de producto de Lummia, sección por sección (iteración 3 §3).
 export default function PaginaProducto({ config, fotos, video }: { config: EcogelConfig; fotos: FotosEcogel; video?: string }) {
   return (
     <TierProvider>
@@ -36,7 +36,7 @@ export default function PaginaProducto({ config, fotos, video }: { config: Ecoge
       <AprendeAUsarlo />
       <Objeciones objeciones={config.objeciones} video={video} />
       <AntesDespues antes={fotos.antes} despues={fotos.despues} resena={RESENAS_ECOGEL[0]} />
-      <Autoridad />
+      <Evidencia segmento={config.segmento} />
       <Beneficios bloques={config.beneficiosLargos} />
       <Casos casos={CASOS_ECOGEL[config.segmento]} />
       <Comparativa />

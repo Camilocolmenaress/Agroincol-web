@@ -1,13 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Marcador from './Marcador';
 import { GARANTIA } from '@/lib/ecogel';
+import { useCarrusel } from './useCarrusel';
 
 // Sección 3 de Lummia: carrusel de 12 encuadres a ancho completo, con scroll-snap
-// nativo (sin librería). El JavaScript solo sigue el scroll para marcar el punto
-// activo y mueve la pista con las flechas; deslizar con el dedo no depende de él.
+// nativo (sin librería). Punto activo y flechas: useCarrusel.
 
 export interface FotosEcogel {
   enUso?: string;
@@ -39,32 +38,14 @@ const SLIDES: Slide[] = [
 ];
 
 export default function Galeria({ fotos }: { fotos: FotosEcogel }) {
-  const pista = useRef<HTMLDivElement>(null);
-  const [activo, setActivo] = useState(0);
-
-  // Punto activo = slide más cercano al borde izquierdo. Se lee en cada scroll;
-  // es una división, no hace falta throttling.
-  useEffect(() => {
-    const el = pista.current;
-    if (!el) return;
-    const onScroll = () => setActivo(Math.round(el.scrollLeft / el.clientWidth));
-    el.addEventListener('scroll', onScroll, { passive: true });
-    return () => el.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const irA = useCallback((i: number) => {
-    const el = pista.current;
-    if (!el) return;
-    const destino = Math.max(0, Math.min(SLIDES.length - 1, i));
-    el.scrollTo({ left: destino * el.clientWidth, behavior: 'smooth' });
-  }, []);
+  const { pista, activo, irA } = useCarrusel(SLIDES.length);
 
   return (
     <section className="container-custom pt-4" aria-roledescription="carrusel" aria-label="Fotos de EcoGel">
       <div className="relative">
         <div
           ref={pista}
-          className="flex snap-x snap-mandatory overflow-x-auto rounded-2xl [&::-webkit-scrollbar]:hidden"
+          className="relative flex snap-x snap-mandatory overflow-x-auto rounded-2xl [&::-webkit-scrollbar]:hidden"
           style={{ scrollbarWidth: 'none' }}
         >
           {SLIDES.map((s, i) => (
