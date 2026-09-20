@@ -62,18 +62,28 @@ function doPost(e) {
   }
 }
 
+// Crea la fila de encabezados, o la corrige si cambió la lista de COLUMNAS.
 function sincronizarEncabezados(h) {
-  var primera = h.getRange(1, 1, 1, COLUMNAS.length).getValues()[0];
-  if (primera.join('|') !== COLUMNAS.join('|')) {
-    h.getRange(1, 1, 1, COLUMNAS.length).setValues([COLUMNAS]);
-    h.setFrozenRows(1);
+  var actuales =
+    h.getLastRow() === 0
+      ? []
+      : h.getRange(1, 1, 1, Math.max(h.getLastColumn(), 1)).getValues()[0];
+  if (actuales.join('|') === COLUMNAS.join('|')) return;
+  // Una hoja nueva tiene 26 columnas y COLUMNAS tiene 27: sin esto getRange
+  // lanza dentro de doPost y el pedido no se guarda.
+  if (h.getMaxColumns() < COLUMNAS.length) {
+    h.insertColumnsAfter(h.getMaxColumns(), COLUMNAS.length - h.getMaxColumns());
   }
+  h.getRange(1, 1, 1, COLUMNAS.length).setValues([COLUMNAS]);
+  h.getRange(1, 1, 1, COLUMNAS.length).setFontWeight('bold');
+  h.setFrozenRows(1);
 }
 
 // Busca la fila por pedidoId y escribe solo las columnas enviadas.
 function actualizar(h, pedidoId, cambios) {
+  if (h.getLastRow() < 2) throw new Error('pedido no encontrado: ' + pedidoId);
   var col = COLUMNAS.indexOf('pedidoId') + 1;
-  var ids = h.getRange(2, col, Math.max(h.getLastRow() - 1, 1), 1).getValues();
+  var ids = h.getRange(2, col, h.getLastRow() - 1, 1).getValues();
   for (var i = 0; i < ids.length; i++) {
     if (ids[i][0] === pedidoId) {
       var fila = i + 2;
