@@ -7,7 +7,8 @@ import SelectorTier from './SelectorTier';
 import { urlPedido, useTier } from './TierContext';
 
 // Pantalla 2 de Lummia, en su orden exacto: H1 → precio anclado → estrellas →
-// selector → 4 beneficios → reencuadre → CTA con precio → logos de pago → chips → garantía.
+// selector → 4 beneficios → qué es y cómo funciona → reencuadre → CTA con precio →
+// logos de pago → chips → garantía.
 
 const ICONOS = { ShieldCheck, Wind, Timer, Bug, Store, Utensils, FileCheck } as const;
 
@@ -74,6 +75,13 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
         })}
       </ul>
 
+      {/* Qué es y cómo funciona: 3 párrafos, el tercero en cursiva como el aviso de Lummia. */}
+      <div className="mt-5 space-y-3 border-t border-brand-gray-light pt-5 text-body-sm text-brand-black/80">
+        <p>{config.queEs[0]}</p>
+        <p>{config.queEs[1]}</p>
+        <p className="italic">{config.queEs[2]}</p>
+      </div>
+
       <p className="mt-4 rounded-lg bg-brand-amber/20 px-3 py-2 text-body-sm font-semibold italic text-brand-black">
         {config.reencuadre}
       </p>
@@ -82,7 +90,7 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
         href={urlPedido(unidades, config.segmento)}
         className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-brand-orange px-6 py-4 font-heading text-body font-bold text-white shadow-brand"
       >
-        Pedir ahora — {money(cod.total)}
+        Comprar ahora — {money(cod.total)}
       </a>
       <p className="mt-1.5 text-center text-body-sm text-brand-black/60">
         Pagando en línea: {money(totalPedido(unidades, 'online').total)}

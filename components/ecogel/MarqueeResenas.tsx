@@ -1,5 +1,5 @@
-import { BadgeCheck, Star } from 'lucide-react';
 import { RESENAS_ECOGEL } from '@/lib/ecogel-resenas';
+import { Avatar, Estrellas, NombreVerificado } from './Estrellas';
 
 // Franja de reseñas que rota de derecha a izquierda justo bajo la galería, como
 // en Lummia. La pista va duplicada para que el bucle no salte (.animate-marquee
@@ -31,21 +31,12 @@ export default function MarqueeResenas() {
                   </span>
                 )}
                 <div>
-                  <span className="flex text-brand-amber" role="img" aria-label={`${r.estrellas} de 5 estrellas`}>
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} size={16} fill={s <= r.estrellas ? 'currentColor' : 'none'} strokeWidth={s <= r.estrellas ? 0 : 1.5} aria-hidden />
-                    ))}
-                  </span>
+                  <Estrellas n={r.estrellas} />
                   <p className="mt-3 text-body-sm text-brand-black/85">“{r.texto}”</p>
                 </div>
                 <div className="mt-4 flex items-center gap-2.5">
-                  <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-gray-light font-heading text-body-sm font-bold text-brand-black/60" aria-hidden>
-                    {r.nombre.charAt(0)}
-                  </span>
-                  <p className="flex min-w-0 items-center gap-1 text-body-sm font-semibold text-brand-black">
-                    <span className="truncate">{r.nombre}</span>
-                    <BadgeCheck size={16} className="flex-none text-brand-green" aria-label="Compra verificada" />
-                  </p>
+                  <Avatar nombre={r.nombre} />
+                  <NombreVerificado nombre={r.nombre} />
                 </div>
               </article>
             );
