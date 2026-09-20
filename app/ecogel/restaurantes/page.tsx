@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function EcogelRestaurantesPage() {
-  return <PaginaProducto config={RESTAURANTES} fotos={fotosEcogel()} video={videoEcogel()} />;
+  return <PaginaProducto config={RESTAURANTES} fotos={fotosEcogel('restaurantes')} video={videoEcogel()} />;
 }

@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function EcogelHogarPage() {
-  return <PaginaProducto config={HOGAR} fotos={fotosEcogel()} video={videoEcogel()} />;
+  return <PaginaProducto config={HOGAR} fotos={fotosEcogel('hogar')} video={videoEcogel()} />;
 }

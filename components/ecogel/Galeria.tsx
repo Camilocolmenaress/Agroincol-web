@@ -2,7 +2,6 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Marcador from './Marcador';
-import { GARANTIA } from '@/lib/ecogel';
 import { useCarrusel } from './useCarrusel';
 
 // Sección 3 de Lummia: carrusel de 12 encuadres a ancho completo, con scroll-snap
@@ -14,6 +13,13 @@ export interface FotosEcogel {
   antes?: string;
   despues?: string;
   equipo?: string;
+  nevera?: string;
+  lavaplatos?: string;
+  gabinete?: string;
+  zocalo?: string;
+  kit?: string;
+  macro?: string;
+  ugc?: string;
 }
 
 interface Slide {
@@ -25,16 +31,16 @@ interface Slide {
 const SLIDES: Slide[] = [
   { etiqueta: 'Gel aplicándose en la rendija de una cocina', alt: 'Aplicación de EcoGel en una rendija de cocina', foto: 'enUso' },
   { etiqueta: 'Jeringa sobre fondo neutro', alt: 'Jeringa de EcoGel', foto: 'producto' },
-  { etiqueta: 'Detrás de la nevera', alt: 'Aplicación de EcoGel detrás de la nevera' },
-  { etiqueta: 'Bajo el lavaplatos', alt: 'Aplicación de EcoGel bajo el lavaplatos' },
-  { etiqueta: 'Esquina de gabinete', alt: 'Aplicación de EcoGel en la esquina de un gabinete' },
-  { etiqueta: 'Zócalo de cocina de restaurante', alt: 'Aplicación de EcoGel en el zócalo de una cocina de restaurante' },
+  { etiqueta: 'Detrás de la nevera', alt: 'Aplicación de EcoGel detrás de la nevera', foto: 'nevera' },
+  { etiqueta: 'Bajo el lavaplatos', alt: 'Aplicación de EcoGel bajo el lavaplatos', foto: 'lavaplatos' },
+  { etiqueta: 'Esquina de gabinete', alt: 'Aplicación de EcoGel en la esquina de un gabinete', foto: 'gabinete' },
+  { etiqueta: 'Zócalo de cocina de restaurante', alt: 'Aplicación de EcoGel en el zócalo de una cocina de restaurante', foto: 'zocalo' },
   { etiqueta: 'Antes (cocina)', alt: 'Cocina con cucarachas, antes', foto: 'antes' },
   { etiqueta: 'Después · día 7', alt: 'La misma cocina, día 7', foto: 'despues' },
   { etiqueta: 'Técnico de AGROINCOL aplicando', alt: 'Técnico de AGROINCOL aplicando EcoGel', foto: 'equipo' },
-  { etiqueta: 'Caja / kit con la guía', alt: 'Kit de EcoGel con la guía de aplicación' },
-  { etiqueta: 'Puntos del tamaño de un grano de arroz (macro)', alt: 'Puntos de gel del tamaño de un grano de arroz' },
-  { etiqueta: 'Cliente mostrando la jeringa (UGC)', alt: 'Cliente mostrando la jeringa de EcoGel' },
+  { etiqueta: 'Caja / kit con la guía', alt: 'Kit de EcoGel con la guía de aplicación', foto: 'kit' },
+  { etiqueta: 'Puntos del tamaño de un grano de arroz (macro)', alt: 'Puntos de gel del tamaño de un grano de arroz', foto: 'macro' },
+  { etiqueta: 'Cliente mostrando la jeringa (UGC)', alt: 'Cliente mostrando la jeringa de EcoGel', foto: 'ugc' },
 ];
 
 export default function Galeria({ fotos }: { fotos: FotosEcogel }) {
@@ -57,12 +63,6 @@ export default function Galeria({ fotos }: { fotos: FotosEcogel }) {
                 alt={s.alt}
                 prioridad={i === 0}
               />
-              {i === 0 && (
-                <div className="absolute right-3 top-3 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-brand-orange text-center text-white shadow-brand">
-                  <span className="font-heading text-2xl font-bold leading-none">{GARANTIA.dias}</span>
-                  <span className="text-[10px] font-semibold uppercase leading-tight">días de garantía</span>
-                </div>
-              )}
             </div>
           ))}
         </div>
