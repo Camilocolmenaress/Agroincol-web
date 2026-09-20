@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { construirPreferencia, consultarPago, crearPreferencia } from './mercadopago';
+import { construirPreferencia, consultarPago, crearPreferencia, mpConfigurado } from './mercadopago';
 
 const datos = {
   pedidoId: 'EG-260919-K7Q2',
@@ -26,15 +26,25 @@ test('la preferencia lleva un solo ítem con el total y las URLs del pedido', ()
   assert.equal(p.auto_return, 'approved');
   assert.equal(p.statement_descriptor, 'AGROINCOL');
   assert.equal(p.payer.email, 'diana@example.com');
+  delete process.env.MP_ACCESS_TOKEN;
 });
 
-test('crearPreferencia devuelve init_point o el detalle del error', async () => {
+test('crearPreferencia verifica la petición y devuelve init_point o el detalle del error', async () => {
   process.env.MP_ACCESS_TOKEN = 'APP_USR-prueba';
-  const okFetch = (async () => new Response(JSON.stringify({ init_point: 'https://mp/x' }), { status: 201 })) as unknown as typeof fetch;
-  assert.deepEqual(await crearPreferencia({}, okFetch), { ok: true, initPoint: 'https://mp/x' });
+  const pref = { external_reference: 'EG-1' };
+  const okFetch = (async (url: string, init: RequestInit) => {
+    assert.equal(url, 'https://api.mercadopago.com/checkout/preferences');
+    assert.equal(init.method, 'POST');
+    assert.equal(init.headers?.['content-type'], 'application/json');
+    assert.equal((init.headers as Record<string, string>).authorization, 'Bearer APP_USR-prueba');
+    assert.deepEqual(JSON.parse(init.body as string), pref);
+    return new Response(JSON.stringify({ init_point: 'https://mp/x' }), { status: 201 });
+  }) as unknown as typeof fetch;
+  assert.deepEqual(await crearPreferencia(pref, okFetch), { ok: true, initPoint: 'https://mp/x' });
   const malFetch = (async () => new Response('nope', { status: 400 })) as unknown as typeof fetch;
-  const r = await crearPreferencia({}, malFetch);
+  const r = await crearPreferencia(pref, malFetch);
   assert.equal(r.ok, false);
+  delete process.env.MP_ACCESS_TOKEN;
 });
 
 test('consultarPago devuelve status y external_reference', async () => {
@@ -44,4 +54,13 @@ test('consultarPago devuelve status y external_reference', async () => {
     return new Response(JSON.stringify({ status: 'approved', external_reference: 'EG-1' }), { status: 200 });
   }) as unknown as typeof fetch;
   assert.deepEqual(await consultarPago('123', f), { ok: true, status: 'approved', externalReference: 'EG-1' });
+  delete process.env.MP_ACCESS_TOKEN;
+});
+
+test('mpConfigurado devuelve false sin token y true con token', () => {
+  delete process.env.MP_ACCESS_TOKEN;
+  assert.equal(mpConfigurado(), false);
+  process.env.MP_ACCESS_TOKEN = 'APP_USR-prueba';
+  assert.equal(mpConfigurado(), true);
+  delete process.env.MP_ACCESS_TOKEN;
 });
