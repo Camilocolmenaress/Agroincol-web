@@ -85,6 +85,8 @@ export interface EcogelConfig {
   subtitulo: string;
   /** 4 beneficios cortos con ícono (nombre de ícono de lucide). */
   beneficios: { icono: 'ShieldCheck' | 'Wind' | 'Timer' | 'Bug' | 'Store' | 'Utensils' | 'FileCheck'; texto: string }[];
+  /** "Qué es y cómo funciona": 3 párrafos antes del CTA. El tercero se pinta en cursiva. */
+  queEs: [string, string, string];
   /** "Pagas lo mismo que…" de Lummia. */
   reencuadre: string;
   /** 5 objeciones en acordeón, pantalla 3. */
@@ -107,6 +109,18 @@ export const AUTORIDAD = {
   anios: new Date().getFullYear() - BUSINESS.founded,
   /** PLACEHOLDER: confirmar con Camilo el número real antes de pautar. */
   restaurantes: '+N',
+} as const;
+
+/**
+ * Figura de prueba social del bloque "Recomendado por" (el "Aida Victoria" de
+ * Lummia). PLACEHOLDER: mientras `placeholder` sea true, la tarjeta lleva una
+ * etiqueta visible. Se reemplaza solo con una persona real que lo haya probado.
+ */
+export const FIGURA = {
+  nombre: 'Nombre de la figura',
+  usuario: '@usuario',
+  titulo: 'Lo probó en su casa y lo recomienda',
+  placeholder: true,
 } as const;
 
 const OBJECIONES_COMUNES: Pregunta[] = [
@@ -159,6 +173,11 @@ export const HOGAR: EcogelConfig = {
     { icono: 'Wind', texto: 'Sin olor, sin desalojar, sin tapar la comida' },
     { icono: 'Timer', texto: 'Primeros resultados en 24-48 horas' },
     { icono: 'Bug', texto: 'Elimina la colonia, no solo la que ves' },
+  ],
+  queEs: [
+    'EcoGel es un cebo en gel para cucarachas: no las espanta, las atrae. Se aplica en puntos del tamaño de un grano de arroz en las rendijas donde viven, y ellas lo comen.',
+    'Actúa con retardo: la que come vuelve al nido y contamina a las demás. Por eso en 24-48 horas ves las primeras caer y en 1-2 semanas desaparece la colonia, no solo la que viste.',
+    'Lleva Bitrex, el amargante más potente que existe: si un niño o una mascota lo toca con la boca, lo escupe. Sin olor, sin vapores, sin salir de la casa.',
   ],
   reencuadre: 'Menos que el mercado que botas por una infestación',
   objeciones: [
@@ -219,6 +238,11 @@ export const RESTAURANTES: EcogelConfig = {
     { icono: 'Utensils', texto: 'Apto para zona de alimentos: sin olor ni residuos' },
     { icono: 'Timer', texto: 'Actúa en 24-48 horas' },
     { icono: 'FileCheck', texto: 'Registro sanitario INVIMA 2009V0004964' },
+  ],
+  queEs: [
+    'EcoGel es el cebo en gel que usamos en cocinas de restaurantes: se aplica en rendijas, bajo equipos y en zócalos, nunca sobre superficies de trabajo.',
+    'Actúa con retardo: la cucaracha que lo come vuelve al nido y contamina a la colonia. Primeros resultados en 24-48 horas, colonia completa en 1-2 semanas.',
+    'Sin olor, sin vapores y sin cerrar: diez minutos después del cierre, con la cocina apagada, y al día siguiente abres normal. Registro sanitario INVIMA 2009V0004964.',
   ],
   reencuadre: 'Menos que un cliente que ve una cucaracha y no vuelve',
   objeciones: [

@@ -5,6 +5,9 @@
 // y se pinta con una etiqueta visible que lo dice. No se quita con un flag: se
 // quita reemplazando cada entrada por una reseña real, copiada textualmente.
 // No se manda pauta mientras haya un solo placeholder visible.
+//
+// `texto` va sin comillas ni prefijo "Ejemplo:": las comillas las pone cada
+// tarjeta y la etiqueta "Ejemplo" sale de `placeholder`, no del texto.
 
 import type { Caso, Segmento } from './ecogel';
 
@@ -12,7 +15,11 @@ export interface ResenaEcogel {
   nombre: string;
   ciudad: string;
   estrellas: 1 | 2 | 3 | 4 | 5;
+  /** Titular corto en negrita (tarjeta bajo el antes/después). Opcional. */
+  titulo?: string;
   texto: string;
+  /** Fecha de la reseña, ISO (AAAA-MM-DD). Se muestra arriba de cada reseña. */
+  fecha: string;
   placeholder: boolean;
 }
 
@@ -21,21 +28,25 @@ export const RESENAS_ECOGEL: ResenaEcogel[] = [
     nombre: 'Nombre de ejemplo',
     ciudad: 'Ciudad',
     estrellas: 5,
-    texto: 'Ejemplo: "A los dos días dejé de ver cucarachas en la cocina. Fácil de aplicar y sin olor."',
+    titulo: 'Ejemplo: Se acabaron de verdad',
+    texto: 'A los dos días dejé de ver cucarachas en la cocina. Fácil de aplicar y sin olor.',
+    fecha: '2026-09-01',
     placeholder: true,
   },
   {
     nombre: 'Nombre de ejemplo',
     ciudad: 'Ciudad',
     estrellas: 5,
-    texto: 'Ejemplo: "Lo usé detrás de la nevera y la estufa. En una semana no quedó ninguna."',
+    texto: 'Lo usé detrás de la nevera y la estufa. En una semana no quedó ninguna.',
+    fecha: '2026-09-01',
     placeholder: true,
   },
   {
     nombre: 'Nombre de ejemplo',
     ciudad: 'Ciudad',
     estrellas: 4,
-    texto: 'Ejemplo: "Funcionó, aunque tardó más de lo que esperaba en los baños."',
+    texto: 'Funcionó, aunque tardó más de lo que esperaba en los baños.',
+    fecha: '2026-09-01',
     placeholder: true,
   },
 ];
