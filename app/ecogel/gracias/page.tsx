@@ -20,14 +20,16 @@ const TEXTOS = {
 
 export default function GraciasPage({ searchParams }: { searchParams: { pedido?: string; estado?: string } }) {
   const pedido = /^EG-\d{6}-[A-Z0-9]{4}$/.test(searchParams.pedido ?? '') ? (searchParams.pedido as string) : '';
-  const estado = (searchParams.estado ?? 'cod') as keyof typeof TEXTOS;
-  const t = TEXTOS[estado] ?? TEXTOS.cod;
+  const crudo = searchParams.estado ?? 'cod';
+  const estado: keyof typeof TEXTOS = crudo in TEXTOS ? (crudo as keyof typeof TEXTOS) : 'cod';
+  const t = TEXTOS[estado];
   const Icono = t.icono;
-  const wa = whatsappEcogel(`Hola, es sobre mi pedido de EcoGel ${pedido}`.trim());
+  const whatsappTexto = `Hola, es sobre mi pedido de EcoGel ${pedido}`.trim();
+  const wa = whatsappEcogel(whatsappTexto);
 
   return (
     <>
-      <CabeceraEcogel whatsappTexto={`Hola, es sobre mi pedido de EcoGel ${pedido}`} />
+      <CabeceraEcogel whatsappTexto={whatsappTexto} />
       <main className="container-custom max-w-xl py-12 text-center">
         <Icono size={52} className={`mx-auto ${estado === 'failure' ? 'text-brand-orange-dark' : 'text-brand-green'}`} aria-hidden />
         <h1 className="font-heading text-h2-mobile text-brand-green mt-4 md:text-h2">{t.titulo}</h1>
