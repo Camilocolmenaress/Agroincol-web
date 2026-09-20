@@ -69,6 +69,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
         const hayErroresPorCampo = json.errores && Object.keys(json.errores).length > 0;
         if (hayErroresPorCampo) {
           setErrores(json.errores!);
+          setEstado('idle');
         } else {
           setEstado(json.motivo === 'mp' ? 'error-mp' : 'error');
         }
