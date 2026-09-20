@@ -135,11 +135,44 @@ function avisarPorCorreo(fila) {
       fila.nombre + ' · ' + fila.celular + '\n' +
       fila.direccion + ', ' + fila.barrio + ', ' + fila.ciudad + ', ' + fila.departamento + '\n' +
       'Total: $' + fila.total + ' (' + fila.metodoPago + ')\n' +
-      'Estado: ' + fila.estado;
+      'Estado: ' + fila.estado + '\n\n' +
+      'Confirmar por WhatsApp (mensaje ya escrito, solo enviar):\n' + linkWhatsapp(fila);
     MailApp.sendEmail(CORREO_AVISOS, asunto, cuerpo);
   } catch (e) {
     // La fila ya quedó escrita; un fallo de correo no la pierde.
   }
+}
+
+// Mensaje distinto según qué falta para despachar: contraentrega necesita que
+// el cliente confirme que sigue queriendo el pedido (baja el rechazo); las
+// transferencias manuales necesitan el comprobante; lo demás ya está pagado.
+function mensajeWhatsapp(fila) {
+  var nombre = fila.nombre || '';
+  var pedidoId = fila.pedidoId || '';
+  if (fila.metodoPago === 'contraentrega') {
+    return (
+      'Hola ' + nombre + ', tu pedido ' + pedidoId + ' de EcoGel está listo para despachar. ' +
+      '*Confirma este mensaje con un SÍ* si deseas recibirlo en ' + fila.direccion + ', ' + fila.barrio + '.'
+    );
+  }
+  if (fila.metodoPago === 'online') {
+    return (
+      'Hola ' + nombre + ', confirmamos tu pedido ' + pedidoId + ' de EcoGel. ' +
+      'Sale en las próximas 24 horas, te enviamos la guía de la transportadora por aquí.'
+    );
+  }
+  // bancolombia, nequi, breb: transferencia manual, falta el comprobante.
+  return (
+    'Hola ' + nombre + ', recibimos tu pedido ' + pedidoId + ' de EcoGel. ' +
+    'Envíanos el comprobante de la transferencia para confirmar y despachar.'
+  );
+}
+
+function linkWhatsapp(fila) {
+  var digitos = String(fila.celular || '').replace(/\D/g, '');
+  if (!digitos) return '(sin celular)';
+  var numero = digitos.length === 10 ? '57' + digitos : digitos;
+  return 'https://wa.me/' + numero + '?text=' + encodeURIComponent(mensajeWhatsapp(fila));
 }
 ```
 
