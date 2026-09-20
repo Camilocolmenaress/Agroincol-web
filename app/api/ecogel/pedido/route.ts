@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { totalPedido } from '@/lib/ecogel';
 import { nuevoPedidoId, validarPedido } from '@/lib/ecogel-pedido';
-import { actualizarFilaPedido, crearFilaPedido } from '@/lib/hoja-pedidos';
+import { actualizarFilaPedido, crearFilaPedido, hojaPedidosConfigurada } from '@/lib/hoja-pedidos';
 import { construirPreferencia, crearPreferencia, mpConfigurado } from '@/lib/mercadopago';
 import { nuevoEventId } from '@/lib/meta/eventos';
 import { construirUserData, sha256 } from '@/lib/meta/hash';
@@ -18,6 +18,9 @@ const PEDIDO_ID_RE = /^EG-\d{6}-[A-Z0-9]{4}$/;
  * Crea un pedido de EcoGel.
  *
  * Orden de los pasos, y por qué:
+ * 0. Sin hoja configurada no se aceptan pedidos (503). La hoja ES la base de
+ *    datos: sin ella la persona vería "gracias" y el pedido no quedaría en
+ *    ningún lado, y con pago en línea además se le cobraría.
  * 1. Validar y RECALCULAR el total en el servidor. El precio del navegador no existe.
  * 2. Escribir la fila en la hoja. Si falla, el pedido sigue: queda en los logs.
  * 3. Purchase a Meta por CAPI con el event_id del checkout. Se manda al crear el
@@ -26,6 +29,11 @@ const PEDIDO_ID_RE = /^EG-\d{6}-[A-Z0-9]{4}$/;
  * 4. Contraentrega → /gracias. En línea → preferencia de Mercado Pago → init_point.
  */
 export async function POST(req: NextRequest) {
+  if (!hojaPedidosConfigurada()) {
+    console.error('[hoja-pedidos] HOJA_PEDIDOS_URL/SECRETO sin configurar: pedido rechazado');
+    return NextResponse.json({ ok: false, motivo: 'no-disponible' }, { status: 503 });
+  }
+
   let cuerpo: Record<string, unknown>;
   try {
     cuerpo = await req.json();
@@ -135,7 +143,7 @@ export async function POST(req: NextRequest) {
   // Escritura en la hoja y Purchase a Meta no dependen entre sí: van en paralelo.
   // Cada una captura sus propios errores, así que Promise.all nunca rechaza por
   // esto.
-  const envioMeta = capiConfigurada()
+  const envioMeta = capiConfigurada('ecogel')
     ? (async () => {
         try {
           const userData = await construirUserData({
@@ -172,7 +180,7 @@ export async function POST(req: NextRequest) {
               order_id: pedidoId,
             },
             user_data: { ...userData, client_ip_address: ip || undefined, client_user_agent: navegador || undefined, fbp, fbc },
-          });
+          }, 'ecogel');
           if (!envio.ok) console.error('[meta] Purchase no enviado:', envio.motivo, envio.detalle ?? '');
         } catch (error) {
           console.error('[meta] error inesperado enviando Purchase:', error);

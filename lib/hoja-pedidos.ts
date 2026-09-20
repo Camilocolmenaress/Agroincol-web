@@ -14,6 +14,12 @@ function credenciales() {
   return { url: process.env.HOJA_PEDIDOS_URL ?? '', secreto: process.env.HOJA_PEDIDOS_SECRETO ?? '' };
 }
 
+/** /api/ecogel/pedido no acepta pedidos sin esto: serían pedidos que nadie ve. */
+export function hojaPedidosConfigurada(): boolean {
+  const { url, secreto } = credenciales();
+  return url.length > 0 && secreto.length > 0;
+}
+
 async function llamar(cuerpo: Record<string, unknown>, fetchFn: typeof fetch): Promise<void> {
   const { url, secreto } = credenciales();
   if (!url || !secreto) return;

@@ -23,7 +23,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
   const [ofertas, setOfertas] = useState(true);
   const [website, setWebsite] = useState('');
   const [errores, setErrores] = useState<Record<string, string>>({});
-  const [estado, setEstado] = useState<'idle' | 'enviando' | 'error-mp' | 'error'>('idle');
+  const [estado, setEstado] = useState<'idle' | 'enviando' | 'error-mp' | 'no-disponible' | 'error'>('idle');
   // Un solo event_id por instancia del formulario (useRef, no useState: no debe
   // disparar un re-render). nuevoEventId() en vez de crypto.randomUUID() directo:
   // en iOS <15.4 o en webviews sin contexto seguro randomUUID no existe y lanza.
@@ -93,7 +93,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           setErrores(json.errores!);
           setEstado('idle');
         } else {
-          setEstado(json.motivo === 'mp' ? 'error-mp' : 'error');
+          setEstado(json.motivo === 'mp' ? 'error-mp' : json.motivo === 'no-disponible' ? 'no-disponible' : 'error');
           if (json.motivo === 'mp' && json.pedidoId && json.firma) setPedidoAnterior({ pedidoId: json.pedidoId, firma: json.firma });
         }
         return;
@@ -189,6 +189,11 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
       {estado === 'error-mp' && (
         <p className="mt-4 rounded-lg bg-brand-orange/10 px-3 py-2.5 text-body-sm text-brand-orange-dark">
           No pudimos abrir el pago en línea. Tu pedido quedó guardado: escoge «Pagar al recibir» y confírmalo, o escríbenos por WhatsApp.
+        </p>
+      )}
+      {estado === 'no-disponible' && (
+        <p className="mt-4 rounded-lg bg-brand-orange/10 px-3 py-2.5 text-body-sm text-brand-orange-dark">
+          Los pedidos en línea no están disponibles en este momento. Escríbenos por WhatsApp y te lo tomamos por ahí.
         </p>
       )}
       {estado === 'error' && (

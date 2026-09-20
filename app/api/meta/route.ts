@@ -20,6 +20,7 @@ import { sha256 } from '@/lib/meta/hash';
 import { resolverFbc } from '@/lib/meta/fbc';
 import { FBP_DURACION_S, resolverFbp } from '@/lib/meta/fbp';
 import { capiConfigurada, enviarEventoAMeta } from '@/lib/meta/capi';
+import { cuentaPorUrl } from '@/lib/meta/cuentas';
 import { MONEDA } from '@/lib/meta/eventos';
 
 // ---------------------------------------------------------------------------
@@ -76,10 +77,6 @@ function origenValido(req: NextRequest): boolean {
 }
 
 export async function POST(req: NextRequest) {
-  // Sin credenciales configuradas el sitio funciona igual, solo sin medición.
-  if (!capiConfigurada()) {
-    return NextResponse.json({ ok: false, motivo: 'sin-configurar' }, { status: 503 });
-  }
   if (!origenValido(req)) {
     return NextResponse.json({ ok: false, motivo: 'origen' }, { status: 403 });
   }
@@ -115,6 +112,14 @@ export async function POST(req: NextRequest) {
     sourceUrl.length > 500
   ) {
     return NextResponse.json({ ok: false, motivo: 'invalido' }, { status: 400 });
+  }
+
+  // La cuenta (servicios o EcoGel) sale de la ruta de la página que disparó el
+  // evento: la misma regla que aplica el Pixel en el navegador. Sin credenciales
+  // para esa cuenta el sitio funciona igual, solo sin medición.
+  const cuenta = cuentaPorUrl(sourceUrl);
+  if (!capiConfigurada(cuenta)) {
+    return NextResponse.json({ ok: false, motivo: 'sin-configurar' }, { status: 503 });
   }
 
   const valorNumerico =
@@ -170,7 +175,7 @@ export async function POST(req: NextRequest) {
     };
   }
 
-  const resultado = await enviarEventoAMeta(datos);
+  const resultado = await enviarEventoAMeta(datos, cuenta);
   if (!resultado.ok) {
     // El detalle se queda en los logs del servidor, no vuelve al navegador.
     console.error('[meta] no se pudo enviar el evento:', resultado.motivo, resultado.detalle ?? '');

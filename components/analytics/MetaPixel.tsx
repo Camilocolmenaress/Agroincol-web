@@ -8,7 +8,10 @@
  * móviles, cargar el Pixel antes de tiempo retrasa el LCP, y eso cuesta más
  * conversiones de las que la medición ayuda a ganar.
  *
- * Sin NEXT_PUBLIC_META_PIXEL_ID no se carga nada: el sitio funciona igual.
+ * Qué pixel se carga lo decide la ruta (lib/meta/cuentas.ts): /lp usa el de
+ * servicios y /ecogel el de la tienda. Sin la variable de esa cuenta no se carga
+ * nada: el sitio funciona igual. Se lee con `usePathname` y no con
+ * `window.location` para que servidor y cliente rendericen lo mismo.
  *
  * `autoConfig: false` va ANTES del init y apaga dos comportamientos que Meta
  * trae encendidos de fábrica:
@@ -26,8 +29,10 @@
  */
 
 import Script from 'next/script';
+import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
-import { PIXEL_ID, enviarACapi, pixelActivo, soloPixel } from '@/lib/meta/pixel';
+import { enviarACapi, soloPixel } from '@/lib/meta/pixel';
+import { cuentaPorRuta, pixelIdDe } from '@/lib/meta/cuentas';
 
 /**
  * Espera a que se cumpla una condición, hasta un máximo. Resuelve igual si se
@@ -51,6 +56,8 @@ const hayCookieFbp = () => /(^|;\s*)_fbp=/.test(document.cookie);
 
 export default function MetaPixel() {
   const yaContado = useRef(false);
+  const pixelId = pixelIdDe(cuentaPorRuta(usePathname() ?? '/'));
+  const activo = pixelId.length > 0;
 
   /**
    * El PageView se manda desde nuestro código y no con el `fbq('track',
@@ -73,7 +80,7 @@ export default function MetaPixel() {
    * `fbq` nunca aparece y el camino del servidor tiene que seguir funcionando.
    */
   useEffect(() => {
-    if (!pixelActivo || yaContado.current) return;
+    if (!activo || yaContado.current) return;
     yaContado.current = true;
     let cancelado = false;
 
@@ -89,9 +96,9 @@ export default function MetaPixel() {
     return () => {
       cancelado = true;
     };
-  }, []);
+  }, [activo]);
 
-  if (!pixelActivo) return null;
+  if (!activo) return null;
 
   return (
     <Script id="meta-pixel" strategy="afterInteractive">
@@ -103,8 +110,8 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('set','autoConfig',false,'${PIXEL_ID}');
-fbq('init','${PIXEL_ID}');`}
+fbq('set','autoConfig',false,'${pixelId}');
+fbq('init','${pixelId}');`}
     </Script>
   );
 }

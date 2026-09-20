@@ -18,6 +18,7 @@
 import { idDeVisitante } from './visitante';
 import { registrarEnEmbudo } from '@/lib/analitica/posthog';
 import { MONEDA, VALOR_MAXIMO, nuevoEventId, type NombreEvento } from './eventos';
+import { cuentaPorRuta, pixelIdDe } from './cuentas';
 
 declare global {
   interface Window {
@@ -26,8 +27,19 @@ declare global {
   }
 }
 
-export const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '';
-export const pixelActivo = PIXEL_ID.length > 0;
+/**
+ * Pixel de la página actual, decidido por la ruta (ver lib/meta/cuentas.ts).
+ * Es una función y no una constante porque el mismo módulo sirve a /lp y a
+ * /ecogel, que usan pixeles distintos. Vacío = esta cuenta no mide.
+ */
+export function pixelIdActual(): string {
+  if (typeof window === 'undefined') return '';
+  return pixelIdDe(cuentaPorRuta(window.location.pathname));
+}
+
+export function pixelActivo(): boolean {
+  return pixelIdActual().length > 0;
+}
 
 /** Eventos de conversión: uno por sesión y por visitante. PageView y ViewContent no. */
 const UNA_VEZ_POR_SESION: NombreEvento[] = ['Lead', 'Contact', 'InitiateCheckout', 'Purchase'];
@@ -101,7 +113,7 @@ function saneaValor(valor: number | undefined): number | undefined {
  * se llamara también a /api/meta, el Lead saldría dos veces por el servidor.
  */
 export function soloPixel(evento: NombreEvento, datos: DatosEvento = {}): string | null {
-  if (!pixelActivo || typeof window === 'undefined') return null;
+  if (!pixelActivo()) return null;
   if (yaSeDisparo(evento)) return null;
 
   const eventId = datos.eventId ?? nuevoEventId();

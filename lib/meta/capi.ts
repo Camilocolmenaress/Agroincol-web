@@ -10,6 +10,8 @@
  * la función.
  */
 
+import { pixelIdDe, type Cuenta } from './cuentas';
+
 /** Versión de la Graph API. Meta mantiene cada una unos dos años. */
 const VERSION_API = 'v21.0';
 
@@ -17,18 +19,22 @@ export type ResultadoEnvio =
   | { ok: true }
   | { ok: false; motivo: 'sin-configurar' | 'meta' | 'red'; detalle?: string };
 
-function credenciales() {
+/**
+ * Credenciales de la cuenta pedida (ver lib/meta/cuentas.ts). Cada cuenta tiene
+ * su pixel y su token; ninguna hereda de la otra.
+ */
+function credenciales(cuenta: Cuenta) {
   return {
-    pixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '',
+    pixelId: pixelIdDe(cuenta),
     /** Solo en el servidor. NUNCA con prefijo NEXT_PUBLIC_. */
-    token: process.env.META_CAPI_TOKEN ?? '',
+    token: (cuenta === 'ecogel' ? process.env.META_CAPI_TOKEN_ECOGEL : process.env.META_CAPI_TOKEN) ?? '',
     codigoPrueba: process.env.META_TEST_EVENT_CODE ?? '',
   };
 }
 
 /** Sin credenciales el sitio funciona igual, solo sin medición. */
-export function capiConfigurada(): boolean {
-  const { pixelId, token } = credenciales();
+export function capiConfigurada(cuenta: Cuenta = 'servicios'): boolean {
+  const { pixelId, token } = credenciales(cuenta);
   return pixelId.length > 0 && token.length > 0;
 }
 
@@ -39,9 +45,10 @@ export function capiConfigurada(): boolean {
  */
 export async function enviarEventoAMeta(
   evento: Record<string, unknown>,
+  cuenta: Cuenta = 'servicios',
   fetchFn: typeof fetch = fetch
 ): Promise<ResultadoEnvio> {
-  const { pixelId, token, codigoPrueba } = credenciales();
+  const { pixelId, token, codigoPrueba } = credenciales(cuenta);
   if (!pixelId || !token) return { ok: false, motivo: 'sin-configurar' };
 
   const cuerpo: Record<string, unknown> = { data: [evento] };
