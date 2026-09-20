@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 
   // Honeypot: un bot lo llena, una persona no lo ve.
   if (typeof cuerpo.website === 'string' && cuerpo.website) {
-    return NextResponse.json({ ok: true, pedidoId: 'EG-000000-BOT', ir: '/ecogel/gracias?estado=cod' });
+    return NextResponse.json({ ok: true, pedidoId: 'EG-000000-BOT', ir: '/ecogel/gracias?estado=cod', eventId: nuevoEventId() });
   }
 
   const validacion = validarPedido(cuerpo);
@@ -46,6 +46,13 @@ export async function POST(req: NextRequest) {
   const url = typeof cuerpo.sourceUrl === 'string' && cuerpo.sourceUrl ? cuerpo.sourceUrl : `${base}/ecogel/pedido`;
   const { fbp, generado } = resolverFbp(req.cookies.get('_fbp')?.value);
   const fbc = resolverFbc(req.cookies.get('_fbc')?.value, url);
+  // El fbp recién generado debe volver en TODA respuesta a partir de aquí, no
+  // solo en la de éxito: si no, un visitante que reintenta tras un fallo de MP
+  // recibe un fbp distinto cada vez y Meta nunca lo enlaza con el clic del anuncio.
+  const conCookieFbp = (respuesta: NextResponse): NextResponse => {
+    if (generado) respuesta.cookies.set('_fbp', fbp, { maxAge: FBP_DURACION_S, path: '/', sameSite: 'lax', secure: true });
+    return respuesta;
+  };
   const externalId = typeof cuerpo.externalId === 'string' ? cuerpo.externalId : '';
   const eventId = typeof cuerpo.eventId === 'string' && cuerpo.eventId.length >= 8 ? cuerpo.eventId : nuevoEventId();
 
@@ -128,20 +135,21 @@ export async function POST(req: NextRequest) {
 
   let ir = `/ecogel/gracias?pedido=${pedidoId}&estado=cod`;
   if (pedido.metodo === 'online') {
-    if (!mpConfigurado()) return NextResponse.json({ ok: false, motivo: 'mp' }, { status: 502 });
+    if (!mpConfigurado()) return conCookieFbp(NextResponse.json({ ok: false, motivo: 'mp' }, { status: 502 }));
     const pref = await crearPreferencia(
       construirPreferencia({ pedidoId, unidades: pedido.unidades, total: totales.total, nombre: pedido.nombre, correo: pedido.correo, celular: pedido.celular, segmento: pedido.de, base }),
     );
     if (!pref.ok) {
-      console.error('[mp] no se pudo crear la preferencia', pedidoId, pref.detalle);
-      return NextResponse.json({ ok: false, motivo: 'mp', pedidoId }, { status: 502 });
+      // Solo los primeros 200 caracteres: el detalle es el cuerpo completo de la
+      // respuesta de Mercado Pago y puede traer de vuelta el nombre/correo/celular
+      // del comprador (payer) que se le mandó en la preferencia.
+      console.error('[mp] no se pudo crear la preferencia', pedidoId, pref.detalle.slice(0, 200));
+      return conCookieFbp(NextResponse.json({ ok: false, motivo: 'mp', pedidoId }, { status: 502 }));
     }
     ir = pref.initPoint;
   }
 
-  const respuesta = NextResponse.json({ ok: true, pedidoId, ir, eventId });
-  if (generado) respuesta.cookies.set('_fbp', fbp, { maxAge: FBP_DURACION_S, path: '/', sameSite: 'lax', secure: true });
-  return respuesta;
+  return conCookieFbp(NextResponse.json({ ok: true, pedidoId, ir, eventId }));
 }
 
 export async function GET() {
