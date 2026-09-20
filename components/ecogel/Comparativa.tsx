@@ -1,4 +1,5 @@
 import { Check, X } from 'lucide-react';
+import { AEROSOL } from '@/lib/ecogel-evidencia';
 
 // Tabla de Lummia ("Otras marcas / Láser / Rastrillo / Cera"). La fumigación no
 // entra: es el servicio de la casa y se recomienda honestamente en el FAQ.
@@ -40,6 +41,12 @@ export default function Comparativa() {
           ))}
         </tbody>
       </table>
+      <p className="mt-3 text-[12px] leading-snug text-brand-black/60">
+        Aerosol mensual: &quot;poco o ningún efecto&quot; en 12 meses · Virginia Tech, J. Econ. Entomol. 2004 ·{' '}
+        <a href={AEROSOL.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+          ver estudio
+        </a>
+      </p>
     </section>
   );
 }

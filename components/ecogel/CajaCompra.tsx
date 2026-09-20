@@ -3,6 +3,7 @@
 import { Bug, FileCheck, ShieldCheck, Store, Timer, Utensils, Wind, Star } from 'lucide-react';
 import { AUTORIDAD, ENVIO_BASE, GARANTIA, money, tierDe, totalPedido, type EcogelConfig } from '@/lib/ecogel';
 import { resumenResenas } from '@/lib/ecogel-resenas';
+import { IMIDACLOPRID } from '@/lib/ecogel-evidencia';
 import SelectorTier from './SelectorTier';
 import { urlPedido, useTier } from './TierContext';
 
@@ -74,6 +75,13 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
           );
         })}
       </ul>
+      {/* Cifra sembrada (iteración 3 §4): el dato con su fuente, en una línea. */}
+      <p className="mt-2.5 text-body-sm text-brand-black/60">
+        −80 % de cucarachas en 4 semanas · Journal of Economic Entomology, 2000 ·{' '}
+        <a href={IMIDACLOPRID.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+          ver estudio
+        </a>
+      </p>
 
       {/* Qué es y cómo funciona: 3 párrafos, el tercero en cursiva como el aviso de Lummia. */}
       <div className="mt-5 space-y-3 border-t border-brand-gray-light pt-5 text-body-sm text-brand-black/80">

@@ -115,7 +115,7 @@ const OBJECIONES_COMUNES: Pregunta[] = [
   {
     pregunta: '¿Cuándo hace efecto?',
     respuesta:
-      'Las primeras cucarachas caen en 24-48 horas. Como el gel actúa con retardo, cada una que lo come contamina a las demás en el nido: la colonia completa cae en 1-2 semanas.',
+      'Las primeras cucarachas caen en 24-48 horas. Como el gel actúa con retardo, cada una que lo come contamina a las demás en el nido: la colonia completa cae en 1-2 semanas (Journal of Economic Entomology, 2000 y 2023).',
   },
   {
     pregunta: '¿Cuánto rinde una jeringa?',
@@ -172,7 +172,7 @@ export const HOGAR: EcogelConfig = {
     {
       pregunta: '¿Es seguro con niños y mascotas?',
       respuesta:
-        'Sí. Lleva Bitrex, la sustancia más amarga que existe: si un niño o una mascota lo toca con la boca, lo escupe de inmediato. Se aplica en rendijas donde ellos no llegan, y no hay olor ni vapores.',
+        'Sí. Lleva Bitrex, la sustancia más amarga que existe: si un niño o una mascota lo toca con la boca, lo escupe de inmediato. Se aplica en rendijas donde ellos no llegan, y no hay olor ni vapores. Y quitar las cucarachas importa: el NEJM asoció su presencia con el triple de hospitalizaciones en niños asmáticos.',
     },
     ...OBJECIONES_COMUNES,
   ],
@@ -237,7 +237,7 @@ export const RESTAURANTES: EcogelConfig = {
     {
       pregunta: '¿Puedo aplicarlo con la cocina funcionando?',
       respuesta:
-        'Sí. Se aplica en rendijas, bajo equipos y en zócalos, nunca sobre superficies de trabajo. No hay olor, no hay vapores y no hay que cerrar.',
+        'Sí. Se aplica en rendijas, bajo equipos y en zócalos, nunca sobre superficies de trabajo. No hay olor, no hay vapores y no hay que cerrar. La Resolución 2674 exige control de plagas; el gel cumple sin cerrar.',
     },
     ...OBJECIONES_COMUNES,
   ],

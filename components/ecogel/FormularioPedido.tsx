@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
-import { DESCUENTO_ONLINE, money, totalPedido, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
+import { DESCUENTO_ONLINE, GARANTIA, money, totalPedido, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
 import { DEPARTAMENTOS, validarPedido } from '@/lib/ecogel-pedido';
 import { nuevoEventId } from '@/lib/meta/eventos';
 import { rastrear } from '@/lib/meta/pixel';
@@ -126,6 +126,11 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           )}
           <div className="flex justify-between border-t border-brand-gray-light pt-2 font-heading text-body font-bold"><dt>Total</dt><dd>{money(t.total)}</dd></div>
         </dl>
+        {/* Dos razones para no abandonar aquí: el dato con fuente y la garantía (iteración 3 §4). */}
+        <ul className="mt-3 space-y-1 rounded-xl bg-brand-gray-light/40 px-4 py-3 text-body-sm text-brand-black/75">
+          <li>✓ −80 % en 4 semanas (Journal of Economic Entomology, 2000)</li>
+          <li>✓ Garantía: si en {GARANTIA.dias} días siguen, otro kit sin costo</li>
+        </ul>
       </section>
 
       <section className="mt-6 space-y-3.5">
