@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { AUTORIDAD, type Segmento } from '@/lib/ecogel';
-import { EVIDENCIA, RESTAURANTES_CLIENTES, type Evidencia as Entrada } from '@/lib/ecogel-evidencia';
+import { EVIDENCIA, type Evidencia as Entrada } from '@/lib/ecogel-evidencia';
 import { useCarrusel } from './useCarrusel';
 
 // "Prueba, no promesas": estudios, norma y prensa como prueba social, en vez de
@@ -155,37 +155,10 @@ export default function Evidencia({ segmento }: { segmento: Segmento }) {
         </div>
       </div>
 
-      {segmento === 'restaurantes' && (
-        <div className="mt-8">
-          <h3 className="container-custom font-heading text-h3 text-brand-green">Restaurantes que confían en AGROINCOL</h3>
-          <ul className="container-custom mt-3 flex gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
-            {RESTAURANTES_CLIENTES.map((c, i) => (
-              <li
-                key={i}
-                className={`w-[160px] flex-none rounded-xl bg-white p-3 ${c.placeholder ? 'border-2 border-dashed border-brand-orange/50' : 'border border-brand-gray-light'}`}
-              >
-                <p className="font-heading text-body-sm font-bold text-brand-black">{c.nombre}</p>
-                <p className="text-body-sm text-brand-black/60">{c.ciudad}</p>
-                {c.placeholder && (
-                  <p className="mt-2 inline-block rounded bg-brand-orange/15 px-1.5 py-0.5 text-[10px] font-bold uppercase leading-tight text-brand-orange-dark">
-                    Placeholder: cliente por autorizar
-                  </p>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
       <div className="container-custom mt-6">
         <div className="rounded-2xl bg-brand-green px-4 py-3 text-center text-white">
           <p className="font-heading text-body font-bold">{AUTORIDAD.anios} años controlando plagas</p>
           <p className="text-body-sm text-white/80">{AUTORIDAD.restaurantes} restaurantes atendidos · el mismo gel que aplican nuestros técnicos</p>
-          {AUTORIDAD.restaurantes === '+N' && (
-            <p className="mt-2 inline-block rounded bg-brand-orange px-2 py-0.5 text-[11px] font-bold uppercase text-white">
-              Placeholder: confirmar número real de restaurantes
-            </p>
-          )}
         </div>
       </div>
     </section>

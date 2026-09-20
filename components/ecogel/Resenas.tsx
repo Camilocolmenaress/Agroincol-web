@@ -1,14 +1,11 @@
 import { RESENAS_ECOGEL, resumenResenas } from '@/lib/ecogel-resenas';
-import Marcador from './Marcador';
 import { Estrellas, NombreVerificado } from './Estrellas';
 
-// Bloque de reseñas al final, estilo Lummia: resumen con distribución, fotos de
-// clientes (UGC), chips de palabras y la lista con fecha, sello y foto enviada.
-// Las reseñas placeholder siguen con borde punteado y etiqueta visible.
+// Bloque de reseñas al final, estilo Lummia: resumen con distribución, chips
+// de palabras y la lista con fecha y sello. Las reseñas placeholder siguen
+// con borde punteado y etiqueta visible.
 
 const CHIPS = ['Excelente', 'Recomendado', 'Sin olor', 'Fácil', 'Funciona', 'Rápido'];
-
-const OCULTAR_SCROLL = 'flex snap-x gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden';
 
 function fechaLegible(iso: string): string {
   const d = new Date(`${iso}T12:00:00`);
@@ -56,15 +53,6 @@ export default function Resenas() {
         <p className="mt-4 text-body-sm text-brand-black/60">{r.total} opiniones recogidas por WhatsApp</p>
       )}
 
-      {/* (b) Fotos de clientes */}
-      <div className={`mt-4 ${OCULTAR_SCROLL}`} style={{ scrollbarWidth: 'none' }} aria-label="Fotos enviadas por clientes">
-        {[1, 2, 3, 4, 5].map((i) => (
-          <div key={i} className="w-28 flex-none snap-start">
-            <Marcador etiqueta={`Foto de cliente ${i} · UGC`} medidas="600×600" className="!rounded-xl !p-2 [&>p]:text-[11px] [&>p]:leading-tight" />
-          </div>
-        ))}
-      </div>
-
       {/* (c) Chips */}
       <ul className="mt-4 flex flex-wrap gap-2" aria-label="Lo que más se repite">
         {CHIPS.map((c) => (
@@ -91,9 +79,6 @@ export default function Resenas() {
               <Estrellas n={res.estrellas} size={14} />
             </div>
             <p className="mt-2 text-body-sm text-brand-black/80">“{res.texto}”</p>
-            <div className="mt-3 w-60 max-w-full">
-              <Marcador etiqueta="Foto enviada por el cliente" medidas="600×600" className="!rounded-xl" />
-            </div>
           </article>
         ))}
       </div>

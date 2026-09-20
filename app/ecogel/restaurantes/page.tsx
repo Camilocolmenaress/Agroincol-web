@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import PaginaProducto from '@/components/ecogel/PaginaProducto';
 import { RESTAURANTES } from '@/lib/ecogel';
-import { fotosEcogel, videoEcogel, videosAprenderAUsarlo } from '../fotos';
+import { fotosEcogel, videosAprenderAUsarlo } from '../fotos';
 
 export const metadata: Metadata = {
   title: RESTAURANTES.metaTitle,
@@ -15,7 +15,6 @@ export default function EcogelRestaurantesPage() {
     <PaginaProducto
       config={RESTAURANTES}
       fotos={fotosEcogel('restaurantes')}
-      video={videoEcogel()}
       videosAprender={videosAprenderAUsarlo()}
     />
   );

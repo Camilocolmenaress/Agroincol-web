@@ -1,8 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import type { Pregunta } from '@/lib/ecogel';
-import Marcador from './Marcador';
 
-export default function Objeciones({ objeciones, video }: { objeciones: Pregunta[]; video?: string }) {
+export default function Objeciones({ objeciones }: { objeciones: Pregunta[] }) {
   return (
     <section className="container-custom mt-10">
       <div className="space-y-2">
@@ -13,11 +12,6 @@ export default function Objeciones({ objeciones, video }: { objeciones: Pregunta
               <ChevronDown size={18} className="flex-none text-brand-orange transition-transform group-open:rotate-180" aria-hidden />
             </summary>
             <p className="text-brand-black/75 text-body-sm mt-2">{o.respuesta}</p>
-            {o.pregunta === '¿Cómo se aplica?' && (
-              <div className="mt-3">
-                <Marcador etiqueta="Video de 20 s: cómo aplicar el gel" medidas="1080×1350 · vertical" ratio="portrait" src={video} />
-              </div>
-            )}
           </details>
         ))}
       </div>

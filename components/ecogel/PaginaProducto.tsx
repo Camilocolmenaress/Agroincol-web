@@ -27,12 +27,10 @@ import WhatsAppFlotante from './WhatsAppFlotante';
 export default function PaginaProducto({
   config,
   fotos,
-  video,
   videosAprender,
 }: {
   config: EcogelConfig;
   fotos: FotosEcogel;
-  video?: string;
   videosAprender: (VideoAprender | undefined)[];
 }) {
   return (
@@ -44,7 +42,7 @@ export default function PaginaProducto({
       <CajaCompra config={config} />
       <BloqueGarantia />
       <AprendeAUsarlo videos={videosAprender} />
-      <Objeciones objeciones={config.objeciones} video={video} />
+      <Objeciones objeciones={config.objeciones} />
       <AntesDespues antes={fotos.antes} despues={fotos.despues} resena={RESENAS_ECOGEL[0]} />
       <Evidencia segmento={config.segmento} />
       <Beneficios bloques={config.beneficiosLargos} />

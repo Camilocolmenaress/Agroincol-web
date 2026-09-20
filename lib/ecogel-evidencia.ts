@@ -85,13 +85,3 @@ export const EVIDENCIA: Record<Segmento, Evidencia[]> = {
   hogar: [IMIDACLOPRID, CASCADA, ASMA, AEROSOL],
   restaurantes: [NORMA, CIERRES, IMIDACLOPRID, CASCADA, AEROSOL],
 };
-
-/**
- * Franja "Restaurantes que confían en AGROINCOL" (solo segmento restaurantes).
- * PLACEHOLDER: se reemplazan solo con clientes reales que hayan autorizado su nombre.
- */
-export const RESTAURANTES_CLIENTES: { nombre: string; ciudad: string; placeholder: boolean }[] = Array.from({ length: 5 }, () => ({
-  nombre: 'Restaurante de ejemplo',
-  ciudad: 'Bucaramanga',
-  placeholder: true,
-}));

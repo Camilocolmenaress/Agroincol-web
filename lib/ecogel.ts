@@ -106,8 +106,7 @@ export const GARANTIA = {
 
 export const AUTORIDAD = {
   anios: new Date().getFullYear() - BUSINESS.founded,
-  /** PLACEHOLDER: confirmar con Camilo el número real antes de pautar. */
-  restaurantes: '+N',
+  restaurantes: 'más de 138',
 } as const;
 
 const OBJECIONES_COMUNES: Pregunta[] = [

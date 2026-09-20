@@ -38,10 +38,6 @@ export function fotosEcogel(segmento: Segmento): FotosEcogel {
   return salida;
 }
 
-export function videoEcogel(): string | undefined {
-  return publicFileExists('/ecogel/aplicacion.jpg') ? '/ecogel/aplicacion.jpg' : undefined;
-}
-
 export interface VideoAprender {
   src: string;
   poster: string;
