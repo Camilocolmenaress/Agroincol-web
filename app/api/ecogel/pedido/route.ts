@@ -4,10 +4,9 @@ import { nuevoPedidoId, validarPedido } from '@/lib/ecogel-pedido';
 import { actualizarFilaPedido, crearFilaPedido, hojaPedidosConfigurada } from '@/lib/hoja-pedidos';
 import { construirPreferencia, crearPreferencia, mpConfigurado } from '@/lib/mercadopago';
 import { nuevoEventId } from '@/lib/meta/eventos';
-import { construirUserData, sha256 } from '@/lib/meta/hash';
 import { resolverFbc } from '@/lib/meta/fbc';
 import { FBP_DURACION_S, resolverFbp } from '@/lib/meta/fbp';
-import { capiConfigurada, enviarEventoAMeta } from '@/lib/meta/capi';
+import { enviarPurchaseEcogel } from '@/lib/meta/ecogel-purchase';
 import { secretoValido } from '@/lib/meta/cierre';
 import { firmaDePedido } from './firma';
 
@@ -23,10 +22,14 @@ const PEDIDO_ID_RE = /^EG-\d{6}-[A-Z0-9]{4}$/;
  *    ningún lado, y con pago en línea además se le cobraría.
  * 1. Validar y RECALCULAR el total en el servidor. El precio del navegador no existe.
  * 2. Escribir la fila en la hoja. Si falla, el pedido sigue: queda en los logs.
- * 3. Purchase a Meta por CAPI con el event_id del checkout. Se manda al crear el
- *    pedido en ambos métodos (como Shopify): es la señal con la que optimiza la
- *    campaña. La verdad de entregado/rechazado vive en la hoja.
- * 4. Contraentrega → /gracias. En línea → preferencia de Mercado Pago → init_point.
+ * 3. Purchase a Meta por CAPI con el event_id del checkout — pero SOLO para los
+ *    métodos sin pasarela (contraentrega, bancolombia, nequi, breb): esos se
+ *    confirman aquí mismo. "online" (tarjeta/PSE vía Mercado Pago) manda el
+ *    suyo desde el webhook (app/api/ecogel/mp/route.ts) cuando el pago se
+ *    confirma de verdad — mandarlo antes reportaría una venta que puede no
+ *    llegar a pagarse.
+ * 4. Contraentrega y métodos manuales → /gracias. En línea → preferencia de
+ *    Mercado Pago → init_point.
  */
 export async function POST(req: NextRequest) {
   if (!hojaPedidosConfigurada()) {
@@ -141,52 +144,31 @@ export async function POST(req: NextRequest) {
   });
 
   // Escritura en la hoja y Purchase a Meta no dependen entre sí: van en paralelo.
-  // Cada una captura sus propios errores, así que Promise.all nunca rechaza por
-  // esto.
-  const envioMeta = capiConfigurada('ecogel')
-    ? (async () => {
-        try {
-          const userData = await construirUserData({
-            nombreCompleto: pedido.nombre,
-            telefono: pedido.celular,
-            correo: pedido.correo || undefined,
-            municipio: pedido.ciudad,
-            externalId: externalId || undefined,
-          });
-          // `construirUserData` fija st = 'santander' (herencia de las landings de
-          // fumigación, donde toda la cobertura es en ese departamento). En EcoGel
-          // el departamento del pedido varía, así que se sobrescribe aquí con el
-          // departamento real que escribió la persona.
-          userData.st = await sha256(
-            pedido.departamento
-              .toLowerCase()
-              .normalize('NFD')
-              .replace(/[̀-ͯ]/g, '')
-              .replace(/[^a-z0-9]/g, ''),
-          );
-          const envio = await enviarEventoAMeta({
-            event_name: 'Purchase',
-            event_time: Math.floor(Date.now() / 1000),
-            event_id: eventId,
-            action_source: 'website',
-            event_source_url: url,
-            custom_data: {
-              value: totales.total,
-              currency: 'COP',
-              content_ids: ['ecogel'],
-              content_type: 'product',
-              num_items: pedido.unidades,
-              content_category: `ecogel-${pedido.de}`,
-              order_id: pedidoId,
-            },
-            user_data: { ...userData, client_ip_address: ip || undefined, client_user_agent: navegador || undefined, fbp, fbc },
-          }, 'ecogel');
-          if (!envio.ok) console.error('[meta] Purchase no enviado:', envio.motivo, envio.detalle ?? '');
-        } catch (error) {
-          console.error('[meta] error inesperado enviando Purchase:', error);
-        }
-      })()
-    : Promise.resolve();
+  // "online" no manda Purchase aquí — lo manda el webhook de Mercado Pago
+  // cuando el pago se confirma (ver comentario del bloque de arriba).
+  const envioMeta =
+    pedido.metodo === 'online'
+      ? Promise.resolve()
+      : enviarPurchaseEcogel(
+          {
+            pedidoId,
+            eventId,
+            total: totales.total,
+            unidades: pedido.unidades,
+            contentCategory: `ecogel-${pedido.de}`,
+            url,
+            nombre: pedido.nombre,
+            celular: pedido.celular,
+            correo: pedido.correo,
+            ciudad: pedido.ciudad,
+            departamento: pedido.departamento,
+            externalId,
+            ip,
+            navegador,
+            fbp,
+            fbc: fbc ?? '',
+          },
+        );
 
   await Promise.all([escrituraFila, envioMeta]);
 

@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { consultarPago, mpConfigurado } from '@/lib/mercadopago';
-import { actualizarFilaPedido } from '@/lib/hoja-pedidos';
+import { actualizarFilaPedido, leerFilaPedido } from '@/lib/hoja-pedidos';
+import { enviarPurchaseEcogel } from '@/lib/meta/ecogel-purchase';
 import { estadoDesdeMp } from './estado';
 
 /**
@@ -13,6 +14,10 @@ import { estadoDesdeMp } from './estado';
  *
  * Responde 200 siempre que el aviso tenga forma, incluso si el pago no cambia
  * nada: Mercado Pago reintenta ante cualquier otro código.
+ *
+ * Cuando el pago queda "pagado" es también el único momento en que un pedido
+ * online manda su Purchase a Meta (ver bloque abajo) y su correo de aviso
+ * (el Apps Script de la hoja lo manda al recibir este `actualizar`).
  */
 export async function POST(req: NextRequest) {
   if (!mpConfigurado()) return NextResponse.json({ ok: false }, { status: 503 });
@@ -46,6 +51,39 @@ export async function POST(req: NextRequest) {
     console.error('[hoja-pedidos] no se pudo actualizar', pago.externalReference, error instanceof Error ? error.message : error);
     return NextResponse.json({ ok: false }, { status: 502 });
   }
+
+  // Único momento en que un pedido "online" manda su Purchase a Meta: aquí,
+  // con el pago ya confirmado. La hoja es la única fuente de los datos del
+  // pedido — esta función y la que creó el pedido corren en invocaciones
+  // serverless distintas, no comparten memoria.
+  if (estado === 'pagado') {
+    const fila = await leerFilaPedido(pago.externalReference);
+    if (!fila) {
+      console.error('[meta] no se pudo leer el pedido para el Purchase', pago.externalReference);
+    } else if (!fila.eventId) {
+      console.error('[meta] pedido sin eventId, no se puede deduplicar el Purchase', pago.externalReference);
+    } else {
+      await enviarPurchaseEcogel({
+        pedidoId: pago.externalReference,
+        eventId: String(fila.eventId),
+        total: Number(fila.total) || 0,
+        unidades: Number(fila.unidades) || 0,
+        contentCategory: String(fila.origen ?? ''),
+        url: String(fila.url ?? ''),
+        nombre: String(fila.nombre ?? ''),
+        celular: String(fila.celular ?? ''),
+        correo: String(fila.correo ?? ''),
+        ciudad: String(fila.ciudad ?? ''),
+        departamento: String(fila.departamento ?? ''),
+        externalId: String(fila.externalId ?? ''),
+        ip: String(fila.ip ?? ''),
+        navegador: String(fila.navegador ?? ''),
+        fbp: String(fila.fbp ?? ''),
+        fbc: String(fila.fbc ?? ''),
+      });
+    }
+  }
+
   return NextResponse.json({ ok: true, estado });
 }
 

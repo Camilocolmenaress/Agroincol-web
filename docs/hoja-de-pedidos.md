@@ -46,21 +46,31 @@ function doPost(e) {
     var h = hoja();
     sincronizarEncabezados(h);
 
+    if (datos.accion === 'crear') {
+      h.appendRow(COLUMNAS.map(function (c) {
+        var v = datos.fila[c];
+        return v === undefined || v === null ? '' : v;
+      }));
+      // Contraentrega y los métodos manuales quedan confirmados apenas se
+      // crean, así que el aviso va de una. "online" puede fallar en Mercado
+      // Pago después de esto, así que el aviso espera a que actualizar()
+      // confirme "pagado" — ver más abajo.
+      if (datos.fila.metodoPago !== 'online') avisarPorCorreo(datos.fila);
+      return ContentService.createTextOutput('ok');
+    }
+
     if (datos.accion === 'actualizar') {
       actualizar(h, datos.pedidoId, datos.cambios || {});
       return ContentService.createTextOutput('ok');
     }
 
-    h.appendRow(COLUMNAS.map(function (c) {
-      var v = datos.fila[c];
-      return v === undefined || v === null ? '' : v;
-    }));
-    // Contraentrega: el pedido queda confirmado apenas se crea (la persona ya
-    // ve "pedido recibido"), así que el aviso va de una. En línea puede fallar
-    // en Mercado Pago después de esto, así que el aviso espera a que
-    // actualizar() confirme "pagado" — ver más abajo.
-    if (datos.fila.metodoPago !== 'online') avisarPorCorreo(datos.fila);
-    return ContentService.createTextOutput('ok');
+    if (datos.accion === 'leer') {
+      var numeroFila = buscarFila(h, datos.pedidoId);
+      var salida = numeroFila ? { ok: true, fila: leerFila(h, numeroFila) } : { ok: false };
+      return ContentService.createTextOutput(JSON.stringify(salida)).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    return ContentService.createTextOutput('accion desconocida');
   } catch (error) {
     return ContentService.createTextOutput('error: ' + error.message);
   }
@@ -83,26 +93,32 @@ function sincronizarEncabezados(h) {
   h.setFrozenRows(1);
 }
 
-// Busca la fila por pedidoId y escribe solo las columnas enviadas.
-function actualizar(h, pedidoId, cambios) {
-  if (h.getLastRow() < 2) throw new Error('pedido no encontrado: ' + pedidoId);
+// Recorre la columna pedidoId. Con el volumen de EcoGel (decenas de pedidos al
+// día, no miles) es más simple y confiable que mantener un índice aparte.
+function buscarFila(h, pedidoId) {
+  if (h.getLastRow() < 2) return null;
   var col = COLUMNAS.indexOf('pedidoId') + 1;
   var ids = h.getRange(2, col, h.getLastRow() - 1, 1).getValues();
   for (var i = 0; i < ids.length; i++) {
-    if (ids[i][0] === pedidoId) {
-      var numeroFila = i + 2;
-      Object.keys(cambios).forEach(function (c) {
-        var idx = COLUMNAS.indexOf(c);
-        if (idx >= 0) h.getRange(numeroFila, idx + 1).setValue(cambios[c]);
-      });
-      // Único momento en que un pedido en línea avisa por correo: cuando el
-      // webhook de Mercado Pago (app/api/ecogel/mp/route.ts) confirma el pago.
-      // Antes de esto nadie debe despachar nada.
-      if (cambios.estado === 'pagado') avisarPorCorreo(leerFila(h, numeroFila));
-      return;
-    }
+    if (ids[i][0] === pedidoId) return i + 2;
   }
-  throw new Error('pedido no encontrado: ' + pedidoId);
+  return null;
+}
+
+// Escribe solo las columnas enviadas en la fila del pedido.
+function actualizar(h, pedidoId, cambios) {
+  var numeroFila = buscarFila(h, pedidoId);
+  if (!numeroFila) throw new Error('pedido no encontrado: ' + pedidoId);
+  Object.keys(cambios).forEach(function (c) {
+    var idx = COLUMNAS.indexOf(c);
+    if (idx >= 0) h.getRange(numeroFila, idx + 1).setValue(cambios[c]);
+  });
+  // Único momento en que un pedido en línea avisa por correo: cuando el
+  // webhook de Mercado Pago (app/api/ecogel/mp/route.ts) confirma el pago.
+  // Antes de esto nadie debe despachar nada. El mismo webhook, en ese
+  // instante, también manda el Purchase a Meta — pide la fila con accion
+  // "leer" (ver doPost arriba) porque esa función corre por separado.
+  if (cambios.estado === 'pagado') avisarPorCorreo(leerFila(h, numeroFila));
 }
 
 function leerFila(h, numeroFila) {

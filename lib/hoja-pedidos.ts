@@ -42,3 +42,25 @@ export function crearFilaPedido(fila: Record<string, unknown>, fetchFn: typeof f
 export function actualizarFilaPedido(pedidoId: string, cambios: Record<string, unknown>, fetchFn: typeof fetch = fetch) {
   return llamar({ accion: 'actualizar', pedidoId, cambios }, fetchFn);
 }
+
+/**
+ * Lee de vuelta una fila ya guardada. La usa el webhook de Mercado Pago para
+ * armar el Purchase de un pedido "online" solo cuando el pago se confirma: el
+ * servidor no guarda esos datos en memoria entre la creación del pedido y el
+ * webhook (son invocaciones serverless distintas), así que la hoja es la única
+ * fuente. A diferencia de crear/actualizar, aquí sí hace falta el cuerpo de la
+ * respuesta, así que se sigue el 302 en vez de tratarlo como éxito silencioso.
+ */
+export async function leerFilaPedido(pedidoId: string, fetchFn: typeof fetch = fetch): Promise<Record<string, unknown> | null> {
+  const { url, secreto } = credenciales();
+  if (!url || !secreto) return null;
+  const respuesta = await fetchFn(url, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ secreto, accion: 'leer', pedidoId }),
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!respuesta.ok) return null;
+  const json = (await respuesta.json()) as { ok: boolean; fila?: Record<string, unknown> };
+  return json.ok && json.fila ? json.fila : null;
+}
