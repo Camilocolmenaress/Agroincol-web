@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { DESCUENTO_ONLINE, money, totalPedido, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
 import { DEPARTAMENTOS, validarPedido } from '@/lib/ecogel-pedido';
@@ -17,23 +17,34 @@ const campo =
   'mt-1 w-full rounded-xl border border-brand-gray-light px-4 py-3 text-body focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/25';
 
 export default function FormularioPedido({ segmento, unidadesIniciales }: { segmento: Segmento; unidadesIniciales: Unidades }) {
-  const { unidades, setUnidades } = useTier();
+  const { unidades } = useTier();
   const [metodo, setMetodo] = useState<MetodoPago>('online');
   const [datos, setDatos] = useState({ nombre: '', celular: '', correo: '', direccion: '', barrio: '', ciudad: '', departamento: '' });
   const [ofertas, setOfertas] = useState(true);
   const [website, setWebsite] = useState('');
   const [errores, setErrores] = useState<Record<string, string>>({});
   const [estado, setEstado] = useState<'idle' | 'enviando' | 'error-mp' | 'error'>('idle');
+  // Un solo event_id por instancia del formulario (useRef, no useState: no debe
+  // disparar un re-render). nuevoEventId() en vez de crypto.randomUUID() directo:
+  // en iOS <15.4 o en webviews sin contexto seguro randomUUID no existe y lanza.
+  // Si el pago en línea falla y la persona reintenta, el segundo envío manda el
+  // MISMO event_id: Meta deduplica el Purchase por (event_name, event_id), así
+  // que un reintento no cuenta como dos compras.
+  const eventIdRef = useRef(nuevoEventId());
+  // Si Mercado Pago falla, el servidor ya guardó una fila con este pedidoId. El
+  // siguiente envío lo manda como `pedidoAnterior` para que el servidor actualice
+  // esa fila en vez de crear una nueva (y una duplicada en la hoja).
+  const [pedidoAnterior, setPedidoAnterior] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    setUnidades(unidadesIniciales);
+    // El tier inicial ya lo fija TierProvider (prop `inicial`); aquí solo se mide.
     // InitiateCheckout: una vez por sesión (ver UNA_VEZ_POR_SESION en lib/meta/pixel.ts).
     rastrear('InitiateCheckout', {
       categoria: `ecogel-${segmento}`,
       valor: totalPedido(unidadesIniciales, 'contraentrega').total,
       contenido: { ids: ['ecogel'], numItems: unidadesIniciales },
     });
-  }, [unidadesIniciales, segmento, setUnidades]);
+  }, [unidadesIniciales, segmento]);
 
   const t = totalPedido(unidades, metodo);
   const set = (k: keyof typeof datos) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
@@ -51,18 +62,20 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
     setEstado('enviando');
 
     // El Pixel dispara Purchase en /gracias, no aquí: si el pago en línea falla no
-    // hubo compra. Pero el event_id se genera ahora, viaja al servidor (que sí
-    // manda el Purchase por CAPI al crear el pedido) y se guarda para /gracias.
-    // nuevoEventId() en vez de crypto.randomUUID() directo: en iOS <15.4 o en
-    // webviews sin contexto seguro randomUUID no existe y lanza, dejando el
-    // botón en "Procesando…" para siempre.
-    const eventId = nuevoEventId();
-
+    // hubo compra. El event_id de eventIdRef viaja al servidor (que sí manda el
+    // Purchase por CAPI al crear el pedido) y se guarda para /gracias.
     try {
       const res = await fetch('/api/ecogel/pedido', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ ...entrada, website, eventId, externalId: idDeVisitante(), sourceUrl: window.location.href }),
+        body: JSON.stringify({
+          ...entrada,
+          website,
+          eventId: eventIdRef.current,
+          externalId: idDeVisitante(),
+          sourceUrl: window.location.href,
+          ...(pedidoAnterior ? { pedidoAnterior } : {}),
+        }),
       });
       const json = (await res.json()) as { ok: boolean; pedidoId?: string; ir?: string; errores?: Record<string, string>; motivo?: string };
       if (!res.ok || !json.ok) {
@@ -72,13 +85,14 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           setEstado('idle');
         } else {
           setEstado(json.motivo === 'mp' ? 'error-mp' : 'error');
+          if (json.motivo === 'mp' && json.pedidoId) setPedidoAnterior(json.pedidoId);
         }
         return;
       }
       try {
         window.sessionStorage.setItem(
           'ecogel_compra',
-          JSON.stringify({ pedidoId: json.pedidoId, eventId, valor: t.total, unidades, segmento }),
+          JSON.stringify({ pedidoId: json.pedidoId, eventId: eventIdRef.current, valor: t.total, unidades, segmento }),
         );
       } catch {
         // Sin almacenamiento el Purchase sale solo por el servidor. Aceptable.

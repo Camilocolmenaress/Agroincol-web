@@ -1,13 +1,16 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { totalPedido } from '@/lib/ecogel';
 import { nuevoPedidoId, validarPedido } from '@/lib/ecogel-pedido';
-import { crearFilaPedido } from '@/lib/hoja-pedidos';
+import { actualizarFilaPedido, crearFilaPedido } from '@/lib/hoja-pedidos';
 import { construirPreferencia, crearPreferencia, mpConfigurado } from '@/lib/mercadopago';
 import { nuevoEventId } from '@/lib/meta/eventos';
 import { construirUserData, sha256 } from '@/lib/meta/hash';
 import { resolverFbc } from '@/lib/meta/fbc';
 import { FBP_DURACION_S, resolverFbp } from '@/lib/meta/fbp';
 import { capiConfigurada, enviarEventoAMeta } from '@/lib/meta/capi';
+
+// Mismo formato que nuevoPedidoId() en lib/ecogel-pedido.ts.
+const PEDIDO_ID_RE = /^EG-\d{6}-[A-Z0-9]{4}$/;
 
 /**
  * Crea un pedido de EcoGel.
@@ -38,12 +41,19 @@ export async function POST(req: NextRequest) {
   const pedido = validacion.pedido;
 
   const totales = totalPedido(pedido.unidades, pedido.metodo);
-  const pedidoId = nuevoPedidoId();
+  // Si el envío anterior falló en Mercado Pago, el servidor ya guardó una fila
+  // con este id: se reutiliza y se actualiza en vez de crear una duplicada.
+  const pedidoAnterior =
+    typeof cuerpo.pedidoAnterior === 'string' && PEDIDO_ID_RE.test(cuerpo.pedidoAnterior) ? cuerpo.pedidoAnterior : undefined;
+  const pedidoId = pedidoAnterior ?? nuevoPedidoId();
   const base = `${req.nextUrl.protocol}//${req.nextUrl.host}`;
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || req.headers.get('x-real-ip') || '';
   const navegador = req.headers.get('user-agent') ?? '';
-  const url = typeof cuerpo.sourceUrl === 'string' && cuerpo.sourceUrl ? cuerpo.sourceUrl : `${base}/ecogel/pedido`;
+  const url =
+    typeof cuerpo.sourceUrl === 'string' && cuerpo.sourceUrl && cuerpo.sourceUrl.length <= 500
+      ? cuerpo.sourceUrl
+      : `${base}/ecogel/pedido`;
   const { fbp, generado } = resolverFbp(req.cookies.get('_fbp')?.value);
   const fbc = resolverFbc(req.cookies.get('_fbc')?.value, url);
   // El fbp recién generado debe volver en TODA respuesta a partir de aquí, no
@@ -53,85 +63,110 @@ export async function POST(req: NextRequest) {
     if (generado) respuesta.cookies.set('_fbp', fbp, { maxAge: FBP_DURACION_S, path: '/', sameSite: 'lax', secure: true });
     return respuesta;
   };
-  const externalId = typeof cuerpo.externalId === 'string' ? cuerpo.externalId : '';
-  const eventId = typeof cuerpo.eventId === 'string' && cuerpo.eventId.length >= 8 ? cuerpo.eventId : nuevoEventId();
+  const externalId = typeof cuerpo.externalId === 'string' && cuerpo.externalId.length <= 64 ? cuerpo.externalId : '';
+  const eventId =
+    typeof cuerpo.eventId === 'string' && cuerpo.eventId.length >= 8 && cuerpo.eventId.length <= 64
+      ? cuerpo.eventId
+      : nuevoEventId();
 
   const fechaLocal = new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Bogota', dateStyle: 'short', timeStyle: 'medium' }).format(new Date());
 
-  await crearFilaPedido({
-    estado: pedido.metodo === 'online' ? 'pendiente_pago' : 'confirmar',
-    guia: '',
-    fecha: fechaLocal,
-    pedidoId,
-    unidades: pedido.unidades,
-    producto: totales.producto,
-    envio: totales.envio,
-    descuento: totales.descuento,
-    total: totales.total,
-    metodoPago: pedido.metodo,
-    nombre: pedido.nombre,
-    celular: pedido.celular,
-    correo: pedido.correo,
-    direccion: pedido.direccion,
-    barrio: pedido.barrio,
-    ciudad: pedido.ciudad,
-    departamento: pedido.departamento,
-    ofertas: pedido.ofertas ? 'sí' : 'no',
-    origen: `ecogel-${pedido.de}`,
-    ip,
-    eventId,
-    fbp,
-    fbc: fbc ?? '',
-    externalId,
-    navegador,
-    url,
-    mpPagoId: '',
-  }).catch((error) => {
+  // Fila nueva, o actualización de la que quedó de un intento anterior fallido
+  // en Mercado Pago: solo cambian estado, método y los montos (pudo cambiar de
+  // "en línea" a "contraentrega"); el resto ya está en la hoja.
+  const escrituraFila = (
+    pedidoAnterior
+      ? actualizarFilaPedido(pedidoId, {
+          estado: pedido.metodo === 'online' ? 'pendiente_pago' : 'confirmar',
+          metodoPago: pedido.metodo,
+          unidades: pedido.unidades,
+          producto: totales.producto,
+          envio: totales.envio,
+          descuento: totales.descuento,
+          total: totales.total,
+        })
+      : crearFilaPedido({
+          estado: pedido.metodo === 'online' ? 'pendiente_pago' : 'confirmar',
+          guia: '',
+          fecha: fechaLocal,
+          pedidoId,
+          unidades: pedido.unidades,
+          producto: totales.producto,
+          envio: totales.envio,
+          descuento: totales.descuento,
+          total: totales.total,
+          metodoPago: pedido.metodo,
+          nombre: pedido.nombre,
+          celular: pedido.celular,
+          correo: pedido.correo,
+          direccion: pedido.direccion,
+          barrio: pedido.barrio,
+          ciudad: pedido.ciudad,
+          departamento: pedido.departamento,
+          ofertas: pedido.ofertas ? 'sí' : 'no',
+          origen: `ecogel-${pedido.de}`,
+          ip,
+          eventId,
+          fbp,
+          fbc: fbc ?? '',
+          externalId,
+          navegador,
+          url,
+          mpPagoId: '',
+        })
+  ).catch((error) => {
     console.error('[hoja-pedidos] no se pudo guardar el pedido', pedidoId, error instanceof Error ? error.message : error);
   });
 
-  if (capiConfigurada()) {
-    try {
-      const userData = await construirUserData({
-        nombreCompleto: pedido.nombre,
-        telefono: pedido.celular,
-        correo: pedido.correo || undefined,
-        municipio: pedido.ciudad,
-        externalId: externalId || undefined,
-      });
-      // `construirUserData` fija st = 'santander' (herencia de las landings de
-      // fumigación, donde toda la cobertura es en ese departamento). En EcoGel
-      // el departamento del pedido varía, así que se sobrescribe aquí con el
-      // departamento real que escribió la persona.
-      userData.st = await sha256(
-        pedido.departamento
-          .toLowerCase()
-          .normalize('NFD')
-          .replace(/[̀-ͯ]/g, '')
-          .replace(/[^a-z0-9]/g, ''),
-      );
-      const envio = await enviarEventoAMeta({
-        event_name: 'Purchase',
-        event_time: Math.floor(Date.now() / 1000),
-        event_id: eventId,
-        action_source: 'website',
-        event_source_url: url,
-        custom_data: {
-          value: totales.total,
-          currency: 'COP',
-          content_ids: ['ecogel'],
-          content_type: 'product',
-          num_items: pedido.unidades,
-          content_category: `ecogel-${pedido.de}`,
-          order_id: pedidoId,
-        },
-        user_data: { ...userData, client_ip_address: ip || undefined, client_user_agent: navegador || undefined, fbp, fbc },
-      });
-      if (!envio.ok) console.error('[meta] Purchase no enviado:', envio.motivo, envio.detalle ?? '');
-    } catch (error) {
-      console.error('[meta] error inesperado enviando Purchase:', error);
-    }
-  }
+  // Escritura en la hoja y Purchase a Meta no dependen entre sí: van en paralelo.
+  // Cada una captura sus propios errores, así que Promise.all nunca rechaza por
+  // esto.
+  const envioMeta = capiConfigurada()
+    ? (async () => {
+        try {
+          const userData = await construirUserData({
+            nombreCompleto: pedido.nombre,
+            telefono: pedido.celular,
+            correo: pedido.correo || undefined,
+            municipio: pedido.ciudad,
+            externalId: externalId || undefined,
+          });
+          // `construirUserData` fija st = 'santander' (herencia de las landings de
+          // fumigación, donde toda la cobertura es en ese departamento). En EcoGel
+          // el departamento del pedido varía, así que se sobrescribe aquí con el
+          // departamento real que escribió la persona.
+          userData.st = await sha256(
+            pedido.departamento
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/[̀-ͯ]/g, '')
+              .replace(/[^a-z0-9]/g, ''),
+          );
+          const envio = await enviarEventoAMeta({
+            event_name: 'Purchase',
+            event_time: Math.floor(Date.now() / 1000),
+            event_id: eventId,
+            action_source: 'website',
+            event_source_url: url,
+            custom_data: {
+              value: totales.total,
+              currency: 'COP',
+              content_ids: ['ecogel'],
+              content_type: 'product',
+              num_items: pedido.unidades,
+              content_category: `ecogel-${pedido.de}`,
+              order_id: pedidoId,
+            },
+            user_data: { ...userData, client_ip_address: ip || undefined, client_user_agent: navegador || undefined, fbp, fbc },
+          });
+          if (!envio.ok) console.error('[meta] Purchase no enviado:', envio.motivo, envio.detalle ?? '');
+        } catch (error) {
+          console.error('[meta] error inesperado enviando Purchase:', error);
+        }
+      })()
+    : Promise.resolve();
+
+  await Promise.all([escrituraFila, envioMeta]);
 
   let ir = `/ecogel/gracias?pedido=${pedidoId}&estado=cod`;
   if (pedido.metodo === 'online') {
