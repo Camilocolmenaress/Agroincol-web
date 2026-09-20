@@ -6,7 +6,7 @@ const COLUMNAS = ['Gel AGROINCOL', 'Aerosol', 'Trampas', 'Otros geles'];
 const FILAS: [string, boolean[]][] = [
   ['Elimina la colonia completa', [true, false, false, true]],
   ['Sin olor ni vapores', [true, false, true, true]],
-  ['Seguro con niños y mascotas (Bitrex)', [true, false, true, false]],
+  ['Seguro con niños y mascotas (Bitrex)', [true, false, true, true]],
   ['Sin desalojar ni tapar comida', [true, false, true, true]],
   ['Sigue actuando por semanas', [true, false, false, true]],
   ['Respaldo de una fumigadora', [true, false, false, false]],

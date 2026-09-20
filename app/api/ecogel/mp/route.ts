@@ -30,6 +30,9 @@ export async function POST(req: NextRequest) {
 
   const pago = await consultarPago(id);
   if (!pago.ok) {
+    // Mercado Pago manda ids de prueba desde su panel de webhooks que no
+    // existen como pago real: un 404 es ruido esperado, no un fallo nuestro.
+    if (pago.detalle === '404') return NextResponse.json({ ok: true, ignorado: true });
     console.error('[mp] no se pudo consultar el pago', id, pago.detalle);
     return NextResponse.json({ ok: false }, { status: 502 });
   }

@@ -54,3 +54,9 @@ test('el id de pedido es legible y determinista con azar fijo', () => {
   const id = nuevoPedidoId(new Date('2026-09-19T15:00:00Z'), () => 0);
   assert.match(id, /^EG-260919-[A-Z0-9]{4}$/);
 });
+
+test('un nombre de 200 caracteres se recorta a 120', () => {
+  const r = validarPedido({ ...base, nombre: 'A'.repeat(200) });
+  assert.equal(r.ok, true);
+  if (r.ok) assert.equal(r.pedido.nombre.length, 120);
+});

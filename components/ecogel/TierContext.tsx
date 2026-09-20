@@ -13,8 +13,8 @@ interface TierState {
 
 const TierCtx = createContext<TierState>({ unidades: TIER_POR_DEFECTO, setUnidades: () => {} });
 
-export function TierProvider({ children }: { children: React.ReactNode }) {
-  const [unidades, setUnidades] = useState<Unidades>(TIER_POR_DEFECTO);
+export function TierProvider({ children, inicial = TIER_POR_DEFECTO }: { children: React.ReactNode; inicial?: Unidades }) {
+  const [unidades, setUnidades] = useState<Unidades>(inicial);
   return <TierCtx.Provider value={{ unidades, setUnidades }}>{children}</TierCtx.Provider>;
 }
 

@@ -29,8 +29,8 @@ export const TIER_POR_DEFECTO: Unidades = 3;
 
 export const TIERS: readonly Tier[] = [
   { unidades: 1, producto: PRECIO_UNIDAD, envio: ENVIO_BASE, etiqueta: 'Para probar', masVendido: false },
-  { unidades: 2, producto: PRECIO_UNIDAD * 2, envio: 10_000, etiqueta: 'Cocina + baños', masVendido: false },
-  { unidades: 3, producto: PRECIO_UNIDAD * 3, envio: 0, etiqueta: 'Casa completa · envío gratis', masVendido: true },
+  { unidades: 2, producto: PRECIO_UNIDAD * 2, envio: 10_000, etiqueta: 'Cocina + baño', masVendido: false },
+  { unidades: 3, producto: PRECIO_UNIDAD * 3, envio: 0, etiqueta: 'Todo el espacio · envío gratis', masVendido: true },
 ];
 
 export function esUnidades(valor: unknown): valor is Unidades {
@@ -143,8 +143,7 @@ const PREGUNTAS_ENVIO_PAGO: Pregunta[] = [
   },
   {
     pregunta: '¿Cómo reclamo la garantía?',
-    respuesta:
-      'Si a los 30 días siguen viendo cucarachas, nos escribes por WhatsApp con una foto y te enviamos otro kit sin costo.',
+    respuesta: `Si a los ${GARANTIA.dias} días siguen viendo cucarachas, nos escribes por WhatsApp con una foto y te enviamos otro kit sin costo.`,
   },
 ];
 

@@ -15,7 +15,7 @@ export default function PedidoPage({ searchParams }: { searchParams: { u?: strin
   const unidades = esUnidades(u) ? u : TIER_POR_DEFECTO;
   const segmento = esSegmento(searchParams.de) ? searchParams.de : 'hogar';
   return (
-    <TierProvider>
+    <TierProvider inicial={unidades}>
       <CabeceraEcogel whatsappTexto={configDe(segmento).whatsappTexto} />
       <FormularioPedido segmento={segmento} unidadesIniciales={unidades} />
       <PieEcogel />
