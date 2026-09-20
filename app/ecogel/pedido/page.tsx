@@ -17,7 +17,8 @@ export default function PedidoPage({ searchParams }: { searchParams: { u?: strin
   const segmento = esSegmento(searchParams.de) ? searchParams.de : 'hogar';
   return (
     <TierProvider inicial={unidades}>
-      <CabeceraEcogel segmento={segmento} />
+      {/* Sin segmento: el carrito llevaría a esta misma página. */}
+      <CabeceraEcogel />
       <FormularioPedido segmento={segmento} unidadesIniciales={unidades} />
       <PieEcogel />
       <WhatsAppFlotante texto={configDe(segmento).whatsappTexto} />
