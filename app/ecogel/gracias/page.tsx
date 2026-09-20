@@ -3,7 +3,7 @@ import { CheckCircle2, Clock, MessageCircle, XCircle } from 'lucide-react';
 import CabeceraEcogel from '@/components/ecogel/CabeceraEcogel';
 import PieEcogel from '@/components/ecogel/PieEcogel';
 import RastreoCompra from '@/components/ecogel/RastreoCompra';
-import { whatsappEcogel } from '@/lib/ecogel';
+import { GARANTIA, whatsappEcogel } from '@/lib/ecogel';
 
 export const metadata: Metadata = { title: 'Pedido recibido | AGROINCOL', robots: { index: false, follow: false } };
 
@@ -21,7 +21,7 @@ const TEXTOS = {
 export default function GraciasPage({ searchParams }: { searchParams: { pedido?: string; estado?: string } }) {
   const pedido = /^EG-\d{6}-[A-Z0-9]{4}$/.test(searchParams.pedido ?? '') ? (searchParams.pedido as string) : '';
   const crudo = searchParams.estado ?? 'cod';
-  const estado: keyof typeof TEXTOS = crudo in TEXTOS ? (crudo as keyof typeof TEXTOS) : 'cod';
+  const estado: keyof typeof TEXTOS = Object.prototype.hasOwnProperty.call(TEXTOS, crudo) ? (crudo as keyof typeof TEXTOS) : 'cod';
   const t = TEXTOS[estado];
   const Icono = t.icono;
   const whatsappTexto = `Hola, es sobre mi pedido de EcoGel ${pedido}`.trim();
@@ -38,7 +38,7 @@ export default function GraciasPage({ searchParams }: { searchParams: { pedido?:
         <a href={wa} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-semibold text-white">
           <MessageCircle size={18} aria-hidden /> Escribir por WhatsApp
         </a>
-        <p className="mt-8 text-body-sm text-brand-black/55">Guarda el número de pedido: es lo que necesitas para cualquier reclamo o para la garantía de 30 días.</p>
+        <p className="mt-8 text-body-sm text-brand-black/55">Guarda el número de pedido: es lo que necesitas para cualquier reclamo o para la garantía de {GARANTIA.dias} días.</p>
       </main>
       <PieEcogel />
       {pedido && <RastreoCompra pedidoId={pedido} estado={estado} />}
