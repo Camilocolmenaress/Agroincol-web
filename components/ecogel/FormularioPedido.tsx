@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { DESCUENTO_ONLINE, money, totalPedido, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
 import { DEPARTAMENTOS, validarPedido } from '@/lib/ecogel-pedido';
-import { rastrear, soloPixel } from '@/lib/meta/pixel';
+import { nuevoEventId } from '@/lib/meta/eventos';
+import { rastrear } from '@/lib/meta/pixel';
 import { idDeVisitante } from '@/lib/meta/visitante';
 import SelectorTier from './SelectorTier';
 import { useTier } from './TierContext';
@@ -52,7 +53,10 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
     // El Pixel dispara Purchase en /gracias, no aquí: si el pago en línea falla no
     // hubo compra. Pero el event_id se genera ahora, viaja al servidor (que sí
     // manda el Purchase por CAPI al crear el pedido) y se guarda para /gracias.
-    const eventId = crypto.randomUUID();
+    // nuevoEventId() en vez de crypto.randomUUID() directo: en iOS <15.4 o en
+    // webviews sin contexto seguro randomUUID no existe y lanza, dejando el
+    // botón en "Procesando…" para siempre.
+    const eventId = nuevoEventId();
 
     try {
       const res = await fetch('/api/ecogel/pedido', {
@@ -62,8 +66,12 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
       });
       const json = (await res.json()) as { ok: boolean; pedidoId?: string; ir?: string; errores?: Record<string, string>; motivo?: string };
       if (!res.ok || !json.ok) {
-        if (json.errores) setErrores(json.errores);
-        setEstado(json.motivo === 'mp' ? 'error-mp' : 'error');
+        const hayErroresPorCampo = json.errores && Object.keys(json.errores).length > 0;
+        if (hayErroresPorCampo) {
+          setErrores(json.errores!);
+        } else {
+          setEstado(json.motivo === 'mp' ? 'error-mp' : 'error');
+        }
         return;
       }
       try {
@@ -169,7 +177,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
       </button>
       <p className="mt-3 text-center text-body-sm text-brand-black/55">
         Al confirmar aceptas que te contactemos por WhatsApp para coordinar la entrega.{' '}
-        <a href="/politica-de-privacidad" target="_blank" className="underline">Política de privacidad</a>.
+        <a href="/politica-de-privacidad" target="_blank" rel="noopener noreferrer" className="underline">Política de privacidad</a>.
       </p>
     </form>
   );
