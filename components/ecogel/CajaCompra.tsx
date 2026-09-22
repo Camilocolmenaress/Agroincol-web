@@ -22,6 +22,7 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
   const tier = tierDe(unidades);
   const cod = totalPedido(unidades, 'contraentrega');
   const ahorroEnvio = ENVIO_BASE - tier.envio;
+  const ahorroTotal = ahorroEnvio + (tier.precioTachado ? tier.precioTachado - tier.producto : 0);
   const resenas = resumenResenas();
 
   return (
@@ -39,9 +40,9 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
         ) : (
           <span className="text-body-sm text-brand-black/60">envío gratis</span>
         )}
-        {ahorroEnvio > 0 && (
+        {ahorroTotal > 0 && (
           <span className="rounded-full border border-dashed border-brand-orange bg-brand-orange/10 px-2.5 py-0.5 text-body-sm font-semibold text-brand-orange-dark">
-            Ahorras {money(ahorroEnvio)} de envío
+            Ahorras {money(ahorroTotal)} en total
           </span>
         )}
       </div>

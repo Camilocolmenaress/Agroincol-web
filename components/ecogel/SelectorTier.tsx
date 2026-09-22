@@ -41,11 +41,6 @@ export default function SelectorTier({ compacto = false }: { compacto?: boolean 
                 <span className="font-normal text-brand-black/55">
                   · envío {t.envio === 0 ? 'gratis' : money(t.envio)}
                 </span>
-                {t.precioTachado && (
-                  <span className="rounded-full bg-brand-orange/15 px-2 py-0.5 text-[11px] font-bold text-brand-orange-dark">
-                    Ahorras {money(t.precioTachado - t.producto)}
-                  </span>
-                )}
               </span>
             </button>
           );

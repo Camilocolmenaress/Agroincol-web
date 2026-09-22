@@ -27,6 +27,8 @@ Extensiones → Apps Script. Borra lo que haya y pega:
 
 var SECRETO = 'CAMBIA-ESTO-POR-TU-SECRETO';
 var CORREO_AVISOS = 'agroincol.1985@gmail.com';
+// Bono del combo de 3 unidades ($109.700): guía en PDF, solo para ese pedido.
+var GUIA_PDF_ECOGEL_URL = 'https://drive.google.com/file/d/1jCReXhQzY6gPNuocx9OmPQxlgke9uD1T/view?usp=sharing';
 
 // El orden manda: así llegan los datos desde el servidor (lib/hoja-pedidos.ts).
 var COLUMNAS = [
@@ -149,23 +151,28 @@ function avisarPorCorreo(fila) {
 function mensajeWhatsapp(fila) {
   var nombre = fila.nombre || '';
   var pedidoId = fila.pedidoId || '';
+  var mensaje;
   if (fila.metodoPago === 'contraentrega') {
-    return (
+    mensaje =
       'Hola ' + nombre + ', tu pedido ' + pedidoId + ' de EcoGel está listo para despachar. ' +
-      '*Confirma este mensaje con un SÍ* si deseas recibirlo en ' + fila.direccion + ', ' + fila.barrio + '.'
-    );
-  }
-  if (fila.metodoPago === 'online') {
-    return (
+      '*Confirma este mensaje con un SÍ* si deseas recibirlo en ' + fila.direccion + ', ' + fila.barrio + '.';
+  } else if (fila.metodoPago === 'online') {
+    mensaje =
       'Hola ' + nombre + ', confirmamos tu pedido ' + pedidoId + ' de EcoGel. ' +
-      'Sale en las próximas 24 horas, te enviamos la guía de la transportadora por aquí.'
-    );
+      'Sale en las próximas 24 horas, te enviamos la guía de la transportadora por aquí.';
+  } else {
+    // bancolombia, nequi, breb: transferencia manual, falta el comprobante.
+    mensaje =
+      'Hola ' + nombre + ', recibimos tu pedido ' + pedidoId + ' de EcoGel. ' +
+      'Envíanos el comprobante de la transferencia para confirmar y despachar.';
   }
-  // bancolombia, nequi, breb: transferencia manual, falta el comprobante.
-  return (
-    'Hola ' + nombre + ', recibimos tu pedido ' + pedidoId + ' de EcoGel. ' +
-    'Envíanos el comprobante de la transferencia para confirmar y despachar.'
-  );
+  // Bono del combo de 3 unidades: la guía en PDF. Mismo texto sin importar el método de pago.
+  if (Number(fila.unidades) === 3) {
+    mensaje +=
+      '\nComo parte del combo, aquí tienes tu guía gratis: "5 puntos donde entran las cucarachas en tu cocina"' +
+      '\n' + GUIA_PDF_ECOGEL_URL;
+  }
+  return mensaje;
 }
 
 function linkWhatsapp(fila) {
