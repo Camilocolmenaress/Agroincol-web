@@ -8,7 +8,7 @@ test('los tres tiers tienen los precios del spec', () => {
     [
       [1, 39_900, 20_000],
       [2, 79_800, 10_000],
-      [3, 119_700, 0],
+      [3, 109_700, 0],
     ],
   );
 });
@@ -20,13 +20,13 @@ test('el tier por defecto es 3 y es el único "más vendido"', () => {
 
 test('contraentrega paga producto + envío sin descuento', () => {
   assert.deepEqual(totalPedido(1, 'contraentrega'), { producto: 39_900, envio: 20_000, descuento: 0, total: 59_900 });
-  assert.deepEqual(totalPedido(3, 'contraentrega'), { producto: 119_700, envio: 0, descuento: 0, total: 119_700 });
+  assert.deepEqual(totalPedido(3, 'contraentrega'), { producto: 109_700, envio: 0, descuento: 0, total: 109_700 });
 });
 
 test('pago en línea descuenta $5.000 por pedido', () => {
   assert.equal(DESCUENTO_ONLINE, 5_000);
   assert.deepEqual(totalPedido(2, 'online'), { producto: 79_800, envio: 10_000, descuento: 5_000, total: 84_800 });
-  assert.equal(totalPedido(3, 'online').total, 114_700);
+  assert.equal(totalPedido(3, 'online').total, 104_700);
 });
 
 test('los métodos manuales (bancolombia, nequi, breb) descuentan igual que en línea', () => {

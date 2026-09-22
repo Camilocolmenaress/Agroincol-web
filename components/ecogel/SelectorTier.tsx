@@ -33,9 +33,19 @@ export default function SelectorTier({ compacto = false }: { compacto?: boolean 
                 {t.unidades} {t.unidades === 1 ? 'unidad' : 'unidades'}
               </span>
               {!compacto && <span className="block text-body-sm text-brand-black/65">{t.etiqueta}</span>}
-              <span className="mt-1 block text-body-sm font-semibold text-brand-black">
+              <span className="mt-1 flex flex-wrap items-center gap-1.5 text-body-sm font-semibold text-brand-black">
+                {t.precioTachado && (
+                  <span className="text-brand-black/45 line-through">{money(t.precioTachado)}</span>
+                )}
                 {money(t.producto)}
-                <span className="font-normal text-brand-black/55"> · envío {t.envio === 0 ? 'gratis' : money(t.envio)}</span>
+                <span className="font-normal text-brand-black/55">
+                  · envío {t.envio === 0 ? 'gratis' : money(t.envio)}
+                </span>
+                {t.precioTachado && (
+                  <span className="rounded-full bg-brand-orange/15 px-2 py-0.5 text-[11px] font-bold text-brand-orange-dark">
+                    Ahorras {money(t.precioTachado - t.producto)}
+                  </span>
+                )}
               </span>
             </button>
           );

@@ -1,7 +1,7 @@
 'use client';
 
-import { Bug, FileCheck, ShieldCheck, Store, Timer, Utensils, Wind, Star } from 'lucide-react';
-import { AUTORIDAD, ENVIO_BASE, GARANTIA, money, tierDe, totalPedido, type EcogelConfig } from '@/lib/ecogel';
+import { Bug, FileCheck, FileText, RotateCcw, ShieldCheck, Store, Timer, Truck, Utensils, Wind, Star } from 'lucide-react';
+import { AUTORIDAD, BONO_GUIA_PDF, ENVIO_BASE, GARANTIA, money, tierDe, totalPedido, type EcogelConfig } from '@/lib/ecogel';
 import { resumenResenas } from '@/lib/ecogel-resenas';
 import { IMIDACLOPRID } from '@/lib/ecogel-evidencia';
 import SelectorTier from './SelectorTier';
@@ -67,6 +67,25 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
 
       <div className="mt-5">
         <SelectorTier />
+      </div>
+
+      {/* Combo del tier 3: se lee como un solo paquete, no como beneficios sueltos. */}
+      <div className="mt-4 rounded-xl border-2 border-brand-green/30 bg-brand-green/5 p-4">
+        <p className="text-body-sm font-bold text-brand-green">Con el paquete de 3 unidades llevas:</p>
+        <ul className="mt-2.5 space-y-2">
+          <li className="flex items-center gap-3 text-body-sm text-brand-black">
+            <Truck size={20} className="flex-none text-brand-green" aria-hidden />
+            Envío gratis a todo el país
+          </li>
+          <li className="flex items-center gap-3 text-body-sm text-brand-black">
+            <RotateCcw size={20} className="flex-none text-brand-green" aria-hidden />
+            Garantía de devolución del dinero si no funciona
+          </li>
+          <li className="flex items-center gap-3 text-body-sm text-brand-black">
+            <FileText size={20} className="flex-none text-brand-green" aria-hidden />
+            {BONO_GUIA_PDF.titulo}
+          </li>
+        </ul>
       </div>
 
       <ul className="mt-5 space-y-2.5">

@@ -14,6 +14,8 @@ export interface Tier {
   unidades: Unidades;
   /** Precio del producto, sin envío. */
   producto: number;
+  /** Precio de lista antes del descuento. Solo lo tienen los tiers en oferta. */
+  precioTachado?: number;
   /** Lo que paga el cliente por el envío. 0 = gratis. */
   envio: number;
   /** Texto corto bajo el número de unidades. */
@@ -37,7 +39,14 @@ export const CUENTAS_MANUALES = {
 export const TIERS: readonly Tier[] = [
   { unidades: 1, producto: PRECIO_UNIDAD, envio: ENVIO_BASE, etiqueta: 'Para probar', masVendido: false },
   { unidades: 2, producto: PRECIO_UNIDAD * 2, envio: 10_000, etiqueta: 'Cocina + baño', masVendido: false },
-  { unidades: 3, producto: PRECIO_UNIDAD * 3, envio: 0, etiqueta: 'Todo el espacio · envío gratis', masVendido: true },
+  {
+    unidades: 3,
+    producto: 109_700,
+    precioTachado: PRECIO_UNIDAD * 3,
+    envio: 0,
+    etiqueta: 'Todo el espacio · envío gratis',
+    masVendido: true,
+  },
 ];
 
 export function esUnidades(valor: unknown): valor is Unidades {
@@ -97,6 +106,12 @@ export interface EcogelConfig {
   /** Texto con el que abre WhatsApp. */
   whatsappTexto: string;
 }
+
+/** Bono digital del combo de 3 unidades. URL pendiente: el PDF todavía no existe. */
+export const BONO_GUIA_PDF = {
+  titulo: 'Guía PDF gratis: "5 puntos donde entran las cucarachas en tu cocina"',
+  url: '{{URL_GUIA_PDF}}',
+} as const;
 
 export const GARANTIA = {
   titulo: 'Si en 30 días siguen, te enviamos otro kit sin costo',
