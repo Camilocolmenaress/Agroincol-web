@@ -138,6 +138,8 @@ export async function POST(req: NextRequest) {
           navegador,
           url,
           mpPagoId: '',
+          tipoDocumento: pedido.tipoDocumento,
+          documento: pedido.documento,
         })
   ).catch((error) => {
     console.error('[hoja-pedidos] no se pudo guardar el pedido', pedidoId, error instanceof Error ? error.message : error);

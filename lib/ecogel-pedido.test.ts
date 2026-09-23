@@ -8,6 +8,8 @@ const base = {
   nombre: 'Diana Pérez',
   celular: '310 789 1948',
   correo: 'diana@example.com',
+  tipoDocumento: 'CC',
+  documento: '1.098.765.432',
   direccion: 'Calle 10 # 20-30',
   barrio: 'Cabecera',
   ciudad: 'Bucaramanga',
@@ -31,14 +33,35 @@ test('el celular debe tener 10 dígitos y empezar por 3', () => {
   if (!r.ok) assert.match(r.errores.celular, /celular/i);
 });
 
-test('el correo es obligatorio salvo en contraentrega', () => {
-  assert.equal(validarPedido({ ...base, correo: '' }).ok, false);
-  assert.equal(validarPedido({ ...base, correo: '', metodo: 'contraentrega' }).ok, true);
-  assert.equal(validarPedido({ ...base, correo: 'no-es-correo' }).ok, false);
-  for (const metodo of ['bancolombia', 'nequi', 'breb']) {
+test('el correo es obligatorio en todos los métodos, contraentrega incluido', () => {
+  for (const metodo of ['online', 'bancolombia', 'nequi', 'breb', 'contraentrega']) {
     assert.equal(validarPedido({ ...base, correo: '', metodo }).ok, false);
     assert.equal(validarPedido({ ...base, metodo }).ok, true);
   }
+  assert.equal(validarPedido({ ...base, correo: 'no-es-correo' }).ok, false);
+});
+
+test('el documento es obligatorio: tipo CC, TI o NIT y solo dígitos', () => {
+  const r = validarPedido(base);
+  assert.equal(r.ok, true);
+  if (r.ok) {
+    assert.equal(r.pedido.tipoDocumento, 'CC');
+    assert.equal(r.pedido.documento, '1098765432');
+  }
+  for (const tipoDocumento of ['TI', 'NIT']) assert.equal(validarPedido({ ...base, tipoDocumento }).ok, true);
+  const nit = validarPedido({ ...base, tipoDocumento: 'NIT', documento: '900.123.456-7' });
+  assert.equal(nit.ok && nit.pedido.documento, '9001234567');
+
+  const sinTipo = validarPedido({ ...base, tipoDocumento: '' });
+  assert.equal(sinTipo.ok, false);
+  if (!sinTipo.ok) assert.ok(sinTipo.errores.tipoDocumento);
+  assert.equal(validarPedido({ ...base, tipoDocumento: 'CE' }).ok, false);
+
+  const sinNumero = validarPedido({ ...base, documento: '' });
+  assert.equal(sinNumero.ok, false);
+  if (!sinNumero.ok) assert.ok(sinNumero.errores.documento);
+  assert.equal(validarPedido({ ...base, documento: '1234' }).ok, false);
+  assert.equal(validarPedido({ ...base, documento: '1234567890123' }).ok, false);
 });
 
 test('rechaza tier, método, segmento y departamento inválidos', () => {

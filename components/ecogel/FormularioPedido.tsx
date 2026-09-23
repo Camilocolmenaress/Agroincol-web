@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { CUENTAS_MANUALES, DESCUENTO_ONLINE, GARANTIA, money, totalPedido, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
-import { DEPARTAMENTOS, validarPedido } from '@/lib/ecogel-pedido';
+import { DEPARTAMENTOS, TIPOS_DOCUMENTO, validarPedido } from '@/lib/ecogel-pedido';
 import { nuevoEventId } from '@/lib/meta/eventos';
 import { rastrear } from '@/lib/meta/pixel';
 import { idDeVisitante } from '@/lib/meta/visitante';
@@ -75,7 +75,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
   // lo que realmente viaja al servidor. Las dos primeras opciones comparten metodo.
   const [opcion, setOpcion] = useState<(typeof OPCIONES_PAGO)[number]['id']>('tarjeta');
   const metodo: MetodoPago = OPCIONES_PAGO.find((o) => o.id === opcion)!.metodo;
-  const [datos, setDatos] = useState({ nombre: '', celular: '', correo: '', direccion: '', barrio: '', ciudad: '', departamento: '' });
+  const [datos, setDatos] = useState({ nombre: '', celular: '', correo: '', tipoDocumento: 'CC', documento: '', direccion: '', barrio: '', ciudad: '', departamento: '' });
   const [ofertas, setOfertas] = useState(true);
   const [website, setWebsite] = useState('');
   const [errores, setErrores] = useState<Record<string, string>>({});
@@ -107,6 +107,13 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
   const t = totalPedido(unidades, metodo);
   const set = (k: keyof typeof datos) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setDatos((d) => ({ ...d, [k]: e.target.value }));
+  const campoTexto = ([k, label, type, auto]: readonly [keyof typeof datos, string, 'text' | 'tel' | 'email', string]) => (
+    <div key={k}>
+      <label htmlFor={`p-${k}`} className="block text-body-sm font-medium text-brand-black">{label}</label>
+      <input id={`p-${k}`} name={k} type={type} autoComplete={auto} inputMode={type === 'tel' ? 'tel' : undefined} value={datos[k]} onChange={set(k)} className={campo} />
+      {errores[k] && <p className="mt-1 text-body-sm text-brand-orange-dark">{errores[k]}</p>}
+    </div>
+  );
 
   const enviar = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -195,18 +202,32 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           [
             ['nombre', 'Nombre completo', 'text', 'name'],
             ['celular', 'Celular (WhatsApp)', 'tel', 'tel'],
-            ['correo', metodo !== 'contraentrega' ? 'Correo' : 'Correo (opcional)', 'email', 'email'],
+            ['correo', 'Correo', 'email', 'email'],
+          ] as const
+        ).map(campoTexto)}
+        {/* La transportadora los exige para despachar contraentrega. */}
+        <div className="grid grid-cols-[6.5rem_1fr] gap-3">
+          <div>
+            <label htmlFor="p-tipoDocumento" className="block text-body-sm font-medium text-brand-black">Tipo</label>
+            <select id="p-tipoDocumento" name="tipoDocumento" value={datos.tipoDocumento} onChange={set('tipoDocumento')} className={campo}>
+              {TIPOS_DOCUMENTO.map((t) => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="p-documento" className="block text-body-sm font-medium text-brand-black">Número de documento</label>
+            <input id="p-documento" name="documento" type="text" inputMode="numeric" autoComplete="off" value={datos.documento} onChange={set('documento')} className={campo} />
+          </div>
+          {(errores.tipoDocumento || errores.documento) && (
+            <p className="col-span-2 -mt-2 text-body-sm text-brand-orange-dark">{errores.tipoDocumento ?? errores.documento}</p>
+          )}
+        </div>
+        {(
+          [
             ['direccion', 'Dirección', 'text', 'street-address'],
             ['barrio', 'Barrio', 'text', 'address-level3'],
             ['ciudad', 'Ciudad / municipio', 'text', 'address-level2'],
           ] as const
-        ).map(([k, label, type, auto]) => (
-          <div key={k}>
-            <label htmlFor={`p-${k}`} className="block text-body-sm font-medium text-brand-black">{label}</label>
-            <input id={`p-${k}`} name={k} type={type} autoComplete={auto} inputMode={type === 'tel' ? 'tel' : undefined} value={datos[k]} onChange={set(k)} className={campo} />
-            {errores[k] && <p className="mt-1 text-body-sm text-brand-orange-dark">{errores[k]}</p>}
-          </div>
-        ))}
+        ).map(campoTexto)}
         <div>
           <label htmlFor="p-departamento" className="block text-body-sm font-medium text-brand-black">Departamento</label>
           <select id="p-departamento" name="departamento" value={datos.departamento} onChange={set('departamento')} className={campo}>

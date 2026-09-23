@@ -34,7 +34,9 @@ var GUIA_PDF_ECOGEL_URL = 'https://drive.google.com/file/d/1jCReXhQzY6gPNuocx9Om
 var COLUMNAS = [
   'estado', 'guia', 'fecha', 'pedidoId', 'unidades', 'producto', 'envio', 'descuento', 'total',
   'metodoPago', 'nombre', 'celular', 'correo', 'direccion', 'barrio', 'ciudad', 'departamento',
-  'ofertas', 'origen', 'ip', 'eventId', 'fbp', 'fbc', 'externalId', 'navegador', 'url', 'mpPagoId'
+  'ofertas', 'origen', 'ip', 'eventId', 'fbp', 'fbc', 'externalId', 'navegador', 'url', 'mpPagoId',
+  // Siempre se agrega al final: en medio descuadra las filas existentes.
+  'tipoDocumento', 'documento'
 ];
 
 function hoja() {
@@ -85,7 +87,7 @@ function sincronizarEncabezados(h) {
       ? []
       : h.getRange(1, 1, 1, Math.max(h.getLastColumn(), 1)).getValues()[0];
   if (actuales.join('|') === COLUMNAS.join('|')) return;
-  // Una hoja nueva tiene 26 columnas y COLUMNAS tiene 27: sin esto getRange
+  // Una hoja nueva tiene 26 columnas y COLUMNAS tiene más: sin esto getRange
   // lanza dentro de doPost y el pedido no se guarda.
   if (h.getMaxColumns() < COLUMNAS.length) {
     h.insertColumnsAfter(h.getMaxColumns(), COLUMNAS.length - h.getMaxColumns());
@@ -135,6 +137,7 @@ function avisarPorCorreo(fila) {
     var asunto = 'Pedido EcoGel ' + fila.pedidoId + ' · ' + fila.unidades + 'u · ' + fila.metodoPago;
     var cuerpo =
       fila.nombre + ' · ' + fila.celular + '\n' +
+      fila.tipoDocumento + ' ' + fila.documento + ' · ' + fila.correo + '\n' +
       fila.direccion + ', ' + fila.barrio + ', ' + fila.ciudad + ', ' + fila.departamento + '\n' +
       'Total: $' + fila.total + ' (' + fila.metodoPago + ')\n' +
       'Estado: ' + fila.estado + '\n\n' +

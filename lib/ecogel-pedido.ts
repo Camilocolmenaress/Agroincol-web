@@ -10,6 +10,10 @@ export const DEPARTAMENTOS = [
   'San Andrés y Providencia', 'Santander', 'Sucre', 'Tolima', 'Valle del Cauca', 'Vaupés', 'Vichada',
 ] as const;
 
+// Las transportadoras piden documento y correo para despachar contraentrega.
+export const TIPOS_DOCUMENTO = ['CC', 'TI', 'NIT'] as const;
+export type TipoDocumento = (typeof TIPOS_DOCUMENTO)[number];
+
 export interface DatosPedido {
   unidades: Unidades;
   metodo: MetodoPago;
@@ -17,6 +21,9 @@ export interface DatosPedido {
   /** 10 dígitos, sin espacios ni indicativo. */
   celular: string;
   correo: string;
+  tipoDocumento: TipoDocumento;
+  /** Solo dígitos (un NIT pierde puntos y guion del DV). */
+  documento: string;
   direccion: string;
   barrio: string;
   ciudad: string;
@@ -47,8 +54,13 @@ export function validarPedido(entrada: unknown): Resultado {
   if (!/^3\d{9}$/.test(celular)) errores.celular = 'Escribe un celular de 10 dígitos que empiece por 3';
 
   const correo = texto(e.correo).toLowerCase();
-  if (correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) errores.correo = 'Ese correo no parece válido';
-  if (metodo && metodo !== 'contraentrega' && !correo) errores.correo = 'Para este método de pago necesitamos tu correo';
+  if (!correo) errores.correo = 'Escribe tu correo';
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) errores.correo = 'Ese correo no parece válido';
+
+  const tipoDocumento = (TIPOS_DOCUMENTO as readonly unknown[]).includes(e.tipoDocumento) ? (e.tipoDocumento as TipoDocumento) : null;
+  if (!tipoDocumento) errores.tipoDocumento = 'Escoge el tipo de documento';
+  const documento = texto(e.documento, 30).replace(/\D/g, '');
+  if (!/^\d{5,12}$/.test(documento)) errores.documento = 'Escribe tu número de documento';
 
   const direccion = texto(e.direccion);
   if (direccion.length < 5) errores.direccion = 'Escribe la dirección de entrega';
@@ -69,6 +81,8 @@ export function validarPedido(entrada: unknown): Resultado {
       nombre,
       celular,
       correo,
+      tipoDocumento: tipoDocumento as TipoDocumento,
+      documento,
       direccion,
       barrio,
       ciudad,
