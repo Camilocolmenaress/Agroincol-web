@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cuentaPorRuta, cuentaPorUrl, pixelIdDe } from './cuentas';
+import { cuentaPorRuta, cuentaPorUrl, esDominioDeProduccion, pixelIdDe, urlEsDeProduccion } from './cuentas';
 
 test('las rutas de EcoGel van a la cuenta ecogel; el resto a servicios', () => {
   assert.equal(cuentaPorRuta('/ecogel'), 'ecogel');
@@ -34,4 +34,17 @@ test('cada cuenta lee su propio pixel; sin variable, vacío (medición apagada)'
     if (previo.s === undefined) delete process.env.NEXT_PUBLIC_META_PIXEL_ID; else process.env.NEXT_PUBLIC_META_PIXEL_ID = previo.s;
     if (previo.e === undefined) delete process.env.NEXT_PUBLIC_META_PIXEL_ID_ECOGEL; else process.env.NEXT_PUBLIC_META_PIXEL_ID_ECOGEL = previo.e;
   }
+});
+
+test('solo agroincol.com cuenta como tráfico real', () => {
+  assert.equal(esDominioDeProduccion('agroincol.com'), true);
+  assert.equal(esDominioDeProduccion('www.agroincol.com'), true);
+  assert.equal(esDominioDeProduccion('localhost'), false);
+  assert.equal(esDominioDeProduccion('192.168.1.1'), false);
+  assert.equal(esDominioDeProduccion('agroincol-4g94dey69-camilos-projects-1d68bc1f.vercel.app'), false);
+  // Un dominio que solo lo contiene no pasa.
+  assert.equal(esDominioDeProduccion('agroincol.com.evil.co'), false);
+  assert.equal(urlEsDeProduccion('https://agroincol.com/ecogel/gracias?pedido=EG-260927-A47J'), true);
+  assert.equal(urlEsDeProduccion('http://localhost:3000/ecogel/gracias'), false);
+  assert.equal(urlEsDeProduccion('no es una url'), false);
 });

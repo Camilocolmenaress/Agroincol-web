@@ -30,9 +30,9 @@
 
 import Script from 'next/script';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { enviarACapi, soloPixel } from '@/lib/meta/pixel';
-import { cuentaPorRuta, pixelIdDe } from '@/lib/meta/cuentas';
+import { cuentaPorRuta, esDominioDeProduccion, pixelIdDe } from '@/lib/meta/cuentas';
 
 /**
  * Espera a que se cumpla una condición, hasta un máximo. Resuelve igual si se
@@ -57,7 +57,14 @@ const hayCookieFbp = () => /(^|;\s*)_fbp=/.test(document.cookie);
 export default function MetaPixel() {
   const yaContado = useRef(false);
   const pixelId = pixelIdDe(cuentaPorRuta(usePathname() ?? '/'));
-  const activo = pixelId.length > 0;
+  // Fuera de agroincol.com ni siquiera se carga el script: además de
+  // facebook.com/tr, el pixel reenvía cada evento a su Gateway de CAPI, y una
+  // prueba local terminaba como compra real (ver lib/meta/cuentas.ts). El
+  // dominio solo se conoce en el navegador, por eso va en un efecto: el
+  // servidor y el primer render del cliente coinciden (sin pixel).
+  const [dominioReal, setDominioReal] = useState(false);
+  useEffect(() => setDominioReal(esDominioDeProduccion(window.location.hostname)), []);
+  const activo = pixelId.length > 0 && dominioReal;
 
   /**
    * El PageView se manda desde nuestro código y no con el `fbq('track',

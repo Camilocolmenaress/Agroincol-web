@@ -10,14 +10,14 @@
  * la función.
  */
 
-import { pixelIdDe, type Cuenta } from './cuentas';
+import { pixelIdDe, urlEsDeProduccion, type Cuenta } from './cuentas';
 
 /** Versión de la Graph API. Meta mantiene cada una unos dos años. */
 const VERSION_API = 'v21.0';
 
 export type ResultadoEnvio =
   | { ok: true }
-  | { ok: false; motivo: 'sin-configurar' | 'meta' | 'red'; detalle?: string };
+  | { ok: false; motivo: 'sin-configurar' | 'fuera-de-produccion' | 'meta' | 'red'; detalle?: string };
 
 /**
  * Credenciales de la cuenta pedida (ver lib/meta/cuentas.ts). Cada cuenta tiene
@@ -50,6 +50,10 @@ export async function enviarEventoAMeta(
 ): Promise<ResultadoEnvio> {
   const { pixelId, token, codigoPrueba } = credenciales(cuenta);
   if (!pixelId || !token) return { ok: false, motivo: 'sin-configurar' };
+  // Un evento que nació fuera de agroincol.com es una prueba (ver cuentas.ts).
+  // Sin URL se deja pasar: el cierre de servicios puede no tenerla.
+  const origen = evento.event_source_url;
+  if (typeof origen === 'string' && origen && !urlEsDeProduccion(origen)) return { ok: false, motivo: 'fuera-de-produccion' };
 
   const cuerpo: Record<string, unknown> = { data: [evento] };
   if (codigoPrueba) cuerpo.test_event_code = codigoPrueba;

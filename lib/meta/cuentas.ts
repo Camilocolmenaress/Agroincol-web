@@ -42,3 +42,24 @@ export function cuentaPorUrl(url: string | undefined): Cuenta {
 export function pixelIdDe(cuenta: Cuenta): string {
   return (cuenta === 'ecogel' ? process.env.NEXT_PUBLIC_META_PIXEL_ID_ECOGEL : process.env.NEXT_PUBLIC_META_PIXEL_ID) ?? '';
 }
+
+/**
+ * Solo el tráfico de agroincol.com se mide. localhost, la red local y los
+ * previews de Vercel usan las mismas credenciales (.env.local): sin este
+ * filtro, una prueba local termina como compra real en Meta. Pasó el
+ * 27-sep-2026: 16 Purchase falsos entraron por el Gateway de CAPI que el
+ * pixel trae configurado, que no pasa por facebook.com.
+ */
+const DOMINIOS_PRODUCCION = ['agroincol.com', 'www.agroincol.com'];
+
+export function esDominioDeProduccion(hostname: string): boolean {
+  return DOMINIOS_PRODUCCION.includes(hostname);
+}
+
+export function urlEsDeProduccion(url: string): boolean {
+  try {
+    return esDominioDeProduccion(new URL(url).hostname);
+  } catch {
+    return false;
+  }
+}

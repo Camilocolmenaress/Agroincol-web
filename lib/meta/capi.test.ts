@@ -72,3 +72,24 @@ test('sin credenciales de la cuenta, no se llama a Meta', () =>
     assert.deepEqual(r, { ok: false, motivo: 'sin-configurar' });
     assert.equal(llamadas, 0);
   }));
+
+// 27-sep-2026: pruebas en localhost mandaron 11 Purchase falsos al pixel real.
+test('enviarEventoAMeta no manda eventos generados fuera de agroincol.com', () =>
+  conEntorno({ NEXT_PUBLIC_META_PIXEL_ID_ECOGEL: '222', META_CAPI_TOKEN_ECOGEL: 'tok-ecogel' }, async () => {
+    let llamadas = 0;
+    const fetchFalso = (async () => {
+      llamadas++;
+      return new Response('{}', { status: 200 });
+    }) as typeof fetch;
+
+    const local = await enviarEventoAMeta({ event_name: 'Purchase', event_source_url: 'http://localhost:3000/ecogel/pedido' }, 'ecogel', fetchFalso);
+    const preview = await enviarEventoAMeta({ event_name: 'Purchase', event_source_url: 'https://x-camilos.vercel.app/ecogel/pedido' }, 'ecogel', fetchFalso);
+    assert.deepEqual([local, preview], [{ ok: false, motivo: 'fuera-de-produccion' }, { ok: false, motivo: 'fuera-de-produccion' }]);
+    assert.equal(llamadas, 0);
+
+    const real = await enviarEventoAMeta({ event_name: 'Purchase', event_source_url: 'https://agroincol.com/ecogel/pedido' }, 'ecogel', fetchFalso);
+    // Sin URL (p. ej. el cierre de servicios sin url en la hoja) se sigue mandando como hasta ahora.
+    const sinUrl = await enviarEventoAMeta({ event_name: 'Purchase' }, 'ecogel', fetchFalso);
+    assert.deepEqual([real.ok, sinUrl.ok], [true, true]);
+    assert.equal(llamadas, 2);
+  }));

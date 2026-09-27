@@ -18,7 +18,7 @@
 import { idDeVisitante } from './visitante';
 import { registrarEnEmbudo } from '@/lib/analitica/posthog';
 import { MONEDA, VALOR_MAXIMO, nuevoEventId, type NombreEvento } from './eventos';
-import { cuentaPorRuta, pixelIdDe } from './cuentas';
+import { cuentaPorRuta, esDominioDeProduccion, pixelIdDe } from './cuentas';
 
 declare global {
   interface Window {
@@ -34,6 +34,7 @@ declare global {
  */
 export function pixelIdActual(): string {
   if (typeof window === 'undefined') return '';
+  if (!esDominioDeProduccion(window.location.hostname)) return '';
   return pixelIdDe(cuentaPorRuta(window.location.pathname));
 }
 
