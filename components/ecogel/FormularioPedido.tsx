@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Truck } from 'lucide-react';
 import { CUENTAS_MANUALES, DESCUENTO_ONLINE, GARANTIA, money, totalPedido, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
 import { DEPARTAMENTOS, TIPOS_DOCUMENTO, validarPedido } from '@/lib/ecogel-pedido';
+import { REGLA_DESPACHO, TIEMPO_ENTREGA } from '@/lib/ecogel-despacho';
 import { nuevoEventId } from '@/lib/meta/eventos';
 import { rastrear } from '@/lib/meta/pixel';
 import { idDeVisitante } from '@/lib/meta/visitante';
@@ -65,7 +66,7 @@ const OPCIONES_PAGO = [
     metodo: 'contraentrega' as MetodoPago,
     titulo: 'Pago Contraentrega',
     logos: [],
-    nota: 'Pagas en efectivo cuando te llega el pedido.',
+    nota: 'Pagas en efectivo cuando te llega el pedido. Antes te escribimos o te llamamos para confirmarlo.',
   },
 ] as const;
 
@@ -107,11 +108,12 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
   const t = totalPedido(unidades, metodo);
   const set = (k: keyof typeof datos) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setDatos((d) => ({ ...d, [k]: e.target.value }));
-  const campoTexto = ([k, label, type, auto]: readonly [keyof typeof datos, string, 'text' | 'tel' | 'email', string]) => (
+  const campoTexto = ([k, label, type, auto, ayuda]: readonly [keyof typeof datos, string, 'text' | 'tel' | 'email', string, string?]) => (
     <div key={k}>
       <label htmlFor={`p-${k}`} className="block text-body-sm font-medium text-brand-black">{label}</label>
-      <input id={`p-${k}`} name={k} type={type} autoComplete={auto} inputMode={type === 'tel' ? 'tel' : undefined} value={datos[k]} onChange={set(k)} className={campo} />
+      <input id={`p-${k}`} name={k} type={type} autoComplete={auto} inputMode={type === 'tel' ? 'tel' : undefined} value={datos[k]} onChange={set(k)} aria-describedby={ayuda ? `p-${k}-ayuda` : undefined} className={campo} />
       {errores[k] && <p className="mt-1 text-body-sm text-brand-orange-dark">{errores[k]}</p>}
+      {ayuda && <p id={`p-${k}-ayuda`} className="mt-1.5 text-body-sm leading-snug text-brand-black/60">{ayuda}</p>}
     </div>
   );
 
@@ -164,7 +166,8 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
       try {
         window.sessionStorage.setItem(
           'ecogel_compra',
-          JSON.stringify({ pedidoId: json.pedidoId, eventId: eventIdRef.current, valor: t.total, unidades, segmento }),
+          // celular: /gracias le muestra a qué número lo vamos a contactar.
+          JSON.stringify({ pedidoId: json.pedidoId, eventId: eventIdRef.current, valor: t.total, unidades, segmento, celular: datos.celular }),
         );
       } catch {
         // Sin almacenamiento el Purchase sale solo por el servidor. Aceptable.
@@ -201,7 +204,13 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
         {(
           [
             ['nombre', 'Nombre completo', 'text', 'name'],
-            ['celular', 'Celular (WhatsApp)', 'tel', 'tel'],
+            [
+              'celular',
+              'Celular (WhatsApp)',
+              'tel',
+              'tel',
+              'Pon un número al que estés pendiente: en los próximos minutos podrías recibir un mensaje o una llamada para confirmar tu pedido.',
+            ],
             ['correo', 'Correo', 'email', 'email'],
           ] as const
         ).map(campoTexto)}
@@ -284,7 +293,12 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
         </p>
       )}
 
-      <button type="submit" disabled={estado === 'enviando'} className="mt-6 w-full rounded-full bg-brand-orange px-6 py-4 font-heading text-body font-bold text-white shadow-brand disabled:opacity-60">
+      <p className="mt-6 flex items-start gap-2.5 rounded-xl bg-brand-mint px-4 py-3 text-body-sm text-brand-green">
+        <Truck size={18} className="mt-0.5 flex-none" aria-hidden />
+        <span>{REGLA_DESPACHO} {TIEMPO_ENTREGA}</span>
+      </p>
+
+      <button type="submit" disabled={estado === 'enviando'} className="mt-4 w-full rounded-full bg-brand-orange px-6 py-4 font-heading text-body font-bold text-white shadow-brand disabled:opacity-60">
         {estado === 'enviando' ? (
           <span className="inline-flex items-center gap-2"><Loader2 size={18} className="animate-spin" aria-hidden /> Procesando…</span>
         ) : (

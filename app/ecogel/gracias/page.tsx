@@ -1,49 +1,85 @@
 import type { Metadata } from 'next';
-import { CheckCircle2, Clock, MessageCircle, XCircle } from 'lucide-react';
+import { MessageCircle, RotateCcw } from 'lucide-react';
+import AprendeAUsarlo from '@/components/ecogel/AprendeAUsarlo';
 import CabeceraEcogel from '@/components/ecogel/CabeceraEcogel';
+import ComoAplicar from '@/components/ecogel/ComoAplicar';
 import PieEcogel from '@/components/ecogel/PieEcogel';
 import RastreoCompra from '@/components/ecogel/RastreoCompra';
 import WhatsAppFlotante from '@/components/ecogel/WhatsAppFlotante';
-import { CUENTAS_MANUALES, GARANTIA, whatsappEcogel } from '@/lib/ecogel';
+import Bienvenida, { type Tono } from '@/components/ecogel/gracias/Bienvenida';
+import { Ayuda, LoQueTienes, Respaldo } from '@/components/ecogel/gracias/Confianza';
+import DatosTransferencia, { type MetodoManual } from '@/components/ecogel/gracias/DatosTransferencia';
+import LineaTiempo from '@/components/ecogel/gracias/LineaTiempo';
+import ResumenPedido from '@/components/ecogel/gracias/ResumenPedido';
+import { esSegmento, esUnidades, totalPedido, whatsappEcogel, type MetodoPago } from '@/lib/ecogel';
+import { diaDeDespacho } from '@/lib/ecogel-despacho';
+import { fotosEcogel, videosAprenderAUsarlo } from '../fotos';
 
 export const metadata: Metadata = { title: 'Pedido recibido | AGROINCOL', robots: { index: false, follow: false } };
 
-const B = CUENTAS_MANUALES.bancolombia;
-const N = CUENTAS_MANUALES.nequi;
-const R = CUENTAS_MANUALES.breb;
+type Estado = 'cod' | 'approved' | 'pending' | 'failure' | MetodoManual;
 
-const TEXTOS = {
+const ESTADOS: Record<Estado, { tono: Tono; titulo: string; bajada: string; metodo: MetodoPago }> = {
   cod: {
-    icono: CheckCircle2,
-    titulo: 'Pedido recibido',
-    texto: 'Te escribimos por WhatsApp para confirmar la dirección. Llega en 2-4 días hábiles y pagas en efectivo al recibir.',
+    tono: 'ok',
+    titulo: '¡Listo! Recibimos tu pedido',
+    bajada: 'Pagas en efectivo cuando te llegue. Esto es lo que sigue.',
+    metodo: 'contraentrega',
   },
-  approved: { icono: CheckCircle2, titulo: 'Pago recibido', texto: 'Tu pedido sale en las próximas 24 horas. Te enviamos la guía de la transportadora por WhatsApp.' },
-  pending: { icono: Clock, titulo: 'Pago en proceso', texto: 'PSE puede tardar unos minutos en confirmar. Te avisamos por correo y WhatsApp apenas entre.' },
-  failure: { icono: XCircle, titulo: 'El pago no se completó', texto: 'No se cobró nada. Escríbenos y lo resolvemos: puedes volver a intentar en línea o pagar al recibir.' },
+  approved: {
+    tono: 'ok',
+    titulo: '¡Listo! Tu pago está confirmado',
+    bajada: 'Ya estamos preparando tu pedido. Esto es lo que sigue.',
+    metodo: 'online',
+  },
+  pending: {
+    tono: 'espera',
+    titulo: 'Tu pago está en proceso',
+    bajada: 'PSE puede tardar unos minutos en confirmar. Te avisamos por correo y WhatsApp apenas entre.',
+    metodo: 'online',
+  },
+  failure: {
+    tono: 'error',
+    titulo: 'El pago no se completó',
+    bajada: 'No se cobró nada. Puedes volver a intentarlo o escribirnos y lo resolvemos: también puedes pagar al recibir.',
+    metodo: 'online',
+  },
   bancolombia: {
-    icono: Clock,
-    titulo: 'Falta tu transferencia',
-    texto: `Transfiere a la cuenta de ${B.tipo} Bancolombia ${B.numero}, a nombre de ${B.titular} (C.C. ${B.cedula}), y manda el comprobante por WhatsApp para que despachemos.`,
+    tono: 'espera',
+    titulo: 'Falta un paso: tu transferencia',
+    bajada: 'Transfiere el valor y mándanos el comprobante por WhatsApp para despachar tu pedido.',
+    metodo: 'bancolombia',
   },
   nequi: {
-    icono: Clock,
-    titulo: 'Falta tu transferencia',
-    texto: `Transfiere por Nequi al ${N.numero} (${N.titular}) y manda el comprobante por WhatsApp para que despachemos.`,
+    tono: 'espera',
+    titulo: 'Falta un paso: tu transferencia',
+    bajada: 'Transfiere el valor y mándanos el comprobante por WhatsApp para despachar tu pedido.',
+    metodo: 'nequi',
   },
   breb: {
-    icono: Clock,
-    titulo: 'Falta tu transferencia',
-    texto: `Transfiere por Bre-B a la llave ${R.llave} (${R.banco}, a nombre de ${R.titular}) y manda el comprobante por WhatsApp para que despachemos.`,
+    tono: 'espera',
+    titulo: 'Falta un paso: tu transferencia',
+    bajada: 'Transfiere el valor y mándanos el comprobante por WhatsApp para despachar tu pedido.',
+    metodo: 'breb',
   },
-} as const;
+};
 
-export default function GraciasPage({ searchParams }: { searchParams: { pedido?: string; estado?: string } }) {
+const esManual = (e: Estado): e is MetodoManual => e === 'bancolombia' || e === 'nequi' || e === 'breb';
+
+export default function GraciasPage({ searchParams }: { searchParams: { pedido?: string; estado?: string; u?: string; s?: string } }) {
   const pedido = /^EG-\d{6}-[A-Z0-9]{4}$/.test(searchParams.pedido ?? '') ? (searchParams.pedido as string) : '';
   const crudo = searchParams.estado ?? 'cod';
-  const estado: keyof typeof TEXTOS = Object.prototype.hasOwnProperty.call(TEXTOS, crudo) ? (crudo as keyof typeof TEXTOS) : 'cod';
-  const t = TEXTOS[estado];
-  const Icono = t.icono;
+  const estado: Estado = Object.prototype.hasOwnProperty.call(ESTADOS, crudo) ? (crudo as Estado) : 'cod';
+  const e = ESTADOS[estado];
+  // Pedidos anteriores a este cambio llegan sin u/s: el resumen se omite y se asume hogar.
+  const u = Number(searchParams.u);
+  const unidades = esUnidades(u) ? u : undefined;
+  const segmento = esSegmento(searchParams.s) ? searchParams.s : 'hogar';
+  const total = unidades ? totalPedido(unidades, e.metodo).total : undefined;
+  const fotos = fotosEcogel(segmento);
+  // Hora de la solicitud = hora del pedido: el checkout redirige aquí al crearlo.
+  const despacho = diaDeDespacho(new Date());
+
   const whatsappTexto = `Hola, es sobre mi pedido de EcoGel ${pedido}`.trim();
   const wa = whatsappEcogel(whatsappTexto);
 
@@ -51,15 +87,58 @@ export default function GraciasPage({ searchParams }: { searchParams: { pedido?:
     <>
       {/* Sin segmento: el pedido ya está hecho, el carrito no aplica. */}
       <CabeceraEcogel />
-      <main className="container-custom max-w-xl py-12 text-center">
-        <Icono size={52} className={`mx-auto ${estado === 'failure' ? 'text-brand-orange-dark' : 'text-brand-green'}`} aria-hidden />
-        <h1 className="font-heading text-h2-mobile text-brand-green mt-4 md:text-h2">{t.titulo}</h1>
-        {pedido && <p className="mt-2 font-heading text-body font-bold text-brand-black">Pedido {pedido}</p>}
-        <p className="text-brand-black/75 mt-3 text-body">{t.texto}</p>
-        <a href={wa} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-semibold text-white">
-          <MessageCircle size={18} aria-hidden /> Escribir por WhatsApp
-        </a>
-        <p className="mt-8 text-body-sm text-brand-black/55">Guarda el número de pedido: es lo que necesitas para cualquier reclamo o para la garantía de {GARANTIA.dias} días.</p>
+      <main className="pb-4">
+        <Bienvenida
+          tono={e.tono}
+          titulo={e.titulo}
+          bajada={e.bajada}
+          pedido={pedido}
+          despacho={estado === 'cod' || estado === 'approved' ? despacho : undefined}
+          avisoContacto={estado === 'cod'}
+        />
+
+        {estado === 'failure' ? (
+          <section className="container-custom max-w-xl space-y-3">
+            <a
+              href={unidades ? `/ecogel/pedido?u=${unidades}&de=${segmento}` : '/ecogel/pedido'}
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-brand-orange px-6 py-3.5 font-heading text-body font-bold text-white shadow-brand"
+            >
+              <RotateCcw size={18} aria-hidden /> Volver a intentar
+            </a>
+            <a
+              href={wa}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 font-heading text-body font-bold text-white"
+            >
+              <MessageCircle size={18} aria-hidden /> Escribir por WhatsApp
+            </a>
+          </section>
+        ) : (
+          <>
+            {esManual(estado) && (
+              <DatosTransferencia
+                metodo={estado}
+                total={total}
+                whatsapp={whatsappEcogel(`Hola, te envío el comprobante de mi pedido de EcoGel ${pedido}`.trim())}
+              />
+            )}
+            {unidades && <ResumenPedido unidades={unidades} metodo={e.metodo} estado={estado} kit={fotos.kit} />}
+            <LineaTiempo estado={estado} despacho={despacho} total={total} />
+
+            <div className="mx-auto mt-12 max-w-xl [&>section:first-of-type]:mt-1">
+              <p className="container-custom font-heading text-[13px] font-semibold uppercase tracking-[0.14em] text-brand-orange">
+                Mientras llega
+              </p>
+              <AprendeAUsarlo videos={videosAprenderAUsarlo()} />
+              {segmento === 'hogar' && <ComoAplicar conQueEsperar={false} />}
+            </div>
+
+            <LoQueTienes />
+            <Respaldo foto={fotos.equipo} />
+            <Ayuda whatsapp={wa} pedido={pedido} />
+          </>
+        )}
       </main>
       <PieEcogel />
       <WhatsAppFlotante texto={whatsappTexto} />

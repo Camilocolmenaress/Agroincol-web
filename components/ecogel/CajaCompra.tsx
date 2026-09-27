@@ -1,6 +1,7 @@
 'use client';
 
 import { Bug, FileCheck, FileText, RotateCcw, ShieldCheck, Store, Timer, Truck, Utensils, Wind, Star } from 'lucide-react';
+import { ENTREGA_CORTA } from '@/lib/ecogel-despacho';
 import { AUTORIDAD, BONO_GUIA_PDF, ENVIO_BASE, GARANTIA, money, tierDe, totalPedido, type EcogelConfig } from '@/lib/ecogel';
 import { resumenResenas } from '@/lib/ecogel-resenas';
 import { IMIDACLOPRID } from '@/lib/ecogel-evidencia';
@@ -142,7 +143,7 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
 
       <div className="mt-4 grid grid-cols-3 gap-2 rounded-xl bg-brand-light p-3 text-center text-body-sm font-semibold text-brand-green">
         <span>Garantía {GARANTIA.dias} días</span>
-        <span>Envío 2-4 días</span>
+        <span>{ENTREGA_CORTA}</span>
         <span>{AUTORIDAD.anios} años en plagas</span>
       </div>
     </section>

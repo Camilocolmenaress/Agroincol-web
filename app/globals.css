@@ -178,3 +178,45 @@
     overflow-x: auto;
   }
 }
+
+/* ── /ecogel/gracias: check que se dibuja, riel que crece con el scroll ──
+   Los trazos usan pathLength="1" en el SVG, así dasharray/offset van de 0 a 1
+   sin medir la longitud real. Sin movimiento permitido todo queda estático. */
+.gr-anillo { opacity: 0; }
+
+@keyframes gr-dibujo { to { stroke-dashoffset: 0; } }
+@keyframes gr-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes gr-onda {
+  from { transform: scale(0.9); opacity: 0.55; }
+  to { transform: scale(1.7); opacity: 0; }
+}
+@keyframes gr-crece { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes gr-latido {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(46, 125, 91, 0.45); }
+  70% { box-shadow: 0 0 0 7px rgba(46, 125, 91, 0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gr-pop { animation: gr-pop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .gr-trazo {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: gr-dibujo 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.25s forwards;
+  }
+  .gr-trazo-2 { animation-delay: 0.65s; }
+  .gr-anillo { animation: gr-onda 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both; }
+  .gr-latido { animation: gr-latido 2.2s ease-out infinite; }
+
+  @supports (animation-timeline: view()) {
+    .gr-riel {
+      transform-origin: top;
+      animation: gr-crece linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 55%;
+    }
+  }
+}

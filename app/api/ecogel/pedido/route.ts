@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { totalPedido } from '@/lib/ecogel';
+import { totalPedido, urlGracias } from '@/lib/ecogel';
 import { nuevoPedidoId, validarPedido } from '@/lib/ecogel-pedido';
 import { actualizarFilaPedido, crearFilaPedido, hojaPedidosConfigurada } from '@/lib/hoja-pedidos';
 import { construirPreferencia, crearPreferencia, mpConfigurado } from '@/lib/mercadopago';
@@ -178,7 +178,12 @@ export async function POST(req: NextRequest) {
   // directo a "gracias" con su propio estado: cada uno tiene su instrucción
   // ahí (ver TEXTOS en app/ecogel/gracias/page.tsx). Solo "online" pasa por
   // Mercado Pago.
-  let ir = `/ecogel/gracias?pedido=${pedidoId}&estado=${pedido.metodo === 'contraentrega' ? 'cod' : pedido.metodo}`;
+  let ir = urlGracias({
+    pedidoId,
+    estado: pedido.metodo === 'contraentrega' ? 'cod' : pedido.metodo,
+    unidades: pedido.unidades,
+    segmento: pedido.de,
+  });
   if (pedido.metodo === 'online') {
     if (!mpConfigurado()) {
       // La firma va en el 502 para que, si la persona reintenta, el próximo

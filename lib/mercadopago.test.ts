@@ -21,8 +21,8 @@ test('la preferencia lleva un solo ítem con el total y las URLs del pedido', ()
   assert.equal(p.items[0].currency_id, 'COP');
   assert.equal(p.external_reference, 'EG-260919-K7Q2');
   assert.equal(p.notification_url, 'https://agroincol.com/api/ecogel/mp');
-  assert.equal(p.back_urls.success, 'https://agroincol.com/ecogel/gracias?pedido=EG-260919-K7Q2&estado=approved');
-  assert.equal(p.back_urls.failure, 'https://agroincol.com/ecogel/gracias?pedido=EG-260919-K7Q2&estado=failure');
+  assert.equal(p.back_urls.success, 'https://agroincol.com/ecogel/gracias?pedido=EG-260919-K7Q2&estado=approved&u=3&s=hogar');
+  assert.equal(p.back_urls.failure, 'https://agroincol.com/ecogel/gracias?pedido=EG-260919-K7Q2&estado=failure&u=3&s=hogar');
   assert.equal(p.auto_return, 'approved');
   assert.equal(p.statement_descriptor, 'AGROINCOL');
   assert.equal(p.payer.email, 'diana@example.com');

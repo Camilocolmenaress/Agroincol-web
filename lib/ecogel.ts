@@ -5,6 +5,7 @@
 // lo que mande el navegador nunca se usa como precio.
 
 import { BUSINESS } from './constants';
+import { REGLA_DESPACHO, TIEMPO_ENTREGA } from './ecogel-despacho';
 
 export type Unidades = 1 | 2 | 3;
 export type MetodoPago = 'online' | 'bancolombia' | 'nequi' | 'breb' | 'contraentrega';
@@ -107,10 +108,10 @@ export interface EcogelConfig {
   whatsappTexto: string;
 }
 
-/** Bono digital del combo de 3 unidades. URL pendiente: el PDF todavía no existe. */
+/** Bono digital del combo de 3 unidades. Misma URL que GUIA_PDF_ECOGEL_URL del Apps Script. */
 export const BONO_GUIA_PDF = {
   titulo: 'Guía PDF gratis: "5 puntos donde entran las cucarachas en tu cocina"',
-  url: '{{URL_GUIA_PDF}}',
+  url: 'https://drive.google.com/file/d/1jCReXhQzY6gPNuocx9OmPQxlgke9uD1T/view?usp=sharing',
 } as const;
 
 export const GARANTIA = {
@@ -149,7 +150,7 @@ const OBJECIONES_COMUNES: Pregunta[] = [
 const PREGUNTAS_ENVIO_PAGO: Pregunta[] = [
   {
     pregunta: '¿Cuánto tarda el envío?',
-    respuesta: '2 a 4 días hábiles a todo Colombia por transportadora. Te enviamos la guía por WhatsApp.',
+    respuesta: `${REGLA_DESPACHO} ${TIEMPO_ENTREGA} Te enviamos la guía de la transportadora por WhatsApp.`,
   },
   {
     pregunta: '¿Cómo puedo pagar?',
@@ -297,6 +298,15 @@ export function configDe(segmento: Segmento): EcogelConfig {
 
 export function esSegmento(valor: unknown): valor is Segmento {
   return valor === 'hogar' || valor === 'restaurantes';
+}
+
+/**
+ * Destino tras el pedido. Unidades y segmento viajan en la URL (no son datos
+ * personales) para que /gracias pinte el resumen desde el servidor, sin
+ * depender del almacenamiento del navegador ni saltos de diseño al cargar.
+ */
+export function urlGracias(p: { pedidoId: string; estado: string; unidades: Unidades; segmento: Segmento; base?: string }): string {
+  return `${p.base ?? ''}/ecogel/gracias?pedido=${p.pedidoId}&estado=${p.estado}&u=${p.unidades}&s=${p.segmento}`;
 }
 
 export function whatsappEcogel(texto: string): string {

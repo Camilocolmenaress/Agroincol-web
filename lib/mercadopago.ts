@@ -1,7 +1,7 @@
 // Mercado Pago Checkout Pro, sin SDK: dos llamadas REST. El token se lee en
 // cada llamada (como en lib/meta/capi.ts) para que las pruebas puedan variarlo.
 
-import type { Segmento, Unidades } from './ecogel';
+import { urlGracias, type Segmento, type Unidades } from './ecogel';
 
 const API = 'https://api.mercadopago.com';
 
@@ -23,7 +23,7 @@ export function construirPreferencia(p: {
   segmento: Segmento;
   base: string;
 }): Record<string, unknown> {
-  const gracias = (estado: string) => `${p.base}/ecogel/gracias?pedido=${p.pedidoId}&estado=${estado}`;
+  const gracias = (estado: string) => urlGracias({ ...p, estado });
   return {
     // Un solo ítem con el total: el desglose (envío, descuento) vive en la hoja.
     items: [

@@ -14,7 +14,8 @@ const PASOS = [
   { Icono: Ban, titulo: 'No limpies encima de los puntos.' },
 ];
 
-export default function ComoAplicar() {
+// En /gracias la línea de tiempo ya cuenta "qué va a pasar": ahí se omite.
+export default function ComoAplicar({ conQueEsperar = true }: { conQueEsperar?: boolean }) {
   return (
     <section id="como-aplicar" className="container-custom mt-10 scroll-mt-4">
       <h2 className="font-heading text-h2-mobile text-brand-green text-balance md:text-h2">Así se aplica en 10 minutos.</h2>
@@ -37,20 +38,22 @@ export default function ComoAplicar() {
         ))}
       </ol>
 
-      <div className="mt-4 rounded-2xl bg-brand-mint p-5">
-        <h3 className="font-heading text-body font-bold text-brand-green">Qué va a pasar</h3>
-        <ul className="mt-3 space-y-3 text-body-sm text-brand-black/80">
-          <li>
-            <strong className="text-brand-green">Primeras 24 a 48 horas:</strong> vas a ver{' '}
-            <strong className="text-brand-orange">MÁS</strong> cucarachas de lo normal. Es buena señal: están saliendo a
-            comerse el gel.
-          </li>
-          <li>
-            <strong className="text-brand-green">Después de 48 horas:</strong> empiezan a desaparecer, porque lo llevan al
-            nido y lo comparten con el resto.
-          </li>
-        </ul>
-      </div>
+      {conQueEsperar && (
+        <div className="mt-4 rounded-2xl bg-brand-mint p-5">
+          <h3 className="font-heading text-body font-bold text-brand-green">Qué va a pasar</h3>
+          <ul className="mt-3 space-y-3 text-body-sm text-brand-black/80">
+            <li>
+              <strong className="text-brand-green">Primeras 24 a 48 horas:</strong> vas a ver{' '}
+              <strong className="text-brand-orange">MÁS</strong> cucarachas de lo normal. Es buena señal: están saliendo a
+              comerse el gel.
+            </li>
+            <li>
+              <strong className="text-brand-green">Después de 48 horas:</strong> empiezan a desaparecer, porque lo llevan al
+              nido y lo comparten con el resto.
+            </li>
+          </ul>
+        </div>
+      )}
 
       <p className="mt-3 flex items-start gap-2 text-body-sm text-brand-black/70">
         <ShieldCheck size={18} className="mt-0.5 flex-none text-brand-green" aria-hidden />
