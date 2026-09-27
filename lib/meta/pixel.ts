@@ -99,6 +99,36 @@ interface DatosEvento {
   eventId?: string;
 }
 
+/**
+ * Llama a `fbq` apenas exista, hasta 5 s.
+ *
+ * Los eventos que se disparan al montar la página (ViewContent, InitiateCheckout,
+ * el Purchase de /gracias) corren ANTES de que next/script inyecte el snippet
+ * del Pixel (ver components/analytics/MetaPixel.tsx): sin esta espera `fbq` aún
+ * no existe, la llamada se perdía en silencio y el evento solo llegaba por el
+ * servidor. El event_id ya está decidido, así que la deduplicación no cambia.
+ * Si se agota la espera (bloqueador de anuncios), el servidor sigue cubriendo.
+ */
+function llamarFbqCuandoExista(argumentos: unknown[], maxMs = 5000): void {
+  const llamar = () => {
+    try {
+      window.fbq?.(...argumentos);
+    } catch {
+      // Bloqueador de anuncios: el camino del servidor sigue funcionando.
+    }
+  };
+  if (typeof window.fbq === 'function') return llamar();
+  const desde = Date.now();
+  const id = setInterval(() => {
+    if (typeof window.fbq === 'function') {
+      clearInterval(id);
+      llamar();
+    } else if (Date.now() - desde > maxMs) {
+      clearInterval(id);
+    }
+  }, 100);
+}
+
 function saneaValor(valor: number | undefined): number | undefined {
   if (valor === undefined || !Number.isFinite(valor)) return undefined;
   return Math.min(Math.max(Math.round(valor), 0), VALOR_MAXIMO);
@@ -132,11 +162,7 @@ export function soloPixel(evento: NombreEvento, datos: DatosEvento = {}): string
   }
 
   // 1) Pixel del navegador.
-  try {
-    window.fbq?.('track', evento, parametros, { eventID: eventId });
-  } catch {
-    // Bloqueador de anuncios: el camino del servidor sigue funcionando.
-  }
+  llamarFbqCuandoExista(['track', evento, parametros, { eventID: eventId }]);
 
   // 2) Embudo en PostHog, con el mismo event_id para poder cruzarlos.
   registrarEnEmbudo(evento, { eventId, valor, categoria: datos.categoria });
