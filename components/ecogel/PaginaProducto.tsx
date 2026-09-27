@@ -11,6 +11,7 @@ import CajaCompra from './CajaCompra';
 import BarraSticky from './BarraSticky';
 import BloqueGarantia from './BloqueGarantia';
 import AprendeAUsarlo from './AprendeAUsarlo';
+import ComoAplicar from './ComoAplicar';
 import AntesDespues from './AntesDespues';
 import Objeciones from './Objeciones';
 import Evidencia from './Evidencia';
@@ -42,6 +43,8 @@ export default function PaginaProducto({
       <CajaCompra config={config} />
       <BloqueGarantia />
       <AprendeAUsarlo videos={videosAprender} />
+      {/* Copy escrito para una cocina de casa: la dosis no aplica a restaurantes. */}
+      {config.segmento === 'hogar' && <ComoAplicar />}
       <Objeciones objeciones={config.objeciones} />
       <AntesDespues antes={fotos.antes} despues={fotos.despues} resena={RESENAS_ECOGEL[0]} />
       <Evidencia segmento={config.segmento} />

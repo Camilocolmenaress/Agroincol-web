@@ -169,12 +169,21 @@ function mensajeWhatsapp(fila) {
       'Hola ' + nombre + ', recibimos tu pedido ' + pedidoId + ' de EcoGel. ' +
       'Envíanos el comprobante de la transferencia para confirmar y despachar.';
   }
+  // Qué esperar al aplicar: sin este aviso, el pico de cucarachas de las
+  // primeras 48 h se lee como "no funciona". Mismo texto en los 3 métodos.
+  mensaje +=
+    '\n\nUn dato importante para cuando lo apliques:' +
+    '\n\n🪳 Las primeras 24 a 48 horas vas a ver MÁS cucarachas de lo normal. Es buena señal: están saliendo a comerse el gel.' +
+    '\n\n✅ Después de las 48 horas empiezan a desaparecer, porque lo llevan al nido y lo comparten con el resto.' +
+    '\n\n📍 Para una cocina, aplica de 20 a 30 puntos pequeños, del tamaño de una lenteja, donde se esconden: ' +
+    'detrás de la nevera, debajo del lavaplatos y en las bisagras. No limpies encima de los puntos.';
   // Bono del combo de 3 unidades: la guía en PDF. Mismo texto sin importar el método de pago.
   if (Number(fila.unidades) === 3) {
     mensaje +=
-      '\nComo parte del combo, aquí tienes tu guía gratis: "5 puntos donde entran las cucarachas en tu cocina"' +
+      '\n\nComo parte del combo, aquí tienes tu guía gratis: "5 puntos donde entran las cucarachas en tu cocina"' +
       '\n' + GUIA_PDF_ECOGEL_URL;
   }
+  mensaje += '\n\nCualquier duda, escríbenos por aquí 🙌';
   return mensaje;
 }
 
