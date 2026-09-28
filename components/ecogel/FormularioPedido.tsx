@@ -1,83 +1,53 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Loader2, Truck } from 'lucide-react';
-import { CUENTAS_MANUALES, DESCUENTO_ONLINE, GARANTIA, money, totalPedido, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
+import { Check, Loader2, MessageCircle, Truck } from 'lucide-react';
+import { DESCUENTO_ONLINE, GARANTIA, configDe, money, totalPedido, whatsappEcogel, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
 import { DEPARTAMENTOS, TIPOS_DOCUMENTO, validarPedido } from '@/lib/ecogel-pedido';
 import { REGLA_DESPACHO, TIEMPO_ENTREGA } from '@/lib/ecogel-despacho';
 import { nuevoEventId } from '@/lib/meta/eventos';
+import { urlParaMedir } from '@/lib/meta/modo-prueba';
 import { rastrear } from '@/lib/meta/pixel';
 import { idDeVisitante } from '@/lib/meta/visitante';
 import SelectorTier from './SelectorTier';
 import { useTier } from './TierContext';
 
-// Checkout de una página (spec §4). Orden: selector → resumen → datos de entrega →
-// método de pago (en línea preseleccionado) → botón con el total → línea legal.
+// Checkout de una página. Celular: cantidad → datos → pago → resumen y botón.
+// Escritorio: datos y pago a la izquierda; cantidad, resumen y botón en una
+// columna fija a la derecha, para que el total nunca se pierda de vista.
+// Solo 6 datos, celular primero (la recuperación de carritos depende de él).
+// El correo NO se pide aquí: se captura, opcional, en el pop-up de salida.
 
 const campo =
   'mt-1 w-full rounded-xl border border-brand-gray-light px-4 py-3 text-body focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/25';
 
-const B = CUENTAS_MANUALES.bancolombia;
-const N = CUENTAS_MANUALES.nequi;
-const R = CUENTAS_MANUALES.breb;
+// Tres grupos en vez de seis opciones: tarjeta y PSE van al mismo sitio
+// (Mercado Pago) y las tres transferencias funcionan igual. Los datos de la
+// cuenta se muestran en /gracias, que es cuando hacen falta.
+type Grupo = 'online' | 'contraentrega' | 'transferencia';
+type Banco = 'bancolombia' | 'nequi' | 'breb';
 
-// Una opción por cada forma real de pagar, no por MetodoPago: tarjeta y PSE se
-// ven distintas pero las dos redirigen a Mercado Pago (mismo `metodo: 'online'`).
-// Los logos faltantes (pse/nequi/bancolombia/breb) van en public/ecogel/pagos/;
-// mientras no estén, el <img> del navegador simplemente no muestra nada.
-const OPCIONES_PAGO = [
-  {
-    id: 'tarjeta',
-    metodo: 'online' as MetodoPago,
-    titulo: 'Tarjeta Crédito/Débito',
-    logos: ['visa.svg', 'mastercard.svg', 'amex.svg', 'diners.svg'],
-    nota: 'Se te redirigirá a Mercado Pago para completar tu compra.',
-  },
-  {
-    id: 'pse',
-    metodo: 'online' as MetodoPago,
-    titulo: 'PSE - Billetera Mercado Pago',
-    logos: ['pse.svg'],
-    nota: 'Se te redirigirá a Mercado Pago para completar tu compra.',
-  },
-  {
-    id: 'bancolombia',
-    metodo: 'bancolombia' as MetodoPago,
-    titulo: 'Bancolombia (Transferencias y consignaciones)',
-    logos: ['bancolombia.svg'],
-    nota: `Cuenta de ${B.tipo} Bancolombia ${B.numero}, a nombre de ${B.titular} (C.C. ${B.cedula}). Transfiere el total y manda el comprobante por WhatsApp.`,
-  },
-  {
-    id: 'nequi',
-    metodo: 'nequi' as MetodoPago,
-    titulo: 'Nequi',
-    logos: ['nequi.svg'],
-    nota: `Nequi ${N.numero}, a nombre de ${N.titular}. Transfiere el total y manda el comprobante por WhatsApp.`,
-  },
-  {
-    id: 'breb',
-    metodo: 'breb' as MetodoPago,
-    titulo: 'Bre-B',
-    logos: ['breb.svg'],
-    nota: `Llave Bre-B ${R.llave} (${R.banco}), a nombre de ${R.titular}. Transfiere el total y manda el comprobante por WhatsApp.`,
-  },
-  {
-    id: 'contraentrega',
-    metodo: 'contraentrega' as MetodoPago,
-    titulo: 'Pago Contraentrega',
-    logos: [],
-    nota: 'Pagas en efectivo cuando te llega el pedido. Antes te escribimos o te llamamos para confirmarlo.',
-  },
-] as const;
+const BANCOS: { id: Banco; nombre: string; logo: string }[] = [
+  { id: 'bancolombia', nombre: 'Bancolombia', logo: 'bancolombia.svg' },
+  { id: 'nequi', nombre: 'Nequi', logo: 'nequi.svg' },
+  { id: 'breb', nombre: 'Bre-B', logo: 'breb.svg' },
+];
+
+const ORDEN_CAMPOS = ['celular', 'nombre', 'tipoDocumento', 'documento', 'departamento', 'ciudad', 'direccion'] as const;
+
+const LOGOS_EN_LINEA = ['visa.svg', 'mastercard.svg', 'amex.svg', 'diners.svg', 'pse.svg'];
 
 export default function FormularioPedido({ segmento, unidadesIniciales }: { segmento: Segmento; unidadesIniciales: Unidades }) {
   const { unidades } = useTier();
-  // opcion es la elección visual (tarjeta vs PSE se ven distintas); metodo es
-  // lo que realmente viaja al servidor. Las dos primeras opciones comparten metodo.
-  const [opcion, setOpcion] = useState<(typeof OPCIONES_PAGO)[number]['id']>('tarjeta');
-  const metodo: MetodoPago = OPCIONES_PAGO.find((o) => o.id === opcion)!.metodo;
-  const [datos, setDatos] = useState({ nombre: '', celular: '', correo: '', tipoDocumento: 'CC', documento: '', direccion: '', barrio: '', ciudad: '', departamento: '' });
-  const [ofertas, setOfertas] = useState(true);
+  // grupo es la elección visual; metodo es lo que viaja al servidor.
+  const [grupo, setGrupo] = useState<Grupo>('online');
+  const [banco, setBanco] = useState<Banco>('bancolombia');
+  const metodo: MetodoPago = grupo === 'transferencia' ? banco : grupo;
+  const [datos, setDatos] = useState({ celular: '', nombre: '', tipoDocumento: 'CC', documento: '', departamento: '', ciudad: '', direccion: '' });
+  // Desmarcada: la autorización tiene que ser expresa (Ley 1581). Va junto al
+  // celular y no al final porque los recordatorios por WhatsApp de quien
+  // abandona necesitan que la haya dado antes de irse.
+  const [autorizaWhatsapp, setAutorizaWhatsapp] = useState(false);
   const [website, setWebsite] = useState('');
   const [errores, setErrores] = useState<Record<string, string>>({});
   const [estado, setEstado] = useState<'idle' | 'enviando' | 'error-mp' | 'no-disponible' | 'error'>('idle');
@@ -108,21 +78,37 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
   const t = totalPedido(unidades, metodo);
   const set = (k: keyof typeof datos) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setDatos((d) => ({ ...d, [k]: e.target.value }));
-  const campoTexto = ([k, label, type, auto, ayuda]: readonly [keyof typeof datos, string, 'text' | 'tel' | 'email', string, string?]) => (
+  const campoTexto = (k: keyof typeof datos, label: string, auto: string, extra: { tipo?: 'text' | 'tel'; ayuda?: string; ejemplo?: string } = {}) => (
     <div key={k}>
       <label htmlFor={`p-${k}`} className="block text-body-sm font-medium text-brand-black">{label}</label>
-      <input id={`p-${k}`} name={k} type={type} autoComplete={auto} inputMode={type === 'tel' ? 'tel' : undefined} value={datos[k]} onChange={set(k)} aria-describedby={ayuda ? `p-${k}-ayuda` : undefined} className={campo} />
+      <input
+        id={`p-${k}`}
+        name={k}
+        type={extra.tipo ?? 'text'}
+        autoComplete={auto}
+        inputMode={extra.tipo === 'tel' ? 'tel' : undefined}
+        placeholder={extra.ejemplo}
+        value={datos[k]}
+        onChange={set(k)}
+        aria-invalid={errores[k] ? true : undefined}
+        aria-describedby={extra.ayuda ? `p-${k}-ayuda` : undefined}
+        className={campo}
+      />
       {errores[k] && <p className="mt-1 text-body-sm text-brand-orange-dark">{errores[k]}</p>}
-      {ayuda && <p id={`p-${k}-ayuda`} className="mt-1.5 text-body-sm leading-snug text-brand-black/60">{ayuda}</p>}
+      {extra.ayuda && <p id={`p-${k}-ayuda`} className="mt-1.5 text-body-sm leading-snug text-brand-black/60">{extra.ayuda}</p>}
     </div>
   );
+  const whatsappAyuda = whatsappEcogel(configDe(segmento).whatsappTexto);
 
   const enviar = async (e: React.FormEvent) => {
     e.preventDefault();
-    const entrada = { ...datos, unidades, metodo, ofertas, de: segmento };
+    const entrada = { ...datos, unidades, metodo, autorizaWhatsapp, de: segmento };
     const v = validarPedido(entrada);
     if (!v.ok) {
       setErrores(v.errores);
+      // El botón queda abajo y los errores arriba: sin esto parece que no pasó nada.
+      const primero = ORDEN_CAMPOS.find((k) => v.errores[k]);
+      if (primero) document.getElementById(`p-${primero}`)?.focus();
       return;
     }
     setErrores({});
@@ -140,7 +126,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           website,
           eventId: eventIdRef.current,
           externalId: idDeVisitante(),
-          sourceUrl: window.location.href,
+          sourceUrl: urlParaMedir(),
           ...(pedidoAnterior ? { pedidoAnterior: pedidoAnterior.pedidoId, firmaAnterior: pedidoAnterior.firma } : {}),
         }),
       });
@@ -178,137 +164,184 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
     }
   };
 
-  return (
-    <form onSubmit={enviar} noValidate className="container-custom max-w-xl pb-10 pt-6">
-      <h1 className="font-heading text-h2-mobile text-brand-green md:text-h2">Tu pedido</h1>
-
-      <section className="mt-5">
-        <SelectorTier compacto />
-        <dl className="mt-4 space-y-1 rounded-xl bg-brand-light p-4 text-body-sm">
-          <div className="flex justify-between"><dt>EcoGel x{unidades}</dt><dd>{money(t.producto)}</dd></div>
-          <div className="flex justify-between"><dt>Envío</dt><dd>{t.envio === 0 ? 'Gratis' : money(t.envio)}</dd></div>
-          {t.descuento > 0 && (
-            <div className="flex justify-between text-brand-green"><dt>Descuento por no pagar contraentrega</dt><dd>−{money(t.descuento)}</dd></div>
-          )}
-          <div className="flex justify-between border-t border-brand-gray-light pt-2 font-heading text-body font-bold"><dt>Total</dt><dd>{money(t.total)}</dd></div>
-        </dl>
-        {/* Dos razones para no abandonar aquí: el dato con fuente y la garantía (iteración 3 §4). */}
-        <ul className="mt-3 space-y-1 rounded-xl bg-brand-gray-light/40 px-4 py-3 text-body-sm text-brand-black/75">
-          <li>✓ −80 % en 4 semanas (Journal of Economic Entomology, 2000)</li>
-          <li>✓ Garantía: si en {GARANTIA.dias} días siguen, otro kit sin costo</li>
-        </ul>
-      </section>
-
-      <section className="mt-6 space-y-3.5">
-        <h2 className="font-heading text-h3 text-brand-green">Datos de entrega</h2>
-        {(
-          [
-            ['nombre', 'Nombre completo', 'text', 'name'],
-            [
-              'celular',
-              'Celular (WhatsApp)',
-              'tel',
-              'tel',
-              'Pon un número al que estés pendiente: en los próximos minutos podrías recibir un mensaje o una llamada para confirmar tu pedido.',
-            ],
-            ['correo', 'Correo', 'email', 'email'],
-          ] as const
-        ).map(campoTexto)}
-        {/* La transportadora los exige para despachar contraentrega. */}
-        <div className="grid grid-cols-[6.5rem_1fr] gap-3">
-          <div>
-            <label htmlFor="p-tipoDocumento" className="block text-body-sm font-medium text-brand-black">Tipo</label>
-            <select id="p-tipoDocumento" name="tipoDocumento" value={datos.tipoDocumento} onChange={set('tipoDocumento')} className={campo}>
-              {TIPOS_DOCUMENTO.map((t) => <option key={t} value={t}>{t}</option>)}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="p-documento" className="block text-body-sm font-medium text-brand-black">Número de documento</label>
-            <input id="p-documento" name="documento" type="text" inputMode="numeric" autoComplete="off" value={datos.documento} onChange={set('documento')} className={campo} />
-          </div>
-          {(errores.tipoDocumento || errores.documento) && (
-            <p className="col-span-2 -mt-2 text-body-sm text-brand-orange-dark">{errores.tipoDocumento ?? errores.documento}</p>
-          )}
-        </div>
-        {(
-          [
-            ['direccion', 'Dirección', 'text', 'street-address'],
-            ['barrio', 'Barrio', 'text', 'address-level3'],
-            ['ciudad', 'Ciudad / municipio', 'text', 'address-level2'],
-          ] as const
-        ).map(campoTexto)}
-        <div>
-          <label htmlFor="p-departamento" className="block text-body-sm font-medium text-brand-black">Departamento</label>
-          <select id="p-departamento" name="departamento" value={datos.departamento} onChange={set('departamento')} className={campo}>
-            <option value="">Escoge…</option>
-            {DEPARTAMENTOS.map((d) => <option key={d} value={d}>{d}</option>)}
-          </select>
-          {errores.departamento && <p className="mt-1 text-body-sm text-brand-orange-dark">{errores.departamento}</p>}
-        </div>
-        <label className="flex items-start gap-2.5 text-body-sm text-brand-black/70">
-          <input type="checkbox" checked={ofertas} onChange={(e) => setOfertas(e.target.checked)} className="mt-0.5 h-4 w-4 rounded border-brand-gray-light text-brand-green" />
-          Recibir ofertas y la guía de aplicación por correo
+  const opcionPago = (id: Grupo, titulo: string, contenido: React.ReactNode) => {
+    const activo = grupo === id;
+    return (
+      <div className={`rounded-xl border-2 transition-colors ${activo ? 'border-brand-green bg-brand-green/5' : 'border-brand-gray-light'}`}>
+        <label className="flex cursor-pointer items-center gap-3 px-4 py-3">
+          <input type="radio" name="grupoPago" value={id} checked={activo} onChange={() => setGrupo(id)} className="h-4 w-4 shrink-0 text-brand-green" />
+          <span className="flex-1 font-semibold text-brand-black">{titulo}</span>
+          {id !== 'contraentrega' && <span className="shrink-0 text-body-sm font-semibold text-brand-green">−{money(DESCUENTO_ONLINE)}</span>}
         </label>
-        <input type="text" name="website" value={website} onChange={(e) => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px] h-px w-px opacity-0" />
-      </section>
+        <div className="-mt-1 space-y-2 px-4 pb-3 pl-11 text-body-sm text-brand-black/70">{contenido}</div>
+      </div>
+    );
+  };
+  const logos = (archivos: string[]) => (
+    <span className="flex flex-wrap items-center gap-2">
+      {archivos.map((archivo) => (
+        <img key={archivo} src={`/ecogel/pagos/${archivo}`} alt="" className="h-4 max-w-[5.5rem] object-contain" />
+      ))}
+    </span>
+  );
 
-      <fieldset className="mt-6">
-        <legend className="font-heading text-h3 text-brand-green">Método de pago</legend>
-        <div className="mt-3 space-y-2">
-          {OPCIONES_PAGO.map((o) => (
-            <div key={o.id} className={`rounded-xl border-2 ${opcion === o.id ? 'border-brand-green bg-brand-green/5' : 'border-brand-gray-light'}`}>
-              <label className="flex cursor-pointer items-center gap-3 px-4 py-3">
-                <input type="radio" name="opcionPago" value={o.id} checked={opcion === o.id} onChange={() => setOpcion(o.id)} className="h-4 w-4 shrink-0 text-brand-green" />
-                <span className="flex-1">
-                  <span className="block font-semibold text-brand-black">{o.titulo}</span>
-                  {o.metodo !== 'contraentrega' && <span className="block text-body-sm text-brand-black/60">{money(DESCUENTO_ONLINE)} menos</span>}
-                </span>
-                {o.logos.length > 0 && (
-                  <span className="flex shrink-0 items-center gap-1.5">
-                    {o.logos.map((archivo) => (
-                      <img key={archivo} src={`/ecogel/pagos/${archivo}`} alt="" className="h-5 w-auto" />
-                    ))}
-                  </span>
-                )}
-              </label>
-              {opcion === o.id && <p className="border-t border-brand-gray-light/70 px-4 py-2.5 text-body-sm text-brand-black/70">{o.nota}</p>}
+  return (
+    <form onSubmit={enviar} noValidate className="container-custom max-w-xl pb-10 pt-6 lg:max-w-5xl">
+      <div className="flex items-baseline justify-between gap-4">
+        <h1 className="font-heading text-h2-mobile text-brand-green md:text-h2">Tu pedido</h1>
+        <a href={whatsappAyuda} target="_blank" rel="noopener noreferrer" className="shrink-0 text-body-sm font-semibold text-brand-green underline underline-offset-4">
+          ¿Dudas? WhatsApp
+        </a>
+      </div>
+
+      {/* Celular: la cantidad va arriba. Escritorio: vive en la columna del resumen. */}
+      <div className="mt-5 lg:hidden">
+        <SelectorTier compacto />
+      </div>
+
+      <div className="lg:mt-5 lg:grid lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-start lg:gap-10">
+        <div>
+          <section className="mt-6 space-y-3.5 lg:mt-0">
+            <h2 className="font-heading text-h3 text-brand-green">¿A dónde te lo enviamos?</h2>
+            {campoTexto('celular', 'Celular (WhatsApp)', 'tel-national', {
+              tipo: 'tel',
+              ayuda: 'Pon un número al que estés pendiente: te escribimos o llamamos para confirmar tu pedido.',
+            })}
+            <label className="flex items-start gap-2.5 text-body-sm text-brand-black/75">
+              <input type="checkbox" name="autorizaWhatsapp" checked={autorizaWhatsapp} onChange={(e) => setAutorizaWhatsapp(e.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 rounded border-brand-gray-light text-brand-green" />
+              Autorizo que AGROINCOL me escriba por WhatsApp sobre este pedido.
+            </label>
+            {campoTexto('nombre', 'Nombre y apellido', 'name')}
+            <div>
+              <div className="grid grid-cols-[6.5rem_1fr] gap-3">
+                <div>
+                  <label htmlFor="p-tipoDocumento" className="block text-body-sm font-medium text-brand-black">Tipo</label>
+                  <select id="p-tipoDocumento" name="tipoDocumento" value={datos.tipoDocumento} onChange={set('tipoDocumento')} className={campo}>
+                    {TIPOS_DOCUMENTO.map((t) => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="p-documento" className="block text-body-sm font-medium text-brand-black">Número de documento</label>
+                  <input id="p-documento" name="documento" type="text" inputMode="numeric" autoComplete="off" value={datos.documento} onChange={set('documento')} aria-invalid={errores.documento ? true : undefined} aria-describedby="p-documento-ayuda" className={campo} />
+                </div>
+              </div>
+              {(errores.tipoDocumento || errores.documento) && (
+                <p className="mt-1 text-body-sm text-brand-orange-dark">{errores.tipoDocumento ?? errores.documento}</p>
+              )}
+              <p id="p-documento-ayuda" className="mt-1.5 text-body-sm text-brand-black/60">La transportadora lo exige para entregar tu pedido.</p>
             </div>
-          ))}
+            <div>
+              <label htmlFor="p-departamento" className="block text-body-sm font-medium text-brand-black">Departamento</label>
+              <select id="p-departamento" name="departamento" autoComplete="address-level1" value={datos.departamento} onChange={set('departamento')} aria-invalid={errores.departamento ? true : undefined} className={campo}>
+                <option value="">Escoge…</option>
+                {DEPARTAMENTOS.map((d) => <option key={d} value={d}>{d}</option>)}
+              </select>
+              {errores.departamento && <p className="mt-1 text-body-sm text-brand-orange-dark">{errores.departamento}</p>}
+            </div>
+            {campoTexto('ciudad', 'Ciudad o municipio', 'address-level2')}
+            {campoTexto('direccion', 'Dirección y barrio', 'street-address', { ejemplo: 'Calle 45 #12-30, apto 301, barrio Cabecera' })}
+            <input type="text" name="website" value={website} onChange={(e) => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px] h-px w-px opacity-0" />
+          </section>
+
+          <fieldset className="mt-7">
+            <legend className="font-heading text-h3 text-brand-green">¿Cómo quieres pagar?</legend>
+            <div className="mt-3 space-y-2">
+              {opcionPago(
+                'online',
+                'En línea: tarjeta o PSE',
+                <>
+                  {logos(LOGOS_EN_LINEA)}
+                  {grupo === 'online' && <p>Pagas en Mercado Pago y vuelves aquí.</p>}
+                </>,
+              )}
+              {opcionPago(
+                'contraentrega',
+                'Pago contra entrega',
+                <p>Pagas en efectivo cuando te llega. Antes te escribimos o te llamamos para confirmarlo.</p>,
+              )}
+              {opcionPago(
+                'transferencia',
+                'Transferencia',
+                grupo === 'transferencia' ? (
+                  <>
+                    <div role="radiogroup" aria-label="Banco" className="flex flex-wrap gap-2">
+                      {BANCOS.map((b) => (
+                        <label key={b.id} className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 ${banco === b.id ? 'border-brand-green bg-white' : 'border-brand-gray-light'}`}>
+                          <input type="radio" name="banco" value={b.id} checked={banco === b.id} onChange={() => setBanco(b.id)} className="h-3.5 w-3.5 text-brand-green" />
+                          <img src={`/ecogel/pagos/${b.logo}`} alt={b.nombre} className="h-4 w-auto" />
+                        </label>
+                      ))}
+                    </div>
+                    <p>Al confirmar te mostramos los datos de la cuenta. Nos mandas el comprobante por WhatsApp y despachamos.</p>
+                  </>
+                ) : (
+                  logos(BANCOS.map((b) => b.logo))
+                ),
+              )}
+            </div>
+          </fieldset>
         </div>
-      </fieldset>
 
-      {estado === 'error-mp' && (
-        <p className="mt-4 rounded-lg bg-brand-orange/10 px-3 py-2.5 text-body-sm text-brand-orange-dark">
-          No pudimos abrir el pago en línea. Tu pedido quedó guardado: escoge «Pagar al recibir» y confírmalo, o escríbenos por WhatsApp.
-        </p>
-      )}
-      {estado === 'no-disponible' && (
-        <p className="mt-4 rounded-lg bg-brand-orange/10 px-3 py-2.5 text-body-sm text-brand-orange-dark">
-          Los pedidos en línea no están disponibles en este momento. Escríbenos por WhatsApp y te lo tomamos por ahí.
-        </p>
-      )}
-      {estado === 'error' && (
-        <p className="mt-4 rounded-lg bg-brand-orange/10 px-3 py-2.5 text-body-sm text-brand-orange-dark">
-          No pudimos registrar el pedido. Inténtalo de nuevo o escríbenos por WhatsApp.
-        </p>
-      )}
+        <aside className="mt-7 lg:sticky lg:top-6 lg:mt-0 lg:rounded-2xl lg:border lg:border-brand-gray-light lg:p-5">
+          <div className="mb-4 hidden lg:block">
+            <SelectorTier compacto />
+          </div>
+          <dl className="space-y-1 rounded-xl bg-brand-light p-4 text-body-sm">
+            <div className="flex justify-between"><dt>EcoGel x{unidades}</dt><dd>{money(t.producto)}</dd></div>
+            <div className="flex justify-between"><dt>Envío</dt><dd className={t.envio === 0 ? 'font-semibold text-brand-green' : undefined}>{t.envio === 0 ? 'Gratis' : money(t.envio)}</dd></div>
+            {t.descuento > 0 && (
+              <div className="flex justify-between text-brand-green"><dt>Descuento por pago anticipado</dt><dd>−{money(t.descuento)}</dd></div>
+            )}
+            <div className="flex justify-between border-t border-brand-gray-light pt-2 font-heading text-body font-bold"><dt>Total</dt><dd>{money(t.total)}</dd></div>
+          </dl>
 
-      <p className="mt-6 flex items-start gap-2.5 rounded-xl bg-brand-mint px-4 py-3 text-body-sm text-brand-green">
-        <Truck size={18} className="mt-0.5 flex-none" aria-hidden />
-        <span>{REGLA_DESPACHO} {TIEMPO_ENTREGA}</span>
-      </p>
+          {/* Las razones para no abandonar, justo encima del botón. */}
+          <ul className="mt-3 space-y-1.5 px-1 text-body-sm text-brand-black/80">
+            <li className="flex gap-2"><Check size={16} className="mt-0.5 flex-none text-brand-green" aria-hidden />Garantía: si en {GARANTIA.dias} días siguen, te enviamos otro kit sin costo</li>
+            {unidades === 3 && (
+              <li className="flex gap-2"><Check size={16} className="mt-0.5 flex-none text-brand-green" aria-hidden />Guía PDF de regalo: 5 puntos donde entran las cucarachas</li>
+            )}
+            <li className="flex gap-2"><Check size={16} className="mt-0.5 flex-none text-brand-green" aria-hidden />−80 % en 4 semanas (Journal of Economic Entomology, 2000)</li>
+          </ul>
 
-      <button type="submit" disabled={estado === 'enviando'} className="mt-4 w-full rounded-full bg-brand-orange px-6 py-4 font-heading text-body font-bold text-white shadow-brand disabled:opacity-60">
-        {estado === 'enviando' ? (
-          <span className="inline-flex items-center gap-2"><Loader2 size={18} className="animate-spin" aria-hidden /> Procesando…</span>
-        ) : (
-          `Confirmar pedido — ${money(t.total)}`
-        )}
-      </button>
-      <p className="mt-3 text-center text-body-sm text-brand-black/55">
-        Al confirmar aceptas que te contactemos por WhatsApp para coordinar la entrega.{' '}
-        <a href="/politica-de-privacidad" target="_blank" rel="noopener noreferrer" className="underline">Política de privacidad</a>.
-      </p>
+          <p className="mt-4 flex items-start gap-2.5 rounded-xl bg-brand-mint px-4 py-3 text-body-sm text-brand-green">
+            <Truck size={18} className="mt-0.5 flex-none" aria-hidden />
+            <span>{REGLA_DESPACHO} {TIEMPO_ENTREGA}</span>
+          </p>
+
+          {estado === 'error-mp' && (
+            <p role="alert" className="mt-4 rounded-lg bg-brand-orange/10 px-3 py-2.5 text-body-sm text-brand-orange-dark">
+              No pudimos abrir el pago en línea. Tu pedido quedó guardado: escoge «Pago contra entrega» o «Transferencia» y confírmalo, o escríbenos por WhatsApp.
+            </p>
+          )}
+          {estado === 'no-disponible' && (
+            <p role="alert" className="mt-4 rounded-lg bg-brand-orange/10 px-3 py-2.5 text-body-sm text-brand-orange-dark">
+              Los pedidos en línea no están disponibles en este momento. Escríbenos por WhatsApp y te lo tomamos por ahí.
+            </p>
+          )}
+          {estado === 'error' && (
+            <p role="alert" className="mt-4 rounded-lg bg-brand-orange/10 px-3 py-2.5 text-body-sm text-brand-orange-dark">
+              No pudimos registrar el pedido. Inténtalo de nuevo o escríbenos por WhatsApp.
+            </p>
+          )}
+
+          <button type="submit" disabled={estado === 'enviando'} className="mt-4 w-full rounded-full bg-brand-orange px-6 py-4 font-heading text-body font-bold text-white shadow-brand disabled:opacity-60">
+            {estado === 'enviando' ? (
+              <span className="inline-flex items-center gap-2"><Loader2 size={18} className="animate-spin" aria-hidden /> Procesando…</span>
+            ) : (
+              `Confirmar pedido — ${money(t.total)}`
+            )}
+          </button>
+          <a href={whatsappAyuda} target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center justify-center gap-2 text-body-sm font-semibold text-brand-green">
+            <MessageCircle size={16} aria-hidden /> ¿Tienes una duda? Escríbenos por WhatsApp
+          </a>
+          <p className="mt-3 text-center text-body-sm text-brand-black/55">
+            Al confirmar autorizas el uso de tus datos para gestionar y entregar tu pedido, según la{' '}
+            <a href="/politica-de-privacidad" target="_blank" rel="noopener noreferrer" className="underline">política de privacidad</a>, y aceptas los{' '}
+            <a href="/ecogel/terminos" target="_blank" rel="noopener noreferrer" className="underline">términos y condiciones</a>, donde está tu derecho de retracto.
+          </p>
+        </aside>
+      </div>
     </form>
   );
 }

@@ -25,7 +25,8 @@ export default function SelectorTier({ compacto = false }: { compacto?: boolean 
               }`}
             >
               {t.masVendido && (
-                <span className="absolute -top-2.5 left-3 rounded-full bg-brand-orange px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                // En el checkout el naranja queda solo para el botón de pago.
+                <span className={`absolute -top-2.5 left-3 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white ${compacto ? 'bg-brand-green' : 'bg-brand-orange'}`}>
                   Más vendido
                 </span>
               )}

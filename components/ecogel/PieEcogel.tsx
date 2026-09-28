@@ -9,6 +9,8 @@ export default function PieEcogel() {
       <p className="mt-4 text-body-sm text-white/60">Pagos aceptados: PSE · Nequi · Tarjeta · Contraentrega (efectivo)</p>
       <p className="mt-4 text-white/45 text-body-sm">
         <a href="/politica-de-privacidad" className="underline underline-offset-4">Política de privacidad</a>
+        {' · '}
+        <a href="/ecogel/terminos" className="underline underline-offset-4">Términos y condiciones</a>
       </p>
       <p className="text-white/35 text-body-sm mt-3">© {new Date().getFullYear()} {BUSINESS.legalName}. EcoGel es marca de Mylva S.A. Registro INVIMA 2009V0004964.</p>
     </footer>

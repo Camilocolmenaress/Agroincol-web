@@ -3,8 +3,7 @@ import CabeceraEcogel from '@/components/ecogel/CabeceraEcogel';
 import FormularioPedido from '@/components/ecogel/FormularioPedido';
 import PieEcogel from '@/components/ecogel/PieEcogel';
 import { TierProvider } from '@/components/ecogel/TierContext';
-import WhatsAppFlotante from '@/components/ecogel/WhatsAppFlotante';
-import { TIER_POR_DEFECTO, configDe, esSegmento, esUnidades } from '@/lib/ecogel';
+import { TIER_POR_DEFECTO, esSegmento, esUnidades } from '@/lib/ecogel';
 
 export const metadata: Metadata = {
   title: 'Tu pedido de EcoGel | AGROINCOL',
@@ -21,7 +20,7 @@ export default function PedidoPage({ searchParams }: { searchParams: { u?: strin
       <CabeceraEcogel />
       <FormularioPedido segmento={segmento} unidadesIniciales={unidades} />
       <PieEcogel />
-      <WhatsAppFlotante texto={configDe(segmento).whatsappTexto} />
+      {/* Sin WhatsApp flotante: en celular tapaba el campo Nombre. La ayuda va en el formulario. */}
     </TierProvider>
   );
 }
