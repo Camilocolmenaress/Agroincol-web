@@ -1,14 +1,17 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Check, Loader2, MessageCircle, Truck } from 'lucide-react';
+import { Check, Gift, Loader2, MessageCircle, Truck } from 'lucide-react';
 import { DESCUENTO_ONLINE, GARANTIA, configDe, money, totalPedido, whatsappEcogel, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
+import { MENSAJE_CODIGO, aplicabilidadPremio, esCodigoPremio, esIdPremio, fechaLarga, premioDe, totalConPremio } from '@/lib/ecogel-premios';
+import { guardarPremio, leerPremioGuardado, olvidarPremio, type PremioGuardado } from '@/lib/ecogel-popups';
 import { DEPARTAMENTOS, TIPOS_DOCUMENTO, validarPedido } from '@/lib/ecogel-pedido';
 import { REGLA_DESPACHO, TIEMPO_ENTREGA } from '@/lib/ecogel-despacho';
 import { nuevoEventId } from '@/lib/meta/eventos';
 import { urlParaMedir } from '@/lib/meta/modo-prueba';
 import { rastrear } from '@/lib/meta/pixel';
 import { idDeVisitante } from '@/lib/meta/visitante';
+import RuletaSalida from './RuletaSalida';
 import SelectorTier from './SelectorTier';
 import { useTier } from './TierContext';
 
@@ -37,8 +40,16 @@ const ORDEN_CAMPOS = ['celular', 'nombre', 'tipoDocumento', 'documento', 'depart
 
 const LOGOS_EN_LINEA = ['visa.svg', 'mastercard.svg', 'amex.svg', 'diners.svg', 'pse.svg'];
 
-export default function FormularioPedido({ segmento, unidadesIniciales }: { segmento: Segmento; unidadesIniciales: Unidades }) {
-  const { unidades } = useTier();
+export default function FormularioPedido({ segmento, unidadesIniciales, codigoUrl }: { segmento: Segmento; unidadesIniciales: Unidades; codigoUrl?: string }) {
+  const { unidades, setUnidades } = useTier();
+  // Premio de la ruleta: llega por el enlace del correo (?codigo=), por el
+  // pop-up de esta misma página o guardado de una visita anterior. El
+  // servidor tiene la última palabra al crear el pedido.
+  const [premio, setPremio] = useState<PremioGuardado | null>(null);
+  const [errorCodigo, setErrorCodigo] = useState('');
+  // El bono de próxima compra no se aplica solo: casi siempre lo tiene alguien
+  // que aún no ha comprado, y mandarlo le haría fallar el pedido.
+  const [usarBono, setUsarBono] = useState(false);
   // grupo es la elección visual; metodo es lo que viaja al servidor.
   const [grupo, setGrupo] = useState<Grupo>('online');
   const [banco, setBanco] = useState<Banco>('bancolombia');
@@ -75,7 +86,34 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
     });
   }, [unidadesIniciales, segmento]);
 
-  const t = totalPedido(unidades, metodo);
+  useEffect(() => {
+    if (esCodigoPremio(codigoUrl)) {
+      fetch(`/api/ecogel/ruleta?codigo=${codigoUrl}`)
+        .then((r) => r.json())
+        .then((j: { ok: boolean; premio?: unknown; codigo?: string; vence?: string; estado?: string }) => {
+          if (!j.ok || !esIdPremio(j.premio) || !j.codigo || !j.vence) return setErrorCodigo(MENSAJE_CODIGO['no-existe']);
+          if (j.estado === 'usado') return setErrorCodigo(MENSAJE_CODIGO.usado);
+          if (new Date(j.vence).getTime() < Date.now()) return setErrorCodigo(MENSAJE_CODIGO.vencido);
+          const p = { premio: j.premio, codigo: j.codigo, vence: j.vence };
+          guardarPremio(p);
+          setPremio(p);
+        })
+        .catch(() => setErrorCodigo(MENSAJE_CODIGO['sin-conexion']));
+      return;
+    }
+    setPremio(leerPremioGuardado());
+  }, [codigoUrl]);
+
+  const premioElegido = premio && (premio.premio !== 'proxima_10000' || usarBono) ? premio.premio : null;
+  const aplicaPremio = premioElegido !== null && aplicabilidadPremio(premioElegido, unidades, true).aplica;
+  // yaCompro = usarBono: el total solo resta el bono si la persona dijo que ya compró (el servidor lo verifica).
+  const t = totalConPremio(unidades, metodo, premioElegido, usarBono);
+  const quitarPremio = () => {
+    olvidarPremio();
+    setPremio(null);
+    setUsarBono(false);
+    setErrorCodigo('');
+  };
   const set = (k: keyof typeof datos) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setDatos((d) => ({ ...d, [k]: e.target.value }));
   const campoTexto = (k: keyof typeof datos, label: string, auto: string, extra: { tipo?: 'text' | 'tel'; ayuda?: string; ejemplo?: string } = {}) => (
@@ -102,7 +140,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
 
   const enviar = async (e: React.FormEvent) => {
     e.preventDefault();
-    const entrada = { ...datos, unidades, metodo, autorizaWhatsapp, de: segmento };
+    const entrada = { ...datos, unidades, metodo, autorizaWhatsapp, de: segmento, ...(aplicaPremio && premio ? { codigo: premio.codigo } : {}) };
     const v = validarPedido(entrada);
     if (!v.ok) {
       setErrores(v.errores);
@@ -137,8 +175,15 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
         errores?: Record<string, string>;
         motivo?: string;
         firma?: string;
+        total?: number;
       };
       if (!res.ok || !json.ok) {
+        // El código no entró: el pedido no se creó. Se explica junto al premio.
+        if (json.errores?.codigo) {
+          setErrorCodigo(json.errores.codigo);
+          setEstado('idle');
+          return;
+        }
         const hayErroresPorCampo = json.errores && Object.keys(json.errores).length > 0;
         if (hayErroresPorCampo) {
           setErrores(json.errores!);
@@ -153,7 +198,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
         window.sessionStorage.setItem(
           'ecogel_compra',
           // celular: /gracias le muestra a qué número lo vamos a contactar.
-          JSON.stringify({ pedidoId: json.pedidoId, eventId: eventIdRef.current, valor: t.total, unidades, segmento, celular: datos.celular }),
+          JSON.stringify({ pedidoId: json.pedidoId, eventId: eventIdRef.current, valor: json.total ?? t.total, unidades, segmento, celular: datos.celular }),
         );
       } catch {
         // Sin almacenamiento el Purchase sale solo por el servidor. Aceptable.
@@ -186,6 +231,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
   );
 
   return (
+    <>
     <form onSubmit={enviar} noValidate className="container-custom max-w-xl pb-10 pt-6 lg:max-w-5xl">
       <div className="flex items-baseline justify-between gap-4">
         <h1 className="font-heading text-h2-mobile text-brand-green md:text-h2">Tu pedido</h1>
@@ -286,11 +332,46 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
           <div className="mb-4 hidden lg:block">
             <SelectorTier compacto />
           </div>
+          {(premio || errorCodigo) && (
+            <div className="mb-3 rounded-xl border border-brand-green/25 bg-brand-mint/60 px-4 py-3 text-body-sm">
+              {premio && (
+                <>
+                  <div className="flex items-start gap-2.5">
+                    <Gift size={18} className="mt-0.5 flex-none text-brand-green" aria-hidden />
+                    <div className="flex-1">
+                      <p className="font-semibold text-brand-green">{premioDe(premio.premio).titulo}</p>
+                      <p className="text-brand-black/60">Código {premio.codigo} · vence el {fechaLarga(premio.vence)}</p>
+                    </div>
+                    <button type="button" onClick={quitarPremio} className="text-body-sm font-semibold text-brand-black/55 underline underline-offset-2">Quitar</button>
+                  </div>
+                  {premio.premio === 'proxima_10000' ? (
+                    <label className="mt-2 flex items-start gap-2 text-brand-black/75">
+                      <input type="checkbox" checked={usarBono} onChange={(e) => { setUsarBono(e.target.checked); setErrorCodigo(''); }} className="mt-0.5 h-4 w-4 shrink-0 rounded border-brand-gray-light text-brand-green" />
+                      Ya les compré antes con este celular: aplicar el bono ahora
+                    </label>
+                  ) : aplicaPremio ? (
+                    <p className="mt-1.5 font-semibold text-brand-green">Aplicado a tu pedido</p>
+                  ) : (
+                    <p className="mt-1.5 text-brand-black/75">
+                      {aplicabilidadPremio(premio.premio, unidades, true).motivo}{' '}
+                      <button type="button" onClick={() => setUnidades(premioDe(premio.premio).unidades!)} className="font-semibold text-brand-green underline underline-offset-2">
+                        Cambiar a {premioDe(premio.premio).unidades} unidades
+                      </button>
+                    </p>
+                  )}
+                </>
+              )}
+              {errorCodigo && <p role="alert" className={`${premio ? 'mt-2' : ''} text-brand-orange-dark`}>{errorCodigo}</p>}
+            </div>
+          )}
           <dl className="space-y-1 rounded-xl bg-brand-light p-4 text-body-sm">
-            <div className="flex justify-between"><dt>EcoGel x{unidades}</dt><dd>{money(t.producto)}</dd></div>
+            <div className="flex justify-between"><dt>EcoGel x{unidades}{t.unidadesRegalo > 0 && ' + 1 de regalo'}</dt><dd>{money(t.producto)}</dd></div>
             <div className="flex justify-between"><dt>Envío</dt><dd className={t.envio === 0 ? 'font-semibold text-brand-green' : undefined}>{t.envio === 0 ? 'Gratis' : money(t.envio)}</dd></div>
             {t.descuento > 0 && (
               <div className="flex justify-between text-brand-green"><dt>Descuento por pago anticipado</dt><dd>−{money(t.descuento)}</dd></div>
+            )}
+            {t.descuentoPremio > 0 && (
+              <div className="flex justify-between text-brand-green"><dt>Premio de la ruleta</dt><dd>−{money(t.descuentoPremio)}</dd></div>
             )}
             <div className="flex justify-between border-t border-brand-gray-light pt-2 font-heading text-body font-bold"><dt>Total</dt><dd>{money(t.total)}</dd></div>
           </dl>
@@ -343,5 +424,16 @@ export default function FormularioPedido({ segmento, unidadesIniciales }: { segm
         </aside>
       </div>
     </form>
+    {/* Fuera del <form>: la ruleta trae su propio formulario y no se pueden anidar. */}
+    <RuletaSalida
+      segmento={segmento}
+      onPremio={(p) => {
+        setPremio(p);
+        setErrorCodigo('');
+        const u = premioDe(p.premio).unidades;
+        if (u) setUnidades(u);
+      }}
+    />
+    </>
   );
 }

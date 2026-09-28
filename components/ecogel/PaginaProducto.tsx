@@ -23,6 +23,8 @@ import Resenas from './Resenas';
 import PieEcogel from './PieEcogel';
 import RastreoVista from './RastreoVista';
 import WhatsAppFlotante from './WhatsAppFlotante';
+import RuletaSalida from './RuletaSalida';
+import CalculadoraJeringas from './CalculadoraJeringas';
 
 // Orden = página de producto de Lummia, sección por sección (iteración 3 §3).
 export default function PaginaProducto({
@@ -58,6 +60,8 @@ export default function PaginaProducto({
       <WhatsAppFlotante texto={config.whatsappTexto} />
       <RastreoVista segmento={config.segmento} />
       <LandingContactTracker categoria={`ecogel-${config.segmento}`} />
+      <RuletaSalida segmento={config.segmento} />
+      <CalculadoraJeringas segmento={config.segmento} />
     </TierProvider>
   );
 }

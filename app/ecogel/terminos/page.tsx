@@ -4,6 +4,7 @@ import PieEcogel from '@/components/ecogel/PieEcogel';
 import { BUSINESS } from '@/lib/constants';
 import { DESCUENTO_ONLINE, GARANTIA, TIERS, money } from '@/lib/ecogel';
 import { REGLA_DESPACHO, TIEMPO_ENTREGA } from '@/lib/ecogel-despacho';
+import { PREMIOS } from '@/lib/ecogel-premios';
 
 // Términos de la tienda EcoGel. Lo enlaza el checkout junto a la política de
 // privacidad. Retracto (art. 47) y reversión del pago (art. 51) son de la Ley
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 const ACTUALIZADO = '27 de septiembre de 2026';
 
 export default function TerminosPage() {
-  const secciones: { titulo: string; parrafos: React.ReactNode[] }[] = [
+  const secciones: { titulo: string; id?: string; parrafos: React.ReactNode[] }[] = [
     {
       titulo: 'Quién vende',
       parrafos: [
@@ -71,12 +72,30 @@ export default function TerminosPage() {
       ],
     },
     {
+      titulo: 'Ruleta de premios',
+      id: 'ruleta',
+      parrafos: [
+        'Participar es opcional. Para reclamar el premio se deja un correo, al que enviamos el código y promociones de EcoGel con tu autorización. Cada correo gira una sola vez; si gira de nuevo, recibe el mismo premio.',
+        'El premio lo sortea nuestro servidor con estas probabilidades reales:',
+        <ul key="premios" className="list-disc space-y-1 pl-5">
+          {PREMIOS.map((p) => (
+            <li key={p.id}>
+              <strong>{p.titulo}</strong>: {p.probabilidad} %. {p.condicion} Vigencia: {p.vigenciaDias} días desde el giro.
+            </li>
+          ))}
+        </ul>,
+        'Cada código es de un solo uso, queda asociado al correo que giró y sirve para un pedido. Un pedido admite un solo código. El premio se suma al descuento por pago anticipado. No se cambia por dinero ni por otro premio.',
+        'Si el pago en línea de un pedido con código falla, el código se puede volver a usar en un pedido nuevo.',
+        'Para dejar de recibir correos, responde cualquiera de ellos con la palabra BAJA.',
+      ],
+    },
+    {
       titulo: 'Tus datos',
       parrafos: [
-        <>
+        <p key="datos">
           Usamos tus datos para gestionar y entregar tu pedido, como explica la{' '}
           <a href="/politica-de-privacidad" className="underline underline-offset-4">política de privacidad</a>. Solo te escribimos por WhatsApp o correo para promociones si lo autorizaste.
-        </>,
+        </p>,
       ],
     },
     {
@@ -93,12 +112,10 @@ export default function TerminosPage() {
         <p className="mt-2 text-body-sm text-brand-black/55">Última actualización: {ACTUALIZADO}</p>
         <div className="mt-8 space-y-8">
           {secciones.map((s) => (
-            <section key={s.titulo}>
+            <section key={s.titulo} id={s.id} className="scroll-mt-6">
               <h2 className="font-heading text-h3 text-brand-green">{s.titulo}</h2>
               <div className="mt-2 space-y-2 text-body leading-relaxed text-brand-black/80">
-                {s.parrafos.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
+                {s.parrafos.map((p, i) => (typeof p === 'string' ? <p key={i}>{p}</p> : p))}
               </div>
             </section>
           ))}

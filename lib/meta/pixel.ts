@@ -213,3 +213,21 @@ export function enviarACapi(ruta: string, cuerpo: Record<string, unknown>): void
     // idem
   }
 }
+
+/**
+ * Evento personalizado, solo por el Pixel del navegador (trackCustom) y una
+ * vez por sesión. Para mediciones que NO son conversión, como RuletaCorreo:
+ * no pasa por la CAPI ni por los eventos estándar, así que no alimenta la
+ * optimización de las campañas. Respeta el filtro de dominio y `?test=1`.
+ */
+export function eventoPersonalizado(nombre: 'RuletaCorreo'): void {
+  if (!pixelActivo()) return;
+  const clave = `agroincol_evp_${nombre}`;
+  try {
+    if (window.sessionStorage.getItem(clave) === '1') return;
+    window.sessionStorage.setItem(clave, '1');
+  } catch {
+    // Sin almacenamiento se manda igual.
+  }
+  llamarFbqCuandoExista(['trackCustom', nombre]);
+}
