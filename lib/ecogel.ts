@@ -305,8 +305,9 @@ export function esSegmento(valor: unknown): valor is Segmento {
  * personales) para que /gracias pinte el resumen desde el servidor, sin
  * depender del almacenamiento del navegador ni saltos de diseño al cargar.
  */
-export function urlGracias(p: { pedidoId: string; estado: string; unidades: Unidades; segmento: Segmento; base?: string }): string {
-  return `${p.base ?? ''}/ecogel/gracias?pedido=${p.pedidoId}&estado=${p.estado}&u=${p.unidades}&s=${p.segmento}`;
+/** `premio`: el que el servidor aplicó al pedido, para que /gracias muestre el total real. */
+export function urlGracias(p: { pedidoId: string; estado: string; unidades: Unidades; segmento: Segmento; base?: string; premio?: string }): string {
+  return `${p.base ?? ''}/ecogel/gracias?pedido=${p.pedidoId}&estado=${p.estado}&u=${p.unidades}&s=${p.segmento}${p.premio ? `&p=${p.premio}` : ''}`;
 }
 
 export function whatsappEcogel(texto: string): string {

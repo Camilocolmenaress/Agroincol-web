@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { hojaPedidosConfigurada, leerFilaPedido } from './hoja-pedidos';
+import { canjearCodigo, hojaPedidosConfigurada, leerFilaPedido } from './hoja-pedidos';
 
 function conCredenciales(fn: () => void | Promise<void>) {
   const previo = { u: process.env.HOJA_PEDIDOS_URL, s: process.env.HOJA_PEDIDOS_SECRETO };
@@ -59,3 +59,26 @@ test('leerFilaPedido sin credenciales no llama a la hoja', async () => {
   assert.equal(await leerFilaPedido('EG-260920-ABCD', fetchFalso), null);
   assert.equal(llamadas, 0);
 });
+
+test('canjearCodigo manda codigo, pedido y celular; traduce la respuesta y la falta de conexión', () =>
+  conCredenciales(async () => {
+    let enviado: Record<string, unknown> = {};
+    const responde = (cuerpo: unknown) =>
+      (async (_url: RequestInfo | URL, init?: RequestInit) => {
+        enviado = JSON.parse(String(init?.body ?? '{}'));
+        return new Response(JSON.stringify(cuerpo), { status: 200 });
+      }) as typeof fetch;
+
+    const ok = await canjearCodigo('RE-ABCDEF', 'EG-260927-ABCD', '3107891948', responde({ ok: true, premio: 'descuento_8000' }));
+    assert.deepEqual(ok, { ok: true, premio: 'descuento_8000' });
+    assert.equal(enviado.accion, 'ruleta_canjear');
+    assert.equal(enviado.codigo, 'RE-ABCDEF');
+    assert.equal(enviado.celular, '3107891948');
+    assert.equal(enviado.secreto, 'shh');
+
+    assert.deepEqual(await canjearCodigo('RE-ABCDEF', 'EG-1', '3', responde({ ok: false, motivo: 'vencido' })), { ok: false, motivo: 'vencido' });
+    // Un premio desconocido no se acepta aunque diga ok.
+    assert.deepEqual(await canjearCodigo('RE-ABCDEF', 'EG-1', '3', responde({ ok: true, premio: 'otro' })), { ok: false, motivo: 'no-existe' });
+    const caido = (async () => { throw new Error('red'); }) as typeof fetch;
+    assert.deepEqual(await canjearCodigo('RE-ABCDEF', 'EG-1', '3', caido), { ok: false, motivo: 'sin-conexion' });
+  }));

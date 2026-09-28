@@ -11,7 +11,8 @@ import { Ayuda, LoQueTienes, Respaldo } from '@/components/ecogel/gracias/Confia
 import DatosTransferencia, { type MetodoManual } from '@/components/ecogel/gracias/DatosTransferencia';
 import LineaTiempo from '@/components/ecogel/gracias/LineaTiempo';
 import ResumenPedido from '@/components/ecogel/gracias/ResumenPedido';
-import { esSegmento, esUnidades, totalPedido, whatsappEcogel, type MetodoPago } from '@/lib/ecogel';
+import { esSegmento, esUnidades, whatsappEcogel, type MetodoPago } from '@/lib/ecogel';
+import { esIdPremio, totalConPremio } from '@/lib/ecogel-premios';
 import { diaDeDespacho } from '@/lib/ecogel-despacho';
 import { fotosEcogel, videosAprenderAUsarlo } from '../fotos';
 
@@ -66,7 +67,7 @@ const ESTADOS: Record<Estado, { tono: Tono; titulo: string; bajada: string; meto
 
 const esManual = (e: Estado): e is MetodoManual => e === 'bancolombia' || e === 'nequi' || e === 'breb';
 
-export default function GraciasPage({ searchParams }: { searchParams: { pedido?: string; estado?: string; u?: string; s?: string } }) {
+export default function GraciasPage({ searchParams }: { searchParams: { pedido?: string; estado?: string; u?: string; s?: string; p?: string } }) {
   const pedido = /^EG-\d{6}-[A-Z0-9]{4}$/.test(searchParams.pedido ?? '') ? (searchParams.pedido as string) : '';
   const crudo = searchParams.estado ?? 'cod';
   const estado: Estado = Object.prototype.hasOwnProperty.call(ESTADOS, crudo) ? (crudo as Estado) : 'cod';
@@ -75,7 +76,9 @@ export default function GraciasPage({ searchParams }: { searchParams: { pedido?:
   const u = Number(searchParams.u);
   const unidades = esUnidades(u) ? u : undefined;
   const segmento = esSegmento(searchParams.s) ? searchParams.s : 'hogar';
-  const total = unidades ? totalPedido(unidades, e.metodo).total : undefined;
+  // p = premio que el servidor aplicó al crear el pedido (si llegó hasta /gracias, ya se canjeó).
+  const premio = esIdPremio(searchParams.p) ? searchParams.p : null;
+  const total = unidades ? totalConPremio(unidades, e.metodo, premio, true).total : undefined;
   const fotos = fotosEcogel(segmento);
   // Hora de la solicitud = hora del pedido: el checkout redirige aquí al crearlo.
   const despacho = diaDeDespacho(new Date());
@@ -123,7 +126,7 @@ export default function GraciasPage({ searchParams }: { searchParams: { pedido?:
                 whatsapp={whatsappEcogel(`Hola, te envío el comprobante de mi pedido de EcoGel ${pedido}`.trim())}
               />
             )}
-            {unidades && <ResumenPedido unidades={unidades} metodo={e.metodo} estado={estado} kit={fotos.kit} />}
+            {unidades && <ResumenPedido unidades={unidades} metodo={e.metodo} estado={estado} premio={premio} kit={fotos.kit} />}
             <LineaTiempo estado={estado} despacho={despacho} total={total} />
 
             <div className="mx-auto mt-12 max-w-xl [&>section:first-of-type]:mt-1">

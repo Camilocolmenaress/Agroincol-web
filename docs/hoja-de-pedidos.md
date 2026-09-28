@@ -36,7 +36,8 @@ var COLUMNAS = [
   'metodoPago', 'nombre', 'celular', 'correo', 'direccion', 'barrio', 'ciudad', 'departamento',
   'ofertas', 'origen', 'ip', 'eventId', 'fbp', 'fbc', 'externalId', 'navegador', 'url', 'mpPagoId',
   // Siempre se agrega al final: en medio descuadra las filas existentes.
-  'tipoDocumento', 'documento', 'autorizaWhatsapp'
+  'tipoDocumento', 'documento', 'autorizaWhatsapp',
+  'codigoPremio', 'premio', 'descuentoPremio', 'unidadesRegalo'
 ];
 
 function hoja() {
@@ -73,6 +74,11 @@ function doPost(e) {
       var salida = numeroFila ? { ok: true, fila: leerFila(h, numeroFila) } : { ok: false };
       return ContentService.createTextOutput(JSON.stringify(salida)).setMimeType(ContentService.MimeType.JSON);
     }
+
+    // Ruleta (§6): cada acción responde JSON.
+    if (datos.accion === 'ruleta_girar') return respuestaJson(ruletaGirar(datos));
+    if (datos.accion === 'ruleta_consultar') return respuestaJson(ruletaConsultar(datos.codigo));
+    if (datos.accion === 'ruleta_canjear') return respuestaJson(ruletaCanjear(h, datos));
 
     return ContentService.createTextOutput('accion desconocida');
   } catch (error) {
@@ -200,6 +206,127 @@ function linkWhatsapp(fila) {
   var numero = digitos.length === 10 ? '57' + digitos : digitos;
   return 'https://wa.me/' + numero + '?text=' + encodeURIComponent(mensajeWhatsapp(fila));
 }
+// ---------------------------------------------------------------------------
+// Ruleta de premios (pestaña "Ruleta"). El sorteo lo hace el servidor de la
+// web; aquí solo se guarda, se garantiza un giro por correo y un canje por
+// código (LockService), y se manda el correo con el código.
+// ---------------------------------------------------------------------------
+
+var COLUMNAS_RULETA = ['fecha', 'correo', 'premio', 'codigo', 'vence', 'estado', 'pedidoId', 'fechaUso', 'autorizaDatos', 'url'];
+// Un pedido previo solo cuenta para el bono de próxima compra si de verdad se pagó o se entregó.
+var ESTADOS_COMPRA_REAL = ['pagado', 'despachado', 'entregado'];
+
+function respuestaJson(objeto) {
+  return ContentService.createTextOutput(JSON.stringify(objeto)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function hojaRuleta() {
+  var libro = SpreadsheetApp.getActiveSpreadsheet();
+  var h = libro.getSheetByName('Ruleta');
+  if (!h) {
+    h = libro.insertSheet('Ruleta'); // queda de última: getSheets()[0] sigue siendo la de pedidos
+    h.getRange(1, 1, 1, COLUMNAS_RULETA.length).setValues([COLUMNAS_RULETA]).setFontWeight('bold');
+    h.setFrozenRows(1);
+  }
+  return h;
+}
+
+function buscarEnRuleta(h, columna, valor) {
+  if (h.getLastRow() < 2) return null;
+  var col = COLUMNAS_RULETA.indexOf(columna) + 1;
+  var valores = h.getRange(2, col, h.getLastRow() - 1, 1).getValues();
+  var buscado = String(valor).toLowerCase();
+  for (var i = 0; i < valores.length; i++) {
+    if (String(valores[i][0]).toLowerCase() === buscado) return i + 2;
+  }
+  return null;
+}
+
+function leerRuleta(h, numeroFila) {
+  var valores = h.getRange(numeroFila, 1, 1, COLUMNAS_RULETA.length).getValues()[0];
+  var r = {};
+  COLUMNAS_RULETA.forEach(function (c, i) {
+    // Sheets convierte las fechas ISO en Date al guardarlas: se devuelven como ISO.
+    r[c] = valores[i] instanceof Date ? valores[i].toISOString() : valores[i];
+  });
+  return r;
+}
+
+function escribirRuleta(h, numeroFila, cambios) {
+  Object.keys(cambios).forEach(function (c) {
+    h.getRange(numeroFila, COLUMNAS_RULETA.indexOf(c) + 1).setValue(cambios[c]);
+  });
+}
+
+function ruletaGirar(datos) {
+  var candado = LockService.getScriptLock();
+  candado.waitLock(10000);
+  try {
+    var h = hojaRuleta();
+    var existente = buscarEnRuleta(h, 'correo', datos.registro.correo);
+    if (existente) return { ok: true, nuevo: false, registro: leerRuleta(h, existente) };
+    h.appendRow(COLUMNAS_RULETA.map(function (c) {
+      var v = datos.registro[c];
+      return v === undefined || v === null ? '' : v;
+    }));
+    try {
+      MailApp.sendEmail({ to: datos.registro.correo, subject: datos.correo.asunto, body: datos.correo.cuerpo, name: 'EcoGel · AGROINCOL', replyTo: CORREO_AVISOS });
+    } catch (e) {
+      // El premio ya quedó guardado y se mostró en pantalla; un fallo de correo no lo pierde.
+    }
+    return { ok: true, nuevo: true, registro: datos.registro };
+  } finally {
+    candado.releaseLock();
+  }
+}
+
+function ruletaConsultar(codigo) {
+  var h = hojaRuleta();
+  var fila = buscarEnRuleta(h, 'codigo', codigo);
+  return fila ? { ok: true, registro: leerRuleta(h, fila) } : { ok: false };
+}
+
+// ¿El pedido que tiene este código se puede soltar? Sí si el pago falló, o si
+// quedó pendiente más de una hora (la persona abandonó Mercado Pago).
+function pedidoLiberaCodigo(hPedidos, pedidoId, fechaUso) {
+  var fila = buscarFila(hPedidos, pedidoId);
+  if (!fila) return true;
+  var estado = hPedidos.getRange(fila, COLUMNAS.indexOf('estado') + 1).getValue();
+  if (estado === 'pago_fallido') return true;
+  return estado === 'pendiente_pago' && Date.now() - new Date(fechaUso).getTime() > 3600 * 1000;
+}
+
+function yaCompro(hPedidos, celular, pedidoActual) {
+  if (hPedidos.getLastRow() < 2) return false;
+  var filas = hPedidos.getRange(2, 1, hPedidos.getLastRow() - 1, COLUMNAS.length).getValues();
+  var iCel = COLUMNAS.indexOf('celular'), iEst = COLUMNAS.indexOf('estado'), iId = COLUMNAS.indexOf('pedidoId');
+  for (var i = 0; i < filas.length; i++) {
+    if (String(filas[i][iCel]) === String(celular) && filas[i][iId] !== pedidoActual && ESTADOS_COMPRA_REAL.indexOf(filas[i][iEst]) >= 0) return true;
+  }
+  return false;
+}
+
+function ruletaCanjear(hPedidos, datos) {
+  var candado = LockService.getScriptLock();
+  candado.waitLock(10000);
+  try {
+    var h = hojaRuleta();
+    var fila = buscarEnRuleta(h, 'codigo', datos.codigo);
+    if (!fila) return { ok: false, motivo: 'no-existe' };
+    var r = leerRuleta(h, fila);
+    if (r.estado === 'usado' && r.pedidoId !== datos.pedidoId && !pedidoLiberaCodigo(hPedidos, r.pedidoId, r.fechaUso)) {
+      return { ok: false, motivo: 'usado' };
+    }
+    if (new Date(r.vence).getTime() < Date.now()) return { ok: false, motivo: 'vencido' };
+    if (r.premio === 'proxima_10000' && !yaCompro(hPedidos, datos.celular, datos.pedidoId)) {
+      return { ok: false, motivo: 'primer-pedido' };
+    }
+    escribirRuleta(h, fila, { estado: 'usado', pedidoId: datos.pedidoId, fechaUso: new Date().toISOString() });
+    return { ok: true, premio: r.premio };
+  } finally {
+    candado.releaseLock();
+  }
+}
 ```
 
 Cambia `SECRETO` por una cadena larga y aleatoria.
@@ -222,3 +349,18 @@ HOJA_PEDIDOS_SECRETO=<el mismo SECRETO>
 `despachado` (anota la `guia`) → `entregado` o `rechazado`.
 `pendiente_pago` → `pagado` (lo pone el webhook) → `despachado` → `entregado`.
 `pago_fallido`: el cliente no completó el pago; escribirle y ofrecer contraentrega.
+
+## 6. Ruleta de premios
+
+La pestaña **Ruleta** se crea sola con el primer giro. Una fila por correo:
+`fecha, correo, premio, codigo, vence, estado, pedidoId, fechaUso, autorizaDatos, url`.
+
+- Un correo gira una sola vez: si vuelve a intentarlo, recibe el mismo premio.
+- `estado` pasa de `disponible` a `usado` cuando el código entra en un pedido.
+  Si ese pedido termina en `pago_fallido`, o queda en `pendiente_pago` más de
+  una hora, el código se puede usar en un pedido nuevo.
+- El bono de $10.000 (`proxima_10000`) solo se canjea si el mismo celular ya
+  tiene un pedido `pagado`, `despachado` o `entregado`.
+- En la hoja de pedidos, `unidadesRegalo = 1` significa **despachar una unidad
+  más** de las que dice `unidades` (premio 4x3).
+- Los correos salen de la cuenta dueña del script (Gmail: unos 100 por día).

@@ -22,6 +22,8 @@ export function construirPreferencia(p: {
   celular: string;
   segmento: Segmento;
   base: string;
+  /** Premio de la ruleta aplicado: viaja a /gracias para mostrar el total real. */
+  premio?: string;
 }): Record<string, unknown> {
   const gracias = (estado: string) => urlGracias({ ...p, estado });
   return {
