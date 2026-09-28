@@ -118,4 +118,6 @@ test('el correo lleva el código, la vigencia, la condición y el enlace con el 
   assert.match(c.cuerpo, /Aplica al llevar 2 unidades/);
   assert.match(c.cuerpo, /https:\/\/agroincol\.com\/ecogel\/pedido\?u=2&codigo=RE-ABCDEF/);
   assert.match(c.cuerpo, /BAJA/);
+  // El enlace trae el premio (p) para mostrarlo sin esperar a la hoja.
+  assert.match(c.cuerpo, /codigo=RE-ABCDEF&p=envio_gratis_2/);
 });

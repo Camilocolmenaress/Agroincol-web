@@ -164,9 +164,13 @@ export function fechaLarga(iso: string): string {
   return new Intl.DateTimeFormat('es-CO', { timeZone: 'America/Bogota', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso));
 }
 
-/** Enlace que abre el checkout con la cantidad del premio y el código ya aplicado. */
+/**
+ * Enlace que abre el checkout con la cantidad del premio y el código ya
+ * aplicado. `p` (el premio) deja mostrarlo al instante, sin esperar al Apps
+ * Script; el servidor lo confirma en segundo plano y otra vez al canjear.
+ */
 export function enlacePremio(id: IdPremio, codigo: string, base = ''): string {
-  return `${base}/ecogel/pedido?u=${premioDe(id).unidades ?? 3}&codigo=${codigo}`;
+  return `${base}/ecogel/pedido?u=${premioDe(id).unidades ?? 3}&codigo=${codigo}&p=${id}`;
 }
 
 /** Correo con el código. Texto plano: lo manda el Apps Script con MailApp. */

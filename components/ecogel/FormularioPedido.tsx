@@ -11,9 +11,12 @@ import { nuevoEventId } from '@/lib/meta/eventos';
 import { urlParaMedir } from '@/lib/meta/modo-prueba';
 import { rastrear } from '@/lib/meta/pixel';
 import { idDeVisitante } from '@/lib/meta/visitante';
-import RuletaSalida from './RuletaSalida';
+import dynamic from 'next/dynamic';
 import SelectorTier from './SelectorTier';
 import { useTier } from './TierContext';
+
+// Fuera del JS inicial: solo aparece si la persona intenta salir (ver PopupsEcogel).
+const RuletaSalida = dynamic(() => import('./RuletaSalida'), { ssr: false });
 
 // Checkout de una página. Celular: cantidad → datos → pago → resumen y botón.
 // Escritorio: datos y pago a la izquierda; cantidad, resumen y botón en una
@@ -40,13 +43,15 @@ const ORDEN_CAMPOS = ['celular', 'nombre', 'tipoDocumento', 'documento', 'depart
 
 const LOGOS_EN_LINEA = ['visa.svg', 'mastercard.svg', 'amex.svg', 'diners.svg', 'pse.svg'];
 
-export default function FormularioPedido({ segmento, unidadesIniciales, codigoUrl }: { segmento: Segmento; unidadesIniciales: Unidades; codigoUrl?: string }) {
+export default function FormularioPedido({ segmento, unidadesIniciales, codigoUrl, premioUrl }: { segmento: Segmento; unidadesIniciales: Unidades; codigoUrl?: string; premioUrl?: string }) {
   const { unidades, setUnidades } = useTier();
   // Premio de la ruleta: llega por el enlace del correo (?codigo=), por el
   // pop-up de esta misma página o guardado de una visita anterior. El
   // servidor tiene la última palabra al crear el pedido.
   const [premio, setPremio] = useState<PremioGuardado | null>(null);
   const [errorCodigo, setErrorCodigo] = useState('');
+  // El Apps Script tarda 2-4 s en responder: mientras tanto se muestra lo que ya se sabe.
+  const [validando, setValidando] = useState(false);
   // El bono de próxima compra no se aplica solo: casi siempre lo tiene alguien
   // que aún no ha comprado, y mandarlo le haría fallar el pedido.
   const [usarBono, setUsarBono] = useState(false);
@@ -87,22 +92,34 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
   }, [unidadesIniciales, segmento]);
 
   useEffect(() => {
-    if (esCodigoPremio(codigoUrl)) {
-      fetch(`/api/ecogel/ruleta?codigo=${codigoUrl}`)
-        .then((r) => r.json())
-        .then((j: { ok: boolean; premio?: unknown; codigo?: string; vence?: string; estado?: string }) => {
-          if (!j.ok || !esIdPremio(j.premio) || !j.codigo || !j.vence) return setErrorCodigo(MENSAJE_CODIGO['no-existe']);
-          if (j.estado === 'usado') return setErrorCodigo(MENSAJE_CODIGO.usado);
-          if (new Date(j.vence).getTime() < Date.now()) return setErrorCodigo(MENSAJE_CODIGO.vencido);
-          const p = { premio: j.premio, codigo: j.codigo, vence: j.vence };
-          guardarPremio(p);
-          setPremio(p);
-        })
-        .catch(() => setErrorCodigo(MENSAJE_CODIGO['sin-conexion']));
+    const guardado = leerPremioGuardado();
+    if (!esCodigoPremio(codigoUrl)) {
+      setPremio(guardado);
       return;
     }
-    setPremio(leerPremioGuardado());
-  }, [codigoUrl]);
+    // Al instante: el premio guardado en este navegador o el que trae el enlace
+    // del correo (?p=). El servidor lo confirma abajo y otra vez al canjear.
+    if (guardado?.codigo === codigoUrl) setPremio(guardado);
+    else if (esIdPremio(premioUrl)) setPremio({ codigo: codigoUrl, premio: premioUrl, vence: '' });
+    setValidando(true);
+    const fallar = (motivo: string) => {
+      setPremio(null);
+      setErrorCodigo(MENSAJE_CODIGO[motivo]);
+    };
+    fetch(`/api/ecogel/ruleta?codigo=${codigoUrl}`)
+      .then((r) => r.json())
+      .then((j: { ok: boolean; premio?: unknown; codigo?: string; vence?: string; estado?: string }) => {
+        if (!j.ok || !esIdPremio(j.premio) || !j.codigo || !j.vence) return fallar('no-existe');
+        if (j.estado === 'usado') return fallar('usado');
+        if (new Date(j.vence).getTime() < Date.now()) return fallar('vencido');
+        const p = { premio: j.premio, codigo: j.codigo, vence: j.vence };
+        guardarPremio(p);
+        setPremio(p);
+      })
+      // Sin conexión con la hoja se deja lo que ya se mostraba: el servidor decide al canjear.
+      .catch(() => undefined)
+      .finally(() => setValidando(false));
+  }, [codigoUrl, premioUrl]);
 
   const premioElegido = premio && (premio.premio !== 'proxima_10000' || usarBono) ? premio.premio : null;
   const aplicaPremio = premioElegido !== null && aplicabilidadPremio(premioElegido, unidades, true).aplica;
@@ -332,6 +349,11 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
           <div className="mb-4 hidden lg:block">
             <SelectorTier compacto />
           </div>
+          {validando && !premio && (
+            <p className="mb-3 flex items-center gap-2 rounded-xl border border-brand-green/25 bg-brand-mint/60 px-4 py-3 text-body-sm text-brand-green">
+              <Loader2 size={16} className="animate-spin" aria-hidden /> Validando tu código {codigoUrl}…
+            </p>
+          )}
           {(premio || errorCodigo) && (
             <div className="mb-3 rounded-xl border border-brand-green/25 bg-brand-mint/60 px-4 py-3 text-body-sm">
               {premio && (
@@ -340,7 +362,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
                     <Gift size={18} className="mt-0.5 flex-none text-brand-green" aria-hidden />
                     <div className="flex-1">
                       <p className="font-semibold text-brand-green">{premioDe(premio.premio).titulo}</p>
-                      <p className="text-brand-black/60">Código {premio.codigo} · vence el {fechaLarga(premio.vence)}</p>
+                      <p className="text-brand-black/60">Código {premio.codigo}{premio.vence && ` · vence el ${fechaLarga(premio.vence)}`}</p>
                     </div>
                     <button type="button" onClick={quitarPremio} className="text-body-sm font-semibold text-brand-black/55 underline underline-offset-2">Quitar</button>
                   </div>

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function PedidoPage({ searchParams }: { searchParams: { u?: string; de?: string; codigo?: string } }) {
+export default function PedidoPage({ searchParams }: { searchParams: { u?: string; de?: string; codigo?: string; p?: string } }) {
   const u = Number(searchParams.u);
   const unidades = esUnidades(u) ? u : TIER_POR_DEFECTO;
   const segmento = esSegmento(searchParams.de) ? searchParams.de : 'hogar';
@@ -18,7 +18,7 @@ export default function PedidoPage({ searchParams }: { searchParams: { u?: strin
     <TierProvider inicial={unidades}>
       {/* Sin segmento: el carrito llevaría a esta misma página. */}
       <CabeceraEcogel />
-      <FormularioPedido segmento={segmento} unidadesIniciales={unidades} codigoUrl={searchParams.codigo} />
+      <FormularioPedido segmento={segmento} unidadesIniciales={unidades} codigoUrl={searchParams.codigo} premioUrl={searchParams.p} />
       <PieEcogel />
       {/* Sin WhatsApp flotante: en celular tapaba el campo Nombre. La ayuda va en el formulario. */}
     </TierProvider>
