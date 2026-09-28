@@ -25,12 +25,14 @@
 
 import { useEffect } from 'react';
 import { registrarClienteAnalitica } from '@/lib/analitica/posthog';
+import { enModoPrueba } from '@/lib/meta/modo-prueba';
 
 const CLAVE = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? '';
 
 export default function PostHogInit() {
   useEffect(() => {
-    if (!CLAVE) return;
+    // Una prueba (`?test=1`) no puede aparecer como pedido en el embudo.
+    if (!CLAVE || enModoPrueba()) return;
     let cancelado = false;
 
     // Import dinámico: saca ~100 kB del bundle inicial de la landing. La

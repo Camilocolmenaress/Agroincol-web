@@ -33,6 +33,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { enviarACapi, soloPixel } from '@/lib/meta/pixel';
 import { cuentaPorRuta, esDominioDeProduccion, pixelIdDe } from '@/lib/meta/cuentas';
+import { enModoPrueba } from '@/lib/meta/modo-prueba';
 
 /**
  * Espera a que se cumpla una condición, hasta un máximo. Resuelve igual si se
@@ -63,7 +64,8 @@ export default function MetaPixel() {
   // dominio solo se conoce en el navegador, por eso va en un efecto: el
   // servidor y el primer render del cliente coinciden (sin pixel).
   const [dominioReal, setDominioReal] = useState(false);
-  useEffect(() => setDominioReal(esDominioDeProduccion(window.location.hostname)), []);
+  // `?test=1` también lo apaga en el dominio real (ver lib/meta/modo-prueba.ts).
+  useEffect(() => setDominioReal(esDominioDeProduccion(window.location.hostname) && !enModoPrueba()), []);
   const activo = pixelId.length > 0 && dominioReal;
 
   /**

@@ -19,6 +19,7 @@ import { idDeVisitante } from './visitante';
 import { registrarEnEmbudo } from '@/lib/analitica/posthog';
 import { MONEDA, VALOR_MAXIMO, nuevoEventId, type NombreEvento } from './eventos';
 import { cuentaPorRuta, esDominioDeProduccion, pixelIdDe } from './cuentas';
+import { enModoPrueba, urlParaMedir } from './modo-prueba';
 
 declare global {
   interface Window {
@@ -34,7 +35,7 @@ declare global {
  */
 export function pixelIdActual(): string {
   if (typeof window === 'undefined') return '';
-  if (!esDominioDeProduccion(window.location.hostname)) return '';
+  if (!esDominioDeProduccion(window.location.hostname) || enModoPrueba()) return '';
   return pixelIdDe(cuentaPorRuta(window.location.pathname));
 }
 
@@ -203,7 +204,7 @@ export function enviarACapi(ruta: string, cuerpo: Record<string, unknown>): void
     void fetch(ruta, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ ...cuerpo, externalId: idDeVisitante(), sourceUrl: window.location.href }),
+      body: JSON.stringify({ ...cuerpo, externalId: idDeVisitante(), sourceUrl: urlParaMedir() }),
       keepalive: true,
     }).catch(() => {
       // La medición nunca puede romper la página.

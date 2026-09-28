@@ -56,9 +56,11 @@ export function esDominioDeProduccion(hostname: string): boolean {
   return DOMINIOS_PRODUCCION.includes(hostname);
 }
 
+/** Dominio real y sin `?test=1` (ver lib/meta/modo-prueba.ts). */
 export function urlEsDeProduccion(url: string): boolean {
   try {
-    return esDominioDeProduccion(new URL(url).hostname);
+    const u = new URL(url);
+    return esDominioDeProduccion(u.hostname) && u.searchParams.get('test') !== '1';
   } catch {
     return false;
   }

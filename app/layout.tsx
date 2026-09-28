@@ -129,9 +129,12 @@ export default function RootLayout({
 
         {/* GTM con afterInteractive: carga justo después de la hidratación, sin bloquear el
             render inicial, pero a tiempo para no perder conversiones de Google Ads (AW-) ni
-            pageviews de rebotes rápidos. lazyOnload (idle) perdía conversiones de tráfico pagado. */}
+            pageviews de rebotes rápidos. lazyOnload (idle) perdía conversiones de tráfico pagado.
+            Tres salidas antes de cargar nada: fuera de agroincol.com (localhost, previews), en
+            /ecogel (la tienda mide solo con su Pixel, sin GTM) y en modo prueba (`?test=1`, misma
+            clave de sessionStorage que lib/meta/modo-prueba.ts). */}
         <Script id="gtm-init" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NLH5NQRR');`}
+          {`(function(w,d,s,l,i){var o=w.location,h=o.hostname,p=o.pathname;if(h!=='agroincol.com'&&h!=='www.agroincol.com')return;if(p==='/ecogel'||p.indexOf('/ecogel/')===0)return;try{var t=new URLSearchParams(o.search).get('test');if(t==='1')w.sessionStorage.setItem('agroincol_test','1');if(t==='0')w.sessionStorage.removeItem('agroincol_test');if(w.sessionStorage.getItem('agroincol_test')==='1')return;}catch(e){if(/[?&]test=1(&|$)/.test(o.search))return;}w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NLH5NQRR');`}
         </Script>
         <noscript>
           <iframe

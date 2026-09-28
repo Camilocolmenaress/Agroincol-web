@@ -48,3 +48,11 @@ test('solo agroincol.com cuenta como tráfico real', () => {
   assert.equal(urlEsDeProduccion('http://localhost:3000/ecogel/gracias'), false);
   assert.equal(urlEsDeProduccion('no es una url'), false);
 });
+
+test('?test=1 marca una prueba en el dominio real: no cuenta como producción', () => {
+  assert.equal(urlEsDeProduccion('https://agroincol.com/ecogel/pedido?u=3&test=1'), false);
+  assert.equal(urlEsDeProduccion('https://agroincol.com/ecogel/gracias?test=1&pedido=EG-260927-A47J'), false);
+  // Solo el valor exacto 1: otro valor o un parámetro parecido no apaga nada.
+  assert.equal(urlEsDeProduccion('https://agroincol.com/ecogel/pedido?test=0'), true);
+  assert.equal(urlEsDeProduccion('https://agroincol.com/ecogel/pedido?contest=1'), true);
+});
