@@ -10,7 +10,7 @@ export const COLUMNAS_PEDIDO = [
   'ofertas', 'origen', 'ip', 'eventId', 'fbp', 'fbc', 'externalId', 'navegador', 'url', 'mpPagoId',
   // Al final y no junto a 'correo': insertarlas en medio descuadraría las filas
   // que ya existen en la hoja (el Apps Script reescribe solo el encabezado).
-  'tipoDocumento', 'documento',
+  'tipoDocumento', 'documento', 'autorizaWhatsapp',
 ] as const;
 
 function credenciales() {

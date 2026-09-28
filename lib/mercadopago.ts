@@ -35,7 +35,8 @@ export function construirPreferencia(p: {
         currency_id: 'COP',
       },
     ],
-    payer: { name: p.nombre, email: p.correo, phone: { area_code: '57', number: p.celular } },
+    // El checkout ya no pide correo: sin él, Mercado Pago lo pide en su propio formulario.
+    payer: { name: p.nombre, ...(p.correo ? { email: p.correo } : {}), phone: { area_code: '57', number: p.celular } },
     external_reference: p.pedidoId,
     notification_url: `${p.base}/api/ecogel/mp`,
     back_urls: { success: gracias('approved'), pending: gracias('pending'), failure: gracias('failure') },

@@ -7,14 +7,11 @@ const base = {
   metodo: 'online',
   nombre: 'Diana Pérez',
   celular: '310 789 1948',
-  correo: 'diana@example.com',
   tipoDocumento: 'CC',
   documento: '1.098.765.432',
-  direccion: 'Calle 10 # 20-30',
-  barrio: 'Cabecera',
+  direccion: 'Calle 10 # 20-30, Cabecera',
   ciudad: 'Bucaramanga',
   departamento: 'Santander',
-  ofertas: true,
   de: 'hogar',
 };
 
@@ -23,7 +20,6 @@ test('un pedido completo es válido y normaliza el celular', () => {
   assert.equal(r.ok, true);
   if (r.ok) {
     assert.equal(r.pedido.celular, '3107891948');
-    assert.equal(r.pedido.correo, 'diana@example.com');
   }
 });
 
@@ -33,12 +29,34 @@ test('el celular debe tener 10 dígitos y empezar por 3', () => {
   if (!r.ok) assert.match(r.errores.celular, /celular/i);
 });
 
-test('el correo es obligatorio en todos los métodos, contraentrega incluido', () => {
+test('el checkout ya no pide correo ni barrio aparte: el pedido vale sin ellos en todos los métodos', () => {
   for (const metodo of ['online', 'bancolombia', 'nequi', 'breb', 'contraentrega']) {
-    assert.equal(validarPedido({ ...base, correo: '', metodo }).ok, false);
-    assert.equal(validarPedido({ ...base, metodo }).ok, true);
+    const r = validarPedido({ ...base, metodo });
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.pedido.correo, '');
+      assert.equal(r.pedido.barrio, '');
+    }
   }
-  assert.equal(validarPedido({ ...base, correo: 'no-es-correo' }).ok, false);
+});
+
+test('un correo o barrio que llegue (página vieja en caché) se guarda; un correo inválido se descarta sin bloquear', () => {
+  const r = validarPedido({ ...base, correo: 'Diana@Example.com', barrio: 'Cabecera' });
+  assert.equal(r.ok && r.pedido.correo, 'diana@example.com');
+  assert.equal(r.ok && r.pedido.barrio, 'Cabecera');
+  const malo = validarPedido({ ...base, correo: 'no-es-correo' });
+  assert.equal(malo.ok && malo.pedido.correo, '');
+});
+
+test('las autorizaciones son expresas: solo cuentan si llegan en true', () => {
+  const r = validarPedido(base);
+  assert.equal(r.ok && r.pedido.autorizaWhatsapp, false);
+  assert.equal(r.ok && r.pedido.ofertas, false);
+  const si = validarPedido({ ...base, autorizaWhatsapp: true, ofertas: true });
+  assert.equal(si.ok && si.pedido.autorizaWhatsapp, true);
+  assert.equal(si.ok && si.pedido.ofertas, true);
+  const texto = validarPedido({ ...base, autorizaWhatsapp: 'sí' });
+  assert.equal(texto.ok && texto.pedido.autorizaWhatsapp, false);
 });
 
 test('el documento es obligatorio: tipo CC, TI o NIT y solo dígitos', () => {

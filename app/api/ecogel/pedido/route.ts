@@ -140,6 +140,7 @@ export async function POST(req: NextRequest) {
           mpPagoId: '',
           tipoDocumento: pedido.tipoDocumento,
           documento: pedido.documento,
+          autorizaWhatsapp: pedido.autorizaWhatsapp ? 'sí' : 'no',
         })
   ).catch((error) => {
     console.error('[hoja-pedidos] no se pudo guardar el pedido', pedidoId, error instanceof Error ? error.message : error);

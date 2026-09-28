@@ -29,6 +29,12 @@ test('la preferencia lleva un solo ítem con el total y las URLs del pedido', ()
   delete process.env.MP_ACCESS_TOKEN;
 });
 
+test('sin correo, la preferencia no manda email del pagador (Mercado Pago lo pide)', () => {
+  const p = construirPreferencia({ ...datos, correo: '' }) as any;
+  assert.equal('email' in p.payer, false);
+  assert.equal(p.payer.phone.number, '3107891948');
+});
+
 test('crearPreferencia verifica la petición y devuelve init_point o el detalle del error', async () => {
   process.env.MP_ACCESS_TOKEN = 'APP_USR-prueba';
   const pref = { external_reference: 'EG-1' };

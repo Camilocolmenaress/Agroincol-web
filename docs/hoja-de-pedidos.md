@@ -36,7 +36,7 @@ var COLUMNAS = [
   'metodoPago', 'nombre', 'celular', 'correo', 'direccion', 'barrio', 'ciudad', 'departamento',
   'ofertas', 'origen', 'ip', 'eventId', 'fbp', 'fbc', 'externalId', 'navegador', 'url', 'mpPagoId',
   // Siempre se agrega al final: en medio descuadra las filas existentes.
-  'tipoDocumento', 'documento'
+  'tipoDocumento', 'documento', 'autorizaWhatsapp'
 ];
 
 function hoja() {
@@ -132,13 +132,20 @@ function leerFila(h, numeroFila) {
   return fila;
 }
 
+// Desde el 27-sep-2026 el checkout pide dirección y barrio en un solo campo y
+// la columna barrio llega vacía; los pedidos anteriores la traen aparte.
+function direccionCompleta(fila) {
+  return [fila.direccion, fila.barrio].filter(function (v) { return v; }).join(', ');
+}
+
 function avisarPorCorreo(fila) {
   try {
     var asunto = 'Pedido EcoGel ' + fila.pedidoId + ' · ' + fila.unidades + 'u · ' + fila.metodoPago;
     var cuerpo =
       fila.nombre + ' · ' + fila.celular + '\n' +
-      fila.tipoDocumento + ' ' + fila.documento + ' · ' + fila.correo + '\n' +
-      fila.direccion + ', ' + fila.barrio + ', ' + fila.ciudad + ', ' + fila.departamento + '\n' +
+      fila.tipoDocumento + ' ' + fila.documento + (fila.correo ? ' · ' + fila.correo : '') + '\n' +
+      direccionCompleta(fila) + ', ' + fila.ciudad + ', ' + fila.departamento + '\n' +
+      'Autoriza WhatsApp: ' + (fila.autorizaWhatsapp || 'no') + '\n' +
       'Total: $' + fila.total + ' (' + fila.metodoPago + ')\n' +
       'Estado: ' + fila.estado + '\n\n' +
       'Confirmar por WhatsApp (mensaje ya escrito, solo enviar):\n' + linkWhatsapp(fila);
@@ -158,7 +165,7 @@ function mensajeWhatsapp(fila) {
   if (fila.metodoPago === 'contraentrega') {
     mensaje =
       'Hola ' + nombre + ', tu pedido ' + pedidoId + ' de EcoGel está listo para despachar. ' +
-      '*Confirma este mensaje con un SÍ* si deseas recibirlo en ' + fila.direccion + ', ' + fila.barrio + '.';
+      '*Confirma este mensaje con un SÍ* si deseas recibirlo en ' + direccionCompleta(fila) + '.';
   } else if (fila.metodoPago === 'online') {
     mensaje =
       'Hola ' + nombre + ', confirmamos tu pedido ' + pedidoId + ' de EcoGel. ' +

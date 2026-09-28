@@ -10,7 +10,7 @@ export const DEPARTAMENTOS = [
   'San Andrés y Providencia', 'Santander', 'Sucre', 'Tolima', 'Valle del Cauca', 'Vaupés', 'Vichada',
 ] as const;
 
-// Las transportadoras piden documento y correo para despachar contraentrega.
+// Todas las transportadoras exigen el documento del destinatario.
 export const TIPOS_DOCUMENTO = ['CC', 'TI', 'NIT'] as const;
 export type TipoDocumento = (typeof TIPOS_DOCUMENTO)[number];
 
@@ -20,14 +20,19 @@ export interface DatosPedido {
   nombre: string;
   /** 10 dígitos, sin espacios ni indicativo. */
   celular: string;
+  /** El checkout ya no lo pide (se captura, opcional, en el pop-up). '' casi siempre. */
   correo: string;
   tipoDocumento: TipoDocumento;
   /** Solo dígitos (un NIT pierde puntos y guion del DV). */
   documento: string;
+  /** Incluye el barrio: el checkout los pide en un solo campo. */
   direccion: string;
+  /** Solo lo traen páginas viejas en caché. La columna sigue en la hoja. */
   barrio: string;
   ciudad: string;
   departamento: string;
+  /** Autorización expresa (casilla desmarcada por defecto) para escribirle por WhatsApp sobre el pedido. */
+  autorizaWhatsapp: boolean;
   ofertas: boolean;
   de: Segmento;
 }
@@ -53,9 +58,9 @@ export function validarPedido(entrada: unknown): Resultado {
   const celular = texto(e.celular, 30).replace(/\D/g, '').replace(/^57(?=3\d{9}$)/, '');
   if (!/^3\d{9}$/.test(celular)) errores.celular = 'Escribe un celular de 10 dígitos que empiece por 3';
 
-  const correo = texto(e.correo).toLowerCase();
-  if (!correo) errores.correo = 'Escribe tu correo';
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) errores.correo = 'Ese correo no parece válido';
+  // Opcional y nunca bloquea: si no parece correo, se guarda vacío.
+  const correoCrudo = texto(e.correo).toLowerCase();
+  const correo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoCrudo) ? correoCrudo : '';
 
   const tipoDocumento = (TIPOS_DOCUMENTO as readonly unknown[]).includes(e.tipoDocumento) ? (e.tipoDocumento as TipoDocumento) : null;
   if (!tipoDocumento) errores.tipoDocumento = 'Escoge el tipo de documento';
@@ -63,9 +68,8 @@ export function validarPedido(entrada: unknown): Resultado {
   if (!/^\d{5,12}$/.test(documento)) errores.documento = 'Escribe tu número de documento';
 
   const direccion = texto(e.direccion);
-  if (direccion.length < 5) errores.direccion = 'Escribe la dirección de entrega';
+  if (direccion.length < 5) errores.direccion = 'Escribe la dirección de entrega con el barrio';
   const barrio = texto(e.barrio, 60);
-  if (barrio.length < 2) errores.barrio = 'Escribe el barrio';
   const ciudad = texto(e.ciudad, 60);
   if (ciudad.length < 2) errores.ciudad = 'Escribe la ciudad o municipio';
   const departamento = texto(e.departamento, 40);
@@ -87,7 +91,9 @@ export function validarPedido(entrada: unknown): Resultado {
       barrio,
       ciudad,
       departamento,
-      ofertas: e.ofertas !== false,
+      // Consentimiento expreso (Ley 1581): solo un true explícito cuenta.
+      autorizaWhatsapp: e.autorizaWhatsapp === true,
+      ofertas: e.ofertas === true,
       de: e.de as Segmento,
     },
   };
