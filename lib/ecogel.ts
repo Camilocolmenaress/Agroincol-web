@@ -45,7 +45,7 @@ export const TIERS: readonly Tier[] = [
     producto: 109_700,
     precioTachado: PRECIO_UNIDAD * 3,
     envio: 0,
-    etiqueta: 'Todo el espacio · envío gratis',
+    etiqueta: 'Tratamiento completo · envío gratis',
     masVendido: true,
   },
 ];
@@ -115,8 +115,8 @@ export const BONO_GUIA_PDF = {
 } as const;
 
 export const GARANTIA = {
-  titulo: 'Si en 30 días siguen, te enviamos otro kit sin costo',
-  texto: 'Nos escribes por WhatsApp con una foto y te despachamos la reposición. Sin formularios ni devoluciones.',
+  titulo: 'Si en 30 días siguen, te devolvemos el dinero',
+  texto: 'Nos escribes por WhatsApp con una foto y te devolvemos el dinero por transferencia bancaria. No tienes que devolver el producto ni llenar formularios.',
   dias: 30,
 } as const;
 
@@ -134,7 +134,7 @@ const OBJECIONES_COMUNES: Pregunta[] = [
   {
     pregunta: '¿Cuánto rinde una jeringa?',
     respuesta:
-      'Una jeringa de 5 g alcanza para una cocina y un baño (unos 30-40 puntos del tamaño de un grano de arroz). Para una casa completa o una infestación fuerte recomendamos 3.',
+      'Una jeringa de 5 g alcanza para una cocina y un baño (unos 30-40 puntos del tamaño de un grano de arroz). La etiqueta indica repetir a las 4 semanas si persisten y volver a aplicar como mantenimiento. Por eso el combo trae 3.',
   },
   {
     pregunta: '¿Y si no funciona?',
@@ -143,7 +143,7 @@ const OBJECIONES_COMUNES: Pregunta[] = [
   {
     pregunta: '¿Cómo se aplica?',
     respuesta:
-      'Puntos pequeños en rendijas, detrás de la nevera y la estufa, bajo el lavaplatos y en las esquinas de los gabinetes. Sin desalojar, sin tapar comida, sin olor. Con el pedido llega la guía paso a paso.',
+      'Puntos pequeños en rendijas, detrás de la nevera y la estufa, bajo el lavaplatos y en las esquinas de los gabinetes. Nunca sobre superficies donde se preparan alimentos. Mientras aplicas, niños y mascotas fuera de la cocina. Sin olor. Con el pedido llega la guía paso a paso.',
   },
 ];
 
@@ -159,34 +159,37 @@ const PREGUNTAS_ENVIO_PAGO: Pregunta[] = [
   },
   {
     pregunta: '¿Cómo reclamo la garantía?',
-    respuesta: `Si a los ${GARANTIA.dias} días siguen viendo cucarachas, nos escribes por WhatsApp con una foto y te enviamos otro kit sin costo.`,
+    respuesta: `Si a los ${GARANTIA.dias} días siguen viendo cucarachas, nos escribes por WhatsApp con una foto y te devolvemos el dinero por transferencia bancaria.`,
   },
 ];
 
+const RESPUESTA_NINOS_MASCOTAS =
+  'Sí, siguiendo la etiqueta. Es un insecticida, por eso va solo en huecos y rendijas, nunca en superficies que se tocan ni donde se preparan alimentos. Mientras aplicas, niños y mascotas fuera de la cocina. Guarda la jeringa bajo llave. Contiene Bitrex, una sustancia amarga que se usa para reducir ingestiones accidentales.';
+
 export const HOGAR: EcogelConfig = {
   segmento: 'hogar',
-  metaTitle: 'EcoGel: cocina sin cucarachas en 48 horas',
+  metaTitle: 'EcoGel: cucarachas fuera de tu cocina',
   metaDescription:
-    'Gel profesional para cucarachas, seguro con niños y mascotas. Envío a todo Colombia, paga en línea o al recibir. Garantía de 30 días.',
-  titulo: 'Cocina sin cucarachas en 48 horas, sin fumigar ni salir de casa',
-  subtitulo: 'El mismo gel que usamos en nuestras fumigaciones, en una jeringa que aplicas tú en 10 minutos.',
+    'Gel en cebo para cucarachas que se aplica en rendijas y contiene Bitrex. Envío a todo Colombia, paga en línea o al recibir. Garantía de 30 días.',
+  titulo: 'Cucarachas fuera de tu cocina: el gel que usan nuestros técnicos, en una jeringa',
+  subtitulo: 'Lo aplicas tú en 10 minutos, en puntos del tamaño de un grano de arroz dentro de las rendijas.',
   beneficios: [
-    { icono: 'ShieldCheck', texto: 'Seguro con niños y mascotas: lleva Bitrex' },
-    { icono: 'Wind', texto: 'Sin olor, sin desalojar, sin tapar la comida' },
+    { icono: 'ShieldCheck', texto: 'Contiene Bitrex y se aplica solo en rendijas' },
+    { icono: 'Wind', texto: 'Sin olor. Va en rendijas, lejos de donde preparas la comida.' },
     { icono: 'Timer', texto: 'Primeros resultados en 24-48 horas' },
     { icono: 'Bug', texto: 'Elimina la colonia, no solo la que ves' },
   ],
   queEs: [
     'EcoGel es un cebo en gel para cucarachas: no las espanta, las atrae. Se aplica en puntos del tamaño de un grano de arroz en las rendijas donde viven, y ellas lo comen.',
     'Actúa con retardo: la que come vuelve al nido y contamina a las demás. Por eso en 24-48 horas ves las primeras caer y en 1-2 semanas desaparece la colonia, no solo la que viste.',
-    'Lleva Bitrex, el amargante más potente que existe: si un niño o una mascota lo toca con la boca, lo escupe. Sin olor, sin vapores, sin salir de la casa.',
+    'Contiene Bitrex al 0,008 %, una sustancia muy amarga que se agrega a productos del hogar para reducir ingestiones accidentales (Hansen et al., Vet. Hum. Toxicol., 1993). Sin olor ni vapores. Mientras aplicas, que nadie más esté en la cocina.',
   ],
   reencuadre: 'Menos que el mercado que botas por una infestación',
   objeciones: [
     {
-      pregunta: '¿Es seguro con niños y mascotas?',
+      pregunta: '¿Puedo usarlo si tengo niños o mascotas?',
       respuesta:
-        'Sí. Lleva Bitrex, la sustancia más amarga que existe: si un niño o una mascota lo toca con la boca, lo escupe de inmediato. Se aplica en rendijas donde ellos no llegan, y no hay olor ni vapores. Y quitar las cucarachas importa: el NEJM asoció su presencia con el triple de hospitalizaciones en niños asmáticos.',
+        `${RESPUESTA_NINOS_MASCOTAS} Y quitar las cucarachas importa: el NEJM asoció su presencia con el triple de hospitalizaciones en niños asmáticos.`,
     },
     ...OBJECIONES_COMUNES,
   ],
@@ -197,9 +200,9 @@ export const HOGAR: EcogelConfig = {
         'El aerosol mata la que sale y deja las 40 que están detrás de la nevera. El gel se lo llevan al nido y lo comparten: cae la colonia completa.',
     },
     {
-      titulo: 'Sin olor y sin salir de la casa',
+      titulo: 'Sin olor y sin rociar',
       texto:
-        'No tienes que tapar la comida, sacar a los niños ni ventilar. Aplicas los puntos y sigues con tu día.',
+        'No se rocía ni deja vapores. Mientras aplicas, niños y mascotas fuera de la cocina. Al terminar, sigues con tu día.',
     },
     {
       titulo: 'Diez minutos, una vez',
@@ -208,14 +211,13 @@ export const HOGAR: EcogelConfig = {
     },
     {
       titulo: 'Respaldo de una fumigadora de verdad',
-      texto: `Lo aplicamos hace ${new Date().getFullYear() - BUSINESS.founded} años en casas y restaurantes. No es un producto de importador: es lo que usan nuestros técnicos.`,
+      texto: `Lo aplicamos hace ${new Date().getFullYear() - BUSINESS.founded} años en casas y restaurantes. Es el mismo producto que usan nuestros técnicos.`,
     },
   ],
   preguntas: [
     {
-      pregunta: '¿Es seguro con niños y mascotas?',
-      respuesta:
-        'Sí. Lleva Bitrex, la sustancia más amarga que existe, y se aplica en rendijas donde ellos no llegan. Sin olor ni vapores.',
+      pregunta: '¿Puedo usarlo si tengo niños o mascotas?',
+      respuesta: RESPUESTA_NINOS_MASCOTAS,
     },
     ...OBJECIONES_COMUNES,
     ...PREGUNTAS_ENVIO_PAGO,
@@ -232,26 +234,26 @@ export const RESTAURANTES: EcogelConfig = {
   segmento: 'restaurantes',
   metaTitle: 'EcoGel: cero cucarachas en tu cocina antes de sanidad',
   metaDescription:
-    'Gel profesional para cucarachas apto para zona de alimentos, con registro INVIMA. Sin cerrar el local. Envío a todo Colombia.',
+    'Gel en cebo para cucarachas en cocinas de restaurante: va en rendijas y bajo equipos, con registro INVIMA. Se aplica al cierre. Envío a todo Colombia.',
   titulo: 'Cero cucarachas en tu cocina antes de la próxima visita de sanidad',
-  subtitulo: 'El gel que usamos en restaurantes, sin cerrar el local ni parar la cocina.',
+  subtitulo: 'El gel que usamos en restaurantes. Se aplica al cierre, con la cocina vacía, y al día siguiente abres normal.',
   beneficios: [
-    { icono: 'Store', texto: 'Sin cerrar el local ni parar un turno' },
-    { icono: 'Utensils', texto: 'Apto para zona de alimentos: sin olor ni residuos' },
+    { icono: 'Store', texto: 'Se aplica al cierre: no pierdes un turno' },
+    { icono: 'Utensils', texto: 'Va en rendijas y bajo equipos, nunca sobre superficies de trabajo' },
     { icono: 'Timer', texto: 'Actúa en 24-48 horas' },
-    { icono: 'FileCheck', texto: 'Registro sanitario INVIMA 2009V0004964' },
+    { icono: 'FileCheck', texto: 'Registro sanitario INVIMA 2021V-0000060' },
   ],
   queEs: [
     'EcoGel es el cebo en gel que usamos en cocinas de restaurantes: se aplica en rendijas, bajo equipos y en zócalos, nunca sobre superficies de trabajo.',
     'Actúa con retardo: la cucaracha que lo come vuelve al nido y contamina a la colonia. Primeros resultados en 24-48 horas, colonia completa en 1-2 semanas.',
-    'Sin olor, sin vapores y sin cerrar: diez minutos después del cierre, con la cocina apagada, y al día siguiente abres normal. Registro sanitario INVIMA 2009V0004964.',
+    'Sin olor ni vapores. Se aplica en diez minutos después del cierre, con la cocina apagada y sin personal en la zona; al día siguiente abres normal. Registro sanitario INVIMA 2021V-0000060.',
   ],
   reencuadre: 'Menos que un cliente que ve una cucaracha y no vuelve',
   objeciones: [
     {
-      pregunta: '¿Puedo aplicarlo con la cocina funcionando?',
+      pregunta: '¿Tengo que cerrar el local?',
       respuesta:
-        'Sí. Se aplica en rendijas, bajo equipos y en zócalos, nunca sobre superficies de trabajo. No hay olor, no hay vapores y no hay que cerrar. La Resolución 2674 exige control de plagas; el gel cumple sin cerrar.',
+        'No. Se aplica al cierre, con la cocina apagada y sin personal en la zona, como indica la etiqueta. Va en rendijas, bajo equipos y en zócalos, nunca sobre superficies de trabajo ni donde se preparan alimentos. Al día siguiente abres normal. La Resolución 2674 exige control de plagas y el gel te ayuda a cumplirla sin perder un turno.',
     },
     ...OBJECIONES_COMUNES,
   ],
@@ -264,12 +266,12 @@ export const RESTAURANTES: EcogelConfig = {
     {
       titulo: 'Sin cerrar ni un turno',
       texto:
-        'Diez minutos después del cierre, con la cocina apagada. Al día siguiente abres normal.',
+        'Diez minutos después del cierre, con la cocina apagada y sin personal en la zona. Al día siguiente abres normal.',
     },
     {
       titulo: 'Prevención, no solo emergencia',
       texto:
-        'Un kit cada 2-3 meses en los puntos críticos mantiene la cocina limpia entre fumigaciones.',
+        'Repetir el tratamiento cada 3 meses en los puntos críticos, como indica la etiqueta, mantiene la cocina limpia entre fumigaciones.',
     },
     {
       titulo: 'Respaldo de una fumigadora de verdad',
@@ -278,8 +280,8 @@ export const RESTAURANTES: EcogelConfig = {
   ],
   preguntas: [
     {
-      pregunta: '¿Puedo aplicarlo con la cocina funcionando?',
-      respuesta: 'Sí. Va en rendijas y bajo equipos, nunca sobre superficies de trabajo. Sin olor ni vapores.',
+      pregunta: '¿Tengo que cerrar el local?',
+      respuesta: 'No. Se aplica al cierre, con la cocina vacía, en rendijas y bajo equipos, nunca sobre superficies de trabajo. Sin olor ni vapores.',
     },
     ...OBJECIONES_COMUNES,
     ...PREGUNTAS_ENVIO_PAGO,

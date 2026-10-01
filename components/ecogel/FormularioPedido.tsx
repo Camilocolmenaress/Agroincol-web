@@ -400,7 +400,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
 
           {/* Las razones para no abandonar, justo encima del botón. */}
           <ul className="mt-3 space-y-1.5 px-1 text-body-sm text-brand-black/80">
-            <li className="flex gap-2"><Check size={16} className="mt-0.5 flex-none text-brand-green" aria-hidden />Garantía: si en {GARANTIA.dias} días siguen, te enviamos otro kit sin costo</li>
+            <li className="flex gap-2"><Check size={16} className="mt-0.5 flex-none text-brand-green" aria-hidden />Garantía: si en {GARANTIA.dias} días siguen, te devolvemos el dinero</li>
             {unidades === 3 && (
               <li className="flex gap-2"><Check size={16} className="mt-0.5 flex-none text-brand-green" aria-hidden />Guía PDF de regalo: 5 puntos donde entran las cucarachas</li>
             )}

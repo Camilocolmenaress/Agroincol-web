@@ -4,7 +4,7 @@ import { AUTORIDAD, GARANTIA } from '@/lib/ecogel';
 import { IconoChat, IconoEscudo, IconoRuta } from './Iconos';
 
 const BENEFICIOS = [
-  { Icono: IconoEscudo, titulo: `Garantía de ${GARANTIA.dias} días`, texto: 'Si siguen, otro kit sin costo.' },
+  { Icono: IconoEscudo, titulo: `Garantía de ${GARANTIA.dias} días`, texto: 'Si siguen, te devolvemos el dinero.' },
   { Icono: IconoChat, titulo: 'Soporte por WhatsApp', texto: 'Fumigadores que te guían.' },
   { Icono: IconoRuta, titulo: 'Envío con rastreo', texto: 'La guía llega a tu WhatsApp.' },
 ];

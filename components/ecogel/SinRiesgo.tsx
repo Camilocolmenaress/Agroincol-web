@@ -9,7 +9,7 @@ export default function SinRiesgo() {
         <ol className="mt-4 list-decimal space-y-1.5 pl-5 text-body-sm text-brand-black/75">
           <li>Aplicas el gel siguiendo la guía que llega con el pedido.</li>
           <li>Si a los {GARANTIA.dias} días siguen apareciendo, nos mandas una foto por WhatsApp.</li>
-          <li>Te despachamos otro kit sin costo. Sin devoluciones ni formularios.</li>
+          <li>Te devolvemos el dinero por transferencia bancaria. No tienes que devolver el producto.</li>
         </ol>
         <a href={whatsappEcogel('Hola, quiero saber cómo funciona la garantía de EcoGel')} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block text-body-sm font-semibold text-brand-green underline underline-offset-2">
           Preguntar por la garantía

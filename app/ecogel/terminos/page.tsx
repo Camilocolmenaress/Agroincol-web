@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-const ACTUALIZADO = '27 de septiembre de 2026';
+const ACTUALIZADO = '1 de octubre de 2026';
 
 export default function TerminosPage() {
   const secciones: { titulo: string; id?: string; parrafos: React.ReactNode[] }[] = [
@@ -24,7 +24,7 @@ export default function TerminosPage() {
       titulo: 'Quién vende',
       parrafos: [
         `${BUSINESS.legalName}, NIT 1.095.786.836-1. ${BUSINESS.address.full}. Teléfono y WhatsApp ${BUSINESS.phone}. Correo ${BUSINESS.email}.`,
-        'EcoGel es marca de Mylva S.A. Registro INVIMA 2009V0004964.',
+        'EcoGel es fabricado por Mylva S.A. (España) e importado por Comervet S.A. Registro INVIMA 2021V-0000060.',
       ],
     },
     {
@@ -53,6 +53,7 @@ export default function TerminosPage() {
       titulo: 'Garantía EcoGel',
       parrafos: [
         `${GARANTIA.titulo}. ${GARANTIA.texto}`,
+        'Para la garantía te pedimos el número de pedido, una foto donde se vean las cucarachas y los datos de una cuenta bancaria a tu nombre. Te devolvemos por transferencia a esa cuenta, también si pagaste en efectivo contra entrega.',
         'Esta garantía se suma a la garantía legal de calidad e idoneidad de la Ley 1480 de 2011; no la reemplaza.',
       ],
     },
@@ -60,6 +61,7 @@ export default function TerminosPage() {
       titulo: 'Derecho de retracto',
       parrafos: [
         'Como compraste a distancia, puedes retractarte de la compra dentro de los 5 días hábiles siguientes a la entrega (Ley 1480 de 2011, artículo 47).',
+        'El retracto no es la garantía: no necesitas dar un motivo, pero sí debes devolver el producto.',
         'Para hacerlo, escríbenos por WhatsApp o correo con tu número de pedido. Devuelves el producto por los mismos medios y en las mismas condiciones en que lo recibiste; el costo del transporte de la devolución corre por tu cuenta.',
         'Te devolvemos todo lo que pagaste, sin descuentos ni retenciones, dentro de los 30 días calendario siguientes a tu solicitud.',
       ],

@@ -188,7 +188,7 @@ export function correoPremio(p: { premio: IdPremio; codigo: string; vence: strin
       'Úsalo aquí, ya viene aplicado:',
       enlacePremio(p.premio, p.codigo, p.base),
       '',
-      'Garantía EcoGel: si en 30 días siguen, te enviamos otro kit sin costo.',
+      'Garantía EcoGel: si en 30 días siguen, te devolvemos el dinero.',
       '',
       `Términos del premio: ${p.base}/ecogel/terminos#ruleta`,
       '',

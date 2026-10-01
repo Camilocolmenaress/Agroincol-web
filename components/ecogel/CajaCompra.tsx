@@ -1,6 +1,6 @@
 'use client';
 
-import { Bug, FileCheck, FileText, RotateCcw, ShieldCheck, Store, Timer, Truck, Utensils, Wind, Star } from 'lucide-react';
+import { Bug, FileCheck, FileText, RotateCcw, ShieldCheck, Syringe, Store, Timer, Truck, Utensils, Wind, Star } from 'lucide-react';
 import { ENTREGA_CORTA } from '@/lib/ecogel-despacho';
 import { AUTORIDAD, BONO_GUIA_PDF, ENVIO_BASE, GARANTIA, money, tierDe, totalPedido, type EcogelConfig } from '@/lib/ecogel';
 import { resumenResenas } from '@/lib/ecogel-resenas';
@@ -75,6 +75,10 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
       <div className="mt-4 rounded-xl border-2 border-brand-green/30 bg-brand-green/5 p-4">
         <p className="text-body-sm font-bold text-brand-green">Con el paquete de 3 unidades llevas:</p>
         <ul className="mt-2.5 space-y-2">
+          <li className="flex items-center gap-3 text-body-sm text-brand-black">
+            <Syringe size={20} className="flex-none text-brand-green" aria-hidden />
+            3 jeringas: aplicación inicial, refuerzo en la semana 4 si persisten y mantenimiento, como indica la etiqueta
+          </li>
           <li className="flex items-center gap-3 text-body-sm text-brand-black">
             <Truck size={20} className="flex-none text-brand-green" aria-hidden />
             Envío gratis a todo el país

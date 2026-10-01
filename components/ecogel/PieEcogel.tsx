@@ -12,7 +12,7 @@ export default function PieEcogel() {
         {' · '}
         <a href="/ecogel/terminos" className="underline underline-offset-4">Términos y condiciones</a>
       </p>
-      <p className="text-white/35 text-body-sm mt-3">© {new Date().getFullYear()} {BUSINESS.legalName}. EcoGel es marca de Mylva S.A. Registro INVIMA 2009V0004964.</p>
+      <p className="text-white/35 text-body-sm mt-3">© {new Date().getFullYear()} {BUSINESS.legalName}. EcoGel es fabricado por Mylva S.A. (España) e importado por Comervet S.A. Registro INVIMA 2021V-0000060.</p>
     </footer>
   );
 }

@@ -2,7 +2,7 @@ import { ShieldCheck } from 'lucide-react';
 import { GARANTIA } from '@/lib/ecogel';
 
 // El bloque rosa de Lummia ("Resultados en 90 días o devolvemos tu dinero"),
-// con la garantía nacional: reposición, no devolución.
+// con la garantía nacional: devolución del dinero.
 export default function BloqueGarantia() {
   return (
     <section className="container-custom mt-5">

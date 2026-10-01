@@ -3,12 +3,12 @@ import { AEROSOL } from '@/lib/ecogel-evidencia';
 
 // Tabla de Lummia ("Otras marcas / Láser / Rastrillo / Cera"). La fumigación no
 // entra: es el servicio de la casa y se recomienda honestamente en el FAQ.
-const COLUMNAS = ['Gel AGROINCOL', 'Aerosol', 'Trampas', 'Otros geles'];
+const COLUMNAS = ['EcoGel', 'Aerosol', 'Trampas', 'Otros geles'];
 const FILAS: [string, boolean[]][] = [
   ['Elimina la colonia completa', [true, false, false, true]],
   ['Sin olor ni vapores', [true, false, true, true]],
-  ['Seguro con niños y mascotas (Bitrex)', [true, false, true, true]],
-  ['Sin desalojar ni tapar comida', [true, false, true, true]],
+  ['Contiene Bitrex', [true, false, true, true]],
+  ['No se rocía: va en rendijas', [true, false, true, true]],
   ['Sigue actuando por semanas', [true, false, false, true]],
   ['Respaldo de una fumigadora', [true, false, false, false]],
 ];
