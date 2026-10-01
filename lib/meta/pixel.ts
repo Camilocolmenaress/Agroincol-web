@@ -17,7 +17,7 @@
 
 import { idDeVisitante } from './visitante';
 import { registrarEnEmbudo } from '@/lib/analitica/posthog';
-import { MONEDA, VALOR_MAXIMO, nuevoEventId, type NombreEvento } from './eventos';
+import { MONEDA, UNA_VEZ_POR_SESION, VALOR_MAXIMO, nuevoEventId, type NombreEvento } from './eventos';
 import { cuentaPorRuta, esDominioDeProduccion, pixelIdDe } from './cuentas';
 import { enModoPrueba, urlParaMedir } from './modo-prueba';
 
@@ -42,9 +42,6 @@ export function pixelIdActual(): string {
 export function pixelActivo(): boolean {
   return pixelIdActual().length > 0;
 }
-
-/** Eventos de conversión: uno por sesión y por visitante. PageView y ViewContent no. */
-const UNA_VEZ_POR_SESION: NombreEvento[] = ['Lead', 'Contact', 'InitiateCheckout', 'Purchase'];
 
 /**
  * ¿Este visitante ya disparó este evento en esta sesión?
@@ -104,8 +101,8 @@ interface DatosEvento {
 /**
  * Llama a `fbq` apenas exista, hasta 5 s.
  *
- * Los eventos que se disparan al montar la página (ViewContent, InitiateCheckout,
- * el Purchase de /gracias) corren ANTES de que next/script inyecte el snippet
+ * Los eventos que se disparan al montar la página (AddToCart, el Purchase de
+ * /gracias) corren ANTES de que next/script inyecte el snippet
  * del Pixel (ver components/analytics/MetaPixel.tsx): sin esta espera `fbq` aún
  * no existe, la llamada se perdía en silencio y el evento solo llegaba por el
  * servidor. El event_id ya está decidido, así que la deduplicación no cambia.

@@ -6,6 +6,7 @@ import { AUTORIDAD, BONO_GUIA_PDF, ENVIO_BASE, GARANTIA, money, tierDe, totalPed
 import { resumenResenas } from '@/lib/ecogel-resenas';
 import { IMIDACLOPRID } from '@/lib/ecogel-evidencia';
 import SelectorTier from './SelectorTier';
+import { ID_OFERTA } from './RastreoVista';
 import { urlPedido, useTier } from './TierContext';
 
 // Pantalla 2 de Lummia, en su orden exacto: H1 → precio anclado → estrellas →
@@ -67,7 +68,7 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
         )}
       </div>
 
-      <div className="mt-5">
+      <div id={ID_OFERTA} className="mt-5">
         <SelectorTier />
       </div>
 

@@ -23,15 +23,28 @@
  * Si los dos fueran `Lead`, Meta optimizaría hacia el más barato y barato aquí
  * significa peor.
  *
- * Los tres de compra son del e-commerce de EcoGel (/ecogel): `ViewContent` en
- * la página de producto, `InitiateCheckout` al abrir el checkout y `Purchase`
- * al crear el pedido. `Purchase` sale por el servidor desde /api/ecogel/pedido
- * (lleva datos hasheados) y por el Pixel desde /ecogel/gracias, con el mismo
- * event_id.
+ * Los cuatro de compra son del e-commerce de EcoGel (/ecogel), uno por paso
+ * real del recorrido para que cada columna de Meta mida algo distinto:
+ *
+ * - `ViewContent`: la oferta (precio y cantidad) aparece en pantalla. No al
+ *   cargar la página: eso ya lo mide la visita.
+ * - `AddToCart`: carga /ecogel/pedido con la cantidad elegida. No hay carrito;
+ *   llegar al checkout ES elegir y avanzar.
+ * - `InitiateCheckout`: escribe en el primer campo del formulario. Separa a
+ *   quien se asusta al ver el formulario de quien lo abandona a medias.
+ * - `Purchase`: al crear el pedido. Sale por el servidor desde
+ *   /api/ecogel/pedido (lleva datos hasheados) y por el Pixel desde
+ *   /ecogel/gracias, con el mismo event_id.
  */
-export const EVENTOS = ['PageView', 'Lead', 'Contact', 'ViewContent', 'InitiateCheckout', 'Purchase'] as const;
+export const EVENTOS = ['PageView', 'Lead', 'Contact', 'ViewContent', 'AddToCart', 'InitiateCheckout', 'Purchase'] as const;
 
 export type NombreEvento = (typeof EVENTOS)[number];
+
+/**
+ * Eventos que un visitante dispara una sola vez por sesión. PageView no.
+ * ViewContent sí: volver del checkout a la landing no es ver la oferta otra vez.
+ */
+export const UNA_VEZ_POR_SESION: readonly NombreEvento[] = ['Lead', 'Contact', 'ViewContent', 'AddToCart', 'InitiateCheckout', 'Purchase'];
 
 export function esEventoValido(valor: unknown): valor is NombreEvento {
   return typeof valor === 'string' && (EVENTOS as readonly string[]).includes(valor);

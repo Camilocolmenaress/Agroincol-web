@@ -71,6 +71,19 @@ export function totalPedido(unidades: Unidades, metodo: MetodoPago) {
   };
 }
 
+/**
+ * Datos de los eventos de Meta del embudo (ViewContent, AddToCart,
+ * InitiateCheckout): el precio de la opción elegida, sin envío ni descuentos.
+ * El valor real de la venta lo lleva solo el Purchase.
+ */
+export function datosMetaEcogel(segmento: Segmento, unidades: Unidades) {
+  return {
+    categoria: `ecogel-${segmento}`,
+    valor: tierDe(unidades).producto,
+    contenido: { ids: ['ecogel'], numItems: unidades },
+  };
+}
+
 export function money(n: number): string {
   return `$${n.toLocaleString('es-CO')}`;
 }

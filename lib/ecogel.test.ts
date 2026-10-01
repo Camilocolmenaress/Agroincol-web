@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { DESCUENTO_ONLINE, TIERS, TIER_POR_DEFECTO, esUnidades, money, tierDe, totalPedido } from './ecogel';
+import { DESCUENTO_ONLINE, TIERS, TIER_POR_DEFECTO, datosMetaEcogel, esUnidades, money, tierDe, totalPedido } from './ecogel';
 
 test('los tres tiers tienen los precios del spec', () => {
   assert.deepEqual(
@@ -50,4 +50,12 @@ test('esUnidades solo acepta 1, 2 o 3 numéricos', () => {
 test('money formatea en pesos colombianos', () => {
   assert.equal(money(119_700), '$119.700');
   assert.equal(money(0), '$0');
+});
+
+test('los eventos del embudo llevan el precio de la opción elegida, sin envío', () => {
+  assert.equal(datosMetaEcogel('hogar', 1).valor, 39_900);
+  assert.equal(datosMetaEcogel('hogar', 2).valor, 79_800);
+  assert.equal(datosMetaEcogel('restaurantes', 3).valor, 109_700);
+  assert.deepEqual(datosMetaEcogel('restaurantes', 3).contenido, { ids: ['ecogel'], numItems: 3 });
+  assert.equal(datosMetaEcogel('restaurantes', 3).categoria, 'ecogel-restaurantes');
 });

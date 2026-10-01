@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Check, Gift, Loader2, MessageCircle, Truck } from 'lucide-react';
-import { DESCUENTO_ONLINE, GARANTIA, configDe, money, totalPedido, whatsappEcogel, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
+import { DESCUENTO_ONLINE, GARANTIA, configDe, datosMetaEcogel, money, whatsappEcogel, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
 import { MENSAJE_CODIGO, aplicabilidadPremio, esCodigoPremio, esIdPremio, fechaLarga, premioDe, totalConPremio } from '@/lib/ecogel-premios';
 import { guardarPremio, leerPremioGuardado, olvidarPremio, type PremioGuardado } from '@/lib/ecogel-popups';
 import { DEPARTAMENTOS, TIPOS_DOCUMENTO, validarPedido } from '@/lib/ecogel-pedido';
@@ -82,14 +82,20 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
   const [pedidoAnterior, setPedidoAnterior] = useState<{ pedidoId: string; firma: string } | undefined>(undefined);
 
   useEffect(() => {
-    // El tier inicial ya lo fija TierProvider (prop `inicial`); aquí solo se mide.
-    // InitiateCheckout: una vez por sesión (ver UNA_VEZ_POR_SESION en lib/meta/pixel.ts).
-    rastrear('InitiateCheckout', {
-      categoria: `ecogel-${segmento}`,
-      valor: totalPedido(unidadesIniciales, 'contraentrega').total,
-      contenido: { ids: ['ecogel'], numItems: unidadesIniciales },
-    });
+    // Sin carrito: llegar aquí con una cantidad ES agregar al carrito. El tier
+    // inicial ya lo fija TierProvider (prop `inicial`); aquí solo se mide.
+    rastrear('AddToCart', datosMetaEcogel(segmento, unidadesIniciales));
   }, [unidadesIniciales, segmento]);
+
+  // InitiateCheckout al escribir en el primer campo, no al cargar: así se
+  // distingue a quien se va al ver el formulario de quien lo deja a medias.
+  // Ambos eventos son una vez por sesión (ver UNA_VEZ_POR_SESION).
+  const empezoRef = useRef(false);
+  const empezarCheckout = () => {
+    if (empezoRef.current) return;
+    empezoRef.current = true;
+    rastrear('InitiateCheckout', datosMetaEcogel(segmento, unidades));
+  };
 
   useEffect(() => {
     const guardado = leerPremioGuardado();
@@ -131,8 +137,10 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
     setUsarBono(false);
     setErrorCodigo('');
   };
-  const set = (k: keyof typeof datos) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+  const set = (k: keyof typeof datos) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    empezarCheckout();
     setDatos((d) => ({ ...d, [k]: e.target.value }));
+  };
   const campoTexto = (k: keyof typeof datos, label: string, auto: string, extra: { tipo?: 'text' | 'tel'; ayuda?: string; ejemplo?: string } = {}) => (
     <div key={k}>
       <label htmlFor={`p-${k}`} className="block text-body-sm font-medium text-brand-black">{label}</label>
