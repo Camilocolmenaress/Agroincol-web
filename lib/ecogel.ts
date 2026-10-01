@@ -116,7 +116,7 @@ export const BONO_GUIA_PDF = {
 
 export const GARANTIA = {
   titulo: 'Si en 30 días siguen, te devolvemos el dinero',
-  texto: 'Nos escribes por WhatsApp con una foto y te devolvemos el dinero por transferencia bancaria. No tienes que devolver el producto ni llenar formularios.',
+  texto: 'Nos escribes por WhatsApp con una foto y nos devuelves el producto. Al recibirlo, te devolvemos el dinero por transferencia bancaria en máximo 5 días hábiles.',
   dias: 30,
 } as const;
 
@@ -159,7 +159,7 @@ const PREGUNTAS_ENVIO_PAGO: Pregunta[] = [
   },
   {
     pregunta: '¿Cómo reclamo la garantía?',
-    respuesta: `Si a los ${GARANTIA.dias} días siguen viendo cucarachas, nos escribes por WhatsApp con una foto y te devolvemos el dinero por transferencia bancaria.`,
+    respuesta: `Si a los ${GARANTIA.dias} días siguen viendo cucarachas, nos escribes por WhatsApp con una foto y nos devuelves el producto. Al recibirlo, te devolvemos el dinero por transferencia bancaria en máximo 5 días hábiles.`,
   },
 ];
 

@@ -53,7 +53,7 @@ export default function TerminosPage() {
       titulo: 'Garantía EcoGel',
       parrafos: [
         `${GARANTIA.titulo}. ${GARANTIA.texto}`,
-        'Para la garantía te pedimos el número de pedido, una foto donde se vean las cucarachas y los datos de una cuenta bancaria a tu nombre. Te devolvemos por transferencia a esa cuenta, también si pagaste en efectivo contra entrega.',
+        'Para la garantía te pedimos el número de pedido, una foto donde se vean las cucarachas y los datos de una cuenta bancaria a tu nombre. Nos devuelves el producto por transportadora; el costo de ese envío corre por tu cuenta. Dentro de los 5 días hábiles siguientes a que lo recibamos, te devolvemos lo que pagaste por transferencia a esa cuenta, también si pagaste en efectivo contra entrega.',
         'Esta garantía se suma a la garantía legal de calidad e idoneidad de la Ley 1480 de 2011; no la reemplaza.',
       ],
     },
@@ -61,7 +61,7 @@ export default function TerminosPage() {
       titulo: 'Derecho de retracto',
       parrafos: [
         'Como compraste a distancia, puedes retractarte de la compra dentro de los 5 días hábiles siguientes a la entrega (Ley 1480 de 2011, artículo 47).',
-        'El retracto no es la garantía: no necesitas dar un motivo, pero sí debes devolver el producto.',
+        'El retracto no es la garantía: no necesitas dar un motivo, pero debes pedirlo dentro de ese plazo.',
         'Para hacerlo, escríbenos por WhatsApp o correo con tu número de pedido. Devuelves el producto por los mismos medios y en las mismas condiciones en que lo recibiste; el costo del transporte de la devolución corre por tu cuenta.',
         'Te devolvemos todo lo que pagaste, sin descuentos ni retenciones, dentro de los 30 días calendario siguientes a tu solicitud.',
       ],
