@@ -31,7 +31,7 @@ export default function TerminosPage() {
       titulo: 'Precios',
       parrafos: [
         `Los precios están en pesos colombianos: ${TIERS.map((t) => `${t.unidades} ${t.unidades === 1 ? 'unidad' : 'unidades'} ${money(t.producto)} con envío ${t.envio === 0 ? 'gratis' : `de ${money(t.envio)}`}`).join('; ')}.`,
-        `Si pagas en línea o por transferencia, el total tiene ${money(DESCUENTO_ONLINE)} de descuento. El total final se muestra antes de confirmar el pedido.`,
+        `Si pagas en línea o por transferencia, el total tiene ${money(DESCUENTO_ONLINE)} de descuento en pedidos de 1 y 2 unidades. El combo de 3 unidades tiene precio neto, sin ese descuento. El total final se muestra antes de confirmar el pedido.`,
       ],
     },
     {
@@ -86,7 +86,7 @@ export default function TerminosPage() {
             </li>
           ))}
         </ul>,
-        'Cada código es de un solo uso, queda asociado al correo que giró y sirve para un pedido. Un pedido admite un solo código. El premio se suma al descuento por pago anticipado. No se cambia por dinero ni por otro premio.',
+        'Cada código es de un solo uso, queda asociado al correo que giró y sirve para un pedido. Un pedido admite un solo código. El premio se suma al descuento por pago anticipado cuando el pedido lo tiene. No se cambia por dinero ni por otro premio.',
         'Si el pago en línea de un pedido con código falla, el código se puede volver a usar en un pedido nuevo.',
         'Para dejar de recibir correos, responde cualquiera de ellos con la palabra BAJA.',
       ],

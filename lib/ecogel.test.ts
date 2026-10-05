@@ -26,7 +26,12 @@ test('contraentrega paga producto + envío sin descuento', () => {
 test('pago en línea descuenta $5.000 por pedido', () => {
   assert.equal(DESCUENTO_ONLINE, 5_000);
   assert.deepEqual(totalPedido(2, 'online'), { producto: 79_800, envio: 10_000, descuento: 5_000, total: 84_800 });
-  assert.equal(totalPedido(3, 'online').total, 104_700);
+});
+
+test('el combo de 3 queda neto: sin descuento por pago anticipado', () => {
+  assert.deepEqual(totalPedido(3, 'online'), { producto: 109_700, envio: 0, descuento: 0, total: 109_700 });
+  assert.equal(totalPedido(3, 'nequi').total, 109_700);
+  assert.equal(totalPedido(1, 'online').descuento, 5_000);
 });
 
 test('los métodos manuales (bancolombia, nequi, breb) descuentan igual que en línea', () => {

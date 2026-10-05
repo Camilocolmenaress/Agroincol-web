@@ -143,7 +143,7 @@ export function aplicabilidadPremio(id: IdPremio, unidades: Unidades, yaCompro: 
 /**
  * Total del pedido con el premio. Parte de `totalPedido` (precios base sin
  * tocar) y solo resta lo que el premio da. El premio se suma al descuento por
- * pago anticipado (decisión del 27-sep-2026).
+ * pago anticipado (decisión del 27-sep-2026), que el combo de 3 no tiene.
  */
 export function totalConPremio(unidades: Unidades, metodo: MetodoPago, premio: IdPremio | null, yaCompro: boolean) {
   const base = totalPedido(unidades, metodo);

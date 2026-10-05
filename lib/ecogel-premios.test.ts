@@ -82,10 +82,10 @@ test('cada premio aplica solo con su cantidad; el de próxima compra solo si ya 
 });
 
 test('totalConPremio: el premio se suma al descuento por pago anticipado', () => {
-  // Combo en línea: 109.700 − 5.000 (anticipado) − 8.000 (premio).
+  // Combo en línea: 109.700 neto (sin anticipado) − 8.000 (premio).
   const d = totalConPremio(3, 'online', 'descuento_8000', false);
-  assert.equal(d.total, 96_700);
-  assert.equal(d.descuento, 5_000);
+  assert.equal(d.total, 101_700);
+  assert.equal(d.descuento, 0);
   assert.equal(d.descuentoPremio, 8_000);
   assert.equal(d.premioAplicado, true);
 
@@ -107,7 +107,7 @@ test('totalConPremio: el premio se suma al descuento por pago anticipado', () =>
   const n = totalConPremio(1, 'contraentrega', 'descuento_8000', false);
   assert.equal(n.total, 59_900);
   assert.equal(n.premioAplicado, false);
-  assert.equal(totalConPremio(3, 'online', null, false).total, 104_700);
+  assert.equal(totalConPremio(3, 'online', null, false).total, 109_700);
 });
 
 test('el correo lleva el código, la vigencia, la condición y el enlace con el código aplicado', () => {

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Check, Gift, Loader2, MessageCircle, Truck } from 'lucide-react';
-import { DESCUENTO_ONLINE, GARANTIA, configDe, datosMetaEcogel, money, whatsappEcogel, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
+import { GARANTIA, configDe, datosMetaEcogel, money, tierDe, whatsappEcogel, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
 import { MENSAJE_CODIGO, aplicabilidadPremio, esCodigoPremio, esIdPremio, fechaLarga, premioDe, totalConPremio } from '@/lib/ecogel-premios';
 import { guardarPremio, leerPremioGuardado, olvidarPremio, type PremioGuardado } from '@/lib/ecogel-popups';
 import { DEPARTAMENTOS, TIPOS_DOCUMENTO, validarPedido } from '@/lib/ecogel-pedido';
@@ -241,7 +241,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
         <label className="flex cursor-pointer items-center gap-3 px-4 py-3">
           <input type="radio" name="grupoPago" value={id} checked={activo} onChange={() => setGrupo(id)} className="h-4 w-4 shrink-0 text-brand-green" />
           <span className="flex-1 font-semibold text-brand-black">{titulo}</span>
-          {id !== 'contraentrega' && <span className="shrink-0 text-body-sm font-semibold text-brand-green">−{money(DESCUENTO_ONLINE)}</span>}
+          {id !== 'contraentrega' && tierDe(unidades).descuentoOnline > 0 && <span className="shrink-0 text-body-sm font-semibold text-brand-green">−{money(tierDe(unidades).descuentoOnline)}</span>}
         </label>
         <div className="-mt-1 space-y-2 px-4 pb-3 pl-11 text-body-sm text-brand-black/70">{contenido}</div>
       </div>
