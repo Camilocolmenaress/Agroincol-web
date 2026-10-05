@@ -9,7 +9,7 @@
 // El sorteo corre SOLO en el servidor (app/api/ecogel/ruleta). El navegador
 // recibe el resultado y anima la ruleta hasta él.
 
-import { totalPedido, type MetodoPago, type Unidades } from './ecogel';
+import { totalPedido, type Unidades } from './ecogel';
 
 export type IdPremio = 'cuatro_por_tres' | 'envio_gratis_2' | 'descuento_8000' | 'proxima_10000';
 
@@ -142,11 +142,10 @@ export function aplicabilidadPremio(id: IdPremio, unidades: Unidades, yaCompro: 
 
 /**
  * Total del pedido con el premio. Parte de `totalPedido` (precios base sin
- * tocar) y solo resta lo que el premio da. El premio se suma al descuento por
- * pago anticipado (decisión del 27-sep-2026), que el combo de 3 no tiene.
+ * tocar) y solo resta lo que el premio da.
  */
-export function totalConPremio(unidades: Unidades, metodo: MetodoPago, premio: IdPremio | null, yaCompro: boolean) {
-  const base = totalPedido(unidades, metodo);
+export function totalConPremio(unidades: Unidades, premio: IdPremio | null, yaCompro: boolean) {
+  const base = totalPedido(unidades);
   const aplica = premio !== null && aplicabilidadPremio(premio, unidades, yaCompro).aplica;
   const envio = aplica && premio === 'envio_gratis_2' ? 0 : base.envio;
   const descuentoPremio = aplica ? DESCUENTO_PREMIO[premio] ?? 0 : 0;
@@ -156,7 +155,7 @@ export function totalConPremio(unidades: Unidades, metodo: MetodoPago, premio: I
     descuentoPremio,
     unidadesRegalo: aplica && premio === 'cuatro_por_tres' ? 1 : 0,
     premioAplicado: aplica,
-    total: base.producto + envio - base.descuento - descuentoPremio,
+    total: base.producto + envio - descuentoPremio,
   };
 }
 

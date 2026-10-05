@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
     codigoPremio = cuerpo.codigo;
   }
   // yaCompro = true: si el bono de próxima compra llegó hasta aquí, el canje ya verificó la compra previa.
-  const totales = totalConPremio(pedido.unidades, pedido.metodo, premio, true);
+  const totales = totalConPremio(pedido.unidades, premio, true);
   const camposPremio = {
     codigoPremio,
     premio: premio ?? '',
@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
           unidades: pedido.unidades,
           producto: totales.producto,
           envio: totales.envio,
-          descuento: totales.descuento,
+          descuento: 0, // columna histórica de la hoja: el pago anticipado ya no tiene descuento
           total: totales.total,
           ...camposPremio,
         })
@@ -150,7 +150,7 @@ export async function POST(req: NextRequest) {
           unidades: pedido.unidades,
           producto: totales.producto,
           envio: totales.envio,
-          descuento: totales.descuento,
+          descuento: 0,
           total: totales.total,
           metodoPago: pedido.metodo,
           nombre: pedido.nombre,

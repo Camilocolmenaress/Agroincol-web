@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Check, Gift, Loader2, MessageCircle, Truck } from 'lucide-react';
-import { GARANTIA, configDe, datosMetaEcogel, money, tierDe, whatsappEcogel, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
+import { GARANTIA, configDe, datosMetaEcogel, money, whatsappEcogel, type MetodoPago, type Segmento, type Unidades } from '@/lib/ecogel';
 import { MENSAJE_CODIGO, aplicabilidadPremio, esCodigoPremio, esIdPremio, fechaLarga, premioDe, totalConPremio } from '@/lib/ecogel-premios';
 import { guardarPremio, leerPremioGuardado, olvidarPremio, type PremioGuardado } from '@/lib/ecogel-popups';
 import { DEPARTAMENTOS, TIPOS_DOCUMENTO, validarPedido } from '@/lib/ecogel-pedido';
@@ -130,7 +130,7 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
   const premioElegido = premio && (premio.premio !== 'proxima_10000' || usarBono) ? premio.premio : null;
   const aplicaPremio = premioElegido !== null && aplicabilidadPremio(premioElegido, unidades, true).aplica;
   // yaCompro = usarBono: el total solo resta el bono si la persona dijo que ya compró (el servidor lo verifica).
-  const t = totalConPremio(unidades, metodo, premioElegido, usarBono);
+  const t = totalConPremio(unidades, premioElegido, usarBono);
   const quitarPremio = () => {
     olvidarPremio();
     setPremio(null);
@@ -241,7 +241,6 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
         <label className="flex cursor-pointer items-center gap-3 px-4 py-3">
           <input type="radio" name="grupoPago" value={id} checked={activo} onChange={() => setGrupo(id)} className="h-4 w-4 shrink-0 text-brand-green" />
           <span className="flex-1 font-semibold text-brand-black">{titulo}</span>
-          {id !== 'contraentrega' && tierDe(unidades).descuentoOnline > 0 && <span className="shrink-0 text-body-sm font-semibold text-brand-green">−{money(tierDe(unidades).descuentoOnline)}</span>}
         </label>
         <div className="-mt-1 space-y-2 px-4 pb-3 pl-11 text-body-sm text-brand-black/70">{contenido}</div>
       </div>
@@ -397,9 +396,6 @@ export default function FormularioPedido({ segmento, unidadesIniciales, codigoUr
           <dl className="space-y-1 rounded-xl bg-brand-light p-4 text-body-sm">
             <div className="flex justify-between"><dt>EcoGel x{unidades}{t.unidadesRegalo > 0 && ' + 1 de regalo'}</dt><dd>{money(t.producto)}</dd></div>
             <div className="flex justify-between"><dt>Envío</dt><dd className={t.envio === 0 ? 'font-semibold text-brand-green' : undefined}>{t.envio === 0 ? 'Gratis' : money(t.envio)}</dd></div>
-            {t.descuento > 0 && (
-              <div className="flex justify-between text-brand-green"><dt>Descuento por pago anticipado</dt><dd>−{money(t.descuento)}</dd></div>
-            )}
             {t.descuentoPremio > 0 && (
               <div className="flex justify-between text-brand-green"><dt>Premio de la ruleta</dt><dd>−{money(t.descuentoPremio)}</dd></div>
             )}

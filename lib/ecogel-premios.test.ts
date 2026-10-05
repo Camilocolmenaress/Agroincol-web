@@ -81,33 +81,32 @@ test('cada premio aplica solo con su cantidad; el de próxima compra solo si ya 
   assert.match(aplicabilidadPremio('descuento_8000', 1, false).motivo ?? '', /3 unidades/);
 });
 
-test('totalConPremio: el premio se suma al descuento por pago anticipado', () => {
-  // Combo en línea: 109.700 neto (sin anticipado) − 8.000 (premio).
-  const d = totalConPremio(3, 'online', 'descuento_8000', false);
+test('totalConPremio: el premio se resta del precio neto', () => {
+  // Combo: 109.700 − 8.000 (premio).
+  const d = totalConPremio(3, 'descuento_8000', false);
   assert.equal(d.total, 101_700);
-  assert.equal(d.descuento, 0);
   assert.equal(d.descuentoPremio, 8_000);
   assert.equal(d.premioAplicado, true);
 
   // 2 unidades contra entrega: el envío de 10.000 pasa a 0.
-  const e = totalConPremio(2, 'contraentrega', 'envio_gratis_2', false);
+  const e = totalConPremio(2, 'envio_gratis_2', false);
   assert.equal(e.envio, 0);
   assert.equal(e.total, 79_800);
 
   // 4x3: mismo precio, una unidad de regalo.
-  const r = totalConPremio(3, 'contraentrega', 'cuatro_por_tres', false);
+  const r = totalConPremio(3, 'cuatro_por_tres', false);
   assert.equal(r.total, 109_700);
   assert.equal(r.unidadesRegalo, 1);
 
   // Próxima compra: solo si ya compró.
-  assert.equal(totalConPremio(1, 'online', 'proxima_10000', true).total, 39_900 + 20_000 - 5_000 - 10_000);
-  assert.equal(totalConPremio(1, 'online', 'proxima_10000', false).total, 39_900 + 20_000 - 5_000);
+  assert.equal(totalConPremio(1, 'proxima_10000', true).total, 39_900 + 20_000 - 10_000);
+  assert.equal(totalConPremio(1, 'proxima_10000', false).total, 39_900 + 20_000);
 
   // Premio que no aplica o sin premio: el precio base intacto.
-  const n = totalConPremio(1, 'contraentrega', 'descuento_8000', false);
+  const n = totalConPremio(1, 'descuento_8000', false);
   assert.equal(n.total, 59_900);
   assert.equal(n.premioAplicado, false);
-  assert.equal(totalConPremio(3, 'online', null, false).total, 109_700);
+  assert.equal(totalConPremio(3, null, false).total, 109_700);
 });
 
 test('el correo lleva el código, la vigencia, la condición y el enlace con el código aplicado', () => {

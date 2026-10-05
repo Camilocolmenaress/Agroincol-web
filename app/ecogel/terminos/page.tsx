@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import CabeceraEcogel from '@/components/ecogel/CabeceraEcogel';
 import PieEcogel from '@/components/ecogel/PieEcogel';
 import { BUSINESS } from '@/lib/constants';
-import { DESCUENTO_ONLINE, GARANTIA, TIERS, money } from '@/lib/ecogel';
+import { GARANTIA, TIERS, money } from '@/lib/ecogel';
 import { REGLA_DESPACHO, TIEMPO_ENTREGA } from '@/lib/ecogel-despacho';
 import { PREMIOS } from '@/lib/ecogel-premios';
 
@@ -31,7 +31,7 @@ export default function TerminosPage() {
       titulo: 'Precios',
       parrafos: [
         `Los precios están en pesos colombianos: ${TIERS.map((t) => `${t.unidades} ${t.unidades === 1 ? 'unidad' : 'unidades'} ${money(t.producto)} con envío ${t.envio === 0 ? 'gratis' : `de ${money(t.envio)}`}`).join('; ')}.`,
-        `Si pagas en línea o por transferencia, el total tiene ${money(DESCUENTO_ONLINE)} de descuento en pedidos de 1 y 2 unidades. El combo de 3 unidades tiene precio neto, sin ese descuento. El total final se muestra antes de confirmar el pedido.`,
+        'El precio es el mismo con cualquier forma de pago. El total final se muestra antes de confirmar el pedido.',
       ],
     },
     {
@@ -86,7 +86,7 @@ export default function TerminosPage() {
             </li>
           ))}
         </ul>,
-        'Cada código es de un solo uso, queda asociado al correo que giró y sirve para un pedido. Un pedido admite un solo código. El premio se suma al descuento por pago anticipado cuando el pedido lo tiene. No se cambia por dinero ni por otro premio.',
+        'Cada código es de un solo uso, queda asociado al correo que giró y sirve para un pedido. Un pedido admite un solo código. No se cambia por dinero ni por otro premio.',
         'Si el pago en línea de un pedido con código falla, el código se puede volver a usar en un pedido nuevo.',
         'Para dejar de recibir correos, responde cualquiera de ellos con la palabra BAJA.',
       ],

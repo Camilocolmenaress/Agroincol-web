@@ -22,7 +22,7 @@ const LOGOS_PAGO = ['visa.svg', 'mastercard.svg', 'amex.svg', 'diners.svg', 'pse
 export default function CajaCompra({ config }: { config: EcogelConfig }) {
   const { unidades } = useTier();
   const tier = tierDe(unidades);
-  const cod = totalPedido(unidades, 'contraentrega');
+  const { total } = totalPedido(unidades);
   const ahorroEnvio = ENVIO_BASE - tier.envio;
   const ahorroTotal = ahorroEnvio + (tier.precioTachado ? tier.precioTachado - tier.producto : 0);
   const resenas = resumenResenas();
@@ -129,11 +129,8 @@ export default function CajaCompra({ config }: { config: EcogelConfig }) {
         href={urlPedido(unidades, config.segmento)}
         className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-brand-orange px-6 py-4 font-heading text-body font-bold text-white shadow-brand"
       >
-        Comprar ahora — {money(cod.total)}
+        Comprar ahora — {money(total)}
       </a>
-      <p className="mt-1.5 text-center text-body-sm text-brand-black/60">
-        Pagando en línea: {money(totalPedido(unidades, 'online').total)}
-      </p>
 
       <ul className="mt-3 flex flex-wrap items-center justify-center gap-2" aria-label="Métodos de pago">
         {LOGOS_PAGO.map((archivo) => (

@@ -19,8 +19,6 @@ export interface Tier {
   precioTachado?: number;
   /** Lo que paga el cliente por el envío. 0 = gratis. */
   envio: number;
-  /** Descuento por pago anticipado (no contraentrega). 0 = precio neto. */
-  descuentoOnline: number;
   /** Texto corto bajo el número de unidades. */
   etiqueta: string;
   masVendido: boolean;
@@ -28,8 +26,6 @@ export interface Tier {
 
 export const PRECIO_UNIDAD = 39_900;
 export const ENVIO_BASE = 20_000;
-/** Descuento por pedido cuando NO es contraentrega: neutraliza el costo del rechazo contraentrega. El combo de 3 no lo tiene (4-oct-2026). */
-export const DESCUENTO_ONLINE = 5_000;
 export const TIER_POR_DEFECTO: Unidades = 3;
 
 /** Cuentas reales para los métodos de pago manuales (sin pasarela: alguien confirma a mano en la hoja). */
@@ -40,14 +36,13 @@ export const CUENTAS_MANUALES = {
 } as const;
 
 export const TIERS: readonly Tier[] = [
-  { unidades: 1, producto: PRECIO_UNIDAD, envio: ENVIO_BASE, descuentoOnline: DESCUENTO_ONLINE, etiqueta: 'Para probar', masVendido: false },
-  { unidades: 2, producto: PRECIO_UNIDAD * 2, envio: 10_000, descuentoOnline: DESCUENTO_ONLINE, etiqueta: 'Cocina + baño', masVendido: false },
+  { unidades: 1, producto: PRECIO_UNIDAD, envio: ENVIO_BASE, etiqueta: 'Para probar', masVendido: false },
+  { unidades: 2, producto: PRECIO_UNIDAD * 2, envio: 10_000, etiqueta: 'Cocina + baño', masVendido: false },
   {
     unidades: 3,
     producto: 109_700,
     precioTachado: PRECIO_UNIDAD * 3,
     envio: 0,
-    descuentoOnline: 0,
     etiqueta: 'Tratamiento completo · envío gratis',
     masVendido: true,
   },
@@ -63,14 +58,13 @@ export function tierDe(unidades: number): Tier {
   return tier;
 }
 
-export function totalPedido(unidades: Unidades, metodo: MetodoPago) {
+/** Precio neto: el mismo con cualquier método de pago (sin descuento por pago anticipado desde el 4-oct-2026). */
+export function totalPedido(unidades: Unidades) {
   const tier = tierDe(unidades);
-  const descuento = metodo === 'contraentrega' ? 0 : tier.descuentoOnline;
   return {
     producto: tier.producto,
     envio: tier.envio,
-    descuento,
-    total: tier.producto + tier.envio - descuento,
+    total: tier.producto + tier.envio,
   };
 }
 
@@ -171,7 +165,7 @@ const PREGUNTAS_ENVIO_PAGO: Pregunta[] = [
   {
     pregunta: '¿Cómo puedo pagar?',
     respuesta:
-      'En línea con PSE, Nequi o tarjeta (con $5.000 de descuento en 1 y 2 unidades) o en efectivo al recibir el paquete.',
+      'En línea con PSE, Nequi o tarjeta, o en efectivo al recibir el paquete. El precio es el mismo.',
   },
   {
     pregunta: '¿Cómo reclamo la garantía?',

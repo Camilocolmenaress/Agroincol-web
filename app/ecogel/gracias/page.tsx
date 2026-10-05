@@ -11,7 +11,7 @@ import { Ayuda, LoQueTienes, Respaldo } from '@/components/ecogel/gracias/Confia
 import DatosTransferencia, { type MetodoManual } from '@/components/ecogel/gracias/DatosTransferencia';
 import LineaTiempo from '@/components/ecogel/gracias/LineaTiempo';
 import ResumenPedido from '@/components/ecogel/gracias/ResumenPedido';
-import { esSegmento, esUnidades, whatsappEcogel, type MetodoPago } from '@/lib/ecogel';
+import { esSegmento, esUnidades, whatsappEcogel } from '@/lib/ecogel';
 import { esIdPremio, totalConPremio } from '@/lib/ecogel-premios';
 import { diaDeDespacho } from '@/lib/ecogel-despacho';
 import { fotosEcogel, videosAprenderAUsarlo } from '../fotos';
@@ -20,48 +20,41 @@ export const metadata: Metadata = { title: 'Pedido recibido | AGROINCOL', robots
 
 type Estado = 'cod' | 'approved' | 'pending' | 'failure' | MetodoManual;
 
-const ESTADOS: Record<Estado, { tono: Tono; titulo: string; bajada: string; metodo: MetodoPago }> = {
+const ESTADOS: Record<Estado, { tono: Tono; titulo: string; bajada: string }> = {
   cod: {
     tono: 'ok',
     titulo: '¡Listo! Recibimos tu pedido',
     bajada: 'Pagas en efectivo cuando te llegue. Esto es lo que sigue.',
-    metodo: 'contraentrega',
   },
   approved: {
     tono: 'ok',
     titulo: '¡Listo! Tu pago está confirmado',
     bajada: 'Ya estamos preparando tu pedido. Esto es lo que sigue.',
-    metodo: 'online',
   },
   pending: {
     tono: 'espera',
     titulo: 'Tu pago está en proceso',
     bajada: 'PSE puede tardar unos minutos en confirmar. Te avisamos por correo y WhatsApp apenas entre.',
-    metodo: 'online',
   },
   failure: {
     tono: 'error',
     titulo: 'El pago no se completó',
     bajada: 'No se cobró nada. Puedes volver a intentarlo o escribirnos y lo resolvemos: también puedes pagar al recibir.',
-    metodo: 'online',
   },
   bancolombia: {
     tono: 'espera',
     titulo: 'Falta un paso: tu transferencia',
     bajada: 'Transfiere el valor y mándanos el comprobante por WhatsApp para despachar tu pedido.',
-    metodo: 'bancolombia',
   },
   nequi: {
     tono: 'espera',
     titulo: 'Falta un paso: tu transferencia',
     bajada: 'Transfiere el valor y mándanos el comprobante por WhatsApp para despachar tu pedido.',
-    metodo: 'nequi',
   },
   breb: {
     tono: 'espera',
     titulo: 'Falta un paso: tu transferencia',
     bajada: 'Transfiere el valor y mándanos el comprobante por WhatsApp para despachar tu pedido.',
-    metodo: 'breb',
   },
 };
 
@@ -78,7 +71,7 @@ export default function GraciasPage({ searchParams }: { searchParams: { pedido?:
   const segmento = esSegmento(searchParams.s) ? searchParams.s : 'hogar';
   // p = premio que el servidor aplicó al crear el pedido (si llegó hasta /gracias, ya se canjeó).
   const premio = esIdPremio(searchParams.p) ? searchParams.p : null;
-  const total = unidades ? totalConPremio(unidades, e.metodo, premio, true).total : undefined;
+  const total = unidades ? totalConPremio(unidades, premio, true).total : undefined;
   const fotos = fotosEcogel(segmento);
   // Hora de la solicitud = hora del pedido: el checkout redirige aquí al crearlo.
   const despacho = diaDeDespacho(new Date());
@@ -126,7 +119,7 @@ export default function GraciasPage({ searchParams }: { searchParams: { pedido?:
                 whatsapp={whatsappEcogel(`Hola, te envío el comprobante de mi pedido de EcoGel ${pedido}`.trim())}
               />
             )}
-            {unidades && <ResumenPedido unidades={unidades} metodo={e.metodo} estado={estado} premio={premio} kit={fotos.kit} />}
+            {unidades && <ResumenPedido unidades={unidades} estado={estado} premio={premio} kit={fotos.kit} />}
             <LineaTiempo estado={estado} despacho={despacho} total={total} />
 
             <div className="mx-auto mt-12 max-w-xl [&>section:first-of-type]:mt-1">

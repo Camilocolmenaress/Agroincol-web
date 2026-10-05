@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { FileDown } from 'lucide-react';
-import { BONO_GUIA_PDF, money, tierDe, type MetodoPago, type Unidades } from '@/lib/ecogel';
+import { BONO_GUIA_PDF, money, tierDe, type Unidades } from '@/lib/ecogel';
 import { premioDe, totalConPremio, type IdPremio } from '@/lib/ecogel-premios';
 
 const COMO_PAGA: Record<string, string> = {
@@ -14,8 +14,8 @@ const COMO_PAGA: Record<string, string> = {
 
 // El mismo desglose del checkout, recalculado desde lib/ecogel.ts con las
 // unidades de la URL: nunca un precio que venga del navegador.
-export default function ResumenPedido({ unidades, metodo, estado, premio = null, kit }: { unidades: Unidades; metodo: MetodoPago; estado: string; premio?: IdPremio | null; kit?: string }) {
-  const t = totalConPremio(unidades, metodo, premio, true);
+export default function ResumenPedido({ unidades, estado, premio = null, kit }: { unidades: Unidades; estado: string; premio?: IdPremio | null; kit?: string }) {
+  const t = totalConPremio(unidades, premio, true);
   const tier = tierDe(unidades);
   return (
     <section className="reveal container-custom mt-10 max-w-xl">
@@ -32,9 +32,6 @@ export default function ResumenPedido({ unidades, metodo, estado, premio = null,
           <dl className="mt-3 space-y-1.5 text-body-sm">
             <div className="flex justify-between"><dt className="text-brand-black/65">Producto</dt><dd>{money(t.producto)}</dd></div>
             <div className="flex justify-between"><dt className="text-brand-black/65">Envío</dt><dd>{t.envio === 0 ? 'Gratis' : money(t.envio)}</dd></div>
-            {t.descuento > 0 && (
-              <div className="flex justify-between text-brand-green"><dt>Descuento por pago anticipado</dt><dd>−{money(t.descuento)}</dd></div>
-            )}
             {premio && t.premioAplicado && (
               <div className="flex justify-between text-brand-green">
                 <dt>Premio: {premioDe(premio).titulo}</dt>

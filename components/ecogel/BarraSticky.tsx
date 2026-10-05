@@ -8,7 +8,7 @@ import { urlPedido, useTier } from './TierContext';
 // cambian el tier igual que el selector: comparten el contexto.
 export default function BarraSticky({ segmento }: { segmento: Segmento }) {
   const { unidades, setUnidades } = useTier();
-  const { total } = totalPedido(unidades, 'contraentrega');
+  const { total } = totalPedido(unidades);
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-brand-gray-light bg-white/95 px-4 pb-[calc(env(safe-area-inset-bottom)+8px)] pt-2 backdrop-blur lg:hidden">
       <div className="flex items-center gap-3">
