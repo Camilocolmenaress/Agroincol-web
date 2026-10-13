@@ -18,8 +18,8 @@ function RatingChip() {
           <Star key={i} size={14} className="fill-current" />
         ))}
       </span>
-      <span className="text-body-sm font-semibold text-white">4.9</span>
-      <span className="text-body-sm text-white/70">· 28 reseñas en Google</span>
+      <span className="text-body-sm font-semibold text-white">{BUSINESS.googleRating}</span>
+      <span className="text-body-sm text-white/70">· {BUSINESS.googleReviewCount} reseñas en Google</span>
     </a>
   );
 }
