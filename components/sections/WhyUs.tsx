@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { CheckCircle, Shield, Leaf, Clock, MapPin, FileCheck } from 'lucide-react';
-import Carousel from '@/components/ui/Carousel';
 
 const benefits = [
   { icon: CheckCircle, text: 'Más de 40 años de experiencia comprobada en Santander' },
@@ -36,31 +35,23 @@ export default function WhyUs() {
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-green-dark/30 to-transparent" aria-hidden />
           </div>
 
-          {/* Benefits — carrusel auto-rotando (1 tarjeta a la vez, arrastrable) */}
-          <div className="reveal">
-            <Carousel
-              autoPlay
-              align="start"
-              controls="both"
-              itemClassName="basis-[86%] sm:basis-[60%] lg:basis-full"
-              ariaLabel="Razones para elegir AGROINCOL"
-            >
-              {benefits.map((benefit, index) => {
-                const Icon = benefit.icon;
-                return (
-                  <div
-                    key={index}
-                    className="flex h-full items-start gap-4 rounded-2xl bg-white p-6 shadow-card"
-                  >
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-soft">
-                      <Icon size={24} className="text-brand-orange" />
-                    </span>
-                    <p className="text-brand-black text-body-lg self-center text-pretty">{benefit.text}</p>
-                  </div>
-                );
-              })}
-            </Carousel>
-          </div>
+          {/* Benefits — las 6 visibles: en un carrusel quedaban 5 de 6 escondidas */}
+          <ul className="reveal grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {benefits.map((benefit) => {
+              const Icon = benefit.icon;
+              return (
+                <li
+                  key={benefit.text}
+                  className="flex h-full items-center gap-4 rounded-2xl bg-white p-5 shadow-card sm:flex-col sm:items-start sm:p-6"
+                >
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-soft">
+                    <Icon size={24} className="text-brand-orange" />
+                  </span>
+                  <p className="text-brand-black text-body text-pretty">{benefit.text}</p>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </section>
