@@ -53,7 +53,6 @@ const serviceSchema = {
     { '@type': 'City', name: 'Girón', containedInPlace: { '@type': 'AdministrativeArea', name: 'Santander' } },
   ],
   description: 'Fumigación industrial y control de plagas para plantas de producción y bodegas en Bucaramanga. Protocolo MIP con registros para auditorías.',
-  aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', reviewCount: '28', bestRating: '5', worstRating: '1' },
   url: 'https://agroincol.com/servicios/fumigacion-industrial',
   offers: {
     '@type': 'Offer',

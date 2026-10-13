@@ -156,7 +156,7 @@ export default function Footer() {
       <div className="border-t border-gray-700">
         <div className="container-custom py-6">
           <p className="text-gray-400 text-body-sm text-center">
-            © 2025 AGROINCOL. Todos los derechos reservados. Fumigación y control de plagas en Bucaramanga, Santander.
+            © {new Date().getFullYear()} AGROINCOL. Todos los derechos reservados. Fumigación y control de plagas en Bucaramanga, Santander.
           </p>
         </div>
       </div>

@@ -100,7 +100,7 @@ export default function ContactForm({ preselectedService, formId, compact = fals
 
   if (status === 'success') {
     return (
-      <div id="contacto" className="bg-white shadow-xl rounded-2xl p-6 md:p-8">
+      <div id="contacto" className="scroll-mt-24 bg-white shadow-xl rounded-2xl p-6 md:p-8">
         <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
           <CheckCircle size={48} className="text-green-600 mx-auto mb-4" />
           <h3 className="font-heading font-semibold text-h3 text-brand-green">¡Mensaje enviado con éxito!</h3>
@@ -119,7 +119,7 @@ export default function ContactForm({ preselectedService, formId, compact = fals
   }
 
   return (
-    <div id="contacto" className="bg-white shadow-xl rounded-2xl p-6 md:p-8">
+    <div id="contacto" className="scroll-mt-24 bg-white shadow-xl rounded-2xl p-6 md:p-8">
       <div className="mb-6">
         <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
           Solicite su Cotización Gratis

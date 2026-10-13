@@ -57,13 +57,6 @@ const serviceSchema = {
   ],
   description:
     'Control de plagas para negocios, locales y establecimientos comerciales en Bucaramanga. Programa MIP documentado, visitas periódicas y certificados para inspecciones.',
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '28',
-    bestRating: '5',
-    worstRating: '1',
-  },
   url: 'https://agroincol.com/servicios/control-plagas-comercial',
   offers: {
     '@type': 'Offer',

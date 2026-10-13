@@ -75,13 +75,6 @@ const serviceSchema = {
   ],
   description:
     'Servicio de fumigación residencial en Bucaramanga y Área Metropolitana. Productos aprobados por OMS e ICA, seguros para niños y mascotas.',
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '28',
-    bestRating: '5',
-    worstRating: '1',
-  },
   url: 'https://agroincol.com/servicios/fumigacion-residencial',
   offers: {
     '@type': 'Offer',

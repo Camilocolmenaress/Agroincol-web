@@ -13,6 +13,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  // No todas las páginas tienen formulario (#contacto): sin él, el CTA lleva al del home.
+  const [ctaHref, setCtaHref] = useState('#contacto');
   const pathname = usePathname();
 
   // El portal solo puede montar en cliente (document.body no existe en SSR).
@@ -28,6 +30,7 @@ export default function Navbar() {
 
   useEffect(() => {
     setMobileOpen(false);
+    setCtaHref(document.getElementById('contacto') ? '#contacto' : '/#contacto');
   }, [pathname]);
 
   // Bloquea el scroll del body mientras el menú está abierto (evita scroll fantasma detrás).
@@ -88,7 +91,7 @@ export default function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden md:block">
-          <Button variant="primary" href="#contacto" className="text-sm px-4 py-2">
+          <Button variant="primary" href={ctaHref} className="text-sm px-4 py-2">
             Cotizar Ahora
           </Button>
         </div>
@@ -158,7 +161,7 @@ export default function Navbar() {
               <span className="text-body-sm font-semibold text-white/45">· Lavado de muebles</span>
             </a>
             <div className="mt-6">
-              <Button variant="primary" href="#contacto" fullWidth>
+              <Button variant="primary" href={ctaHref} fullWidth>
                 Cotizar Ahora
               </Button>
             </div>

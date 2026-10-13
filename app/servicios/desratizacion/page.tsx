@@ -53,7 +53,6 @@ const serviceSchema = {
     { '@type': 'City', name: 'Girón', containedInPlace: { '@type': 'AdministrativeArea', name: 'Santander' } },
   ],
   description: 'Servicio profesional de desratización en Bucaramanga. Diagnóstico de puntos de entrada, eliminación de roedores y sellado de accesos con seguimiento post-servicio.',
-  aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', reviewCount: '28', bestRating: '5', worstRating: '1' },
   url: 'https://agroincol.com/servicios/desratizacion',
   offers: {
     '@type': 'Offer',

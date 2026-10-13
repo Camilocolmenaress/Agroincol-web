@@ -27,6 +27,10 @@ export const BUSINESS = {
   // Link DIRECTO a la casilla de reseña de Google (abre el formulario, no el perfil).
   // Obtenido en Google Business Profile → "Pedir reseñas". Si cambia, edita solo esta línea: el QR apunta a /resena, no aquí.
   reviewLink: 'https://g.page/r/Cd-hRhdI2eRIEBM/review',
+  // Calificación pública del Google Business Profile. Se muestra en el hero y en la sección
+  // de reseñas: al crecer el conteo, actualizar SOLO aquí.
+  googleRating: '4.9',
+  googleReviewCount: 33,
 } as const;
 
 export const SERVICES = [

@@ -37,7 +37,7 @@ export default function ReviewsMarquee({
             </span>
           </div>
           <p className="text-brand-black/70 text-body-sm">
-            33 reseñas en Google · más de 300 servicios este año
+            {BUSINESS.googleReviewCount} reseñas en Google · más de 300 servicios este año
           </p>
         </div>
       </div>
