@@ -57,13 +57,6 @@ const serviceSchema = {
     },
   },
   description: 'Servicio especializado de control de plagas para restaurantes en Bucaramanga. Certificación válida ante INVIMA y Secretaría de Salud de Santander.',
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '28',
-    bestRating: '5',
-    worstRating: '1',
-  },
 };
 
 const faqSchema = {
