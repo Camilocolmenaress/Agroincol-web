@@ -71,15 +71,32 @@ export async function crearPreferencia(
 export async function consultarPago(
   id: string,
   fetchFn: typeof fetch = fetch,
-): Promise<{ ok: true; status: string; externalReference: string } | { ok: false; detalle: string }> {
+): Promise<
+  | { ok: true; status: string; externalReference: string; comisionMp: number | null; netoRecibido: number | null }
+  | { ok: false; detalle: string }
+> {
   try {
     const r = await fetchFn(`${API}/v1/payments/${encodeURIComponent(id)}`, {
       headers: { authorization: `Bearer ${token()}` },
       signal: AbortSignal.timeout(8000),
     });
     if (!r.ok) return { ok: false, detalle: `${r.status}` };
-    const json = (await r.json()) as { status?: string; external_reference?: string };
-    return { ok: true, status: json.status ?? '', externalReference: json.external_reference ?? '' };
+    const json = (await r.json()) as {
+      status?: string;
+      external_reference?: string;
+      fee_details?: { amount?: number }[];
+      transaction_details?: { net_received_amount?: number };
+    };
+    // Comisión y neto reales, para que EcoGel Cuentas no tenga que estimarlos.
+    const comisiones = (json.fee_details ?? []).map((f) => f.amount).filter((a): a is number => typeof a === 'number');
+    const neto = json.transaction_details?.net_received_amount;
+    return {
+      ok: true,
+      status: json.status ?? '',
+      externalReference: json.external_reference ?? '',
+      comisionMp: comisiones.length ? Math.round(comisiones.reduce((s, a) => s + a, 0)) : null,
+      netoRecibido: typeof neto === 'number' ? Math.round(neto) : null,
+    };
   } catch (e) {
     return { ok: false, detalle: e instanceof Error ? e.message : String(e) };
   }

@@ -3,6 +3,7 @@ import { urlGracias } from '@/lib/ecogel';
 import { MENSAJE_CODIGO, aplicabilidadPremio, esCodigoPremio, esIdPremio, totalConPremio, type IdPremio } from '@/lib/ecogel-premios';
 import { nuevoPedidoId, validarPedido } from '@/lib/ecogel-pedido';
 import { actualizarFilaPedido, canjearCodigo, consultarCodigo, crearFilaPedido, hojaPedidosConfigurada } from '@/lib/hoja-pedidos';
+import { avisarCuentas } from '@/lib/cuentas-ecogel';
 import { construirPreferencia, crearPreferencia, mpConfigurado } from '@/lib/mercadopago';
 import { nuevoEventId } from '@/lib/meta/eventos';
 import { resolverFbc } from '@/lib/meta/fbc';
@@ -130,51 +131,51 @@ export async function POST(req: NextRequest) {
   // Fila nueva, o actualización de la que quedó de un intento anterior fallido
   // en Mercado Pago: solo cambian estado, método y los montos (pudo cambiar de
   // "en línea" a "contraentrega"); el resto ya está en la hoja.
+  const cambiosReintento = {
+    estado: pedido.metodo === 'online' ? 'pendiente_pago' : 'confirmar',
+    metodoPago: pedido.metodo,
+    unidades: pedido.unidades,
+    producto: totales.producto,
+    envio: totales.envio,
+    descuento: 0, // columna histórica de la hoja: el pago anticipado ya no tiene descuento
+    total: totales.total,
+    ...camposPremio,
+  };
+  const filaNueva = {
+    estado: pedido.metodo === 'online' ? 'pendiente_pago' : 'confirmar',
+    guia: '',
+    fecha: fechaLocal,
+    pedidoId,
+    unidades: pedido.unidades,
+    producto: totales.producto,
+    envio: totales.envio,
+    descuento: 0,
+    total: totales.total,
+    metodoPago: pedido.metodo,
+    nombre: pedido.nombre,
+    celular: pedido.celular,
+    correo: pedido.correo,
+    direccion: pedido.direccion,
+    barrio: pedido.barrio,
+    ciudad: pedido.ciudad,
+    departamento: pedido.departamento,
+    ofertas: pedido.ofertas ? 'sí' : 'no',
+    origen: `ecogel-${pedido.de}`,
+    ip,
+    eventId,
+    fbp,
+    fbc: fbc ?? '',
+    externalId,
+    navegador,
+    url,
+    mpPagoId: '',
+    tipoDocumento: pedido.tipoDocumento,
+    documento: pedido.documento,
+    autorizaWhatsapp: pedido.autorizaWhatsapp ? 'sí' : 'no',
+    ...camposPremio,
+  };
   const escrituraFila = (
-    pedidoAnterior
-      ? actualizarFilaPedido(pedidoId, {
-          estado: pedido.metodo === 'online' ? 'pendiente_pago' : 'confirmar',
-          metodoPago: pedido.metodo,
-          unidades: pedido.unidades,
-          producto: totales.producto,
-          envio: totales.envio,
-          descuento: 0, // columna histórica de la hoja: el pago anticipado ya no tiene descuento
-          total: totales.total,
-          ...camposPremio,
-        })
-      : crearFilaPedido({
-          estado: pedido.metodo === 'online' ? 'pendiente_pago' : 'confirmar',
-          guia: '',
-          fecha: fechaLocal,
-          pedidoId,
-          unidades: pedido.unidades,
-          producto: totales.producto,
-          envio: totales.envio,
-          descuento: 0,
-          total: totales.total,
-          metodoPago: pedido.metodo,
-          nombre: pedido.nombre,
-          celular: pedido.celular,
-          correo: pedido.correo,
-          direccion: pedido.direccion,
-          barrio: pedido.barrio,
-          ciudad: pedido.ciudad,
-          departamento: pedido.departamento,
-          ofertas: pedido.ofertas ? 'sí' : 'no',
-          origen: `ecogel-${pedido.de}`,
-          ip,
-          eventId,
-          fbp,
-          fbc: fbc ?? '',
-          externalId,
-          navegador,
-          url,
-          mpPagoId: '',
-          tipoDocumento: pedido.tipoDocumento,
-          documento: pedido.documento,
-          autorizaWhatsapp: pedido.autorizaWhatsapp ? 'sí' : 'no',
-          ...camposPremio,
-        })
+    pedidoAnterior ? actualizarFilaPedido(pedidoId, cambiosReintento) : crearFilaPedido(filaNueva)
   ).catch((error) => {
     console.error('[hoja-pedidos] no se pudo guardar el pedido', pedidoId, error instanceof Error ? error.message : error);
   });
@@ -206,7 +207,9 @@ export async function POST(req: NextRequest) {
           },
         );
 
-  await Promise.all([escrituraFila, envioMeta]);
+  // EcoGel Cuentas recibe lo mismo que la hoja; si no responde, no frena nada.
+  const avisoCuentas = avisarCuentas('pedido', pedidoAnterior ? { pedidoId, ...cambiosReintento } : filaNueva);
+  await Promise.all([escrituraFila, envioMeta, avisoCuentas]);
 
   // Contraentrega y los métodos manuales (transferencia sin pasarela) van
   // directo a "gracias" con su propio estado: cada uno tiene su instrucción
