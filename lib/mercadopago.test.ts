@@ -59,7 +59,18 @@ test('consultarPago devuelve status y external_reference', async () => {
     assert.match(String(url), /\/v1\/payments\/123$/);
     return new Response(JSON.stringify({ status: 'approved', external_reference: 'EG-1' }), { status: 200 });
   }) as unknown as typeof fetch;
-  assert.deepEqual(await consultarPago('123', f), { ok: true, status: 'approved', externalReference: 'EG-1' });
+  assert.deepEqual(await consultarPago('123', f), { ok: true, status: 'approved', externalReference: 'EG-1', comisionMp: null, netoRecibido: null });
+  delete process.env.MP_ACCESS_TOKEN;
+});
+
+test('consultarPago devuelve la comisión y el neto que Mercado Pago deja en la cuenta', async () => {
+  process.env.MP_ACCESS_TOKEN = 'APP_USR-prueba';
+  const f = (async () =>
+    new Response(
+      JSON.stringify({ status: 'approved', external_reference: 'EG-2', fee_details: [{ amount: 3000.4 }, { amount: 456.3 }], transaction_details: { net_received_amount: 106243.3 } }),
+      { status: 200 },
+    )) as unknown as typeof fetch;
+  assert.deepEqual(await consultarPago('9', f), { ok: true, status: 'approved', externalReference: 'EG-2', comisionMp: 3457, netoRecibido: 106243 });
   delete process.env.MP_ACCESS_TOKEN;
 });
 

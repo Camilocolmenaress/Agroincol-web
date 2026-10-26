@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { avisarCuentas } from '@/lib/cuentas-ecogel';
 import { consultarPago, mpConfigurado } from '@/lib/mercadopago';
 import { actualizarFilaPedido, leerFilaPedido } from '@/lib/hoja-pedidos';
 import { enviarPurchaseEcogel } from '@/lib/meta/ecogel-purchase';
@@ -51,6 +52,9 @@ export async function POST(req: NextRequest) {
     console.error('[hoja-pedidos] no se pudo actualizar', pago.externalReference, error instanceof Error ? error.message : error);
     return NextResponse.json({ ok: false }, { status: 502 });
   }
+
+  // EcoGel Cuentas: estado del pago con la comisión y el neto reales. Nunca lanza.
+  await avisarCuentas('pago', { pedidoId: pago.externalReference, estado, comisionMp: pago.comisionMp, netoRecibido: pago.netoRecibido });
 
   // Único momento en que un pedido "online" manda su Purchase a Meta: aquí,
   // con el pago ya confirmado. La hoja es la única fuente de los datos del
