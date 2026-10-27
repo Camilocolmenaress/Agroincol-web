@@ -153,7 +153,7 @@ export async function POST(req: NextRequest) {
   };
 
   // Lista cerrada: nada que venga del navegador llega crudo a Meta.
-  const CATEGORIAS = ['chinches', 'comejen', 'ecogel-hogar', 'ecogel-restaurantes'];
+  const CATEGORIAS = ['chinches', 'comejen', 'ecogel-hogar', 'ecogel-restaurantes', 'restaurantes'];
   const categoriaValida =
     typeof categoria === 'string' && CATEGORIAS.includes(categoria) ? categoria : undefined;
 

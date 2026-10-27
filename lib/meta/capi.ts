@@ -24,6 +24,15 @@ export type ResultadoEnvio =
  * su pixel y su token; ninguna hereda de la otra.
  */
 function credenciales(cuenta: Cuenta) {
+  if (cuenta === 'restaurantes') {
+    return {
+      pixelId: pixelIdDe(cuenta),
+      token: process.env.META_CAPI_TOKEN_RESTAURANTES ?? '',
+      // Código de prueba propio: el global pondría en prueba también la
+      // campaña de servicios, que está en el aire.
+      codigoPrueba: process.env.META_TEST_EVENT_CODE_RESTAURANTES ?? '',
+    };
+  }
   return {
     pixelId: pixelIdDe(cuenta),
     /** Solo en el servidor. NUNCA con prefijo NEXT_PUBLIC_. */
