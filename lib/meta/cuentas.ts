@@ -15,10 +15,22 @@
  * Este módulo no importa nada del navegador ni del servidor: lo usan los dos.
  */
 
-export type Cuenta = 'servicios' | 'ecogel';
+export type Cuenta = 'servicios' | 'ecogel' | 'restaurantes';
 
+/** Solo el segmento exacto: '/ecogelito' no es EcoGel. */
+function bajo(pathname: string, raiz: string): boolean {
+  return pathname === raiz || pathname.startsWith(`${raiz}/`);
+}
+
+/**
+ * Restaurantes (/lp/restaurantes) tiene su propio dataset: es otro público
+ * (dueños de restaurante, ticket de contrato) y su campaña optimiza hacia el
+ * lead calificado, no hacia el de hogar de /lp/chinches.
+ */
 export function cuentaPorRuta(pathname: string): Cuenta {
-  return pathname === '/ecogel' || pathname.startsWith('/ecogel/') ? 'ecogel' : 'servicios';
+  if (bajo(pathname, '/ecogel')) return 'ecogel';
+  if (bajo(pathname, '/lp/restaurantes')) return 'restaurantes';
+  return 'servicios';
 }
 
 /** Para el servidor, que recibe la URL completa de la página. Si no parsea, servicios. */
@@ -33,14 +45,16 @@ export function cuentaPorUrl(url: string | undefined): Cuenta {
 
 /**
  * Pixel de cada cuenta. Sin la variable, cadena vacía = medición apagada para
- * esa cuenta. EcoGel NUNCA cae al pixel de servicios: preferimos no medir un
+ * esa cuenta. Ninguna cae al pixel de servicios: preferimos no medir un
  * día a contaminar el historial del otro pixel.
  *
  * Los `process.env.NEXT_PUBLIC_*` van escritos literalmente (no por índice)
  * porque Next los reemplaza en tiempo de build buscando ese texto exacto.
  */
 export function pixelIdDe(cuenta: Cuenta): string {
-  return (cuenta === 'ecogel' ? process.env.NEXT_PUBLIC_META_PIXEL_ID_ECOGEL : process.env.NEXT_PUBLIC_META_PIXEL_ID) ?? '';
+  if (cuenta === 'ecogel') return process.env.NEXT_PUBLIC_META_PIXEL_ID_ECOGEL ?? '';
+  if (cuenta === 'restaurantes') return process.env.NEXT_PUBLIC_META_PIXEL_ID_RESTAURANTES ?? '';
+  return process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '';
 }
 
 /**

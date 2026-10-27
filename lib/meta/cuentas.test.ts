@@ -12,6 +12,29 @@ test('las rutas de EcoGel van a la cuenta ecogel; el resto a servicios', () => {
   assert.equal(cuentaPorRuta('/ecogelito'), 'servicios');
 });
 
+test('/lp/restaurantes va a su propia cuenta; las demás landings siguen en servicios', () => {
+  assert.equal(cuentaPorRuta('/lp/restaurantes'), 'restaurantes');
+  assert.equal(cuentaPorRuta('/lp/restaurantes/gracias'), 'restaurantes');
+  assert.equal(cuentaPorRuta('/lp/restaurantesx'), 'servicios');
+  // La página de EcoGel para restaurantes es de la tienda, no de servicios.
+  assert.equal(cuentaPorRuta('/ecogel/restaurantes'), 'ecogel');
+  assert.equal(cuentaPorUrl('https://agroincol.com/lp/restaurantes?utm_source=fb'), 'restaurantes');
+});
+
+test('restaurantes lee su propio pixel y nunca hereda el de servicios', () => {
+  const previo = { s: process.env.NEXT_PUBLIC_META_PIXEL_ID, r: process.env.NEXT_PUBLIC_META_PIXEL_ID_RESTAURANTES };
+  process.env.NEXT_PUBLIC_META_PIXEL_ID = '111';
+  delete process.env.NEXT_PUBLIC_META_PIXEL_ID_RESTAURANTES;
+  try {
+    assert.equal(pixelIdDe('restaurantes'), '');
+    process.env.NEXT_PUBLIC_META_PIXEL_ID_RESTAURANTES = '333';
+    assert.equal(pixelIdDe('restaurantes'), '333');
+  } finally {
+    if (previo.s === undefined) delete process.env.NEXT_PUBLIC_META_PIXEL_ID; else process.env.NEXT_PUBLIC_META_PIXEL_ID = previo.s;
+    if (previo.r === undefined) delete process.env.NEXT_PUBLIC_META_PIXEL_ID_RESTAURANTES; else process.env.NEXT_PUBLIC_META_PIXEL_ID_RESTAURANTES = previo.r;
+  }
+});
+
 test('cuentaPorUrl lee el pathname y cae a servicios si la URL no parsea', () => {
   assert.equal(cuentaPorUrl('https://agroincol.com/ecogel/restaurantes?u=3'), 'ecogel');
   assert.equal(cuentaPorUrl('https://agroincol.com/lp/comejen'), 'servicios');
