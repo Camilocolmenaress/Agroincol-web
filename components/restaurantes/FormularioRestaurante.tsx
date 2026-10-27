@@ -18,7 +18,37 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, Check, Loader2, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
+import { AnimatePresence, LazyMotion, MotionConfig } from 'motion/react';
+import * as m from 'motion/react-m';
+import {
+  ArrowLeft,
+  BadgeCheck,
+  Bug,
+  CalendarCheck,
+  CalendarX,
+  Check,
+  CircleHelp,
+  ClipboardCheck,
+  Coffee,
+  KeyRound,
+  Loader2,
+  MapPin,
+  MapPinOff,
+  MessageCircle,
+  MessageSquareWarning,
+  MessagesSquare,
+  Phone,
+  RotateCcw,
+  ShieldCheck,
+  Store,
+  User,
+  UserRound,
+  Users,
+  UsersRound,
+  UtensilsCrossed,
+  Wallet,
+  type LucideIcon,
+} from 'lucide-react';
 import { PREGUNTAS, type IdPregunta, type Respuestas } from '@/lib/restaurantes/calificacion';
 import { estaAbierto, textoProximaApertura } from '@/lib/restaurantes/horario';
 import { nuevoEventId } from '@/lib/meta/eventos';
@@ -29,12 +59,63 @@ import { BUSINESS } from '@/lib/constants';
 import { PanelCerrado } from './PanelCerrado';
 
 const TOTAL_PASOS = PREGUNTAS.length + 1;
+
+/** Un ícono por respuesta: se reconoce la opción antes de terminar de leerla. */
+const ICONOS: Record<string, LucideIcon> = {
+  'situacion:cliente-vio': MessageSquareWarning,
+  'situacion:cucarachas': Bug,
+  'situacion:volvieron': RotateCcw,
+  'situacion:secretaria': ClipboardCheck,
+  'situacion:prevenir': ShieldCheck,
+  'tipo:restaurante': UtensilsCrossed,
+  'tipo:comida': Coffee,
+  'tipo:otro': Store,
+  'municipio:otro': MapPinOff,
+  'personas:1': User,
+  'personas:2-5': Users,
+  'personas:6-15': UsersRound,
+  'personas:15+': UsersRound,
+  'rol:dueno': KeyRound,
+  'rol:admin-decide': BadgeCheck,
+  'rol:admin-consulta': MessagesSquare,
+  'rol:otro': UserRound,
+  'plan_anual:si': CalendarCheck,
+  'plan_anual:no': CalendarX,
+  'presupuesto:asesoria': CircleHelp,
+};
+
+const cargarMovimiento = () => import('./movimiento').then((r) => r.default);
+
+/** Cada paso entra desde el lado hacia el que se avanza: adelante, derecha; atrás, izquierda. */
+const VARIANTES_PASO = {
+  entra: (d: number) => ({ x: d * 28, opacity: 0 }),
+  centro: { x: 0, opacity: 1, transition: { type: 'spring' as const, stiffness: 420, damping: 36 } },
+  sale: (d: number) => ({ x: d * -28, opacity: 0, transition: { duration: 0.14 } }),
+};
+
+function iconoDe(id: IdPregunta, valor: string): LucideIcon {
+  return ICONOS[`${id}:${valor}`] ?? (id === 'municipio' ? MapPin : Wallet);
+}
 const WHATSAPP = BUSINESS.phoneRaw.replace('+', '');
 
 type Estado = 'llenando' | 'enviando' | 'calificado' | 'descalificado' | 'cerrado' | 'error';
 
-/** `vigilarHorario` en falso cuando el servidor tiene el horario desactivado para pruebas. */
-export default function FormularioRestaurante({ vigilarHorario = true }: { vigilarHorario?: boolean }) {
+interface Props {
+  /** En falso cuando el servidor tiene el horario desactivado para pruebas. */
+  vigilarHorario?: boolean;
+}
+
+export default function FormularioRestaurante(props: Props) {
+  return (
+    <MotionConfig reducedMotion="user">
+      <LazyMotion features={cargarMovimiento} strict>
+        <Formulario {...props} />
+      </LazyMotion>
+    </MotionConfig>
+  );
+}
+
+function Formulario({ vigilarHorario = true }: Props) {
   const [paso, setPaso] = useState(0);
   const [respuestas, setRespuestas] = useState<Partial<Respuestas>>({});
   const [mostrarGarantia, setMostrarGarantia] = useState(false);
@@ -54,6 +135,12 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
   const tarjeta = useRef<HTMLDivElement>(null);
   const primerRender = useRef(true);
   const garantia = useRef<HTMLDivElement>(null);
+  // Hacia dónde se movió el último cambio de paso, para la dirección de la animación.
+  const pasoAnterior = useRef(0);
+  const direccion = paso >= pasoAnterior.current ? 1 : -1;
+  useEffect(() => {
+    pasoAnterior.current = paso;
+  }, [paso]);
   useEffect(() => {
     leadId.current = nuevoEventId();
   }, []);
@@ -79,9 +166,13 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
       primerRender.current = false;
       return;
     }
-    titulo.current?.focus({ preventScroll: true });
+    // Con AnimatePresence el título nuevo monta después de la salida: el foco
+    // de los pasos lo pone onExitComplete. Aquí solo el de las pantallas finales.
+    if (estado !== 'llenando' && estado !== 'enviando') titulo.current?.focus({ preventScroll: true });
     const caja = tarjeta.current?.getBoundingClientRect();
-    if (caja && caja.top < 0) tarjeta.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // window.scrollBy y no scrollIntoView: este último también desplaza los
+    // contenedores con overflow oculto, y corría la tarjeta 30 px de lado.
+    if (caja && caja.top < 0) window.scrollBy({ top: caja.top - 12, behavior: 'smooth' });
   }, [paso, estado]);
 
   const elegir = (id: IdPregunta, valor: string) => {
@@ -89,7 +180,10 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
     if (id === 'situacion' && valor === 'volvieron') {
       setMostrarGarantia(true);
       // En el celular la garantía aparece debajo de la última opción, fuera de vista.
-      setTimeout(() => garantia.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+      setTimeout(() => {
+        const caja = garantia.current?.getBoundingClientRect();
+        if (caja && caja.bottom > window.innerHeight) window.scrollBy({ top: caja.bottom - window.innerHeight + 24, behavior: 'smooth' });
+      }, 60);
       return;
     }
     setMostrarGarantia(false);
@@ -160,10 +254,17 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
     const mensaje = `Hola, soy ${primerNombre} de ${negocio}. Acabo de pedir la inspección gratis para mi restaurante. Mi código es ${codigo}.`;
     return (
       <div className="px-6 py-9 text-center sm:px-10" aria-live="polite">
-        <span className="rr-sello mx-auto grid h-16 w-16 place-items-center rounded-full bg-brand-green text-white">
-          <Check size={34} strokeWidth={2.5} aria-hidden />
-        </span>
-        <h2 ref={titulo} tabIndex={-1} className="mt-5 font-heading text-[1.75rem] font-bold leading-tight text-brand-green-dark outline-none">
+        <m.span
+          className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-brand-green text-white"
+          initial={{ scale: 0.6, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 320, damping: 18 }}
+        >
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <m.path d="M5 12.5l4.5 4.5L19 7.5" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.2, duration: 0.45, ease: 'easeOut' }} />
+          </svg>
+        </m.span>
+        <h2 ref={titulo} tabIndex={-1} className="mt-5 font-heading text-[1.75rem] font-semibold leading-tight tracking-[-0.015em] text-brand-green-dark outline-none">
           Listo, {primerNombre}.
         </h2>
         <p className="mx-auto mt-2 max-w-sm text-body-lg text-brand-black/75">
@@ -173,14 +274,14 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
           <a
             href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensaje)}`}
             onClick={() => rastrear('Contact', { categoria: 'restaurantes' })}
-            className="flex min-h-[56px] items-center justify-center gap-2.5 rounded-2xl bg-[#1FA855] px-5 font-heading text-lg font-semibold text-white transition active:scale-[0.98]"
+            className="flex min-h-[56px] items-center justify-center gap-2.5 rounded-full bg-[#1FA855] px-5 font-heading text-lg font-semibold text-white transition active:scale-[0.98]"
           >
             <MessageCircle size={22} aria-hidden /> Escríbanos ya por WhatsApp
           </a>
           <a
             href={`tel:${BUSINESS.phoneRaw}`}
             onClick={() => rastrear('Contact', { categoria: 'restaurantes' })}
-            className="flex min-h-[56px] items-center justify-center gap-2.5 rounded-2xl border-2 border-brand-green/20 px-5 font-heading text-lg font-semibold text-brand-green-dark transition active:scale-[0.98]"
+            className="flex min-h-[56px] items-center justify-center gap-2.5 rounded-full border border-[#D5E0DA] px-5 font-heading text-lg font-semibold text-brand-green-dark transition active:scale-[0.98]"
           >
             <Phone size={20} aria-hidden /> Llámenos ahora
           </a>
@@ -193,7 +294,7 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
   if (estado === 'descalificado') {
     return (
       <div className="px-6 py-10 text-center sm:px-10" aria-live="polite">
-        <h2 ref={titulo} tabIndex={-1} className="font-heading text-[1.6rem] font-bold leading-tight text-brand-green-dark outline-none">
+        <h2 ref={titulo} tabIndex={-1} className="font-heading text-[1.6rem] font-semibold leading-tight tracking-[-0.015em] text-brand-green-dark outline-none">
           Gracias, {primerNombre}.
         </h2>
         <p className="mx-auto mt-3 max-w-sm text-body text-brand-black/70">
@@ -210,7 +311,7 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
   return (
     <div ref={tarjeta} className="scroll-mt-4">
       {/* Progreso: es una secuencia real, por eso lleva número. */}
-      <div className="flex items-center gap-3 px-5 pt-5 sm:px-8 sm:pt-7">
+      <div className="flex items-center gap-3 px-5 pt-5 sm:px-7 sm:pt-6">
         {paso > 0 && estado !== 'enviando' ? (
           <button
             type="button"
@@ -218,64 +319,86 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
               setMostrarGarantia(false);
               setPaso((p) => p - 1);
             }}
-            className="-ml-2 grid h-10 w-10 place-items-center rounded-full text-brand-green-dark hover:bg-brand-mint"
+            className="-ml-1.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#F2F6F3] text-brand-green-dark transition hover:bg-brand-mint"
             aria-label="Volver a la pregunta anterior"
           >
-            <ArrowLeft size={20} aria-hidden />
+            <ArrowLeft size={18} aria-hidden />
           </button>
         ) : null}
-        <div className="flex flex-1 gap-1.5" aria-hidden>
-          {Array.from({ length: TOTAL_PASOS }, (_, i) => (
-            <span
-              key={i}
-              className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${i <= paso ? 'bg-brand-orange' : 'bg-brand-green/10'}`}
-            />
-          ))}
+        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#E8EEEA]" aria-hidden>
+          <m.div
+            className="h-full rounded-full bg-brand-green"
+            initial={false}
+            animate={{ width: `${((paso + 1) / TOTAL_PASOS) * 100}%` }}
+            transition={{ type: 'spring', stiffness: 160, damping: 24 }}
+          />
         </div>
-        <span className="text-body-sm tabular-nums text-brand-black/50">
+        <span className="shrink-0 text-[0.8rem] font-semibold tabular-nums text-[#5B6B63]">
           {paso + 1} de {TOTAL_PASOS}
         </span>
       </div>
 
+      <AnimatePresence
+        mode="wait"
+        initial={false}
+        custom={direccion}
+        onExitComplete={() => titulo.current?.focus({ preventScroll: true })}
+      >
       {!enDatos && pregunta ? (
-        <fieldset key={pregunta.id} className="rr-paso px-5 pb-6 pt-5 sm:px-8 sm:pb-8">
+        <m.fieldset
+          key={pregunta.id}
+          custom={direccion}
+          variants={VARIANTES_PASO}
+          initial="entra"
+          animate="centro"
+          exit="sale"
+          className="px-5 pb-6 pt-5 sm:px-7 sm:pb-7"
+        >
           <legend className="sr-only">{pregunta.titulo}</legend>
-          <h2 ref={titulo} tabIndex={-1} className="font-heading text-[1.45rem] font-bold leading-[1.2] text-brand-green-dark outline-none sm:text-[1.65rem]">
+          <h2 ref={titulo} tabIndex={-1} className="font-heading text-[1.45rem] font-semibold leading-[1.15] tracking-[-0.015em] text-brand-green-dark outline-none sm:text-[1.6rem]">
             {pregunta.titulo}
           </h2>
           {pregunta.ayuda ? <p className="mt-1.5 text-body-sm text-brand-black/55">{pregunta.ayuda}</p> : null}
-          <div className="mt-5 grid gap-2.5" role="radiogroup" aria-label={pregunta.titulo}>
+          <div className="mt-5 grid gap-2" role="radiogroup" aria-label={pregunta.titulo}>
             {pregunta.opciones.map((o) => {
               const marcada = respuestas[pregunta.id] === o.valor;
+              const Icono = iconoDe(pregunta.id, o.valor);
               return (
-                <button
+                <m.button
                   key={o.valor}
                   type="button"
                   role="radio"
                   aria-checked={marcada}
                   onClick={() => elegir(pregunta.id, o.valor)}
-                  className={`group flex min-h-[56px] w-full items-center gap-3.5 rounded-2xl border-2 px-4 py-3 text-left text-[1.05rem] font-semibold leading-snug transition active:scale-[0.99] ${
+                  whileTap={{ scale: 0.985 }}
+                  className={`flex min-h-[60px] w-full items-center gap-3.5 rounded-[18px] border px-3 py-2.5 text-left text-[1.02rem] font-semibold leading-snug transition-colors ${
                     marcada
-                      ? 'border-brand-green bg-brand-green text-white'
-                      : 'border-brand-green/15 bg-white text-brand-black hover:border-brand-green/40'
+                      ? 'border-brand-green bg-[#F2F6F3] text-brand-green-dark ring-1 ring-brand-green'
+                      : 'border-[#E3EAE6] bg-white text-brand-black hover:border-brand-green/40 hover:bg-[#FAFCFB]'
                   }`}
                 >
                   <span
-                    className={`grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 transition ${
-                      marcada ? 'border-white bg-white text-brand-green' : 'border-brand-green/25'
+                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl transition ${
+                      marcada ? 'bg-brand-green text-white' : 'bg-[#EEF3F0] text-brand-green'
                     }`}
                     aria-hidden
                   >
-                    {marcada ? <Check size={14} strokeWidth={3.5} /> : null}
+                    {marcada ? (
+                      <m.span initial={{ scale: 0.4 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500, damping: 20 }}>
+                        <Check size={19} strokeWidth={2.75} />
+                      </m.span>
+                    ) : (
+                      <Icono size={19} strokeWidth={1.9} />
+                    )}
                   </span>
-                  {o.etiqueta}
-                </button>
+                  <span className="flex-1">{o.etiqueta}</span>
+                </m.button>
               );
             })}
           </div>
 
           {mostrarGarantia && pregunta.id === 'situacion' ? (
-            <div ref={garantia} className="rr-paso mt-4 scroll-mb-6 rounded-2xl bg-brand-mint p-4">
+            <div ref={garantia} className="rr-paso mt-4 scroll-mb-6 rounded-[18px] bg-[#EEF3F0] p-4">
               <p className="flex gap-2.5 text-body text-brand-green-dark">
                 <ShieldCheck size={22} className="mt-0.5 shrink-0" aria-hidden />
                 <span>
@@ -289,16 +412,26 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
                   setMostrarGarantia(false);
                   setPaso(1);
                 }}
-                className="mt-4 min-h-[52px] w-full rounded-2xl bg-brand-green-dark font-heading text-lg font-semibold text-white"
+                className="mt-4 min-h-[52px] w-full rounded-full bg-brand-green-dark font-heading text-lg font-semibold text-white"
               >
                 Continuar
               </button>
             </div>
           ) : null}
-        </fieldset>
+        </m.fieldset>
       ) : (
-        <form onSubmit={enviar} noValidate className="rr-paso px-5 pb-6 pt-5 sm:px-8 sm:pb-8">
-          <h2 ref={titulo} tabIndex={-1} className="font-heading text-[1.45rem] font-bold leading-[1.2] text-brand-green-dark outline-none sm:text-[1.65rem]">
+        <m.form
+          key="datos"
+          custom={direccion}
+          variants={VARIANTES_PASO}
+          initial="entra"
+          animate="centro"
+          exit="sale"
+          onSubmit={enviar}
+          noValidate
+          className="px-5 pb-6 pt-5 sm:px-7 sm:pb-7"
+        >
+          <h2 ref={titulo} tabIndex={-1} className="font-heading text-[1.45rem] font-semibold leading-[1.15] tracking-[-0.015em] text-brand-green-dark outline-none sm:text-[1.6rem]">
             ¿A quién contactamos?
           </h2>
 
@@ -324,7 +457,7 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
             </Campo>
             <Campo id="rr-celular" etiqueta="Su celular" error={errores.celular}>
               <div className={`flex overflow-hidden ${claseInput(errores.celular)} p-0`}>
-                <span className="grid place-items-center border-r border-brand-green/10 bg-brand-light px-3.5 text-brand-black/60">+57</span>
+                <span className="grid place-items-center border-r border-[#E3EAE6] bg-[#F5F8F6] px-3.5 font-semibold text-brand-black/60">+57</span>
                 <input
                   id="rr-celular"
                   type="tel"
@@ -353,10 +486,10 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
                     role="radio"
                     aria-checked={canal === valor}
                     onClick={() => setCanal(valor)}
-                    className={`flex min-h-[52px] items-center justify-center gap-2 rounded-2xl border-2 font-semibold transition ${
+                    className={`flex min-h-[52px] items-center justify-center gap-2 rounded-[16px] border font-semibold transition ${
                       canal === valor
-                        ? 'border-brand-green bg-brand-green text-white'
-                        : 'border-brand-green/15 bg-white text-brand-black'
+                        ? 'border-brand-green bg-[#F2F6F3] text-brand-green-dark ring-1 ring-brand-green'
+                        : 'border-[#E3EAE6] bg-white text-brand-black'
                     }`}
                   >
                     <Icono size={18} aria-hidden /> {etiqueta}
@@ -405,21 +538,22 @@ export default function FormularioRestaurante({ vigilarHorario = true }: { vigil
           <button
             type="submit"
             disabled={estado === 'enviando'}
-            className="mt-6 flex min-h-[58px] w-full items-center justify-center gap-2 rounded-2xl bg-brand-orange px-5 font-heading text-[1.15rem] font-bold text-white shadow-brand transition hover:bg-brand-orange-dark active:scale-[0.98] disabled:opacity-70"
+            className="mt-6 flex min-h-[58px] w-full items-center justify-center gap-2 rounded-full bg-brand-orange px-5 font-heading text-[1.2rem] font-bold text-white shadow-brand transition hover:bg-brand-orange-dark active:scale-[0.98] disabled:opacity-70"
           >
             {estado === 'enviando' ? <Loader2 className="animate-spin" size={22} aria-hidden /> : null}
             Agende su inspección gratis
           </button>
           <p className="mt-3 text-center text-body-sm text-brand-black/55">Lo contactamos en 5 minutos.</p>
-        </form>
+        </m.form>
       )}
+      </AnimatePresence>
     </div>
   );
 }
 
 function claseInput(error?: string) {
-  return `min-h-[54px] w-full rounded-2xl border-2 bg-white px-4 text-[1.05rem] text-brand-black outline-none transition placeholder:text-brand-black/35 focus-within:border-brand-green ${
-    error ? 'border-red-400' : 'border-brand-green/15'
+  return `min-h-[54px] w-full rounded-[16px] border bg-white px-4 text-[1.05rem] text-brand-black outline-none transition placeholder:text-brand-black/35 focus-within:border-brand-green focus-within:ring-1 focus-within:ring-brand-green ${
+    error ? 'border-red-400' : 'border-[#E3EAE6]'
   }`;
 }
 
