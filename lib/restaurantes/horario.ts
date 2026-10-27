@@ -148,14 +148,16 @@ function esDiaDeAtencion(anio: number, mes: number, dia: number, diaSemana: numb
 }
 
 /**
- * Solo para probar en local fuera de horario. En producción no existe: Vercel
- * compila con NODE_ENV=production y la condición queda siempre en falso.
+ * Interruptor para PROBAR fuera de horario (local o producción):
+ * RESTAURANTES_SIN_HORARIO=1. Solo lo lee el servidor; en el navegador no
+ * existe. Mientras esté puesto, el formulario recibe a cualquier hora y nadie
+ * llama en 5 minutos: quitarlo apenas terminen las pruebas.
  */
-const SIN_HORARIO_LOCAL = process.env.NODE_ENV !== 'production' && process.env.RESTAURANTES_SIN_HORARIO === '1';
+export const HORARIO_DESACTIVADO = process.env.RESTAURANTES_SIN_HORARIO === '1';
 
 /** ¿Se reciben solicitudes en este instante? */
 export function estaAbierto(fecha: Date = new Date(), margenMin: number = MARGEN_CIERRE_MIN): boolean {
-  if (SIN_HORARIO_LOCAL) return true;
+  if (HORARIO_DESACTIVADO) return true;
   const l = enBogota(fecha);
   if (!esDiaDeAtencion(l.anio, l.mes, l.dia, l.diaSemana)) return false;
   return BLOQUES.some((b) => l.minutos >= b.desde && l.minutos < b.hasta - margenMin);

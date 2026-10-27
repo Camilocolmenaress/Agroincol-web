@@ -33,7 +33,8 @@ const WHATSAPP = BUSINESS.phoneRaw.replace('+', '');
 
 type Estado = 'llenando' | 'enviando' | 'calificado' | 'descalificado' | 'cerrado' | 'error';
 
-export default function FormularioRestaurante() {
+/** `vigilarHorario` en falso cuando el servidor tiene el horario desactivado para pruebas. */
+export default function FormularioRestaurante({ vigilarHorario = true }: { vigilarHorario?: boolean }) {
   const [paso, setPaso] = useState(0);
   const [respuestas, setRespuestas] = useState<Partial<Respuestas>>({});
   const [mostrarGarantia, setMostrarGarantia] = useState(false);
@@ -61,6 +62,7 @@ export default function FormularioRestaurante() {
   // persona no ha empezado, se cierra. Quien ya empezó puede terminar: el
   // servidor recibe hasta la hora en punto.
   useEffect(() => {
+    if (!vigilarHorario) return;
     const id = setInterval(() => {
       if (!estaAbierto() && paso === 0 && Object.keys(respuestas).length === 0) {
         setVuelve(textoProximaApertura());
@@ -68,7 +70,7 @@ export default function FormularioRestaurante() {
       }
     }, 30_000);
     return () => clearInterval(id);
-  }, [paso, respuestas]);
+  }, [paso, respuestas, vigilarHorario]);
 
   // Al cambiar de paso, el foco va al título (lectores de pantalla) y la
   // tarjeta vuelve a quedar a la vista si el teclado la desplazó.

@@ -4,7 +4,7 @@ import { Clock3, FileCheck2, Leaf, RotateCcw, Star, Moon } from 'lucide-react';
 import { LandingFooter } from '@/components/landing/LandingChrome';
 import FormularioRestaurante from '@/components/restaurantes/FormularioRestaurante';
 import { HORARIO_TEXTO, PanelCerrado } from '@/components/restaurantes/PanelCerrado';
-import { estaAbierto, textoProximaApertura } from '@/lib/restaurantes/horario';
+import { HORARIO_DESACTIVADO, estaAbierto, textoProximaApertura } from '@/lib/restaurantes/horario';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
@@ -92,7 +92,7 @@ export default function RestaurantesLandingPage() {
           </div>
 
           <div id="formulario" className="mt-8 scroll-mt-4 overflow-hidden rounded-[28px] bg-brand-cream text-brand-black shadow-premium lg:mt-0">
-            {abierto ? <FormularioRestaurante /> : <PanelCerrado vuelve={vuelve} />}
+            {abierto ? <FormularioRestaurante vigilarHorario={!HORARIO_DESACTIVADO} /> : <PanelCerrado vuelve={vuelve} />}
           </div>
         </div>
       </header>

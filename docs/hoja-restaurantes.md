@@ -382,8 +382,11 @@ que sí se revisa cada enero, o cuando pase:
 RESTAURANTES_SIN_HORARIO=1 npm run dev   # abre http://localhost:3000/lp/restaurantes
 ```
 
-`RESTAURANTES_SIN_HORARIO` no existe en producción. En local la medición está
-apagada (solo agroincol.com mide).
+En local la medición está apagada (solo agroincol.com mide).
+
+`RESTAURANTES_SIN_HORARIO=1` también funciona en Vercel para probar fuera de
+horario en producción. **Quitarlo apenas terminen las pruebas**: mientras esté,
+el formulario recibe a cualquier hora y la promesa de 5 minutos no se cumple.
 
 **En producción, con "Probar eventos"** (dentro del horario):
 
