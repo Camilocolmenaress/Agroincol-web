@@ -7,8 +7,9 @@ export const HORARIO_TEXTO = 'Atendemos de lunes a viernes, 8:00\u00a0a.\u00a0m.
 export function PanelCerrado({ vuelve }: { vuelve: string }) {
   return (
     <div className="px-6 py-10 text-center sm:px-10">
-      <p className="font-heading text-[1.75rem] font-bold leading-tight text-brand-green-dark">Volvemos {vuelve}</p>
-      <p className="mx-auto mt-3 max-w-sm text-body text-brand-black/70">
+      <p className="text-[0.85rem] font-semibold text-[#5B6B63]">En este momento no estamos atendiendo</p>
+      <p className="mt-2 font-heading text-[1.85rem] font-semibold leading-[1.05] tracking-[-0.025em] text-brand-green-dark">Volvemos {vuelve}</p>
+      <p className="mx-auto mt-3 max-w-sm text-[0.98rem] leading-relaxed text-[#5B6B63]">
         {HORARIO_TEXTO} Recibimos solicitudes solo cuando hay alguien para atenderlo en 5 minutos.
       </p>
     </div>
