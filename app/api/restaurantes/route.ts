@@ -1,22 +1,22 @@
 /**
  * Recibe el formulario de /lp/restaurantes.
  *
- * En orden, y cada paso es una barrera:
- * 1. Horario: fuera del horario del equipo no se recibe nada (lo decide el
- *    reloj del servidor, no el del celular).
- * 2. Respuestas: solo opciones de la lista; datos completos; autorización.
- * 3. Calificación: se RECALCULA aquí. El puntaje del navegador no existe.
- * 4. Fila en la hoja, calificado o no. La hoja avisa por correo si calificó.
- * 5. Lead a Meta SOLO si calificó, con el mismo event_id que el Pixel.
+ * Recibe a cualquier hora. En orden, y cada paso es una barrera:
+ * 1. Respuestas: solo opciones de la lista; datos completos; autorización.
+ * 2. Calificación: se RECALCULA aquí. El puntaje del navegador no existe.
+ * 3. Fila en la hoja, calificado o no. La hoja avisa por correo si calificó.
+ * 4. Lead a Meta SOLO si calificó, con el mismo event_id que el Pixel.
  *
  * El navegador recibe `calificado` y con eso decide si dispara el Pixel. Así un
  * descalificado nunca produce un Lead, ni por el servidor ni por el navegador.
+ * También recibe `contacto` ("en 5 minutos" o la próxima apertura del equipo,
+ * según el reloj del servidor) para decirle cuándo lo llamamos.
  *
  * Nunca se registra el contenido del lead en los logs: son datos personales.
  */
 
 import { NextResponse, type NextRequest } from 'next/server';
-import { estaAbierto } from '@/lib/restaurantes/horario';
+import { cuandoContactamos, estaAbierto } from '@/lib/restaurantes/horario';
 import { calificar, opcionDe, respuestasValidas } from '@/lib/restaurantes/calificacion';
 import { celularNormalizado, construirEvento, origenDeUrl } from '@/lib/restaurantes/eventos';
 import { capiConfigurada, enviarEventoAMeta } from '@/lib/meta/capi';
@@ -53,11 +53,6 @@ async function guardarEnHoja(fila: Record<string, unknown>): Promise<void> {
 }
 
 export async function POST(req: NextRequest) {
-  // Margen 0: quien empezó a las 11:54 puede terminar hasta las 12:00.
-  if (!estaAbierto(new Date(), 0)) {
-    return NextResponse.json({ ok: false, motivo: 'cerrado' }, { status: 409 });
-  }
-
   let b: Record<string, unknown>;
   try {
     b = await req.json();
@@ -92,11 +87,14 @@ export async function POST(req: NextRequest) {
   const fbc = resolverFbc(req.cookies.get('_fbc')?.value, url) ?? '';
   const externalId = texto(b.externalId, 64);
 
+  const ahora = new Date();
+  const enHorario = estaAbierto(ahora);
+  const contacto = cuandoContactamos(ahora);
   const fechaHora = new Intl.DateTimeFormat('sv-SE', {
     timeZone: 'America/Bogota',
     dateStyle: 'short',
     timeStyle: 'medium',
-  }).format(new Date());
+  }).format(ahora);
 
   // Las respuestas van con su texto, no con el código: quien lee la hoja en el
   // celular no tiene que traducir "admin-consulta".
@@ -132,6 +130,10 @@ export async function POST(req: NextRequest) {
       user_agent: navegador,
       external_id: externalId,
       url,
+      // Lo que se le prometió: el correo lo repite y la mediana de minutos a
+      // contacto cuenta solo los de horario (los de la noche esperan la apertura).
+      en_horario: enHorario ? 'Sí' : 'No',
+      contactar: contacto,
     });
   } catch (error) {
     // Aquí la hoja es la base de datos y la alarma del equipo: si no se guardó,
@@ -140,7 +142,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, motivo: 'hoja' }, { status: 502 });
   }
 
-  const respuesta = NextResponse.json({ ok: true, calificado: resultado.calificado, leadId });
+  const respuesta = NextResponse.json({ ok: true, calificado: resultado.calificado, leadId, enHorario, contacto });
 
   if (resultado.calificado && capiConfigurada('restaurantes')) {
     const evento = await construirEvento({

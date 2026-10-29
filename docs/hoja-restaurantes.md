@@ -4,7 +4,7 @@ Formulario en **https://agroincol.com/lp/restaurantes** (noindex, sin enlaces
 desde el sitio: solo llega tráfico de la campaña).
 
 ```
-formulario (solo en horario) → /api/restaurantes ─┬→ fila en la hoja → correo si calificó
+formulario (24/7)          → /api/restaurantes ─┬→ fila en la hoja → correo si calificó
                                                   └→ Lead a Meta (solo calificados)
 estado en la hoja → Apps Script → /api/restaurantes/etapa → Schedule / Purchase a Meta
 ```
@@ -87,7 +87,9 @@ var COLUMNAS = [
   'meta_schedule', 'meta_purchase', 'fecha_primer_contacto', 'minutos_a_contacto', 'id_cliente_erp',
   'lead_id', 'puntaje', 'motivo_descalificacion', 'plan_sugerido', 'tipo_negocio', 'municipio', 'personas',
   'rol', 'plan_anual', 'presupuesto', 'autoriza', 'politica_version',
-  'utm_source', 'utm_campaign', 'utm_content', 'fbclid', 'fbc', 'fbp', 'client_ip', 'user_agent', 'external_id', 'url'
+  'utm_source', 'utm_campaign', 'utm_content', 'fbclid', 'fbc', 'fbp', 'client_ip', 'user_agent', 'external_id', 'url',
+  // Al final para no correr las filas que ya existen.
+  'en_horario', 'contactar'
 ];
 
 function hojaLeads() {
@@ -150,14 +152,14 @@ function avisarPorCorreo(f) {
     var saludo = 'Hola ' + String(f.nombre || '').split(' ')[0] + ', le habla [su nombre] de AGROINCOL. ' +
       'Recibimos su solicitud de inspección gratis para ' + (f.negocio || 'su restaurante') + '.';
     var alta = f.prioridad === 'alta';
-    var asunto = (alta ? '🔴 ' : '') + 'Restaurante: ' + (f.negocio || f.nombre) + ' — ' + (f.situacion || '');
+    var asunto = (alta ? '🔴 ' : '') + (f.en_horario === 'No' ? '🌙 ' : '') + 'Restaurante: ' + (f.negocio || f.nombre) + ' — ' + (f.situacion || '');
     var boton = function (href, texto, color) {
       return '<a href="' + href + '" style="display:inline-block;padding:14px 22px;margin:4px 6px 4px 0;border-radius:12px;' +
         'background:' + color + ';color:#fff;font-weight:bold;text-decoration:none;font-family:Arial">' + texto + '</a>';
     };
     var html =
       '<div style="font-family:Arial;font-size:15px;color:#1a1a1a">' +
-      '<p style="font-size:18px"><b>Contactar en 5 minutos</b> — prefiere <b>' + f.canal_preferido + '</b></p>' +
+      '<p style="font-size:18px"><b>Contactar ' + (f.contactar || 'en 5 minutos') + '</b> — prefiere <b>' + f.canal_preferido + '</b></p>' +
       boton('tel:+' + celular, 'Llamar', '#174634') +
       boton('https://wa.me/' + celular + '?text=' + encodeURIComponent(saludo), 'WhatsApp', '#1FA855') +
       '<table cellpadding="4" style="margin-top:14px">' +
@@ -311,7 +313,8 @@ function crearMetricas(libro) {
     ['Inspección → contrato', '=IFERROR(COUNTIFS(' + L('estado') + ',"Contratado",' + L('meta_schedule') + ',"✓*")/B5,"")', 'Solo contratos que tuvieron inspección'],
     ['Cierre total', '=IFERROR(B6/B2,"")', 'Supuesto: 11,1 %'],
     ['Costo por venta real', '=IFERROR(B1/B6,"")', 'Máx. $135.141 — criterio de corte'],
-    ['Minutos a primer contacto (mediana)', '=IFERROR(MEDIAN(' + L('minutos_a_contacto') + '),"")', '≤ 5'],
+    // Solo los que llegaron en horario: uno de la noche espera la apertura y no mide la velocidad del equipo.
+    ['Minutos a primer contacto (mediana, en horario)', '=IFERROR(MEDIAN(FILTER(' + L('minutos_a_contacto') + ',' + L('minutos_a_contacto') + '<>"",' + L('en_horario') + '<>"No")),"")', '≤ 5'],
     ['Ticket real de restaurante', '=IFERROR(AVERAGEIF(' + L('estado') + ',"Contratado",' + L('valor_contrato') + '),"")', '']
   ];
   m.getRange(1, 1, filas.length, 3).setValues(filas);
@@ -335,6 +338,9 @@ function columnaLetra(n) {
 
 1. Llega el correo (solo calificados). **Contactar en 5 minutos** por el canal
    que prefirió. Los botones del correo llaman o abren WhatsApp con un saludo.
+   Si el asunto trae 🌙, llegó fuera de horario: el correo dice cuándo se le
+   prometió el contacto (p. ej. "mañana a partir de las 8:00 a. m.") y esos van
+   primero al abrir.
 2. Al hablar con él, `estado` → **Contactado**. Eso registra solo la hora del
    primer contacto y los minutos que tardamos.
 3. `Inspección agendada` → sale el **Schedule** (`meta_schedule` dice ✓).
@@ -359,9 +365,12 @@ servía, y Meta debe saberlo.
 
 ## Horario y festivos
 
-El formulario solo se ve y solo recibe lunes a viernes, 8:00-11:55 y
-14:00-17:55 (Bogotá); la API acepta hasta la hora en punto para no perder a
-quien ya estaba llenándolo. Lo decide el servidor: `lib/restaurantes/horario.ts`.
+El formulario recibe 24/7. El horario del equipo (lunes a viernes, 8:00-12:00
+y 14:00-18:00, Bogotá) solo cambia la promesa: de 8:00 a 11:55 y de 14:00 a
+17:55 es "lo contactamos en 5 minutos"; fuera de ahí, la próxima apertura
+("mañana a partir de las 8:00 a. m."). Lo decide el reloj del servidor al
+recibir: `lib/restaurantes/horario.ts`. La fila guarda `en_horario` y
+`contactar` con lo que se le prometió.
 
 **Los festivos de Colombia se calculan solos** (fijos, Ley Emiliani y los que
 dependen de Semana Santa), así que no hay lista que actualizar cada enero. Lo
@@ -376,19 +385,10 @@ que sí se revisa cada enero, o cuando pase:
 
 ## Cómo probar
 
-**En local** (fuera de horario):
+**En local:** `npm run dev` y abre http://localhost:3000/lp/restaurantes. En
+local la medición está apagada (solo agroincol.com mide).
 
-```bash
-RESTAURANTES_SIN_HORARIO=1 npm run dev   # abre http://localhost:3000/lp/restaurantes
-```
-
-En local la medición está apagada (solo agroincol.com mide).
-
-`RESTAURANTES_SIN_HORARIO=1` también funciona en Vercel para probar fuera de
-horario en producción. **Quitarlo apenas terminen las pruebas**: mientras esté,
-el formulario recibe a cualquier hora y la promesa de 5 minutos no se cumple.
-
-**En producción, con "Probar eventos"** (dentro del horario):
+**En producción, con "Probar eventos"** (a cualquier hora):
 
 1. Administrador de eventos → dataset 1928275594400158 → **Probar eventos** →
    copia el código `TEST…`.

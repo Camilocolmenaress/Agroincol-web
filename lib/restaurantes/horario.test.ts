@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { estaAbierto, festivosDe, proximaApertura, textoProximaApertura } from './horario';
+import { cuandoContactamos, estaAbierto, festivosDe, proximaApertura, textoProximaApertura } from './horario';
 
 /** Hora local de Bogotá (UTC-5) como instante real. */
 const bogota = (iso: string) => new Date(`${iso}-05:00`);
@@ -50,11 +50,6 @@ test('cerrado sábado, domingo y festivos', () => {
   assert.equal(estaAbierto(bogota('2026-11-16T10:00')), false); // Cartagena, corrido
 });
 
-test('la API acepta hasta la hora en punto: quien empezó a las 11:54 no pierde lo llenado', () => {
-  assert.equal(estaAbierto(bogota('2026-10-26T11:58'), 0), true);
-  assert.equal(estaAbierto(bogota('2026-10-26T12:00'), 0), false);
-});
-
 test('no depende de la zona horaria de la máquina: 13:00 UTC son las 8:00 en Bogotá', () => {
   assert.equal(estaAbierto(new Date('2026-10-26T13:00:00Z')), true);
   assert.equal(estaAbierto(new Date('2026-10-26T12:59:00Z')), false);
@@ -68,9 +63,16 @@ test('próxima apertura', () => {
 });
 
 test('texto de la próxima apertura', () => {
-  assert.equal(textoProximaApertura(bogota('2026-10-26T12:30')), 'hoy a las 2:00 p. m.');
-  assert.equal(textoProximaApertura(bogota('2026-10-26T18:05')), 'mañana a las 8:00 a. m.');
-  assert.equal(textoProximaApertura(bogota('2026-10-30T18:05')), 'el martes 3 de noviembre a las 8:00 a. m.');
+  assert.equal(textoProximaApertura(bogota('2026-10-26T12:30')), 'hoy a partir de las 2:00 p. m.');
+  assert.equal(textoProximaApertura(bogota('2026-10-26T18:05')), 'mañana a partir de las 8:00 a. m.');
+  assert.equal(textoProximaApertura(bogota('2026-10-30T18:05')), 'el martes 3 de noviembre a partir de las 8:00 a. m.');
   // Pasada la medianoche del domingo, el lunes ya es "hoy".
-  assert.equal(textoProximaApertura(bogota('2026-10-26T00:30')), 'hoy a las 8:00 a. m.');
+  assert.equal(textoProximaApertura(bogota('2026-10-26T00:30')), 'hoy a partir de las 8:00 a. m.');
+});
+
+test('cuándo contactamos: 5 minutos en horario, la próxima apertura fuera de él', () => {
+  assert.equal(cuandoContactamos(bogota('2026-10-26T10:00')), 'en 5 minutos');
+  // 11:57: aún es horario, pero no alcanza para los 5 minutos.
+  assert.equal(cuandoContactamos(bogota('2026-10-26T11:57')), 'hoy a partir de las 2:00 p. m.');
+  assert.equal(cuandoContactamos(bogota('2026-10-31T22:00')), 'el martes 3 de noviembre a partir de las 8:00 a. m.');
 });

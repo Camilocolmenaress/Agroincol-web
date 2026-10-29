@@ -1,13 +1,13 @@
 /**
- * Horario en que el formulario de restaurantes recibe solicitudes.
+ * Horario del equipo que atiende los leads de restaurantes.
  *
- * La promesa de la página es "lo contactamos en 5 minutos". Solo se puede
- * cumplir si hay alguien atendiendo, así que el formulario existe únicamente
- * en el horario del equipo: lunes a viernes, 8:00-12:00 y 14:00-18:00 en
- * Bogotá, sin festivos. Fuera de ahí la página muestra cuándo vuelve a abrir.
+ * El formulario recibe a cualquier hora, pero "lo contactamos en 5 minutos"
+ * solo se puede prometer si hay alguien atendiendo: lunes a viernes,
+ * 8:00-12:00 y 14:00-18:00 en Bogotá, sin festivos. Fuera de ahí la promesa es
+ * la próxima apertura ("mañana a partir de las 8:00 a. m.").
  *
  * Lo decide el SERVIDOR (la página se arma en cada visita y la API vuelve a
- * comprobarlo al recibir). El reloj del celular de la persona no cuenta.
+ * calcularlo al recibir). El reloj del celular de la persona no cuenta.
  *
  * Este módulo no depende del navegador ni del servidor y no lee la zona horaria
  * de la máquina: Vercel corre en UTC y una prueba local en otra zona tiene que
@@ -24,11 +24,8 @@ export const BLOQUES = [
 ] as const;
 
 /**
- * La página deja de recibir 5 minutos antes de cada cierre (11:55 y 17:55):
- * un lead que entra a las 11:59 no se puede llamar "en 5 minutos".
- *
- * La API usa margen 0: quien abrió el formulario a las 11:54 y lo envía a las
- * 11:57 no pierde lo que ya llenó.
+ * La promesa de 5 minutos termina 5 minutos antes de cada cierre (11:55 y
+ * 17:55): un lead que entra a las 11:59 no se puede llamar "en 5 minutos".
  */
 export const MARGEN_CIERRE_MIN = 5;
 
@@ -147,23 +144,17 @@ function esDiaDeAtencion(anio: number, mes: number, dia: number, diaSemana: numb
   return !festivosDe(anio).has(k) && !DIAS_SIN_ATENCION.includes(k);
 }
 
-/**
- * Interruptor para PROBAR fuera de horario (local o producción):
- * RESTAURANTES_SIN_HORARIO=1. Solo lo lee el servidor; en el navegador no
- * existe. Mientras esté puesto, el formulario recibe a cualquier hora y nadie
- * llama en 5 minutos: quitarlo apenas terminen las pruebas.
- */
-export const HORARIO_DESACTIVADO = process.env.RESTAURANTES_SIN_HORARIO === '1';
+// Espacios duros: en el celular "a. m." no debe partirse en dos renglones.
+export const HORARIO_TEXTO = 'Atendemos de lunes a viernes, 8:00\u00a0a.\u00a0m.-12:00\u00a0m. y 2:00-6:00\u00a0p.\u00a0m.';
 
-/** ¿Se reciben solicitudes en este instante? */
+/** ¿Hay alguien para contactar en 5 minutos en este instante? */
 export function estaAbierto(fecha: Date = new Date(), margenMin: number = MARGEN_CIERRE_MIN): boolean {
-  if (HORARIO_DESACTIVADO) return true;
   const l = enBogota(fecha);
   if (!esDiaDeAtencion(l.anio, l.mes, l.dia, l.diaSemana)) return false;
   return BLOQUES.some((b) => l.minutos >= b.desde && l.minutos < b.hasta - margenMin);
 }
 
-/** Próximo instante en que el formulario abre. Si está abierto, el actual. */
+/** Próximo instante en que el equipo atiende. Si está abierto, el actual. */
 export function proximaApertura(fecha: Date = new Date()): Date {
   if (estaAbierto(fecha)) return fecha;
   const hoy = enBogota(fecha);
@@ -188,13 +179,22 @@ function hora(minutos: number): string {
   return `${h > 12 ? h - 12 : h}:${m} ${h < 12 ? 'a. m.' : 'p. m.'}`;
 }
 
-/** "hoy a las 2:00 p. m.", "mañana a las 8:00 a. m.", "el lunes 2 de noviembre a las 8:00 a. m." */
+/**
+ * "hoy a partir de las 2:00 p. m.", "mañana a partir de las 8:00 a. m.",
+ * "el martes 3 de noviembre a partir de las 8:00 a. m.". "A partir de" y no
+ * "a las": los leads de la noche se llaman en fila al abrir.
+ */
 export function textoProximaApertura(fecha: Date = new Date()): string {
   const abre = enBogota(proximaApertura(fecha));
   const hoy = enBogota(fecha);
   const manana = enBogota(sumarDias(instante(hoy.anio, hoy.mes, hoy.dia, 12 * 60), 1));
-  const a = `a las ${hora(abre.minutos)}`;
+  const a = `a partir de las ${hora(abre.minutos)}`;
   if (abre.dia === hoy.dia && abre.mes === hoy.mes) return `hoy ${a}`;
   if (abre.dia === manana.dia && abre.mes === manana.mes) return `mañana ${a}`;
   return `el ${DIAS[abre.diaSemana]} ${abre.dia} de ${MESES[abre.mes - 1]} ${a}`;
+}
+
+/** Lo que se le promete a quien envía ahora: "en 5 minutos" o la próxima apertura. */
+export function cuandoContactamos(fecha: Date = new Date()): string {
+  return estaAbierto(fecha) ? 'en 5 minutos' : textoProximaApertura(fecha);
 }

@@ -5,8 +5,7 @@ import { LandingFooter } from '@/components/landing/LandingChrome';
 import FormularioRestaurante from '@/components/restaurantes/FormularioRestaurante';
 import Cifra from '@/components/restaurantes/Cifra';
 import Revelar from '@/components/restaurantes/Revelar';
-import { HORARIO_TEXTO, PanelCerrado } from '@/components/restaurantes/PanelCerrado';
-import { HORARIO_DESACTIVADO, estaAbierto, textoProximaApertura } from '@/lib/restaurantes/horario';
+import { HORARIO_TEXTO, cuandoContactamos, estaAbierto } from '@/lib/restaurantes/horario';
 
 import cocina16x9 from '@/public/images/lp/restaurantes/cocina-noche-16x9.webp';
 import cocina4x5 from '@/public/images/lp/restaurantes/cocina-noche-4x5.webp';
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 // El horario lo decide el reloj del servidor en cada visita: una página
-// cacheada mostraría el formulario abierto un sábado.
+// cacheada prometería "en 5 minutos" un sábado.
 export const dynamic = 'force-dynamic';
 
 /*
@@ -115,7 +114,7 @@ function Icono({ Componente, oscuro = false }: { Componente: typeof Moon; oscuro
 export default function RestaurantesLandingPage() {
   const ahora = new Date();
   const abierto = estaAbierto(ahora);
-  const vuelve = textoProximaApertura(ahora);
+  const contacto = cuandoContactamos(ahora);
 
   return (
     <div className="bg-white text-brand-black">
@@ -141,7 +140,7 @@ export default function RestaurantesLandingPage() {
                 />
                 <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-[0.78rem] font-semibold text-brand-green-dark ring-1 ring-white">
                   <span className={`h-2 w-2 rounded-full ${abierto ? 'rr-latido bg-[#1FA855]' : 'bg-[#9AA39E]'}`} aria-hidden />
-                  {abierto ? 'Atendiendo ahora' : 'Fuera de horario'}
+                  {abierto ? 'Atendiendo ahora' : 'Recibimos 24/7'}
                 </span>
               </div>
 
@@ -200,7 +199,7 @@ export default function RestaurantesLandingPage() {
               id="formulario"
               className="mt-5 scroll-mt-3 overflow-clip rounded-[26px] bg-white shadow-[0_30px_80px_-30px_rgba(13,43,32,0.45)] ring-1 ring-white lg:sticky lg:top-6 lg:mt-0"
             >
-              {abierto ? <FormularioRestaurante vigilarHorario={!HORARIO_DESACTIVADO} /> : <PanelCerrado vuelve={vuelve} />}
+              <FormularioRestaurante contacto={contacto} />
             </div>
           </div>
         </div>
@@ -377,22 +376,20 @@ export default function RestaurantesLandingPage() {
           <Revelar
             como="h2"
             tipo="palabras"
-            texto={abierto ? 'Agende su inspección gratis' : `Volvemos ${vuelve}`}
+            texto="Agende su inspección gratis"
             className="font-heading text-[2rem] font-semibold leading-[1.02] tracking-[-0.03em] text-brand-green-dark sm:text-[2.6rem]"
           />
           <Revelar como="p" retraso={200} className="mx-auto mt-3 max-w-md text-[0.98rem] leading-relaxed text-[#5B6B63]">
-            {HORARIO_TEXTO} {abierto ? 'Lo contactamos en 5 minutos.' : ''}
+            {HORARIO_TEXTO} Si nos escribe ahora, lo contactamos {contacto}.
           </Revelar>
-          {abierto ? (
-            <Revelar retraso={320}>
-              <a
-                href="#formulario"
-                className="mt-7 inline-flex min-h-[58px] items-center justify-center rounded-full bg-brand-orange px-9 font-heading text-[1.2rem] font-bold text-white shadow-brand transition hover:bg-brand-orange-dark"
-              >
-                Agende su inspección gratis
-              </a>
-            </Revelar>
-          ) : null}
+          <Revelar retraso={320}>
+            <a
+              href="#formulario"
+              className="mt-7 inline-flex min-h-[58px] items-center justify-center rounded-full bg-brand-orange px-9 font-heading text-[1.2rem] font-bold text-white shadow-brand transition hover:bg-brand-orange-dark"
+            >
+              Agende su inspección gratis
+            </a>
+          </Revelar>
         </section>
       </main>
 

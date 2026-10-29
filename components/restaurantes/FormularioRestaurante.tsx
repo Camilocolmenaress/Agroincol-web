@@ -15,6 +15,10 @@
  * Quién califica lo decide el SERVIDOR (lib/restaurantes/calificacion.ts). El
  * Pixel dispara el Lead solo si el servidor responde `calificado`, con el mismo
  * event_id (= lead_id) que usó la API de Conversiones.
+ *
+ * Recibe a cualquier hora. Lo que se promete ("en 5 minutos" o "mañana a partir
+ * de las 8:00 a. m.") también lo dice el servidor: al cargar la página y otra
+ * vez en la respuesta del envío, que es la que vale.
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -50,13 +54,11 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { PREGUNTAS, type IdPregunta, type Respuestas } from '@/lib/restaurantes/calificacion';
-import { estaAbierto, textoProximaApertura } from '@/lib/restaurantes/horario';
 import { nuevoEventId } from '@/lib/meta/eventos';
 import { rastrear, soloPixel } from '@/lib/meta/pixel';
 import { idDeVisitante } from '@/lib/meta/visitante';
 import { urlParaMedir } from '@/lib/meta/modo-prueba';
 import { BUSINESS } from '@/lib/constants';
-import { PanelCerrado } from './PanelCerrado';
 
 const TOTAL_PASOS = PREGUNTAS.length + 1;
 
@@ -98,11 +100,11 @@ function iconoDe(id: IdPregunta, valor: string): LucideIcon {
 }
 const WHATSAPP = BUSINESS.phoneRaw.replace('+', '');
 
-type Estado = 'llenando' | 'enviando' | 'calificado' | 'descalificado' | 'cerrado' | 'error';
+type Estado = 'llenando' | 'enviando' | 'calificado' | 'descalificado' | 'error';
 
 interface Props {
-  /** En falso cuando el servidor tiene el horario desactivado para pruebas. */
-  vigilarHorario?: boolean;
+  /** "en 5 minutos" o la próxima apertura, calculado por el servidor al armar la página. */
+  contacto: string;
 }
 
 export default function FormularioRestaurante(props: Props) {
@@ -115,7 +117,7 @@ export default function FormularioRestaurante(props: Props) {
   );
 }
 
-function Formulario({ vigilarHorario = true }: Props) {
+function Formulario(props: Props) {
   const [paso, setPaso] = useState(0);
   const [respuestas, setRespuestas] = useState<Partial<Respuestas>>({});
   const [mostrarGarantia, setMostrarGarantia] = useState(false);
@@ -127,7 +129,8 @@ function Formulario({ vigilarHorario = true }: Props) {
   const [website, setWebsite] = useState('');
   const [errores, setErrores] = useState<Record<string, string>>({});
   const [estado, setEstado] = useState<Estado>('llenando');
-  const [vuelve, setVuelve] = useState('');
+  const [contacto, setContacto] = useState(props.contacto);
+  const [enHorario, setEnHorario] = useState(true);
 
   // El lead_id nace aquí para que el Pixel y el servidor usen el mismo.
   const leadId = useRef('');
@@ -144,20 +147,6 @@ function Formulario({ vigilarHorario = true }: Props) {
   useEffect(() => {
     leadId.current = nuevoEventId();
   }, []);
-
-  // Si el formulario sigue abierto en pantalla cuando cierra el bloque y la
-  // persona no ha empezado, se cierra. Quien ya empezó puede terminar: el
-  // servidor recibe hasta la hora en punto.
-  useEffect(() => {
-    if (!vigilarHorario) return;
-    const id = setInterval(() => {
-      if (!estaAbierto() && paso === 0 && Object.keys(respuestas).length === 0) {
-        setVuelve(textoProximaApertura());
-        setEstado('cerrado');
-      }
-    }, 30_000);
-    return () => clearInterval(id);
-  }, [paso, respuestas, vigilarHorario]);
 
   // Al cambiar de paso, el foco va al título (lectores de pantalla) y la
   // tarjeta vuelve a quedar a la vista si el teclado la desplazó.
@@ -223,17 +212,20 @@ function Formulario({ vigilarHorario = true }: Props) {
           sourceUrl: urlParaMedir(),
         }),
       });
-      if (r.status === 409) {
-        setVuelve(textoProximaApertura());
-        setEstado('cerrado');
-        return;
-      }
-      const datos = (await r.json().catch(() => ({}))) as { ok?: boolean; calificado?: boolean; leadId?: string };
+      const datos = (await r.json().catch(() => ({}))) as {
+        ok?: boolean;
+        calificado?: boolean;
+        leadId?: string;
+        enHorario?: boolean;
+        contacto?: string;
+      };
       if (!r.ok || !datos.ok) {
         setEstado('error');
         return;
       }
       if (datos.leadId) leadId.current = datos.leadId;
+      if (datos.contacto) setContacto(datos.contacto);
+      setEnHorario(datos.enHorario !== false);
       if (datos.calificado) {
         soloPixel('Lead', { eventId: leadId.current, categoria: 'restaurantes' });
         setEstado('calificado');
@@ -247,8 +239,6 @@ function Formulario({ vigilarHorario = true }: Props) {
 
   const primerNombre = nombre.trim().split(/\s+/)[0] ?? '';
   const codigo = leadId.current.slice(0, 8).toUpperCase();
-
-  if (estado === 'cerrado') return <PanelCerrado vuelve={vuelve} />;
 
   if (estado === 'calificado') {
     const mensaje = `Hola, soy ${primerNombre} de ${negocio}. Acabo de pedir la inspección gratis para mi restaurante. Mi código es ${codigo}.`;
@@ -268,23 +258,26 @@ function Formulario({ vigilarHorario = true }: Props) {
           Listo, {primerNombre}.
         </h2>
         <p className="mx-auto mt-2 max-w-sm text-body-lg text-brand-black/75">
-          Lo contactamos en 5 minutos para agendar su inspección gratis.
+          Lo contactamos {contacto} para agendar su inspección gratis.
         </p>
+        {/* Fuera de horario no hay quién conteste el teléfono: solo WhatsApp, que queda en fila. */}
         <div className="mt-7 grid gap-3">
           <a
             href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensaje)}`}
             onClick={() => rastrear('Contact', { categoria: 'restaurantes' })}
             className="flex min-h-[56px] items-center justify-center gap-2.5 rounded-full bg-[#1FA855] px-5 font-heading text-lg font-semibold text-white transition active:scale-[0.98]"
           >
-            <MessageCircle size={22} aria-hidden /> Escríbanos ya por WhatsApp
+            <MessageCircle size={22} aria-hidden /> {enHorario ? 'Escríbanos ya por WhatsApp' : 'Escríbanos por WhatsApp'}
           </a>
-          <a
-            href={`tel:${BUSINESS.phoneRaw}`}
-            onClick={() => rastrear('Contact', { categoria: 'restaurantes' })}
-            className="flex min-h-[56px] items-center justify-center gap-2.5 rounded-full border border-[#D5E0DA] px-5 font-heading text-lg font-semibold text-brand-green-dark transition active:scale-[0.98]"
-          >
-            <Phone size={20} aria-hidden /> Llámenos ahora
-          </a>
+          {enHorario ? (
+            <a
+              href={`tel:${BUSINESS.phoneRaw}`}
+              onClick={() => rastrear('Contact', { categoria: 'restaurantes' })}
+              className="flex min-h-[56px] items-center justify-center gap-2.5 rounded-full border border-[#D5E0DA] px-5 font-heading text-lg font-semibold text-brand-green-dark transition active:scale-[0.98]"
+            >
+              <Phone size={20} aria-hidden /> Llámenos ahora
+            </a>
+          ) : null}
         </div>
         <p className="mt-5 text-body-sm text-brand-black/55">Su código de solicitud: {codigo}</p>
       </div>
@@ -543,7 +536,7 @@ function Formulario({ vigilarHorario = true }: Props) {
             {estado === 'enviando' ? <Loader2 className="animate-spin" size={22} aria-hidden /> : null}
             Agende su inspección gratis
           </button>
-          <p className="mt-3 text-center text-body-sm text-brand-black/55">Lo contactamos en 5 minutos.</p>
+          <p className="mt-3 text-center text-body-sm text-brand-black/55">Lo contactamos {contacto}.</p>
         </m.form>
       )}
       </AnimatePresence>
