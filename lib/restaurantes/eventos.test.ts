@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { celularNormalizado, construirEvento, eventIdDe, origenDeUrl } from './eventos';
+import { celularNormalizado, construirEvento, eventIdDe, eventTimeRecuperado, origenDeUrl } from './eventos';
 import { sha256 } from '@/lib/meta/hash';
 
 const LEAD = '7f3c2a10-1111-4222-8333-944455556666';
@@ -71,4 +71,20 @@ test('Purchase lleva el valor del contrato en COP', async () => {
   const e = await construirEvento({ evento: 'Purchase', leadId: LEAD, autoriza: true, valor: 1_800_000 });
   assert.deepEqual(e.custom_data, { content_category: 'restaurantes', value: 1_800_000, currency: 'COP' });
   assert.equal(e.event_id, `purchase-${LEAD}`);
+});
+
+test('Lead recuperado: sale con la hora del formulario y solo dentro de los 7 días de Meta', async () => {
+  const ahora = Date.UTC(2026, 9, 31, 15, 0, 0);
+  // Rapipunto: 2026-10-30 23:04:28 en Bogotá (UTC-5) = 2026-10-31 04:04:28 UTC.
+  const formulario = Date.UTC(2026, 9, 31, 4, 4, 28) / 1000;
+  assert.equal(eventTimeRecuperado(formulario, ahora), formulario);
+  assert.equal(eventTimeRecuperado(String(formulario), ahora), formulario);
+  assert.equal(eventTimeRecuperado(ahora / 1000 - 7 * 24 * 3600, ahora), null);
+  assert.equal(eventTimeRecuperado(ahora / 1000 + 60, ahora), null);
+  assert.equal(eventTimeRecuperado('ayer', ahora), null);
+  assert.equal(eventTimeRecuperado(undefined, ahora), null);
+
+  const e = await construirEvento({ evento: 'Lead', leadId: LEAD, autoriza: true }, formulario * 1000);
+  assert.equal(e.event_time, formulario);
+  assert.equal(e.event_id, LEAD);
 });

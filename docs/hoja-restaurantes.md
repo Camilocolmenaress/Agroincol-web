@@ -12,6 +12,7 @@ estado en la hoja → Apps Script → /api/restaurantes/etapa → Schedule / Pur
 | Momento | Evento | Sale por |
 |---|---|---|
 | Envía el formulario y califica | `Lead` | Pixel + API, mismo `event_id` = `lead_id` |
+| `estado` pasa a Recuperado (un descalificado que sí servía) | `Lead` con la hora del formulario | Hoja → API |
 | Toca WhatsApp o Llamar al final | `Contact` | Pixel + API |
 | `estado` pasa a Inspección agendada, Inspección hecha o Cotizado | `Schedule` | Hoja → API |
 | `estado` pasa a Contratado, con `valor_contrato` | `Purchase` con valor en COP | Hoja → API |
@@ -37,6 +38,19 @@ Nada de esto está en el código ni en el repositorio.
 El token de Meta vive solo en Vercel. El script nunca le habla a Meta: le pide
 a la página que lo haga. Así hay un solo lugar donde rotarlo.
 
+### Actualizar un script ya montado
+
+Cuando cambia el script (p. ej. el 31-oct-2026, regla 60 y Recuperado):
+
+1. Pega el script nuevo completo y **guarda**. El trigger `alEditar` usa lo
+   guardado desde ese momento.
+2. Si el cambio trae una función `migrar…`, elígela y **Ejecutar ▶** una vez.
+   NO corras `configurar` en una hoja con datos: reescribe Métricas y borra el
+   gasto escrito a mano.
+3. **Implementar → Gestionar implementaciones → ✏ → Versión: Nueva versión →
+   Implementar.** Sin esto `doPost` (la fila nueva) sigue con el código viejo.
+   Así la URL `/exec` no cambia y no hay que tocar Vercel.
+
 ---
 
 ## Montaje (una vez, ~10 minutos)
@@ -61,7 +75,7 @@ que sí hay que cuidar es con quién se comparte la HOJA: tiene datos personales
 //  - doPost: la página agrega una fila por cada envío, calificado o no.
 //  - aviso por correo SOLO de los calificados.
 //  - al cambiar `estado` (o escribir el valor), manda Schedule / Purchase a
-//    Meta a través de la página.
+//    Meta a través de la página; "Recuperado" manda el Lead que no salió.
 //
 // `var` y punto y coma explícitos: un proyecto puede quedar con el motor Rhino,
 // que no entiende `let` y a veces falla sin los punto y coma.
@@ -70,7 +84,7 @@ var APP_URL = 'https://agroincol.com';
 var CORREO_AVISOS = 'agroincol.1985@gmail.com';
 var WHATSAPP_EMPRESA = '573107891948';
 
-var ESTADOS = ['Nuevo', 'Contactado', 'Inspección agendada', 'Inspección hecha', 'Cotizado', 'Contratado', 'Perdido', 'Descalificado'];
+var ESTADOS = ['Nuevo', 'Contactado', 'Inspección agendada', 'Inspección hecha', 'Cotizado', 'Contratado', 'Perdido', 'Descalificado', 'Recuperado'];
 // Estados que implican una inspección: si alguien salta de Contactado a
 // Inspección hecha, el Schedule sale igual. Contratado NO está: un cliente que
 // paga sin inspección no tuvo cita, y mandarle un Schedule sería inventarla.
@@ -89,8 +103,12 @@ var COLUMNAS = [
   'rol', 'plan_anual', 'presupuesto', 'autoriza', 'politica_version',
   'utm_source', 'utm_campaign', 'utm_content', 'fbclid', 'fbc', 'fbp', 'client_ip', 'user_agent', 'external_id', 'url',
   // Al final para no correr las filas que ya existen.
-  'en_horario', 'contactar'
+  'en_horario', 'contactar', 'origen_calificacion', 'meta_lead'
 ];
+
+// Meta rechaza la solicitud entera si el event_time tiene más de 7 días. Margen
+// de 10 minutos, igual que la página.
+var LEAD_MAXIMO_S = 7 * 24 * 3600 - 600;
 
 function hojaLeads() {
   return SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
@@ -196,11 +214,13 @@ function alEditar(e) {
     if (ETAPAS_CONTACTO.indexOf(f.estado) >= 0 && !f.fecha_primer_contacto) {
       var ahora = new Date();
       hoja.getRange(n, col('fecha_primer_contacto')).setValue(ahora);
-      var recibido = f.fecha_hora instanceof Date ? f.fecha_hora : new Date(String(f.fecha_hora).replace(' ', 'T') + '-05:00');
+      var recibido = fechaDeFila(f.fecha_hora);
       if (!isNaN(recibido.getTime())) {
         hoja.getRange(n, col('minutos_a_contacto')).setValue(Math.round((ahora - recibido) / 60000));
       }
     }
+
+    if (f.estado === 'Recuperado') recuperar(hoja, n, f);
 
     if (ETAPAS_SCHEDULE.indexOf(f.estado) >= 0 && !enviado(f.meta_schedule)) {
       enviar('Schedule', f, hoja.getRange(n, col('meta_schedule')));
@@ -224,7 +244,43 @@ function enviado(celda) {
   return String(celda).indexOf('✓') === 0;
 }
 
-function enviar(evento, f, celda) {
+// `fecha_hora` la escribe la página en hora de Bogotá ("2026-10-30 23:04:28").
+// La hoja la convierte en fecha con su zona, que `configurar` deja en Bogotá; si
+// quedó como texto, se lee con -05:00 (Colombia no tiene horario de verano).
+function fechaDeFila(v) {
+  return v instanceof Date ? v : new Date(String(v).replace(' ', 'T') + '-05:00');
+}
+
+// Un descalificado que sí servía: manda el Lead que el formulario no mandó, con
+// la hora en que lo llenó. Una sola vez, y solo dentro de los 7 días de Meta.
+function recuperar(hoja, n, f) {
+  if (enviado(f.meta_lead)) return;
+  var celda = hoja.getRange(n, col('meta_lead'));
+  // Si calificó en el formulario su Lead ya salió con el mismo event_id.
+  if (f.calificado === 'Sí') {
+    celda.setValue('error: calificó en el formulario, su Lead ya salió');
+    return;
+  }
+  var eventTime = Math.floor(fechaDeFila(f.fecha_hora).getTime() / 1000);
+  if (isNaN(eventTime)) {
+    celda.setValue('error: fecha_hora ilegible');
+    return;
+  }
+  if (Date.now() / 1000 - eventTime > LEAD_MAXIMO_S) {
+    celda.setValue('error: más de 7 días');
+    return;
+  }
+  if (enviar('Lead', f, celda, eventTime)) {
+    hoja.getRange(n, col('calificado')).setValue('Sí');
+    hoja.getRange(n, col('origen_calificacion')).setValue('recuperado');
+    // Deja de ser gris: ahora es un lead para atender.
+    hoja.getRange(n, 1, 1, COLUMNAS.length).setFontColor(null);
+  }
+}
+
+// Devuelve true si Meta lo recibió. La celda queda con la prueba: cuántos
+// eventos recibió y el fbtrace_id con que Meta lo puede rastrear.
+function enviar(evento, f, celda, eventTime) {
   try {
     var r = UrlFetchApp.fetch(APP_URL + '/api/restaurantes/etapa', {
       method: 'post',
@@ -244,19 +300,23 @@ function enviar(evento, f, celda) {
         fbc: texto(f.fbc),
         ip: texto(f.client_ip),
         navegador: texto(f.user_agent).slice(0, 500),
-        url: texto(f.url)
+        url: texto(f.url),
+        eventTime: eventTime
       })
     });
     var cuerpo = {};
     try { cuerpo = JSON.parse(r.getContentText()); } catch (_) { /* no era JSON */ }
     if (r.getResponseCode() === 200 && cuerpo.ok) {
-      celda.setValue('✓ ' + Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM HH:mm'));
-    } else {
-      celda.setValue('error: ' + (cuerpo.motivo || r.getResponseCode()) + (cuerpo.detalle ? ' ' + cuerpo.detalle : ''));
+      celda.setValue('✓ ' + Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM HH:mm') +
+        ' · recibidos ' + cuerpo.events_received + ' · fbtrace ' + cuerpo.fbtrace_id +
+        (evento === 'Lead' ? ' · event_time ' + new Date(cuerpo.event_time * 1000).toISOString() : ''));
+      return true;
     }
+    celda.setValue('error: ' + (cuerpo.motivo || r.getResponseCode()) + (cuerpo.detalle ? ' ' + cuerpo.detalle : ''));
   } catch (error) {
     celda.setValue('error: ' + error.message);
   }
+  return false;
 }
 
 function leerFila(hoja, n) {
@@ -303,26 +363,68 @@ function crearMetricas(libro) {
   var L = function (c) { return "Leads!" + columnaLetra(col(c)) + "2:" + columnaLetra(col(c)); };
   var filas = [
     ['Gasto en Meta (COP, escribir a mano)', 0, ''],
-    ['Leads calificados', '=COUNTIF(' + L('calificado') + ',"Sí")', ''],
+    ['Leads calificados', '=COUNTIF(' + L('calificado') + ',"Sí")', '']
+  ].concat(filasOrigen(L)).concat([
     ['Leads descalificados', '=COUNTIF(' + L('calificado') + ',"No")', ''],
     ['Inspecciones agendadas', '=COUNTIF(' + L('meta_schedule') + ',"✓*")', ''],
     ['Inspecciones hechas', '=COUNTIF(' + L('estado') + ',"Inspección hecha")+COUNTIF(' + L('estado') + ',"Cotizado")+COUNTIFS(' + L('estado') + ',"Contratado",' + L('meta_schedule') + ',"✓*")', 'Contratos sin inspección no cuentan'],
     ['Contratos', '=COUNTIF(' + L('estado') + ',"Contratado")', ''],
     ['CPL calificado', '=IFERROR(B1/B2,"")', 'Máx. $15.000'],
-    ['Lead → inspección', '=IFERROR(B4/B2,"")', ''],
-    ['Inspección → contrato', '=IFERROR(COUNTIFS(' + L('estado') + ',"Contratado",' + L('meta_schedule') + ',"✓*")/B5,"")', 'Solo contratos que tuvieron inspección'],
-    ['Cierre total', '=IFERROR(B6/B2,"")', 'Supuesto: 11,1 %'],
-    ['Costo por venta real', '=IFERROR(B1/B6,"")', 'Máx. $135.141 — criterio de corte'],
+    ['Lead → inspección', '=IFERROR(B7/B2,"")', ''],
+    ['Inspección → contrato', '=IFERROR(COUNTIFS(' + L('estado') + ',"Contratado",' + L('meta_schedule') + ',"✓*")/B8,"")', 'Solo contratos que tuvieron inspección'],
+    ['Cierre total', '=IFERROR(B9/B2,"")', 'Supuesto: 11,1 %'],
+    ['Costo por venta real', '=IFERROR(B1/B9,"")', 'Máx. $135.141 — criterio de corte'],
     // Solo los que llegaron en horario: uno de la noche espera la apertura y no mide la velocidad del equipo.
     ['Minutos a primer contacto (mediana, en horario)', '=IFERROR(MEDIAN(FILTER(' + L('minutos_a_contacto') + ',' + L('minutos_a_contacto') + '<>"",' + L('en_horario') + '<>"No")),"")', '≤ 5'],
     ['Ticket real de restaurante', '=IFERROR(AVERAGEIF(' + L('estado') + ',"Contratado",' + L('valor_contrato') + '),"")', '']
-  ];
+  ]);
   m.getRange(1, 1, filas.length, 3).setValues(filas);
-  m.getRange('B7').setNumberFormat('$#,##0');
-  m.getRange('B11').setNumberFormat('$#,##0');
-  m.getRange('B13').setNumberFormat('$#,##0');
-  m.getRange('B8:B10').setNumberFormat('0.0%');
+  m.getRange('B10').setNumberFormat('$#,##0');
+  m.getRange('B14').setNumberFormat('$#,##0');
+  m.getRange('B16').setNumberFormat('$#,##0');
+  m.getRange('B11:B13').setNumberFormat('0.0%');
   m.setColumnWidth(1, 280);
+}
+
+// Desglose de "Leads calificados" (filas 3 a 5 de Métricas).
+function filasOrigen(L) {
+  return [
+    ['Leads calificados por formulario', '=COUNTIF(' + L('origen_calificacion') + ',"formulario")', ''],
+    ['Leads calificados por regla 60', '=COUNTIF(' + L('origen_calificacion') + ',"regla 60")', 'Puntaje ≥ 60 con un descarte perdonado'],
+    ['Leads recuperados', '=COUNTIF(' + L('origen_calificacion') + ',"recuperado")', 'Calificados a mano después: estado Recuperado']
+  ];
+}
+
+// ---------------------------------------------------------------------------
+// Migración del 31-oct-2026 (regla 60 y Recuperado). Correr UNA VEZ en una hoja
+// que ya existía, en vez de `configurar`: configurar reescribe Métricas y borra
+// el gasto escrito a mano. Correrla dos veces no hace nada nuevo.
+// ---------------------------------------------------------------------------
+
+function migrar20261031() {
+  var libro = SpreadsheetApp.getActiveSpreadsheet();
+  var hoja = hojaLeads();
+  if (hoja.getMaxColumns() < COLUMNAS.length) hoja.insertColumnsAfter(hoja.getMaxColumns(), COLUMNAS.length - hoja.getMaxColumns());
+  hoja.getRange(1, 1, 1, COLUMNAS.length).setValues([COLUMNAS]).setFontWeight('bold');
+
+  for (var n = 2; n <= hoja.getLastRow(); n++) {
+    validarFila(hoja, n); // agrega "Recuperado" a la lista de estado
+    var f = leerFila(hoja, n);
+    if (f.calificado === 'Sí' && !f.origen_calificacion) {
+      var regla60 = String(f.motivo_descalificacion).indexOf('aprobado por puntaje') === 0;
+      hoja.getRange(n, col('origen_calificacion')).setValue(regla60 ? 'regla 60' : 'formulario');
+    }
+  }
+
+  // Las filas nuevas van debajo de "Leads calificados". Insertarlas (en vez de
+  // reescribir la pestaña) deja el gasto y hace que la hoja corra sola las
+  // referencias B4, B5, B6 de las fórmulas que ya estaban.
+  var m = libro.getSheetByName('Métricas');
+  if (m.getRange('A3').getValue() !== 'Leads calificados por formulario') {
+    m.insertRowsAfter(2, 3);
+    var L = function (c) { return "Leads!" + columnaLetra(col(c)) + "2:" + columnaLetra(col(c)); };
+    m.getRange(3, 1, 3, 3).setValues(filasOrigen(L)).setNumberFormat('0');
+  }
 }
 
 function columnaLetra(n) {
@@ -360,6 +462,40 @@ con el TOTAL del contrato: no se espera al segundo pago ni se manda en dos.
 Las filas grises son descalificados (estado `Descalificado`). No dispararon
 Lead. Si igual contratan, pasarlas a Contratado manda el Purchase: si compró,
 servía, y Meta debe saberlo.
+
+**Recuperado.** Si un descalificado sí servía (habló con él y es cliente
+posible), `estado` → **Recuperado**: sale el `Lead` que el formulario no mandó,
+con el mismo `event_id` (= `lead_id`) y la hora en que llenó el formulario, no
+la de hoy. Con la respuesta de Meta la fila queda `calificado` = Sí,
+`origen_calificacion` = recuperado, deja de ser gris, y `meta_lead` dice
+`✓ fecha · recibidos 1 · fbtrace … · event_time …`. Luego sigue el flujo normal
+(Inspección agendada → Schedule, Contratado → Purchase).
+
+- **Solo dentro de 7 días** desde `fecha_hora`: Meta rechaza un evento más
+  viejo. Pasado el plazo, `meta_lead` dice `error: más de 7 días` y no se manda.
+- **Una sola vez.** Si `meta_lead` ya tiene ✓, no hace nada aunque se vuelva a
+  elegir Recuperado.
+- A una fila que calificó en el formulario no se le manda: su Lead ya salió.
+
+## Calificación (regla 60, desde el 31-oct-2026)
+
+Ver `lib/restaurantes/calificacion.ts`. Puntaje de 0 a 110:
+
+| Pregunta | Puntos |
+|---|---|
+| Qué está pasando | cliente vio / cucarachas 30 · volvieron / Secretaría 25 · prevenir 10 |
+| Personas | solo yo 0 (descarte) · 2-5: 8 · 6-15: 15 · más de 15: 20 |
+| Rol | dueño 25 · admin que decide 20 · admin que consulta 10 · otro 0 |
+| Plan anual | sí 10 · no 0 |
+| Presupuesto | < $140.000 0 (descarte) · 140-300: 10 · 300-600: 20 · 600+: 25 · asesoría 12 |
+| Tipo y municipio | 0 puntos; "otro" es descarte |
+
+- Sin descartes y puntaje ≥ 55 → calificado, `origen_calificacion` = formulario.
+- Puntaje ≥ 60 y municipio del área → calificado aunque tenga descarte de tipo,
+  personas o presupuesto. `origen_calificacion` = regla 60, y
+  `motivo_descalificacion` = "aprobado por puntaje: <el descarte perdonado>".
+- Municipio "Otro" → descalificado siempre.
+- Lo demás → descalificado, como antes.
 
 ---
 
