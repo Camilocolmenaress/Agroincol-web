@@ -365,7 +365,8 @@ function crearMetricas(libro) {
     ['Gasto en Meta (COP, escribir a mano)', 0, ''],
     ['Leads calificados', '=COUNTIF(' + L('calificado') + ',"Sí")', '']
   ].concat(filasOrigen(L)).concat([
-    ['Leads descalificados', '=COUNTIF(' + L('calificado') + ',"No")', ''],
+    // Sin las filas de prueba (nombre con PRUEBA o utm_source prueba_claude).
+    ['Leads descalificados', '=COUNTIFS(' + L('calificado') + ',"No",' + L('nombre') + ',"<>*PRUEBA*",' + L('utm_source') + ',"<>prueba_claude")', 'Sin filas de prueba'],
     ['Inspecciones agendadas', '=COUNTIF(' + L('meta_schedule') + ',"✓*")', ''],
     ['Inspecciones hechas', '=COUNTIF(' + L('estado') + ',"Inspección hecha")+COUNTIF(' + L('estado') + ',"Cotizado")+COUNTIFS(' + L('estado') + ',"Contratado",' + L('meta_schedule') + ',"✓*")', 'Contratos sin inspección no cuentan'],
     ['Contratos', '=COUNTIF(' + L('estado') + ',"Contratado")', ''],
