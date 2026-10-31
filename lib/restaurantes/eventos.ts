@@ -3,6 +3,8 @@
  *
  *   Lead      — al enviar el formulario, SOLO si calificó. Mismo event_id que el
  *               Pixel del navegador (= lead_id), así Meta lo cuenta una vez.
+ *               También cuando en la hoja un descalificado pasa a "Recuperado":
+ *               sale con la hora en que llenó el formulario, no la de hoy.
  *   Schedule  — cuando en la hoja la fila pasa a "Inspección agendada".
  *   Purchase  — cuando pasa a "Contratado", con el valor del contrato.
  *
@@ -70,6 +72,20 @@ export function origenDeUrl(url: string): Record<'utm_source' | 'utm_campaign' |
     utm_content: leer('utm_content'),
     fbclid: leer('fbclid'),
   };
+}
+
+/**
+ * Meta rechaza la solicitud ENTERA si un event_time tiene más de 7 días. Se
+ * deja un margen de 10 minutos para que uno al borde no se venza en camino.
+ */
+const ANTIGUEDAD_MAXIMA_S = 7 * 24 * 3600 - 600;
+
+/** event_time (Unix, segundos) de un Lead recuperado, o null si no sirve: futuro, vencido o basura. */
+export function eventTimeRecuperado(valor: unknown, ahoraMs = Date.now()): number | null {
+  const t = Number(valor);
+  const ahora = Math.floor(ahoraMs / 1000);
+  if (!Number.isInteger(t) || t > ahora || ahora - t > ANTIGUEDAD_MAXIMA_S) return null;
+  return t;
 }
 
 function sinVacios(objeto: Record<string, unknown>): Record<string, unknown> {

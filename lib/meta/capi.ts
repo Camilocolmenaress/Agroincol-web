@@ -15,8 +15,14 @@ import { pixelIdDe, urlEsDeProduccion, type Cuenta } from './cuentas';
 /** Versión de la Graph API. Meta mantiene cada una unos dos años. */
 const VERSION_API = 'v21.0';
 
+/** Lo que Meta responde a un envío aceptado; prueba de que lo recibió. */
+export interface RespuestaMeta {
+  events_received?: number;
+  fbtrace_id?: string;
+}
+
 export type ResultadoEnvio =
-  | { ok: true }
+  | { ok: true; respuesta: RespuestaMeta }
   | { ok: false; motivo: 'sin-configurar' | 'fuera-de-produccion' | 'meta' | 'red'; detalle?: string };
 
 /**
@@ -81,7 +87,14 @@ export async function enviarEventoAMeta(
     if (!respuesta.ok) {
       return { ok: false, motivo: 'meta', detalle: `${respuesta.status} ${await respuesta.text()}` };
     }
-    return { ok: true };
+    let cuerpoRespuesta: RespuestaMeta = {};
+    try {
+      const j = await respuesta.json();
+      cuerpoRespuesta = { events_received: j.events_received, fbtrace_id: j.fbtrace_id };
+    } catch {
+      /* 200 sin JSON: igual quedó recibido */
+    }
+    return { ok: true, respuesta: cuerpoRespuesta };
   } catch (error) {
     return { ok: false, motivo: 'red', detalle: error instanceof Error ? error.message : String(error) };
   }

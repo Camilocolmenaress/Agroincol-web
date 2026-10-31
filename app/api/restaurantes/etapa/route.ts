@@ -1,5 +1,8 @@
 /**
  * Schedule y Purchase de restaurantes, cuando cambia el `estado` en la hoja.
+ * También el Lead de un descalificado que se pasa a "Recuperado": con el mismo
+ * event_id (= lead_id) y la hora en que llenó el formulario (`eventTime`), que
+ * debe estar dentro de los 7 días que acepta Meta.
  *
  * Quien llama es el Apps Script de la hoja, no el navegador: la barrera es el
  * secreto compartido (el mismo con que /api/restaurantes escribe en la hoja).
@@ -11,7 +14,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { capiConfigurada, enviarEventoAMeta } from '@/lib/meta/capi';
 import { secretoValido } from '@/lib/meta/cierre';
-import { construirEvento } from '@/lib/restaurantes/eventos';
+import { construirEvento, eventTimeRecuperado } from '@/lib/restaurantes/eventos';
 
 const SECRETO = process.env.HOJA_RESTAURANTES_SECRETO ?? '';
 
@@ -43,10 +46,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, motivo: 'secreto' }, { status: 401 });
   }
 
-  const evento = c.evento === 'Schedule' || c.evento === 'Purchase' ? c.evento : null;
+  const evento = c.evento === 'Lead' || c.evento === 'Schedule' || c.evento === 'Purchase' ? c.evento : null;
   const leadId = texto(c.leadId, 64);
   if (!evento || !leadId || leadId.length < 8) {
     return NextResponse.json({ ok: false, motivo: 'invalido' }, { status: 400 });
+  }
+
+  // El Lead recuperado sale con la hora del formulario: con la de hoy, Meta lo
+  // pegaría a otro clic y otro día de gasto.
+  let ahoraMs: number | undefined;
+  if (evento === 'Lead') {
+    const t = eventTimeRecuperado(c.eventTime);
+    if (t === null) return NextResponse.json({ ok: false, motivo: 'event_time', detalle: 'futuro o con más de 7 días' }, { status: 400 });
+    ahoraMs = t * 1000;
   }
 
   let valor: number | undefined;
@@ -72,14 +84,14 @@ export async function POST(req: NextRequest) {
     ip: texto(c.ip, 45),
     navegador: texto(c.navegador, 500),
     url: texto(c.url, 500),
-  });
+  }, ahoraMs);
 
   const r = await enviarEventoAMeta(datos, 'restaurantes');
   if (!r.ok) {
     console.error(`[restaurantes] ${evento} no enviado:`, r.motivo, r.detalle ?? '');
     return NextResponse.json({ ok: false, motivo: r.motivo, detalle: r.detalle?.slice(0, 200) }, { status: 502 });
   }
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, ...r.respuesta, event_time: datos.event_time });
 }
 
 export async function GET() {

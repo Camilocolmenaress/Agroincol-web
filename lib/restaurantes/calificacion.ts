@@ -14,6 +14,11 @@
  * 2. PUNTAJE. Lo demás suma y pasa quien llega al UMBRAL. Es la perilla: con
  *    ~19 leads calificados por semana Meta ya aprende lento, y cada punto que
  *    sube el umbral le quita señal. Subirlo solo con datos de la hoja.
+ * 3. REGLA 60 (desde el 31-oct-2026). Con UMBRAL_SIN_DESCARTES puntos o más, los
+ *    descartes dejan de descalificar, salvo la zona: fuera del área no hay a
+ *    quién mandarle el técnico. En la primera semana 4 de 9 leads reales tenían
+ *    70+ puntos y se perdían por un descarte (presupuesto o tipo de negocio). La
+ *    hoja guarda en `motivo_descalificacion` el descarte que se perdonó.
  *
  * Un descalificado NUNCA dispara el Lead: Meta no debe aprender de quien no sirve.
  */
@@ -47,6 +52,10 @@ export type Respuestas = Record<IdPregunta, string>;
 /** Puntos mínimos para calificar, sobre un máximo de 110. */
 export const UMBRAL = 55;
 
+/** Desde aquí los descartes no descalifican, salvo DESCARTE_ZONA. */
+export const UMBRAL_SIN_DESCARTES = 60;
+const DESCARTE_ZONA = 'fuera de zona';
+
 /** Respuestas de "Qué está pasando" que indican plaga activa. */
 const CON_PLAGA = ['cliente-vio', 'cucarachas', 'volvieron', 'secretaria'];
 
@@ -79,7 +88,7 @@ export const PREGUNTAS: readonly Pregunta[] = [
       { valor: 'Floridablanca', etiqueta: 'Floridablanca', puntos: 0 },
       { valor: 'Girón', etiqueta: 'Girón', puntos: 0 },
       { valor: 'Piedecuesta', etiqueta: 'Piedecuesta', puntos: 0 },
-      { valor: 'otro', etiqueta: 'Otro municipio', puntos: 0, descarta: 'fuera de zona' },
+      { valor: 'otro', etiqueta: 'Otro municipio', puntos: 0, descarta: DESCARTE_ZONA },
     ],
   },
   {
@@ -126,8 +135,13 @@ export const PREGUNTAS: readonly Pregunta[] = [
 
 export interface Calificacion {
   calificado: boolean;
+  /** Por qué regla calificó; vacío si no calificó. Columna `origen_calificacion`. */
+  origen: 'formulario' | 'regla 60' | '';
   puntaje: number;
-  /** Por qué no calificó. Vacío si calificó. */
+  /**
+   * Por qué no calificó. Vacío si calificó por las reglas originales; si
+   * calificó por la regla 60, el descarte que se le perdonó.
+   */
   motivo: string;
   prioridad: 'alta' | 'normal';
   planSugerido: 'choque' | 'preventivo';
@@ -169,11 +183,13 @@ export function calificar(respuestas: Respuestas): Calificacion {
     : puntaje < UMBRAL
       ? `puntaje bajo (${puntaje} de ${UMBRAL})`
       : '';
+  const porPuntaje = motivo !== '' && puntaje >= UMBRAL_SIN_DESCARTES && !descartes.includes(DESCARTE_ZONA);
 
   return {
-    calificado: motivo === '',
+    calificado: motivo === '' || porPuntaje,
+    origen: motivo === '' ? 'formulario' : porPuntaje ? 'regla 60' : '',
     puntaje,
-    motivo,
+    motivo: porPuntaje ? `aprobado por puntaje: ${motivo}` : motivo,
     prioridad: conPlaga ? 'alta' : 'normal',
     planSugerido: conPlaga ? 'choque' : 'preventivo',
   };

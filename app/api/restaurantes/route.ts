@@ -105,6 +105,7 @@ export async function POST(req: NextRequest) {
       lead_id: leadId,
       fecha_hora: fechaHora,
       calificado: resultado.calificado ? 'Sí' : 'No',
+      origen_calificacion: resultado.origen,
       puntaje: resultado.puntaje,
       motivo_descalificacion: resultado.motivo,
       prioridad: resultado.prioridad,
