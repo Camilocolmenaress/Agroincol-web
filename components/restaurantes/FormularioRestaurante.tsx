@@ -428,7 +428,9 @@ function Formulario(props: Props) {
             ¿A quién contactamos?
           </h2>
 
-          <div className="mt-5 grid gap-4">
+          {/* grid-cols-1 = minmax(0, 1fr): sin esto, en Safari el ancho propio de
+              los <input> ensancha la columna y los campos se salen de la tarjeta. */}
+          <div className="mt-5 grid grid-cols-1 gap-4">
             <Campo id="rr-nombre" etiqueta="Su nombre" error={errores.nombre}>
               <input
                 id="rr-nombre"
