@@ -23,6 +23,7 @@ import { capiConfigurada, enviarEventoAMeta } from '@/lib/meta/capi';
 import { resolverFbc } from '@/lib/meta/fbc';
 import { FBP_DURACION_S, resolverFbp } from '@/lib/meta/fbp';
 import { nuevoEventId } from '@/lib/meta/eventos';
+import { enviarAAppsScript } from '@/lib/apps-script';
 
 const HOJA_URL = process.env.HOJA_RESTAURANTES_URL ?? '';
 const HOJA_SECRETO = process.env.HOJA_RESTAURANTES_SECRETO ?? '';
@@ -36,20 +37,11 @@ function texto(valor: unknown, max: number): string {
   return typeof valor === 'string' ? valor.trim().replace(/\s+/g, ' ').slice(0, max) : '';
 }
 
-/**
- * Escribe la fila. Apps Script responde 302 tras un doPost exitoso: no se
- * sigue la redirección (ver /api/contact, mismo motivo).
- */
+/** Escribe la fila y confirma que el script respondió "ok" (ver lib/apps-script). */
 async function guardarEnHoja(fila: Record<string, unknown>): Promise<void> {
   if (!HOJA_URL || !HOJA_SECRETO) throw new Error('hoja sin configurar');
-  const r = await fetch(HOJA_URL, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ secreto: HOJA_SECRETO, fila }),
-    redirect: 'manual',
-    signal: AbortSignal.timeout(10000),
-  });
-  if (r.status !== 200 && r.status !== 302) throw new Error(`la hoja respondió ${r.status}`);
+  const { confirmado } = await enviarAAppsScript(HOJA_URL, { secreto: HOJA_SECRETO, fila });
+  if (!confirmado) console.warn('[restaurantes] fila enviada; no se pudo leer la respuesta de la hoja');
 }
 
 export async function POST(req: NextRequest) {
