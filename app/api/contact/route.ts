@@ -111,10 +111,8 @@ export async function POST(request: NextRequest) {
         console.error('Error enviando al webhook:', webhookError);
         // Don't return error to user — the form data was received
       }
-    } else {
-      console.log('📋 Nuevo lead recibido (sin WEBHOOK_URL configurado):');
-      console.log(JSON.stringify(payload, null, 2));
     }
+    // Sin WEBHOOK_URL no se registra nada: el lead son datos personales y no va a los logs.
 
     // ---------------------------------------------------------------------
     // Lead hacia la API de Conversiones de Meta.
