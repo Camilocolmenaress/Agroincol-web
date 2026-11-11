@@ -10,6 +10,9 @@ test('las rutas de EcoGel van a la cuenta ecogel; el resto a servicios', () => {
   assert.equal(cuentaPorRuta('/'), 'servicios');
   // Un prefijo parecido no basta: solo el segmento exacto.
   assert.equal(cuentaPorRuta('/ecogelito'), 'servicios');
+  assert.equal(cuentaPorRuta('/tienda/laminas-de-captura'), 'ecogel');
+  assert.equal(cuentaPorRuta('/tienda/pedido'), 'ecogel');
+  assert.equal(cuentaPorRuta('/tiendas'), 'servicios');
 });
 
 test('/lp/restaurantes va a su propia cuenta; las demás landings siguen en servicios', () => {

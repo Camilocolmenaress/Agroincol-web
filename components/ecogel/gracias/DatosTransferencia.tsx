@@ -41,12 +41,15 @@ export default function DatosTransferencia({ metodo, total, whatsapp }: { metodo
         <h2 className="font-heading text-h3 font-bold text-brand-green">Datos para transferir</h2>
         <dl className="mt-3 divide-y divide-brand-gray-light">
           {filas.map((f) => (
-            <div key={f.etiqueta} className="flex items-center justify-between gap-3 py-3">
-              <div className="min-w-0">
-                <dt className="text-[13px] text-brand-black/55">{f.etiqueta}</dt>
-                <dd className="break-words font-heading text-body font-bold text-brand-black">{f.valor}</dd>
-              </div>
-              {f.copiable && <BotonCopiar valor={f.valor.replace(/[^0-9A-Za-z@]/g, '')} etiqueta={f.etiqueta.toLowerCase()} />}
+            // dt y dd hijos directos del div (HTML válido para lectores de pantalla); el botón va en su propio dd.
+            <div key={f.etiqueta} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 py-3">
+              <dt className="col-start-1 text-[13px] text-brand-black/70">{f.etiqueta}</dt>
+              <dd className="col-start-1 break-words font-heading text-body font-bold text-brand-black">{f.valor}</dd>
+              {f.copiable && (
+                <dd className="col-start-2 row-span-2 row-start-1">
+                  <BotonCopiar valor={f.valor.replace(/[^0-9A-Za-z@]/g, '')} etiqueta={f.etiqueta.toLowerCase()} />
+                </dd>
+              )}
             </div>
           ))}
         </dl>
@@ -54,7 +57,7 @@ export default function DatosTransferencia({ metodo, total, whatsapp }: { metodo
           href={whatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 font-heading text-body font-bold text-white"
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 font-heading text-body font-bold text-brand-green-dark"
         >
           <MessageCircle size={18} aria-hidden /> Enviar comprobante por WhatsApp
         </a>

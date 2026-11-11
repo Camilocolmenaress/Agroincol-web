@@ -153,17 +153,22 @@ export async function POST(req: NextRequest) {
   };
 
   // Lista cerrada: nada que venga del navegador llega crudo a Meta.
-  const CATEGORIAS = ['chinches', 'comejen', 'ecogel-hogar', 'ecogel-restaurantes', 'restaurantes'];
+  const CATEGORIAS = ['chinches', 'comejen', 'ecogel-hogar', 'ecogel-restaurantes', 'restaurantes', 'laminas'];
   const categoriaValida =
     typeof categoria === 'string' && CATEGORIAS.includes(categoria) ? categoria : undefined;
 
-  // content_ids solo puede ser 'ecogel' por ahora; num_items entre 1 y 3.
+  // content_ids: 'ecogel' (num_items 1-3) o 'laminas-captura' (6-500 láminas).
   let contenidoValido: { content_ids: string[]; content_type: 'product'; num_items?: number } | undefined;
   if (contenido && typeof contenido === 'object') {
     const { ids, numItems } = contenido as { ids?: unknown; numItems?: unknown };
-    if (Array.isArray(ids) && ids.length === 1 && ids[0] === 'ecogel') {
-      contenidoValido = { content_ids: ['ecogel'], content_type: 'product' };
-      if (numItems === 1 || numItems === 2 || numItems === 3) contenidoValido.num_items = numItems;
+    const rangos: Record<string, [number, number]> = { ecogel: [1, 3], 'laminas-captura': [6, 500] };
+    const id = Array.isArray(ids) && ids.length === 1 && typeof ids[0] === 'string' ? ids[0] : '';
+    const rango = Object.prototype.hasOwnProperty.call(rangos, id) ? rangos[id] : undefined;
+    if (rango) {
+      contenidoValido = { content_ids: [id], content_type: 'product' };
+      if (typeof numItems === 'number' && Number.isInteger(numItems) && numItems >= rango[0] && numItems <= rango[1]) {
+        contenidoValido.num_items = numItems;
+      }
     }
   }
 
