@@ -17,8 +17,10 @@ export interface DatosPurchaseEcogel {
   eventId: string;
   total: number;
   unidades: number;
-  /** Ya armado como "ecogel-hogar" / "ecogel-restaurantes" (columna `origen` de la hoja). */
+  /** Ya armado como "ecogel-hogar" / "ecogel-restaurantes" / "laminas" (columna `origen` de la hoja). */
   contentCategory: string;
+  /** content_ids de Meta. Por defecto 'ecogel'; las láminas mandan 'laminas-captura'. */
+  contentId?: string;
   url: string;
   nombre: string;
   celular: string;
@@ -62,7 +64,7 @@ export async function enviarPurchaseEcogel(d: DatosPurchaseEcogel, fetchFn: type
         custom_data: {
           value: d.total,
           currency: 'COP',
-          content_ids: ['ecogel'],
+          content_ids: [d.contentId ?? 'ecogel'],
           content_type: 'product',
           num_items: d.unidades,
           content_category: d.contentCategory,

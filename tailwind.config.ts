@@ -47,6 +47,8 @@ const config: Config = {
       fontFamily: {
         heading: ['var(--font-heading)', 'sans-serif'],
         body: ['var(--font-body)', 'sans-serif'],
+        // Caveat Brush del manual de marca: lemas y humor, una vez por pieza. Solo la carga /tienda.
+        lema: ['var(--font-lema)', 'cursive'],
       },
       fontSize: {
         'hero': ['4.25rem', { lineHeight: '1.04', letterSpacing: '-0.02em', fontWeight: '700' }],

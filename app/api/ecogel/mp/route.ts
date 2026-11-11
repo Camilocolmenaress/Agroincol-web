@@ -44,7 +44,10 @@ export async function POST(req: NextRequest) {
   }
 
   const estado = estadoDesdeMp(pago.status);
-  if (!estado || !pago.externalReference.startsWith('EG-')) return NextResponse.json({ ok: true, ignorado: true });
+  // EG- = EcoGel, LC- = Láminas de Captura (/tienda): misma hoja, mismo webhook.
+  const ref = pago.externalReference;
+  if (!estado || !(ref.startsWith('EG-') || ref.startsWith('LC-'))) return NextResponse.json({ ok: true, ignorado: true });
+  const esLaminas = ref.startsWith('LC-');
 
   try {
     await actualizarFilaPedido(pago.externalReference, { estado, mpPagoId: id });
@@ -54,7 +57,8 @@ export async function POST(req: NextRequest) {
   }
 
   // EcoGel Cuentas: estado del pago con la comisión y el neto reales. Nunca lanza.
-  await avisarCuentas('pago', { pedidoId: pago.externalReference, estado, comisionMp: pago.comisionMp, netoRecibido: pago.netoRecibido });
+  // Las láminas no van: Cuentas calcula el margen con el costo del gel.
+  if (!esLaminas) await avisarCuentas('pago', { pedidoId: pago.externalReference, estado, comisionMp: pago.comisionMp, netoRecibido: pago.netoRecibido });
 
   // Único momento en que un pedido "online" manda su Purchase a Meta: aquí,
   // con el pago ya confirmado. La hoja es la única fuente de los datos del
@@ -73,6 +77,7 @@ export async function POST(req: NextRequest) {
         total: Number(fila.total) || 0,
         unidades: Number(fila.unidades) || 0,
         contentCategory: String(fila.origen ?? ''),
+        contentId: esLaminas ? 'laminas-captura' : 'ecogel',
         url: String(fila.url ?? ''),
         nombre: String(fila.nombre ?? ''),
         celular: String(fila.celular ?? ''),

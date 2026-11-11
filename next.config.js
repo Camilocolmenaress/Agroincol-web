@@ -12,6 +12,14 @@ const nextConfig = {
         destination: '/servicios/fumigacion-restaurantes',
         permanent: true,
       },
+      // EcoGel cerró (9-nov-2026): sus páginas de venta llevan a la tienda nueva.
+      // Temporal (307), no 308: si EcoGel vuelve, nadie queda con la redirección en caché.
+      // /ecogel/gracias, /ecogel/terminos y /api/ecogel/mp siguen vivos para pedidos pendientes.
+      ...['/ecogel', '/ecogel/hogar', '/ecogel/restaurantes', '/ecogel/pedido'].map((source) => ({
+        source,
+        destination: '/tienda/laminas-de-captura',
+        permanent: false,
+      })),
     ];
   },
   // Multi-Zones: agroincol.com/alivio lo sirve la app Alivio (zona aparte).

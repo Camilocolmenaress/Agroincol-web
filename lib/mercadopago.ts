@@ -48,6 +48,31 @@ export function construirPreferencia(p: {
   };
 }
 
+/** Preferencia de las Láminas de Captura (/tienda). Mismo webhook que EcoGel: lo distingue el prefijo LC-. */
+export function construirPreferenciaLaminas(p: {
+  pedidoId: string;
+  cantidad: number;
+  zona: string;
+  total: number;
+  nombre: string;
+  celular: string;
+  base: string;
+}): Record<string, unknown> {
+  const gracias = (estado: string) => `${p.base}/tienda/gracias?pedido=${p.pedidoId}&estado=${estado}&n=${p.cantidad}&z=${p.zona}`;
+  return {
+    items: [
+      { id: 'laminas-captura', title: `Láminas de Captura x${p.cantidad} — AGROINCOL`, quantity: 1, unit_price: p.total, currency_id: 'COP' },
+    ],
+    payer: { name: p.nombre, phone: { area_code: '57', number: p.celular } },
+    external_reference: p.pedidoId,
+    notification_url: `${p.base}/api/ecogel/mp`,
+    back_urls: { success: gracias('approved'), pending: gracias('pending'), failure: gracias('failure') },
+    auto_return: 'approved',
+    statement_descriptor: 'AGROINCOL',
+    metadata: { producto: 'laminas-captura', cantidad: p.cantidad },
+  };
+}
+
 export async function crearPreferencia(
   pref: Record<string, unknown>,
   fetchFn: typeof fetch = fetch,

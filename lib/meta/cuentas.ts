@@ -28,7 +28,8 @@ function bajo(pathname: string, raiz: string): boolean {
  * lead calificado, no hacia el de hogar de /lp/chinches.
  */
 export function cuentaPorRuta(pathname: string): Cuenta {
-  if (bajo(pathname, '/ecogel')) return 'ecogel';
+  // /tienda es la tienda que reemplazó a EcoGel (9-nov-2026): mismo pixel TIENDA AGROINCOL.
+  if (bajo(pathname, '/ecogel') || bajo(pathname, '/tienda')) return 'ecogel';
   if (bajo(pathname, '/lp/restaurantes')) return 'restaurantes';
   return 'servicios';
 }

@@ -288,3 +288,8 @@
   .rr-al-cargar.rr-revelar-imagen { animation: rr-abre 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
   .rr-al-cargar.rr-revelar-imagen img { animation: rr-zoom 1.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
 }
+
+/* /tienda no lleva la barra fija del sitio: sin los 84 px que el <main> raíz le reserva. */
+main:has(> [data-tienda]) {
+  padding-bottom: 0;
+}

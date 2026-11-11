@@ -75,3 +75,21 @@ test('sin credenciales de EcoGel, no llama a Meta ni lanza', async () => {
   await enviarPurchaseEcogel(datosBase, fetchFalso);
   assert.equal(llamadas, 0);
 });
+
+test('láminas: Purchase con content_id propio, valor total con envío y la cantidad de láminas', () =>
+  conEcogelConfigurado(async (fetchFalso, cuerpos) => {
+    await enviarPurchaseEcogel(
+      { ...datosBase, pedidoId: 'LC-261109-ABCD', total: 68_000, unidades: 6, contentCategory: 'laminas', contentId: 'laminas-captura', correo: '' },
+      fetchFalso,
+    );
+    const evento = (cuerpos[0] as { data: Array<Record<string, unknown>> }).data[0];
+    assert.deepEqual(evento.custom_data, {
+      value: 68_000,
+      currency: 'COP',
+      content_ids: ['laminas-captura'],
+      content_type: 'product',
+      num_items: 6,
+      content_category: 'laminas',
+      order_id: 'LC-261109-ABCD',
+    });
+  }));

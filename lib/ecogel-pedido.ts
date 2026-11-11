@@ -101,11 +101,11 @@ export function validarPedido(entrada: unknown): Resultado {
 
 const ALFABETO = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sin 0/O ni 1/I: se dicta por teléfono
 
-export function nuevoPedidoId(ahora = new Date(), azar: () => number = Math.random): string {
+export function nuevoPedidoId(ahora = new Date(), azar: () => number = Math.random, prefijo = 'EG'): string {
   const fecha = new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Bogota', year: '2-digit', month: '2-digit', day: '2-digit' })
     .format(ahora)
     .replace(/-/g, '');
   let sufijo = '';
   for (let i = 0; i < 4; i++) sufijo += ALFABETO[Math.floor(azar() * ALFABETO.length)];
-  return `EG-${fecha}-${sufijo}`;
+  return `${prefijo}-${fecha}-${sufijo}`;
 }

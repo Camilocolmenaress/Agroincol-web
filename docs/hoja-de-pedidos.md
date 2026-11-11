@@ -29,6 +29,12 @@ var SECRETO = 'CAMBIA-ESTO-POR-TU-SECRETO';
 var CORREO_AVISOS = 'agroincol.1985@gmail.com';
 // Bono del combo de 3 unidades ($109.700): guía en PDF, solo para ese pedido.
 var GUIA_PDF_ECOGEL_URL = 'https://drive.google.com/file/d/1jCReXhQzY6gPNuocx9OmPQxlgke9uD1T/view?usp=sharing';
+// Láminas de Captura (/tienda, desde el 9-nov-2026): misma hoja, origen = 'laminas', id LC-…
+var GUIA_PDF_LAMINAS_URL = 'https://agroincol.com/tienda/laminas/guia-laminas-de-captura.pdf';
+
+function esLaminas(fila) {
+  return fila.origen === 'laminas';
+}
 
 // El orden manda: así llegan los datos desde el servidor (lib/hoja-pedidos.ts).
 var COLUMNAS = [
@@ -119,6 +125,7 @@ function buscarFila(h, pedidoId) {
 function actualizar(h, pedidoId, cambios) {
   var numeroFila = buscarFila(h, pedidoId);
   if (!numeroFila) throw new Error('pedido no encontrado: ' + pedidoId);
+  var estadoAntes = h.getRange(numeroFila, COLUMNAS.indexOf('estado') + 1).getValue();
   Object.keys(cambios).forEach(function (c) {
     var idx = COLUMNAS.indexOf(c);
     if (idx >= 0) h.getRange(numeroFila, idx + 1).setValue(cambios[c]);
@@ -129,6 +136,11 @@ function actualizar(h, pedidoId, cambios) {
   // instante, también manda el Purchase a Meta — pide la fila con accion
   // "leer" (ver doPost arriba) porque esa función corre por separado.
   if (cambios.estado === 'pagado') avisarPorCorreo(leerFila(h, numeroFila));
+  // Reintento tras un fallo de Mercado Pago (/api/tienda/pedido y
+  // /api/ecogel/pedido): el pedido nació "en línea" (sin correo) y el cliente
+  // lo confirmó por transferencia o contraentrega. Sin este aviso quedaría mudo
+  // en la hoja. Solo en la transición, para que no se repita.
+  else if (cambios.estado === 'confirmar' && estadoAntes === 'pendiente_pago') avisarPorCorreo(leerFila(h, numeroFila));
 }
 
 function leerFila(h, numeroFila) {
@@ -146,7 +158,9 @@ function direccionCompleta(fila) {
 
 function avisarPorCorreo(fila) {
   try {
-    var asunto = 'Pedido EcoGel ' + fila.pedidoId + ' · ' + fila.unidades + 'u · ' + fila.metodoPago;
+    var asunto = esLaminas(fila)
+      ? 'Pedido Láminas ' + fila.pedidoId + ' · ' + fila.unidades + ' láminas · ' + fila.metodoPago
+      : 'Pedido EcoGel ' + fila.pedidoId + ' · ' + fila.unidades + 'u · ' + fila.metodoPago;
     var cuerpo =
       fila.nombre + ' · ' + fila.celular + '\n' +
       fila.tipoDocumento + ' ' + fila.documento + (fila.correo ? ' · ' + fila.correo : '') + '\n' +
@@ -164,7 +178,31 @@ function avisarPorCorreo(fila) {
 // Mensaje distinto según qué falta para despachar: contraentrega necesita que
 // el cliente confirme que sigue queriendo el pedido (baja el rechazo); las
 // transferencias manuales necesitan el comprobante; lo demás ya está pagado.
+// Láminas: trato de usted, sin tiempos para fuera del área y con la guía.
+function mensajeWhatsappLaminas(fila) {
+  var nombre = fila.nombre || '';
+  var pedidoId = fila.pedidoId || '';
+  var mensaje;
+  if (fila.metodoPago === 'contraentrega') {
+    mensaje =
+      'Hola ' + nombre + ', su pedido ' + pedidoId + ' de ' + fila.unidades + ' Láminas de Captura está listo para despachar. ' +
+      '*Confirme este mensaje con un SÍ* si desea recibirlo en ' + direccionCompleta(fila) + ', ' + fila.ciudad + '.';
+  } else if (fila.metodoPago === 'online') {
+    mensaje = 'Hola ' + nombre + ', confirmamos su pedido ' + pedidoId + ' de ' + fila.unidades + ' Láminas de Captura. Ya lo estamos preparando.';
+  } else {
+    mensaje =
+      'Hola ' + nombre + ', recibimos su pedido ' + pedidoId + ' de ' + fila.unidades + ' Láminas de Captura. ' +
+      'Envíenos el comprobante de la transferencia para confirmar y despachar.';
+  }
+  mensaje +=
+    '\n\nAquí tiene su guía de ubicación y uso (3 minutos de lectura):\n' + GUIA_PDF_LAMINAS_URL +
+    '\n\n📍 La regla de oro: contra la pared, nunca en la mitad del paso.' +
+    '\n\nCualquier duda, escríbanos por aquí.';
+  return mensaje;
+}
+
 function mensajeWhatsapp(fila) {
+  if (esLaminas(fila)) return mensajeWhatsappLaminas(fila);
   var nombre = fila.nombre || '';
   var pedidoId = fila.pedidoId || '';
   var mensaje;
