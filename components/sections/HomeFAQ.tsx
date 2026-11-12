@@ -10,7 +10,7 @@ const faqs = [
   },
   {
     q: '¿Cuánto cuesta?',
-    a: 'Para hogares desde $90.000 (servicio puntual) y para negocios desde $80.000/mes. El precio final depende del tamaño y la plaga; la cotización es gratis y sin compromiso.',
+    a: 'Depende del tipo de propiedad, el tamaño, la plaga y si es un servicio puntual o un programa recurrente. Escríbanos con su caso y le enviamos la cotización el mismo día, gratis y sin compromiso.',
   },
   {
     q: '¿Entregan certificado de fumigación?',

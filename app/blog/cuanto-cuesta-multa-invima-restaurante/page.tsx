@@ -152,7 +152,7 @@ export default function MultaInvimaPage() {
           </Link>{' '}
           es menor a lo que factura su restaurante en una sola hora de operación. Con{' '}
           <Link href="/precios" className="text-brand-orange underline hover:text-brand-orange-dark">
-            programas desde $80.000/mes
+            programas de control continuo
           </Link>, una sola multa de rango bajo (5 SMMLV) equivale a más de 10 años de programa preventivo. Y un cierre temporal de 5 días puede costar más que una década completa de fumigación profesional.
         </p>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">

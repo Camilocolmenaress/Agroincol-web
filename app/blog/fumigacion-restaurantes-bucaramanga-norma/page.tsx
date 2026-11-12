@@ -167,14 +167,14 @@ export default function FumigacionRestaurantesNormaPage() {
           ¿Cuánto Cuesta la Fumigación para Restaurantes en Bucaramanga?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
-          En el Área Metropolitana de Bucaramanga, los precios de fumigación para restaurantes varían según la modalidad de servicio. Estos son los rangos de referencia de AGROINCOL para 2026:
+          En el Área Metropolitana de Bucaramanga, el costo de fumigación para restaurantes varía según la modalidad de servicio, el tamaño del local y el nivel de riesgo. Estas son las modalidades que ofrece AGROINCOL:
         </p>
         <ul className="space-y-2 mb-4">
           {[
-            'Servicio único (una visita): desde $150.000 — para problemas puntuales sin programa continuo',
-            'Programa trimestral (Control): desde $80.000/mes — cumple el mínimo legal con 4 visitas anuales',
-            'Programa bimestral (Protección): desde $105.000/mes — incluye reportes técnicos, garantía entre visitas y soporte en auditorías',
-            'Programa mensual (Blindaje): desde $180.000/mes — cobertura completa con mapa de riesgo e informes trimestrales de tendencias',
+            'Servicio único (una visita): para problemas puntuales sin programa continuo',
+            'Programa trimestral (Control): cumple el mínimo legal con 4 visitas anuales',
+            'Programa bimestral (Protección): incluye reportes técnicos, garantía entre visitas y soporte en auditorías',
+            'Programa mensual (Blindaje): cobertura completa con mapa de riesgo e informes trimestrales de tendencias',
           ].map((item) => (
             <li key={item} className="flex items-start gap-2 text-brand-black text-body-lg leading-relaxed">
               <span className="text-brand-orange mt-1 shrink-0">•</span>
@@ -188,7 +188,7 @@ export default function FumigacionRestaurantesNormaPage() {
 
         <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
-            <strong>Perspectiva:</strong> El costo de un programa anual de Protección ($1.260.000/año) es una fracción del costo de un solo día de cierre por sanción sanitaria. Si su restaurante factura $3 millones diarios, 5 días cerrado son $15 millones perdidos — más la multa. Conozca el impacto real en nuestro artículo sobre{' '}
+            <strong>Perspectiva:</strong> El costo de un programa anual de control de plagas es una fracción del costo de un solo día de cierre por sanción sanitaria. Si su restaurante factura $3 millones diarios, 5 días cerrado son $15 millones perdidos — más la multa. Conozca el impacto real en nuestro artículo sobre{' '}
             <Link href="/blog/cuanto-cuesta-multa-invima-restaurante" className="text-brand-orange underline hover:text-brand-orange-dark">
               cuánto cuestan las multas del INVIMA
             </Link>.
@@ -197,7 +197,7 @@ export default function FumigacionRestaurantesNormaPage() {
 
         <p className="text-brand-black text-body-lg leading-relaxed mb-6">
           <Link href="/precios" className="text-brand-orange underline hover:text-brand-orange-dark">
-            Vea nuestros planes y precios detallados para restaurantes →
+            Vea nuestros programas para restaurantes y pida su cotización →
           </Link>
         </p>
 

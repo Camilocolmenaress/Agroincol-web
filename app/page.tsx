@@ -8,7 +8,6 @@ import AlivioTeaser from '@/components/sections/AlivioTeaser';
 import WhyUs from '@/components/sections/WhyUs';
 import ServiceAreas from '@/components/sections/ServiceAreas';
 import Testimonials from '@/components/sections/Testimonials';
-import PricingTeaser from '@/components/sections/PricingTeaser';
 import HomeFAQ from '@/components/sections/HomeFAQ';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
@@ -107,9 +106,6 @@ export default function HomePage() {
 
       {/* 8. Prueba social — reseñas reales de Google */}
       <Testimonials />
-
-      {/* 9. Precio orientativo — califica leads */}
-      <PricingTeaser />
 
       {/* 10. FAQ — resuelve objeciones que frenan la conversión */}
       <HomeFAQ />

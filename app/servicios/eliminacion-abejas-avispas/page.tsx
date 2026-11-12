@@ -68,7 +68,7 @@ const FAQS_ABEJAS = [
   {
     question: '¿Cuánto cuesta el retiro de un nido de abejas o avispas?',
     answer:
-      'El costo depende de la ubicación del nido, su altura, accesibilidad y tamaño de la colmena. Contáctenos por teléfono o WhatsApp con una foto del nido y le damos una cotización sin compromiso. También puede consultar nuestra página de precios para conocer los rangos de nuestros servicios.',
+      'El costo depende de la ubicación del nido, su altura, accesibilidad y tamaño de la colmena. Contáctenos por teléfono o WhatsApp con una foto del nido y le damos una cotización sin compromiso.',
   },
 ];
 
@@ -385,7 +385,7 @@ export default function AbejasAvispasPage() {
               href="/precios"
               className="text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body-sm underline transition-colors"
             >
-              Consulte los rangos de precios de nuestros servicios →
+              Vea cómo cotizamos →
             </Link>
           </p>
         </div>

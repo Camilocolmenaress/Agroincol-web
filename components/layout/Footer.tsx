@@ -46,7 +46,7 @@ export default function Footer() {
               )}
               <li>
                 <Link href="/precios" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
-                  Precios
+                  Cotización
                 </Link>
               </li>
               {/* Alivio — zona externa (/alivio). <a> obligatorio para cruzar de zona. */}

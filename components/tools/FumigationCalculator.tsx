@@ -304,7 +304,7 @@ export default function FumigationCalculator() {
               href="/precios"
               className="inline-flex items-center gap-2 text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body transition-colors"
             >
-              Vea nuestros precios y programas de protección →
+              Vea nuestros programas de protección →
             </a>
           </div>
 

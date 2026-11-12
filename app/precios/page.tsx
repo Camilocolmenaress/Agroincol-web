@@ -21,17 +21,17 @@ import SchemaMarkup from '@/components/seo/SchemaMarkup';
 import { BUSINESS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Precios Fumigación Bucaramanga 2026',
+  title: 'Precio de Fumigación en Bucaramanga: Cotización Gratis',
   description:
-    'Precios reales de fumigación en Bucaramanga para restaurantes y hogares. Desde $90.000. Programas mensuales desde $80.000/mes. Cotización gratis.',
+    'Qué define el precio de fumigar en Bucaramanga: tipo de propiedad, tamaño, plaga y frecuencia. Cotización gratis el mismo día por WhatsApp.',
   alternates: {
     canonical: 'https://agroincol.com/precios',
   },
   robots: 'index, follow',
   openGraph: {
-    title: 'Precios Fumigación Bucaramanga 2026 | AGROINCOL',
+    title: 'Precio de Fumigación en Bucaramanga | AGROINCOL',
     description:
-      'Precios reales de fumigación en Bucaramanga para restaurantes y hogares. Desde $90.000. Programas mensuales desde $80.000/mes.',
+      'Qué define el precio de fumigar en Bucaramanga: tipo de propiedad, tamaño, plaga y frecuencia. Cotización gratis el mismo día por WhatsApp.',
     url: 'https://agroincol.com/precios',
     siteName: 'AGROINCOL',
     locale: 'es_CO',
@@ -41,24 +41,24 @@ export const metadata: Metadata = {
         url: 'https://agroincol.com/images/hero/hero-home.jpg',
         width: 1200,
         height: 630,
-        alt: 'AGROINCOL — Precios de Fumigación en Bucaramanga 2026',
+        alt: 'AGROINCOL — Cotización de fumigación en Bucaramanga',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Precios Fumigación Bucaramanga 2026 | AGROINCOL',
+    title: 'Precio de Fumigación en Bucaramanga | AGROINCOL',
     description:
-      'Precios reales de fumigación en Bucaramanga para restaurantes y hogares. Desde $90.000. Programas mensuales desde $80.000/mes.',
+      'Qué define el precio de fumigar en Bucaramanga: tipo de propiedad, tamaño, plaga y frecuencia. Cotización gratis el mismo día por WhatsApp.',
   },
 };
 
 const pageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  name: 'Precios de Fumigación en Bucaramanga 2026',
+  name: 'Cómo se cotiza la fumigación en Bucaramanga',
   description:
-    'Guía completa de precios de fumigación y control de plagas en Bucaramanga para restaurantes y hogares.',
+    'Qué determina el valor de la fumigación y el control de plagas en Bucaramanga para restaurantes y hogares, y cómo pedir una cotización.',
   provider: {
     '@id': 'https://agroincol.com/#organization',
   },
@@ -101,7 +101,7 @@ const paymentMethods = [
   {
     icon: CreditCard,
     title: 'Contado / Mensual',
-    description: 'Pago antes del servicio, precio estándar.',
+    description: 'Pago antes del servicio.',
   },
   {
     icon: CalendarCheck,
@@ -121,19 +121,19 @@ export default function PreciosPage() {
       <SchemaMarkup schema={pageSchema} />
       <Breadcrumbs items={[
         { name: 'Inicio', href: '/' },
-        { name: 'Precios' },
+        { name: 'Cotización' },
       ]} />
 
       {/* Hero */}
       <Hero
         withBreadcrumbs
         title="¿Cuánto Cuesta Fumigar en Bucaramanga?"
-        subtitle="Precios transparentes para restaurantes y hogares. Todos nuestros precios incluyen IVA, productos certificados INVIMA y técnicos profesionales."
-        badgeText="Precios actualizados — Marzo 2026"
+        subtitle="Cada propiedad es distinta, por eso cotizamos su caso: gratis, sin compromiso y el mismo día. Productos certificados INVIMA y técnicos profesionales."
+        badgeText="Cotización gratis el mismo día"
         primaryCta={{ text: 'Cotizar Ahora', href: '#contacto' }}
         secondaryCta={{ text: 'WhatsApp', href: BUSINESS.whatsappLink }}
         imageSrc="/images/hero/hero-home.jpg"
-        imageAlt="Precios de fumigación en Bucaramanga — AGROINCOL"
+        imageAlt="Cotización de fumigación en Bucaramanga — AGROINCOL"
       />
 
       {/* Pricing Tabs (Client Component) */}
@@ -202,7 +202,7 @@ export default function PreciosPage() {
             })}
           </div>
           <p className="text-center text-brand-gray text-body-sm mt-6">
-            Todos los precios incluyen IVA. Factura electrónica disponible.
+            Factura electrónica disponible.
           </p>
         </div>
       </section>
@@ -226,23 +226,21 @@ export default function PreciosPage() {
 
               <p className="text-brand-black text-body leading-relaxed">
                 En el Área Metropolitana de Bucaramanga — que incluye Bucaramanga, Floridablanca, Piedecuesta y Girón
-                — los servicios de fumigación residencial tienen precios de referencia que van desde <strong>$90.000
-                para tratamientos básicos</strong> enfocados en un solo espacio y una sola plaga, hasta{' '}
-                <strong>$250.000 para tratamientos integrales</strong> que cubren toda la vivienda, incluyen diagnóstico
+                — el valor de una fumigación residencial cambia según el alcance: no cuesta lo mismo tratar un solo
+                espacio contra una sola plaga que hacer un tratamiento integral de toda la vivienda con diagnóstico
                 completo, reporte digital y garantía. Las familias que prefieren un programa preventivo continuo pueden
-                acceder a planes recurrentes con visitas cada dos meses por aproximadamente $67.500 mensuales,
-                lo que equivale a menos de $2.250 diarios para mantener su hogar libre de plagas durante todo el año.
+                acceder a planes recurrentes con visitas cada dos meses para mantener su hogar libre de plagas durante
+                todo el año.
               </p>
 
               <p className="text-brand-black text-body leading-relaxed">
                 Para restaurantes y negocios de alimentos, los precios están determinados por los requerimientos de la
                 normativa colombiana. La Resolución 2674 de 2013 exige un programa continuo de control de plagas con
-                certificación vigente, no un servicio esporádico. Los programas mensuales para restaurantes en
-                Bucaramanga van desde <strong>$80.000/mes para el plan básico trimestral</strong> (Control) hasta{' '}
-                <strong>$180.000/mes para el plan premium mensual</strong> (Blindaje), que incluye visitas cada mes,
-                reportes detallados, acompañamiento en auditorías y garantía ilimitada entre visitas. El plan más
-                elegido por restaurantes en Bucaramanga es el plan Protección a $105.000/mes, que ofrece el mejor
-                equilibrio entre precio, cobertura y tranquilidad.
+                certificación vigente, no un servicio esporádico. Los programas para restaurantes en Bucaramanga van
+                desde el plan básico trimestral (Control) hasta el plan premium mensual (Blindaje), que incluye visitas
+                cada mes, reportes detallados, acompañamiento en auditorías y garantía ilimitada entre visitas. El plan
+                más elegido por restaurantes en Bucaramanga es Protección, que ofrece el mejor equilibrio entre costo,
+                cobertura y tranquilidad.
               </p>
 
               <p className="text-brand-black text-body leading-relaxed">
@@ -272,8 +270,8 @@ export default function PreciosPage() {
               </p>
 
               <p className="text-brand-black text-body leading-relaxed">
-                Todos los precios de AGROINCOL incluyen IVA, productos certificados INVIMA registrados ante el ICA y
-                aprobados por la OMS, y técnicos profesionales capacitados. El valor final puede variar según el tamaño
+                Todos los servicios de AGROINCOL incluyen productos certificados INVIMA registrados ante el ICA y
+                aprobados por la OMS, y técnicos profesionales capacitados. El valor depende del tamaño
                 específico de su propiedad, el tipo de plaga, las condiciones del entorno y el nivel de infestación.
                 Por eso, siempre recomendamos solicitar una cotización personalizada: es gratis, sin compromiso, y le
                 respondemos por WhatsApp en menos de 5 minutos.
@@ -289,7 +287,7 @@ export default function PreciosPage() {
                 Si tiene un <strong>restaurante o negocio de alimentos</strong> y necesita cumplir con la normativa
                 INVIMA, el mínimo es el plan <strong>Control</strong> (trimestral). Sin embargo, recomendamos el plan{' '}
                 <strong>Protección</strong> porque incluye garantía entre visitas, reportes técnicos y soporte
-                documental en auditorías — por solo $25.000/mes más. Si opera un restaurante grande, una cadena o un
+                documental en auditorías. Si opera un restaurante grande, una cadena o un
                 hotel con cero tolerancia a incidentes, el plan <strong>Blindaje</strong> le da cobertura mensual
                 completa con acompañamiento en auditorías.
               </p>
@@ -326,14 +324,13 @@ export default function PreciosPage() {
                 Solicite su Cotización Personalizada
               </h2>
               <p className="text-brand-gray text-body mt-4">
-                Los precios mostrados son de referencia. El valor final depende del tamaño de su propiedad y tipo de
-                plaga. Contáctenos para una cotización sin compromiso.
+                El valor depende del tamaño de su propiedad, el tipo de plaga y la frecuencia. Cuéntenos su caso y le
+                enviamos la cotización sin compromiso.
               </p>
               <ul className="mt-6 space-y-3">
                 {[
                   'Cotización gratis y sin compromiso',
                   'Respuesta por WhatsApp en menos de 5 minutos',
-                  'Precios con IVA incluido',
                   'Certificado INVIMA incluido (programas)',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brand-black text-body">
@@ -359,9 +356,9 @@ export default function PreciosPage() {
       <section className="bg-gray-50 py-6">
         <div className="container-custom">
           <p className="text-gray-400 text-xs text-center max-w-4xl mx-auto leading-relaxed">
-            Precios válidos para Bucaramanga y Área Metropolitana (Floridablanca, Girón, Piedecuesta). Todos los precios
-            incluyen IVA. El valor final puede variar según el tamaño del establecimiento, tipo de plaga y condiciones
-            específicas. Precios actualizados a marzo 2026. Consulte condiciones con nuestro equipo comercial.
+            Servicio en Bucaramanga y Área Metropolitana (Floridablanca, Girón, Piedecuesta). El valor de cada servicio
+            se define en la cotización según el tamaño del establecimiento, el tipo de plaga y las condiciones
+            específicas. Consulte condiciones con nuestro equipo comercial.
           </p>
         </div>
       </section>

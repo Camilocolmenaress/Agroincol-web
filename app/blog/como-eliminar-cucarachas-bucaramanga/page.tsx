@@ -48,7 +48,7 @@ const faqSchema = {
       name: '¿Cuánto cuesta eliminar cucarachas en Bucaramanga?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'El tratamiento profesional para cucarachas en Bucaramanga va desde $90.000 para un espacio específico hasta $250.000 para un tratamiento integral de toda la vivienda. Para restaurantes, los programas de control continuo van desde $80.000/mes. El costo depende del tamaño de la propiedad y el nivel de infestación.',
+        text: 'El costo depende del tamaño de la propiedad, el nivel de infestación y el alcance del tratamiento: no es lo mismo tratar un espacio específico que hacer un tratamiento integral de toda la vivienda. Para restaurantes se recomienda un programa de control continuo. La cotización es gratis y se entrega el mismo día.',
       },
     },
     {
@@ -229,9 +229,9 @@ export default function CucarachasBucaramangaPage() {
           ¿Cuánto cuesta eliminar cucarachas en Bucaramanga?
         </h3>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
-          El tratamiento profesional para cucarachas en Bucaramanga va desde $90.000 para un espacio específico hasta $250.000 para un tratamiento integral de toda la vivienda. Para restaurantes, los programas de control continuo van desde $80.000/mes. El costo depende del tamaño de la propiedad y el nivel de infestación.{' '}
+          El costo depende del tamaño de la propiedad, el nivel de infestación y el alcance del tratamiento: no es lo mismo tratar un espacio específico que hacer un tratamiento integral de toda la vivienda. Para restaurantes se recomienda un programa de control continuo. La cotización es gratis y se entrega el mismo día.{' '}
           <Link href="/precios" className="text-brand-orange underline hover:text-brand-orange-dark">
-            Conozca nuestros precios detallados
+            Vea cómo cotizamos
           </Link>.
         </p>
 

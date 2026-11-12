@@ -88,7 +88,7 @@ const FAQS_CHINCHES = [
   {
     question: '¿Cuánto cuesta el control de chinches en Bucaramanga?',
     answer:
-      'El costo depende del número de habitaciones afectadas y del nivel de infestación. La cotización es gratuita y sin compromiso. Puede consultar nuestra página de precios o escribirnos por WhatsApp para recibir una cotización el mismo día.',
+      'El costo depende del número de habitaciones afectadas y del nivel de infestación. La cotización es gratuita y sin compromiso. Escríbanos por WhatsApp para recibir una cotización el mismo día.',
   },
   {
     question: '¿El tratamiento es seguro para niños y mascotas?',
@@ -334,7 +334,7 @@ export default function ControlChinchesPage() {
               href="/precios"
               className="text-brand-orange hover:text-brand-orange-dark font-body font-semibold text-body-sm underline transition-colors"
             >
-              Consulte nuestros precios de fumigación →
+              Vea cómo cotizamos →
             </Link>
           </div>
           <p className="text-brand-gray text-body mt-6">

@@ -14,11 +14,6 @@ interface Feature {
 interface PricingPlan {
   name: string;
   tag: string;
-  price: string;
-  priceDetail: string;
-  annualValue?: string;
-  semesterValue?: string;
-  monthlyEquiv?: string;
   features: Feature[];
   idealFor: string;
   highlighted?: boolean;
@@ -31,8 +26,6 @@ const restaurantPlans: PricingPlan[] = [
   {
     name: 'Servicio Único',
     tag: 'Puntual',
-    price: '$150.000',
-    priceDetail: 'pago único · IVA incluido',
     features: [
       { text: '1 visita', included: true },
       { text: 'Aspersión + gel', included: true },
@@ -41,7 +34,7 @@ const restaurantPlans: PricingPlan[] = [
       { text: 'Reporte técnico no incluido', included: false },
       { text: 'Sin garantía de re-servicio', included: false },
       { text: 'Sin soporte en auditorías', included: false },
-      { text: 'Estaciones de roedores: adicionales $50.000 c/u', included: true },
+      { text: 'Estaciones de roedores adicionales (se cotizan aparte)', included: true },
     ],
     idealFor: 'Problema puntual. Una visita, una solución.',
     ctaVariant: 'secondary',
@@ -49,9 +42,6 @@ const restaurantPlans: PricingPlan[] = [
   {
     name: 'Control',
     tag: 'Básico',
-    price: '$80.000',
-    priceDetail: '/mes · IVA incluido',
-    annualValue: '$960.000/año',
     features: [
       { text: '4 visitas/año (1 cada 3 meses)', included: true },
       { text: 'Aspersión + gel', included: true },
@@ -68,9 +58,6 @@ const restaurantPlans: PricingPlan[] = [
   {
     name: 'Protección',
     tag: 'Recomendado',
-    price: '$105.000',
-    priceDetail: '/mes · IVA incluido',
-    annualValue: '$1.260.000/año',
     highlighted: true,
     features: [
       { text: '6 visitas/año (1 cada 2 meses)', included: true },
@@ -88,9 +75,6 @@ const restaurantPlans: PricingPlan[] = [
   {
     name: 'Blindaje',
     tag: 'Premium',
-    price: '$180.000',
-    priceDetail: '/mes · IVA incluido',
-    annualValue: '$2.160.000/año',
     features: [
       { text: '12 visitas/año (1 cada mes)', included: true },
       { text: 'Aspersión + gel + trampas de monitoreo', included: true },
@@ -113,8 +97,6 @@ const homePlans: PricingPlan[] = [
   {
     name: 'Express',
     tag: 'Mínimo',
-    price: '$90.000',
-    priceDetail: 'pago único · IVA incluido',
     features: [
       { text: '1 visita — 1 espacio específico (cocina O baño O habitación)', included: true },
       { text: '1 plaga', included: true },
@@ -131,15 +113,13 @@ const homePlans: PricingPlan[] = [
   {
     name: 'Esencial',
     tag: 'Puntual',
-    price: '$140.000',
-    priceDetail: 'pago único · IVA incluido',
     features: [
       { text: '1 visita — áreas principales del interior', included: true },
       { text: '1 plaga principal', included: true },
       { text: 'Aspersión + gel', included: true },
       { text: 'Inspección rápida', included: true },
       { text: 'Productos INVIMA seguros para familia', included: true },
-      { text: 'Garantía: refuerzo a 15 días ($140.000), si persiste 1 garantía sin costo (máx 90 días)', included: true },
+      { text: 'Refuerzo a 15 días (con costo); si persiste, 1 garantía sin costo (máx 90 días)', included: true },
       { text: 'Sin reporte digital', included: false },
       { text: 'Sin seguimiento', included: false },
     ],
@@ -149,8 +129,6 @@ const homePlans: PricingPlan[] = [
   {
     name: 'Integral',
     tag: 'Recomendado',
-    price: '$250.000',
-    priceDetail: 'pago único · IVA incluido',
     highlighted: true,
     features: [
       { text: '1 visita completa — toda la casa incluyendo exteriores', included: true },
@@ -168,10 +146,6 @@ const homePlans: PricingPlan[] = [
   {
     name: 'Hogar Protegido',
     tag: 'Premium · Recurrente',
-    price: '$810.000',
-    priceDetail: '/año · IVA incluido (10% dto. prepago)',
-    semesterValue: '$430.000/semestre (5% dto.)',
-    monthlyEquiv: '~$67.500/mes',
     features: [
       { text: '6 visitas/año (1 cada 2 meses)', included: true },
       { text: 'Toda la casa: interior + exterior + zonas ocultas', included: true },
@@ -216,21 +190,6 @@ function PricingCard({ plan }: { plan: PricingPlan }) {
 
       {/* Name */}
       <h3 className="font-heading text-xl font-bold text-brand-green">{plan.name}</h3>
-
-      {/* Price */}
-      <div className="mt-3 mb-1">
-        <span className="font-heading text-3xl md:text-4xl text-brand-green font-bold">{plan.price}</span>
-      </div>
-      <p className="text-brand-gray text-body-sm">{plan.priceDetail}</p>
-      {plan.annualValue && (
-        <p className="text-brand-gray text-xs mt-0.5">{plan.annualValue}</p>
-      )}
-      {plan.semesterValue && (
-        <p className="text-brand-gray text-xs mt-0.5">{plan.semesterValue}</p>
-      )}
-      {plan.monthlyEquiv && (
-        <p className="text-brand-orange text-xs font-semibold mt-0.5">{plan.monthlyEquiv}</p>
-      )}
 
       {/* Divider */}
       <hr className="my-5 border-gray-100" />
@@ -356,13 +315,13 @@ export default function PricingTabs() {
                 <Star size={16} className="inline text-brand-orange mr-1 -mt-0.5" />
                 {activeTab === 'restaurantes' ? (
                   <>
-                    <strong>PROTECCIÓN</strong> es el programa más elegido por restaurantes en Bucaramanga. Solo
-                    $25.000/mes más que Control, pero incluye garantía, reportes técnicos y soporte en auditorías.
+                    <strong>PROTECCIÓN</strong> es el programa más elegido por restaurantes en Bucaramanga. A
+                    diferencia de Control, incluye garantía, reportes técnicos y soporte en auditorías.
                   </>
                 ) : (
                   <>
                     <strong>INTEGRAL</strong> es el plan más elegido por familias en Bucaramanga. Diagnóstico completo,
-                    tratamiento en todas las áreas, garantía de 30 días y seguimiento. Solo $110.000 más que Express.
+                    tratamiento en todas las áreas, garantía de 30 días y seguimiento.
                   </>
                 )}
               </p>

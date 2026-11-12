@@ -55,7 +55,7 @@ const FAQS_COMEJEN = [
   {
     question: '¿Cuánto cuesta eliminar el comején en Bucaramanga?',
     answer:
-      'El costo depende del tipo de termita, la extensión de la infestación y el tamaño del inmueble. Por eso realizamos primero una inspección para diagnosticar el problema y entregarle una cotización exacta sin compromiso. Puede consultar nuestra página de precios para conocer los rangos de nuestros servicios o contactarnos directamente para una cotización personalizada.',
+      'El costo depende del tipo de termita, la extensión de la infestación y el tamaño del inmueble. Por eso realizamos primero una inspección para diagnosticar el problema y entregarle una cotización exacta sin compromiso. Contáctenos directamente para una cotización personalizada.',
   },
   {
     question: '¿Los remedios caseros o insecticidas de supermercado funcionan contra el comején?',
@@ -309,7 +309,7 @@ export default function ComejenTermitasPage() {
               href="/precios"
               className="text-brand-orange hover:text-brand-orange-dark font-semibold underline transition-colors"
             >
-              Consulte nuestra página de precios →
+              Vea cómo cotizamos →
             </Link>
           </p>
         </div>

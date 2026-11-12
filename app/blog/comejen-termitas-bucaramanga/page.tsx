@@ -48,7 +48,7 @@ const faqSchema = {
       name: '¿Cuánto cuesta el tratamiento de comején en Bucaramanga?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'El costo depende de la extensión del daño y el tipo de termita. Un tratamiento localizado puede ir desde $200.000, mientras que un tratamiento completo con barrera perimetral puede costar entre $500.000 y $1.500.000 dependiendo del tamaño de la propiedad. La inspección diagnóstica es sin costo.',
+        text: 'El costo depende de la extensión del daño, el tipo de termita y el tamaño de la propiedad: un tratamiento localizado no cuesta lo mismo que uno completo con barrera perimetral. La inspección diagnóstica es sin costo y con ella le entregamos la cotización exacta.',
       },
     },
     {
@@ -216,9 +216,9 @@ export default function ComejenTermitasPage() {
           ¿Cuánto cuesta el tratamiento de comején en Bucaramanga?
         </h3>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
-          El costo depende de la extensión del daño y el tipo de termita. Un tratamiento localizado puede ir desde $200.000, mientras que un tratamiento completo con barrera perimetral puede costar entre $500.000 y $1.500.000 dependiendo del tamaño de la propiedad. La inspección diagnóstica es sin costo.{' '}
+          El costo depende de la extensión del daño, el tipo de termita y el tamaño de la propiedad: un tratamiento localizado no cuesta lo mismo que uno completo con barrera perimetral. La inspección diagnóstica es sin costo y con ella le entregamos la cotización exacta.{' '}
           <Link href="/precios" className="text-brand-orange underline hover:text-brand-orange-dark">
-            Conozca nuestros precios
+            Vea cómo cotizamos
           </Link>.
         </p>
 
