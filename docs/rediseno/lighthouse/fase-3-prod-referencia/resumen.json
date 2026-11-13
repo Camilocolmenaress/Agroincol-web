@@ -1,0 +1,27 @@
+{
+  "base": "https://agroincol.com",
+  "fecha": "2026-11-13T23:25:26.788Z",
+  "corridas": 5,
+  "nota": "Lighthouse móvil (preset por defecto: Moto G Power, 4G lento simulado). INP no se mide en laboratorio: se usa TBT como proxy y CrUX/Speed Insights para campo.",
+  "resumen": [
+    {
+      "url": "/",
+      "perf": 75,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 79,
+      "lcp_s": 6.12,
+      "cls": 0,
+      "tbt_ms": 147,
+      "fcp_s": 1.48,
+      "peso_kb": 873,
+      "perf_corridas": [
+        67,
+        73,
+        75,
+        75,
+        80
+      ]
+    }
+  ]
+}

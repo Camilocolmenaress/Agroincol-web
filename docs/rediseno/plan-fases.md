@@ -224,3 +224,63 @@ Preview: `agroincol-web-git-rediseno-recorrido-camilos-projects-1d68bc1f.vercel.
   - favicon del manual (el `favicon.ico` anterior pesaba 70 bytes);
   - el CSS global partido en dos archivos (fuentes v1 y resto), con el mismo contenido.
   - Visualmente, 0 píxeles distintos en `/lp/*`.
+
+## Resultado Fase 3: home (13-nov)
+
+**Decisiones del 13-nov:** variante B de la casa (techo naranja), ronda de detalle hecha, galería con marcos en blanco (no hay fotos reales) y Blender en vivo por MCP.
+
+**Qué hay en el home:**
+- Hero con aro, lema girando y arco naranja.
+- Casa 3D desfilando sobre el arco.
+- Entrada de primera visita detrás del contenido.
+- Cinta de confianza.
+- Foco "¿Qué necesita proteger?" con la casa entre las líneas.
+- Segmentos gigantes, con Los Colados solo en Hogar.
+- Método en ficha de tres columnas.
+- Galería "Arrastre" en blanco.
+- Lema con Caveat (única vez en la página).
+- Servicios con inclinación y patrón gel.
+- Alivio sin cambios, y Por qué, Zonas, Reseñas, FAQ, banda de WhatsApp y formulario restilados con el mismo texto.
+
+**SEO:** solo cambia el home. Aprobado por D3: −12 H3 duplicados y sus enlaces duplicados, sale la foto del hero, entra el alt del render 3D, y el conteo de palabras pasa de 1.337 a 1.153.
+
+**Pendiente de aprobación:**
+1. +1 enlace interno: la casa del desfile lleva a `/servicios/fumigacion-residencial`, con su alt como texto del enlace.
+2. 3 imágenes decorativas con `alt=""`: la casa del foco, la casa que aparece al pasar el cursor sobre "Mi hogar" y la casa de la tarjeta de residencial. Es el mismo objeto ya descrito una vez.
+
+**Texto propuesto para la tabla del método** (nuevo en el home; no está publicado, espera su visto bueno):
+
+| Columna | Texto |
+|---|---|
+| Frecuencia (chips) | Servicio único · Mensual · Bimestral · Trimestral. Son los planes que ya nombran las FAQ de restaurantes y comercial. |
+| Garantía | "En planes: si la plaga vuelve entre visitas, volvemos sin costo, siguiendo las recomendaciones del técnico." Es el texto que usted aprobó. |
+
+**Choques de texto que encontré (no los toqué):**
+- **Método, paso 3:** dice "respondemos sin costo si la plaga vuelve" sin aclarar que es solo en planes. Choca con la política real de garantía.
+- **"Certificado":** el home y las FAQ siguen diciendo "certificado". Desde sep-2026 el documento real es el acta de hallazgos. Pendiente de contenido.
+- **`WhyUs`** usa `equipo-agroincol.webp` (tres técnicos con una van). Si la foto es de IA, rompe la regla "nunca fotos de IA con personas". Cambiarla mueve un alt: necesita su aprobación.
+
+**Lighthouse local del home** (producción, 3 corridas), `main` → rama:
+
+| Rendimiento | LCP | FCP | TBT | Peso |
+|---|---|---|---|---|
+| 91 → 91 | 3,37 → 3,44 s | 1,52 → 1,06 s | 3 → 2 ms | 351 → 500 KB |
+
+- El peso extra viene de GSAP y Lenis (cargan con el hilo libre, después del primer pintado), los renders y Los Colados.
+- El elemento LCP es el texto del aro (SVG), que se pinta junto con el H1.
+
+**Landings:** 0 píxeles distintos frente a `main` capturado a la misma hora. `/lp/restaurantes` cambia sola según el horario de atención, así que las capturas "antes" de otra hora no sirven para compararla.
+
+**Preview con GTM contra producción** (home, 5 corridas cada uno):
+
+| | Rendimiento | LCP | TBT | Peso |
+|---|---|---|---|---|
+| Producción hoy | 75 | 6,12 s | 147 ms | 873 KB |
+| Preview fase 3 | 77 | 4,90 s | 215 ms | 1.043 KB |
+
+- **El LCP sigue lejos del presupuesto de 2,5 s.** El elemento LCP es el texto del aro, con 4,2 s de *render delay*.
+- **Las corridas son muy ruidosas** (el preview fue de 68 a 95). No cuento esto como mejora probada.
+- **Próximos pasos para el LCP:**
+  1. La revisión de GTM que ya está aprobada.
+  2. Probar CSS crítico en línea: hoy hay dos CSS que bloquean el render, unos 85 KB.
+  3. Sacar el lema del aro de la carrera por el LCP: que aparezca después del H1, sin opacidad en el H1.
