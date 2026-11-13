@@ -576,3 +576,14 @@ html.lenis { scroll-behavior: auto !important; }
   .fundido-ruta { animation: fundido-ruta 0.35s cubic-bezier(.2,.7,.2,1) both; }
 }
 @keyframes fundido-ruta { from { opacity: 0.85; } to { opacity: 0; } }
+
+/* Manual v2: nunca texto pequeño en naranja sobre blanco o verde. En el sitio, el texto que venía
+   en naranja (enlaces de artículos, "Ver más", etiquetas) pasa a Verde Con Sello con el naranja
+   como subrayado. Los íconos (svg) conservan su naranja. Las landings (v1) no cambian. */
+[data-marca='v2'] :is(a, p, span, li, strong).text-brand-orange {
+  color: #164A38;
+  text-decoration-color: #F5682E;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+[data-marca='v2'] a.text-brand-orange:not(.no-underline) { text-decoration-line: underline; }

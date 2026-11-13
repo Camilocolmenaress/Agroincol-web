@@ -11,7 +11,7 @@ function RatingChip() {
       href={BUSINESS.googleMapsLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/15 backdrop-blur-sm transition-colors hover:bg-white/15"
+      className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/15 transition-colors hover:bg-white/15"
     >
       <span className="flex items-center gap-0.5 text-brand-amber">
         {Array.from({ length: 5 }).map((_, i) => (
@@ -27,15 +27,12 @@ function RatingChip() {
 export default function Hero({ title, subtitle, badgeText, primaryCta, secondaryCta, imageSrc, imageAlt, centeredText = false, withBreadcrumbs = false }: HeroProps) {
   const topPadding = withBreadcrumbs ? '' : 'pt-24 md:pt-32';
 
-  // Capa de atmósfera compartida: dot-grid + glow naranja difuso.
+  // Atmósfera (manual v2): verde liso con el patrón gel oscuro, un solo patrón por pantalla.
   const atmosphere = (
-    <>
-      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-60" aria-hidden />
-      <div
-        className="glow-pulse pointer-events-none absolute -top-24 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-brand-orange/30 blur-[120px]"
-        aria-hidden
-      />
-    </>
+    <div
+      className="pointer-events-none absolute inset-0 bg-[url('/images/patrones/patron-gel-oscuro.webp')] bg-[length:420px] opacity-20"
+      aria-hidden
+    />
   );
 
   if (centeredText) {
@@ -107,7 +104,7 @@ export default function Hero({ title, subtitle, badgeText, primaryCta, secondary
 
           {/* Image — 40% */}
           {imageSrc && (
-            <div className="animate-rise anim-d3 lg:col-span-2 relative aspect-video rounded-2xl overflow-hidden ring-1 ring-white/15 shadow-premium">
+            <div className="animate-rise anim-d3 lg:col-span-2 relative aspect-video rounded-[28px] overflow-hidden">
               <Image
                 src={imageSrc}
                 alt={imageAlt || title}
@@ -116,8 +113,7 @@ export default function Hero({ title, subtitle, badgeText, primaryCta, secondary
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 40vw"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-green-dark/40 to-transparent" aria-hidden />
-            </div>
+                          </div>
           )}
         </div>
       </div>
