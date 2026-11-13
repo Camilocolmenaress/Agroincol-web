@@ -168,7 +168,7 @@ export default function Navbar() {
               <span className="h-1.5 w-1.5 rounded-full bg-[#1FB3A7]" aria-hidden />
               Alivio
             </a>
-            <Button variant="primary" href={ctaHref} className="text-base">
+            <Button variant="primary" href={ctaHref}>
               Cotizar Ahora
             </Button>
           </div>

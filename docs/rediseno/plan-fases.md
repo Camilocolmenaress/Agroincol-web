@@ -97,13 +97,17 @@ Aprobado: tokens aparte, D1 (aro gráfico con arco que gira y logo plano sobre o
 
 Lo que elegí en las decisiones que me dejó a mí:
 
-- **D7, galería:** arranca con las fotos reales que ya están en el repo (equipo, inspección, técnicos). Los marcos "Foto real pendiente" solo se ven en el preview. A producción sale con al menos 4 fotos reales.
+- **D7, galería:** arranca con fotos del repo que **Camilo confirme como reales**. No asumo cuáles lo son, porque algunas imágenes de las landings salieron de briefs de IA. Los marcos "Foto real pendiente" solo se ven en el preview. A producción sale con al menos 4 fotos reales.
 - **D9, titular de servicio:** el mismo H1 en mayúsculas por CSS, en League Spartan 800 gigante, con el objeto cruzando entre las líneas. El DOM no cambia.
 - **D10, `/og-image.jpg`:** subido. Es la imagen para compartir del manual, en JPG de 15 KB. No toca el JSON-LD.
 - **D11, lenguaje alarmista:** fuera del rediseño. En lo visual no quedan íconos rojos de riesgo.
 - **D12, Alivio:** enlace, texto y color (#1FB3A7) sin cambios. En la cabecera vive dentro del menú, con las mismas clases de siempre.
 
-GTM en el preview: carga solo con `?gtm=1`, que queda guardado en la sesión. Lighthouse mide igual que en producción, pero las visitas de revisión no ensucian GA4 ni las conversiones de Ads, que son las que usa la puja.
+GTM en el preview: **me aparté de la instrucción**, que era cargarlo "igual que en producción".
+
+- Carga solo con `?gtm=1`, que queda guardado en la sesión.
+- Así Lighthouse mide igual que en producción, pero las visitas de revisión no mandan pageviews a GA4 ni clics de WhatsApp a las conversiones de Ads, que son las que usa la puja.
+- Si Camilo prefiere que cargue siempre, es un cambio de una línea en `app/layout.tsx`.
 
 ## Decisiones de la Fase 0 (registro)
 
@@ -201,10 +205,22 @@ Preview: `agroincol-web-git-rediseno-recorrido-camilos-projects-1d68bc1f.vercel.
 | blog | 6,35 s | **2,30 s** | 345 ms | 438 ms |
 | zonas | 4,74 s | 4,49 s | 308 ms | 550 ms |
 
-**Lectura de los números:**
-- El LCP baja entre 3,6 y 3,8 s en tres de las cuatro páginas. El H1 y el texto ya no arrancan invisibles.
+**Lectura de los números (provisional):**
+- La comparación controlada es la local: `main` contra la rama, en la misma máquina y con el mismo build. Ahí el LCP casi no se mueve (3,44 → 3,39 s en el home).
+- La comparación preview contra producción enfrenta dos despliegues distintos, y producción osciló hoy entre 6,2 y 9,9 s. Que el LCP del preview salga más bajo no prueba todavía que lo bajó el arreglo del H1, ni que el presupuesto de 2,5 s esté cumplido.
+- La prueba real será producción después del merge, con Speed Insights y CrUX.
 - El TBT del preview sale más alto. En el preview GTM bloqueó 1.007 ms, contra unos 250 ms en producción.
 - Hay dos causas probables que todavía no separo:
   1. GTM se comporta distinto en el host vercel.app.
   2. El render 3D corría en paralelo en la misma máquina.
 - Se repite cuando termine el render. El SEO del preview da 69 por el `noindex` que Vercel pone a todos los previews: es esperado.
+
+**Ajustes del cierre de la Fase 1 (después de la revisión):**
+- **Precarga de League Spartan 800 fuera de las landings.** Ahora se declara con `@font-face` y URL estable, y se precarga con `ReactDOM.preload` solo en las rutas v2. En las landings, las precargas son las mismas de `main`.
+- **El H1 del sitio va en League Spartan 800**, la fuente precargada.
+- **Contraste:** el botón primario pasa a 19 px bold (blanco sobre naranja da 3,04:1 y solo vale como texto grande). La píldora del hero ya no lleva texto blanco pequeño sobre naranja.
+- **Lo que sí cambia en el `<head>` de las landings** (global por dominio, no es contenido):
+  - `theme-color` #164A38;
+  - favicon del manual (el `favicon.ico` anterior pesaba 70 bytes);
+  - el CSS global partido en dos archivos (fuentes v1 y resto), con el mismo contenido.
+  - Visualmente, 0 píxeles distintos en `/lp/*`.

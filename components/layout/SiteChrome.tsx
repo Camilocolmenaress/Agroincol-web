@@ -1,6 +1,10 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { preload } from 'react-dom';
+
+// Fuente del H1 del sitio v2. Si se cambia el archivo, cambiar el nombre: se sirve con caché inmutable.
+export const FUENTE_TITULAR = '/fonts/league-spartan-latin-800-normal.woff2';
 
 // Las landings de pauta (/lp/*, /ecogel/* y /tienda/*) no llevan navegación: cada enlace de salida
 // es un lead pagado que se va, y cada una trae su propio cromo (cabecera, WhatsApp,
@@ -21,8 +25,11 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
 // (sin parpadeo). El contenedor es display: contents: no agrega caja ni cambia el layout.
 export function MarcaRuta({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const v2 = !esLanding(pathname);
+  // Precarga solo donde se usa: las landings no pagan esa descarga.
+  if (v2) preload(FUENTE_TITULAR, { as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' });
   return (
-    <div data-marca={esLanding(pathname) ? 'v1' : 'v2'} id="marca-raiz">
+    <div data-marca={v2 ? 'v2' : 'v1'} id="marca-raiz">
       {children}
     </div>
   );

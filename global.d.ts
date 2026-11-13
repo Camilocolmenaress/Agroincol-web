@@ -1,3 +1,4 @@
+/// <reference types="react-dom/canary" />
 /* eslint-disable no-var */
 export {};
 

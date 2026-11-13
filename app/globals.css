@@ -58,6 +58,27 @@
   color: rgb(var(--brand-black));
 }
 
+/* League Spartan ExtraBold (manual v2): H1 y titulares gigantes. El respaldo Arial lleva las
+   métricas ajustadas que calculaba next/font, para que el cambio de fuente no mueva el layout. */
+@font-face {
+  font-family: 'League Spartan Titular';
+  src: url('/fonts/league-spartan-latin-800-normal.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'League Spartan Titular Respaldo';
+  src: local('Arial');
+  ascent-override: 68.13%;
+  descent-override: 21.41%;
+  line-gap-override: 0%;
+  size-adjust: 102.75%;
+}
+:root {
+  --font-display: 'League Spartan Titular', 'League Spartan Titular Respaldo', sans-serif;
+}
+
 /* El contenedor de marca no dibuja caja: solo aporta variables y herencia. */
 [data-marca] {
   display: contents;
@@ -72,6 +93,11 @@
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+  }
+  /* Sitio v2: el H1 va en League Spartan ExtraBold, la fuente precargada. */
+  [data-marca='v2'] h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
   }
 }
 

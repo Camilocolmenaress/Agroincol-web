@@ -13,8 +13,9 @@ interface ButtonProps {
 }
 
 const variantStyles = {
+  // Blanco sobre Naranja De Una da 3,04:1: solo vale como texto grande (≥ 19 px bold).
   primary:
-    'bg-orange-gradient text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 focus-visible:ring-brand-orange/50',
+    'bg-orange-gradient text-white text-[1.1875rem] !font-bold shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 focus-visible:ring-brand-orange/50',
   secondary:
     'bg-transparent text-brand-green border-2 border-brand-green hover:bg-brand-green hover:text-white hover:-translate-y-0.5 focus-visible:ring-brand-green/40',
   whatsapp:

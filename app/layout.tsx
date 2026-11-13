@@ -40,14 +40,9 @@ const body = localFont({
 });
 
 // ── Fuentes del manual de marca v2 (sitio). Las de arriba quedan para las landings de pauta. ──
-// League Spartan ExtraBold: H1 y titulares gigantes. Es la letra del LCP: la única que se precarga.
-const display = localFont({
-  src: [{ path: '../public/fonts/league-spartan-latin-800-normal.woff2', weight: '800', style: 'normal' }],
-  variable: '--font-display',
-  display: 'swap',
-  fallback: ['sans-serif'],
-  preload: true,
-});
+// League Spartan ExtraBold (H1 y titulares gigantes) no va por next/font: next/font la precargaría
+// también en las landings de pauta. Se declara en globals.css con URL estable y se precarga solo
+// en las rutas del sitio v2 (MarcaRuta, components/layout/SiteChrome.tsx).
 
 // Montserrat reemplaza a Nunito en el sitio. Pesos del manual: Regular, Medium y Bold (sin 600).
 // Mismos archivos que /tienda: el navegador los descarga una sola vez.
@@ -142,7 +137,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es-CO" className={`${heading.variable} ${body.variable} ${display.variable} ${texto.variable}`}>
+    <html lang="es-CO" className={`${heading.variable} ${body.variable} ${texto.variable}`}>
       <body>
         <MarcaRuta>
         <SchemaMarkup schema={globalSchema} />

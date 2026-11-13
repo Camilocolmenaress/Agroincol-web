@@ -36,6 +36,8 @@ async function capturar(etiqueta, base) {
     fs.mkdirSync(path.join(DIR, etiqueta, String(ancho)), { recursive: true });
     for (const ruta of RUTAS) {
       await page.goto(base + ruta, { waitUntil: 'networkidle' });
+      // Sin scroll suave: si no, la captura sale mientras vuelve arriba y los fijos quedan corridos.
+      await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
       // Imágenes diferidas: se fuerzan a cargar ya (la captura de página completa no las dispara).
       await page.evaluate(() => document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; }));
       // Recorre la página para disparar revelados por scroll.
