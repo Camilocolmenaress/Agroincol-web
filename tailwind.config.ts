@@ -9,24 +9,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Los colores son variables CSS (app/globals.css): las landings (/lp, /ecogel, /tienda)
+        // conservan los valores v1 exactos y el sitio toma los del manual v2 vía [data-marca="v2"]
+        // (components/layout/SiteChrome.tsx). Así las landings no cambian ni un píxel.
         brand: {
-          green: '#174634',
-          'green-dark': '#0D2B20',
-          'green-mid': '#1F5C44',
-          'green-light': '#2E7D5B',
-          orange: '#F46931',
-          'orange-dark': '#D4551F',
-          'orange-light': '#FB8A5C',
-          amber: '#F59E0B',
-          white: '#FFFFFF',
-          light: '#F5F5F0',
-          cream: '#FBFBF7',
-          // Menta del fondo del logo. Muestreado del PNG para que la franja de cabecera
-          // de las landings empalme sin que se note el borde de la imagen.
-          mint: '#E1EAE2',
-          gray: '#6B7280',
-          'gray-light': '#E5E5E5',
-          black: '#1A1A1A',
+          green: 'rgb(var(--brand-green) / <alpha-value>)',
+          'green-dark': 'rgb(var(--brand-green-dark) / <alpha-value>)',
+          'green-mid': 'rgb(var(--brand-green-mid) / <alpha-value>)',
+          'green-light': 'rgb(var(--brand-green-light) / <alpha-value>)',
+          orange: 'rgb(var(--brand-orange) / <alpha-value>)',
+          'orange-dark': 'rgb(var(--brand-orange-dark) / <alpha-value>)',
+          'orange-light': 'rgb(var(--brand-orange-light) / <alpha-value>)',
+          amber: 'rgb(var(--brand-amber) / <alpha-value>)',
+          white: 'rgb(var(--brand-white) / <alpha-value>)',
+          light: 'rgb(var(--brand-light) / <alpha-value>)',
+          cream: 'rgb(var(--brand-cream) / <alpha-value>)',
+          mint: 'rgb(var(--brand-mint) / <alpha-value>)',
+          gray: 'rgb(var(--brand-gray) / <alpha-value>)',
+          'gray-light': 'rgb(var(--brand-gray-light) / <alpha-value>)',
+          black: 'rgb(var(--brand-black) / <alpha-value>)',
+        },
+        // Paleta del manual de marca v2 con sus nombres, para los componentes nuevos del rediseño.
+        marca: {
+          verde: '#164A38', // Verde Con Sello
+          naranja: '#F5682E', // Naranja De Una · máximo 10 % de cada pantalla
+          menta: '#E1EBE3', // Menta En Paz
+          letra: '#143C2C', // Verde Letra Clara
+          blanco: '#FFFFFF',
         },
       },
       boxShadow: {
@@ -39,13 +48,15 @@ const config: Config = {
       },
       backgroundImage: {
         'hero-radial':
-          'radial-gradient(120% 120% at 80% 0%, #1F5C44 0%, #174634 45%, #0D2B20 100%)',
-        'green-gradient': 'linear-gradient(135deg, #1F5C44 0%, #0D2B20 100%)',
-        'orange-gradient': 'linear-gradient(135deg, #FB8A5C 0%, #F46931 55%, #D4551F 100%)',
-        'orange-soft': 'linear-gradient(135deg, rgba(244,105,49,0.14), rgba(244,105,49,0.05))',
+          'radial-gradient(120% 120% at 80% 0%, rgb(var(--brand-green-mid)) 0%, rgb(var(--brand-green)) 45%, rgb(var(--brand-green-dark)) 100%)',
+        'green-gradient': 'linear-gradient(135deg, rgb(var(--brand-green-mid)) 0%, rgb(var(--brand-green-dark)) 100%)',
+        'orange-gradient': 'linear-gradient(135deg, rgb(var(--brand-orange-light)) 0%, rgb(var(--brand-orange)) 55%, rgb(var(--brand-orange-dark)) 100%)',
+        'orange-soft': 'linear-gradient(135deg, rgb(var(--brand-orange) / 0.14), rgb(var(--brand-orange) / 0.05))',
       },
       fontFamily: {
         heading: ['var(--font-heading)', 'sans-serif'],
+        // League Spartan 800 del manual: solo H1 y titulares gigantes. Es la única fuente precargada del sitio v2.
+        display: ['var(--font-display)', 'var(--font-heading)', 'sans-serif'],
         body: ['var(--font-body)', 'sans-serif'],
         // Caveat Brush del manual de marca: lemas y humor, una vez por pieza. Solo la carga /tienda.
         lema: ['var(--font-lema)', 'cursive'],

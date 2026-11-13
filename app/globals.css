@@ -8,6 +8,61 @@
  * next/font/local se encarga del @font-face y el preload en layout.tsx.
  */
 
+/*
+ * COLORES COMO VARIABLES (canales RGB para que funcione la opacidad de Tailwind: bg-brand-green/90).
+ * :root = v1, la paleta con la que se construyeron las landings de pauta. No se toca: /lp, /ecogel y
+ * /tienda deben verse idénticas.
+ * [data-marca="v2"] = manual de marca v2 (oct-2026), para el resto del sitio. Lo pone
+ * components/layout/SiteChrome.tsx según la ruta, ya en el HTML del servidor.
+ */
+:root {
+  --brand-green: 23 70 52; /* #174634 */
+  --brand-green-dark: 13 43 32; /* #0D2B20 */
+  --brand-green-mid: 31 92 68; /* #1F5C44 */
+  --brand-green-light: 46 125 91; /* #2E7D5B */
+  --brand-orange: 244 105 49; /* #F46931 */
+  --brand-orange-dark: 212 85 31; /* #D4551F */
+  --brand-orange-light: 251 138 92; /* #FB8A5C */
+  --brand-amber: 245 158 11; /* #F59E0B */
+  --brand-white: 255 255 255;
+  --brand-light: 245 245 240; /* #F5F5F0 */
+  --brand-cream: 251 251 247; /* #FBFBF7 */
+  --brand-mint: 225 234 226; /* #E1EAE2 */
+  --brand-gray: 107 114 128; /* #6B7280 */
+  --brand-gray-light: 229 229 229; /* #E5E5E5 */
+  --brand-black: 26 26 26; /* #1A1A1A */
+}
+
+/* Manual v2: solo cinco colores. Los tonos que la v1 tenía de más (verdes medios, naranjas
+   claros/oscuros, ámbar) caen al color de la paleta más cercano; el gris de texto secundario y el
+   de bordes son Verde Letra Clara mezclado con blanco (75 % y 20 %), no grises neutros. */
+[data-marca='v2'] {
+  --brand-green: 22 74 56; /* Verde Con Sello #164A38 */
+  --brand-green-dark: 20 60 44; /* Verde Letra Clara #143C2C */
+  --brand-green-mid: 22 74 56;
+  --brand-green-light: 22 74 56;
+  --brand-orange: 245 104 46; /* Naranja De Una #F5682E */
+  --brand-orange-dark: 245 104 46;
+  --brand-orange-light: 245 104 46;
+  --brand-amber: 245 104 46;
+  --brand-white: 255 255 255;
+  --brand-light: 225 235 227; /* Menta En Paz #E1EBE3 */
+  --brand-cream: 255 255 255;
+  --brand-mint: 225 235 227;
+  --brand-gray: 79 109 97; /* #4F6D61: 5,6:1 sobre blanco, 4,6:1 sobre menta */
+  --brand-gray-light: 208 219 215; /* #D0DBD7 */
+  --brand-black: 20 60 44; /* Verde Letra Clara */
+  /* Montserrat reemplaza a Nunito en el sitio (las landings siguen con la suya). */
+  --font-body: var(--font-texto);
+  font-family: var(--font-texto), sans-serif;
+  color: rgb(var(--brand-black));
+}
+
+/* El contenedor de marca no dibuja caja: solo aporta variables y herencia. */
+[data-marca] {
+  display: contents;
+}
+
 @layer base {
   html {
     @apply scroll-smooth;
@@ -30,6 +85,17 @@
   /* Eyebrow — etiqueta corta sobre los títulos de sección */
   .eyebrow {
     @apply inline-flex items-center gap-2 text-brand-orange font-heading font-semibold uppercase tracking-[0.14em] text-body-sm;
+  }
+  /* Manual v2: nada de texto pequeño en naranja. El eyebrow va en verde con un punto de gel naranja. */
+  [data-marca='v2'] .eyebrow {
+    @apply text-marca-verde;
+  }
+  [data-marca='v2'] .eyebrow.eyebrow-claro {
+    @apply text-white;
+  }
+  [data-marca='v2'] .eyebrow::before {
+    content: '';
+    @apply h-1.5 w-1.5 shrink-0 rounded-full bg-marca-naranja;
   }
 }
 
@@ -108,6 +174,11 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes rise-in-sin-opacidad {
+  from { transform: translateY(24px); }
+  to { transform: translateY(0); }
+}
+
 @keyframes border-flow {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -129,6 +200,13 @@
   .anim-d3 { animation-delay: 0.28s; }
   .anim-d4 { animation-delay: 0.38s; }
   .anim-d5 { animation-delay: 0.48s; }
+
+  /* Sitio v2: el H1 y los botones (WhatsApp) se ven desde el primer pintado. La entrada solo
+     desplaza, nunca anima la opacidad: así el H1 cuenta como LCP desde el primer cuadro. */
+  [data-marca='v2'] .animate-rise {
+    opacity: 1;
+    animation-name: rise-in-sin-opacidad;
+  }
 
   /* Borde animado: solo se mueve cuando el motion está permitido */
   .border-animated::before {

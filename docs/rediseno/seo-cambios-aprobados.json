@@ -1,0 +1,9 @@
+{
+  "nota": "Cambios de SEO aprobados por Camilo. Fase 0 → respuestas del 13-nov-2026 (D3). El comparador los descuenta; cualquier otra diferencia hay que aprobarla antes.",
+  "cambios": [
+    { "fase": "1", "decision": "D3: +3 enlaces de segmento en la cabecera", "ruta": "*", "tipo": "enlace", "cambio": "+", "item": { "region": "cabecera", "href": "/servicios/fumigacion-residencial", "texto": "Hogar" } },
+    { "fase": "1", "decision": "D3: +3 enlaces de segmento en la cabecera", "ruta": "*", "tipo": "enlace", "cambio": "+", "item": { "region": "cabecera", "href": "/servicios/fumigacion-restaurantes", "texto": "Restaurantes" } },
+    { "fase": "1", "decision": "D3: +3 enlaces de segmento en la cabecera", "ruta": "*", "tipo": "enlace", "cambio": "+", "item": { "region": "cabecera", "href": "/servicios/fumigacion-industrial", "texto": "Empresas" } },
+    { "fase": "1", "decision": "D3: +1 botón circular de WhatsApp en la cabecera", "ruta": "*", "tipo": "enlace", "cambio": "+", "item": { "region": "cabecera", "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n", "texto": "Cotizar por WhatsApp" } }
+  ]
+}

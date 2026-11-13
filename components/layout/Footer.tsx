@@ -3,53 +3,67 @@ import Image from 'next/image';
 import { MapPin, Phone, MessageCircle, Clock } from 'lucide-react';
 import { BUSINESS, SERVICES } from '@/lib/constants';
 
+// Pie del sitio (manual v2): logo horizontal blanco a todo el ancho sobre Verde Letra Clara,
+// el símbolo en línea y las mismas columnas, textos y enlaces del pie anterior (mismo orden).
+// Manual: nada de texto pequeño en naranja sobre verde; el naranja queda en íconos y subrayados.
+const enlace =
+  'text-white/70 text-body-sm underline-offset-4 decoration-marca-naranja decoration-2 transition-colors hover:text-white hover:underline';
+const titulo = 'font-display text-white text-sm uppercase tracking-[0.14em] mb-4';
+const dato = 'text-white/70 text-body-sm';
+
 export default function Footer() {
   return (
-    <footer className="bg-brand-green-dark">
-      <div className="h-1 w-full bg-orange-gradient" aria-hidden />
-      <div className="container-custom py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Column 1 — Brand */}
+    <footer className="relative overflow-hidden bg-marca-letra">
+      <div className="container-custom pt-14 md:pt-20">
+        {/* Logo oficial gigante. Es el único logo del pie: mismo alt que antes. */}
+        <Link href="/" className="block">
+          <Image
+            src="/images/logos/v2/agroincol-logo-horizontal-blanca.svg"
+            alt="AGROINCOL"
+            width={1100}
+            height={405}
+            className="h-auto w-full max-w-[1100px]"
+          />
+        </Link>
+
+        <div className="mt-14 grid grid-cols-1 gap-10 border-t border-white/10 pt-12 md:mt-20 md:grid-cols-2 lg:grid-cols-4 lg:gap-12">
+          {/* Columna 1 — Marca: el símbolo en línea, como la mascota del pie */}
           <div>
-            <Link href="/" className="inline-block">
-              <Image
-                src="/images/logos/logo-horizontal.png"
-                alt="AGROINCOL"
-                width={160}
-                height={36}
-                className="h-9 w-auto"
-              />
-            </Link>
-            <p className="text-brand-gray text-body-sm mt-2">{BUSINESS.slogan}</p>
-            <p className="text-gray-400 text-body-sm mt-4">
+            <span
+              className="block h-14 w-14 bg-[url('/images/logos/v2/agroincol-logo-simbolo-blanco.svg')] bg-contain bg-no-repeat"
+              aria-hidden
+            />
+            <p className="mt-5 font-display text-lg uppercase tracking-[0.04em] text-white">{BUSINESS.slogan}</p>
+            <p className={`${dato} mt-3`}>
               Empresa de fumigación y control de plagas líder en el Área Metropolitana de Bucaramanga.
               Servicio certificado conforme al Decreto 1843 de 1991.
             </p>
           </div>
 
-          {/* Column 2 — Services */}
+          {/* Columna 2 — Servicios */}
           <div>
-            <h3 className="text-white font-heading font-semibold text-lg mb-4">Servicios</h3>
+            <h3 className={titulo}>Servicios</h3>
             <ul className="space-y-2">
               {SERVICES.map((service) =>
                 'hasPage' in service && service.hasPage && 'href' in service ? (
                   <li key={service.slug}>
-                    <Link href={service.href} className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                    <Link href={service.href} className={enlace}>
                       {service.title}
                     </Link>
                   </li>
                 ) : (
                   <li key={service.slug}>
-                    <span className="text-gray-400 text-body-sm">{service.title}</span>
+                    <span className={dato}>{service.title}</span>
                   </li>
                 )
               )}
               <li>
-                <Link href="/precios" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                <Link href="/precios" className={enlace}>
                   Cotización
                 </Link>
               </li>
-              {/* Alivio — zona externa (/alivio). <a> obligatorio para cruzar de zona. */}
+              {/* Alivio — zona externa (/alivio). <a> obligatorio para cruzar de zona.
+                  Enlace y estilo sin cambios hasta que se decida qué pasa con Alivio. */}
               <li>
                 <a
                   href="/alivio"
@@ -62,86 +76,86 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 — Legal, Tools & Zones */}
+          {/* Columna 3 — Normativa, herramientas y zonas */}
           <div>
-            <h3 className="text-white font-heading font-semibold text-lg mb-4">Normativa</h3>
+            <h3 className={titulo}>Normativa</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/certificaciones-y-normativa" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                <Link href="/certificaciones-y-normativa" className={enlace}>
                   Certificaciones y Normativa
                 </Link>
               </li>
               <li>
-                <span className="text-gray-400 text-body-sm">Decreto 1843 de 1991</span>
+                <span className={dato}>Decreto 1843 de 1991</span>
               </li>
               <li>
-                <span className="text-gray-400 text-body-sm">Resolución 2674 de 2013</span>
+                <span className={dato}>Resolución 2674 de 2013</span>
               </li>
               <li>
-                <Link href="/politica-de-privacidad" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                <Link href="/politica-de-privacidad" className={enlace}>
                   Política de Privacidad
                 </Link>
               </li>
               <li>
-                <Link href="/herramientas/calculadora-fumigacion" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                <Link href="/herramientas/calculadora-fumigacion" className={enlace}>
                   Calculadora de Fumigación
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                <Link href="/blog" className={enlace}>
                   Blog
                 </Link>
               </li>
             </ul>
 
-            <h3 className="text-white font-heading font-semibold text-lg mb-4 mt-6">Zonas de Servicio</h3>
+            <h3 className={`${titulo} mt-8`}>Zonas de Servicio</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/zonas/fumigacion-bucaramanga" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                <Link href="/zonas/fumigacion-bucaramanga" className={enlace}>
                   Fumigación en Bucaramanga
                 </Link>
               </li>
               <li>
-                <Link href="/zonas/fumigacion-floridablanca" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                <Link href="/zonas/fumigacion-floridablanca" className={enlace}>
                   Fumigación en Floridablanca
                 </Link>
               </li>
               <li>
-                <Link href="/zonas/fumigacion-piedecuesta" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                <Link href="/zonas/fumigacion-piedecuesta" className={enlace}>
                   Fumigación en Piedecuesta
                 </Link>
               </li>
               <li>
-                <Link href="/zonas/fumigacion-giron" className="text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
+                <Link href="/zonas/fumigacion-giron" className={enlace}>
                   Fumigación en Girón
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 4 — Contact */}
+          {/* Columna 4 — Contacto */}
           <div>
-            <h3 className="text-white font-heading font-semibold text-lg mb-4">Contacto</h3>
+            <h3 className={titulo}>Contacto</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <MapPin size={18} className="text-brand-orange mt-0.5 shrink-0" />
-                <span className="text-gray-400 text-body-sm">{BUSINESS.address.full}</span>
+                <MapPin size={18} className="mt-0.5 shrink-0 text-marca-naranja" aria-hidden />
+                <span className={dato}>{BUSINESS.address.full}</span>
               </li>
               <li>
-                <a href={`tel:${BUSINESS.phoneRaw}`} className="flex items-center gap-3 text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
-                  <Phone size={18} className="text-brand-orange shrink-0" />
+                <a href={`tel:${BUSINESS.phoneRaw}`} className={`flex items-center gap-3 ${enlace}`}>
+                  <Phone size={18} className="shrink-0 text-marca-naranja" aria-hidden />
                   {BUSINESS.phone}
                 </a>
               </li>
               <li>
-                <a href={BUSINESS.whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-gray-400 text-body-sm hover:text-brand-orange transition-colors">
-                  <MessageCircle size={18} className="text-brand-orange shrink-0" />
+                <a href={BUSINESS.whatsappLink} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-3 ${enlace}`}>
+                  <MessageCircle size={18} className="shrink-0 text-marca-naranja" aria-hidden />
                   WhatsApp
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Clock size={18} className="text-brand-orange mt-0.5 shrink-0" />
-                <div className="text-gray-400 text-body-sm">
+                <Clock size={18} className="mt-0.5 shrink-0 text-marca-naranja" aria-hidden />
+                <div className={dato}>
                   <p>L-V: {BUSINESS.hours.weekdays}</p>
                   <p>Sáb: {BUSINESS.hours.saturday}</p>
                   <p>Dom: {BUSINESS.hours.sunday}</p>
@@ -152,10 +166,10 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-gray-700">
+      {/* Barra inferior */}
+      <div className="mt-14 border-t border-white/10">
         <div className="container-custom py-6">
-          <p className="text-gray-400 text-body-sm text-center">
+          <p className="text-center text-body-sm text-white/55">
             © {new Date().getFullYear()} AGROINCOL. Todos los derechos reservados. Fumigación y control de plagas en Bucaramanga, Santander.
           </p>
         </div>

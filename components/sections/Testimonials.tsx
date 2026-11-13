@@ -17,7 +17,7 @@ export default function Testimonials() {
       <div className="glow-pulse pointer-events-none absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-brand-orange/25 blur-[120px]" aria-hidden />
       <div className="container-custom relative">
         <div className="reveal text-center mb-10">
-          <span className="eyebrow">Reseñas reales</span>
+          <span className="eyebrow eyebrow-claro">Reseñas reales</span>
           <h2 className="font-heading text-h2-mobile md:text-h2 text-white mt-3">
             Lo Que Dicen Nuestros Clientes
           </h2>

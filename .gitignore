@@ -37,3 +37,10 @@ next-env.d.ts
 # que documenta qué variables hay que configurar en Vercel.
 .env*
 !.env.example
+
+# Skills de Blender instaladas por proyecto (symlinks al Escritorio): no van al repo
+/.claude/skills/
+
+# Capturas de comparación del rediseño (pesadas, solo locales) y reportes HTML de Lighthouse
+/docs/rediseno/capturas/
+/docs/rediseno/lighthouse/**/*.html

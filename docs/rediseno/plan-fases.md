@@ -1,0 +1,178 @@
+# Rediseño "recorrido": plan por fases
+
+Rama: `rediseno-recorrido` · Fecha: 13-nov-2026 · Estado: **Fase 0 aprobada (13-nov). Fase 1 y piloto 3D en curso.**
+
+## Fase 0: lo que ya quedó
+
+| Entregable | Dónde | Estado |
+|---|---|---|
+| Hojas de referencia de Agrumea (7) | `docs/rediseno/referencia-agrumea/` | Copiadas. La grabación de 173 MB no va al repo. |
+| Script de línea base | `scripts/seo-baseline.mjs` | Hecho. Se corre contra `next build && next start` y lee el HTML del servidor con `fetch`, sin navegador. Por eso también prueba que el contenido no dependa de JS. |
+| Línea base | `docs/rediseno/seo-baseline.json` | 39 URLs: las 29 del sitemap, `/resena` y las 9 landings de pauta. Estas últimas están como guarda: cualquier diferencia ahí es una regresión, y `/ecogel*` debe seguir respondiendo 307. Autocomparación: **0 diferencias**. Prueba de sensibilidad: al alterar un H2, un alt, un JSON-LD y un conteo de palabras, detectó los 4 y salió con error. |
+| Lighthouse móvil | `docs/rediseno/lighthouse/fase-0-{local,prod}/` | Mediana de 3 corridas. Ver la tabla abajo. |
+| Dependencia | `htmlparser2` 8.0.2 en devDependencies | Ya estaba instalada como dependencia transitiva. Solo se declaró. |
+
+Comparar en cada fase:
+1. `npm run build && npx next start -p 3200`.
+2. En otra terminal, `node scripts/seo-baseline.mjs --compare`. Con `--solo-main` se ignoran la cabecera y el pie.
+
+Los cambios aprobados están en `docs/rediseno/seo-cambios-aprobados.json`. Cualquier otra diferencia cuenta.
+
+**Corrección del 13-nov.** En el puerto 3100 ya corría un `next dev` que no es de esta sesión, así que la primera medición fue contra el servidor de desarrollo.
+
+- La línea base se regeneró desde un build de producción de `main`, en un worktree en el puerto 3201. Salió idéntica a la de desarrollo: 0 diferencias en las 39 URLs.
+- El Lighthouse local de la Fase 0 se repitió en producción. Las cifras locales de la primera versión de este documento no valen.
+- Las cifras de producción (agroincol.com) sí son válidas.
+
+### Lighthouse antes (celular)
+
+Mediana de 3 corridas. El preset de Lighthouse simula 4G lento.
+
+| URL | Rendimiento local | Rendimiento prod | LCP local | **LCP prod** | TBT prod | CLS |
+|---|---|---|---|---|---|---|
+| `/` | 80 | 63 | 5,2 s | **9,9 s** | 352 ms | 0 |
+| `/servicios/fumigacion-residencial` | 88 | 77 | 3,7 s | **4,6 s** | 263 ms | 0 |
+| `/blog/como-eliminar-cucarachas-bucaramanga` | 99 | 73 | 2,1 s | **5,5 s** | 235 ms | 0 |
+| `/zonas/fumigacion-bucaramanga` | 80 | 63 | 5,1 s | **10,6 s** | 320 ms | 0 |
+
+**Hoy ninguna página cumple el presupuesto de LCP < 2,5 s.** La causa no son imágenes pesadas:
+
+- **El elemento LCP en celular es el logo PNG de la cabecera, no el H1.**
+  - El H1 arranca en `opacity: 0` (`.animate-rise`) y por eso Lighthouse no lo cuenta como candidato.
+  - El logo tarda en pintarse. El 74 % del LCP (7,4 s) es *render delay*: el hilo principal está ocupado.
+- **GTM descarga 502 KB y bloquea 248 ms.** Es lo más pesado de la página. En local no carga, y por eso local sale mucho mejor que producción.
+
+Para el rediseño:
+
+- Un H1 visible desde el primer pintado, más el logo SVG en línea, deberían bajar el LCP por sí solos.
+- **GTM está fuera de alcance**, pero es la palanca más grande que queda. Revisar sus etiquetas es una tarea aparte que le propongo.
+
+## Hallazgos del código que cambian el plan
+
+1. **Las landings de pauta comparten los tokens y las fuentes del sitio.**
+   - Hay unos 840 usos de `brand-*` en `/lp`, `/ecogel`, `/tienda` y sus componentes.
+   - `/lp` y `/ecogel` toman Nunito y League Spartan del layout raíz.
+   - Si cambio `brand.*` o `--font-body`, se rediseñan sin querer las landings, que están fuera de alcance.
+   - El diff de SEO no lo detectaría, porque el cambio es visual.
+2. **El H1 actual ya anima su opacidad** (`.animate-rise` arranca en `opacity: 0`). Eso viola la regla 3.3 hoy mismo. El rediseño lo corrige.
+3. **El home ya tiene el H2 "¿Qué necesita proteger?".** El titular gigante de la sección 3 puede ser ese mismo H2 en mayúsculas por CSS, sin texto nuevo.
+4. **Hay H3 duplicados en el HTML.** `AudienceSelector` y `ServicesGrid` pintan dos veces las mismas tarjetas, una para celular y otra para escritorio: son 12 H3 repetidos en el home.
+5. **El texto para la tabla Frecuencia/Garantía casi no existe.**
+   - "Garantía" aparece solo en `/servicios/desratizacion` y en el paso "Certificado y garantía" del home.
+   - "Frecuencia" aparece en el cuerpo de residencial, comercial y restaurantes. En otras dos páginas solo está dentro de una FAQ ("¿Cada cuánto…?").
+   - En 8 de las 9 páginas, la columna "Garantía" sería texto nuevo y además una promesa comercial.
+6. **Los H1 de servicio son largos.** Por ejemplo, "Fumigación Industrial y Control de Plagas para Empresas en Bucaramanga" tiene 10 palabras.
+7. **El JSON-LD global apunta a `/og-image.jpg`, que no existe** (404). No toco el JSON-LD. Se arregla subiendo un archivo a esa ruta.
+8. **Íconos rojos de riesgo:** están en `/servicios/fumigacion-restaurantes`, líneas 134 y 135 (`bg-red-50` / `text-red-500`).
+9. **Lenguaje alarmista:** "riesgo", "infestación" y "exterminio" aparecen en el texto indexable de unas 20 páginas. El texto está congelado, así que el rediseño no lo puede quitar.
+
+## Decisiones de arquitectura (propuestas)
+
+- **A1. Separar el sitio de las landings sin mover archivos** (ver D0):
+  - Se extiende el patrón de `SiteChrome`, que ya decide por ruta en el servidor con `usePathname`.
+  - Un contenedor envuelve el `<body>` con `data-marca="v2"` en el sitio y `"v1"` en `/lp`, `/ecogel` y `/tienda`.
+  - Las fuentes y los colores nuevos cuelgan de `[data-marca=v2]`.
+  - Los portales (menú y cursor) se montan dentro de ese contenedor, no en `body`.
+  - Con esto `<main>` sigue donde está, así que la línea base sigue etiquetando bien cabecera, main y pie.
+- **A2. Tokens nuevos en un espacio aparte:** `marca.verde` #164A38, `marca.naranja` #F5682E, `marca.menta` #E1EBE3, `marca.letra` #143C2C y `marca.blanco`. `brand.*` se queda solo para las landings.
+- **A3. Fuentes desde `Web_WOFF2` del manual:**
+  - League Spartan 800 para el H1 (la única que se precarga) y 700 para los demás títulos.
+  - Montserrat 400, 500 y 700. El manual dice "Regular, Medium y Bold": el 600 del prompt se cae y gana el manual.
+  - Caveat Brush solo en la ruta que la use, sin precarga.
+- **A4. Ningún texto nuevo se convierte en encabezado.** El lema, las etiquetas laterales y "Baje para descubrir" van como `<p>` o `<span>`. Los adornos llevan `alt=""`.
+- **A5. Movimiento:**
+  - GSAP, ScrollTrigger y Lenis se cargan con `import()` dinámico después del primer pintado, solo en el home y en servicios. Pesan unos 45 KB gzip.
+  - Lenis solo en escritorio con `pointer: fine`. En táctil va el scroll nativo, para no arriesgar el INP.
+  - `motion` se queda porque lo usa `/lp/restaurantes`.
+  - Todo se apaga con `prefers-reduced-motion`.
+- **A6. Peso del 3D** (no se puede cumplir el LCP con 9 sprites de 24 cuadros):
+  - Hero: imágenes fijas AVIF de máximo 40 KB cada una, cargadas después del LCP. El LCP es el H1 de texto, no una imagen.
+  - Sprites de giro: solo en escritorio y solo al pasar el cursor o al enfocar. En celular no hay sprites.
+  - Tope para el home en celular: hasta el primer pantallazo, 150 KB de imágenes. En total, 600 KB de 3D.
+- **A7. FAQ con `<details>`/`<summary>`.** El contenido ya está en el DOM hoy; se mantiene igual.
+
+## Respuestas de Camilo (13-nov) y lo que elegí donde me dejó decidir
+
+Aprobado: tokens aparte, D1 (aro gráfico con arco que gira y logo plano sobre objetos reales), D2, D3, D4 (sin overlay, ≤1,2 s detrás del contenido), D5, D6 (og:image queda pendiente), D8 (garantía solo para planes, con su texto exacto) y D13 (revisión de GTM aparte; GTM en el preview).
+
+Lo que elegí en las decisiones que me dejó a mí:
+
+- **D7, galería:** arranca con las fotos reales que ya están en el repo (equipo, inspección, técnicos). Los marcos "Foto real pendiente" solo se ven en el preview. A producción sale con al menos 4 fotos reales.
+- **D9, titular de servicio:** el mismo H1 en mayúsculas por CSS, en League Spartan 800 gigante, con el objeto cruzando entre las líneas. El DOM no cambia.
+- **D10, `/og-image.jpg`:** subido. Es la imagen para compartir del manual, en JPG de 15 KB. No toca el JSON-LD.
+- **D11, lenguaje alarmista:** fuera del rediseño. En lo visual no quedan íconos rojos de riesgo.
+- **D12, Alivio:** enlace, texto y color (#1FB3A7) sin cambios. En la cabecera vive dentro del menú, con las mismas clases de siempre.
+
+GTM en el preview: carga solo con `?gtm=1`, que queda guardado en la sesión. Lighthouse mide igual que en producción, pero las visitas de revisión no ensucian GA4 ni las conversiones de Ads, que son las que usa la puja.
+
+## Decisiones de la Fase 0 (registro)
+
+| # | Choque | Mi recomendación |
+|---|---|---|
+| D0 | **Cómo aislar las landings.** Hay dos caminos: (a) mover unas 35 carpetas a un grupo de rutas `app/(sitio)/` (las URLs no cambian, pero `<main>` sale del layout raíz, las landings necesitan su propio `<main>`, el 404 pierde el cromo y los portales escapan); (b) un contenedor por ruta (A1). | (b): menos archivos tocados y el mismo resultado. Se verifica con la línea base y con capturas de las landings. |
+| D13 | **Presupuesto de LCP.** Producción está hoy en 9,9 s, con GTM (502 KB) fuera de alcance. Los previews y localhost no cargan GTM, así que un "LCP < 2,5 s" medido en el preview no garantiza ese número en producción. | La meta de cada fase se mide en el preview (Lighthouse móvil, 5 corridas). La meta de producción se verifica después del merge, con Speed Insights y CrUX. ¿Abrimos una revisión de GTM como tarea aparte? |
+| D1 | **Logo.** El manual prohíbe rotar el logo, separar o mover sus elementos y agregarle sombras o efectos. El prompt pide un aro gigante con el arco naranja "en su posición", el arco que barre y subraya por su cuenta, y el símbolo extruido en 3D girando 360°. | El aro gigante es un círculo verde liso, un elemento gráfico de la familia del patrón Arcos, sin hoja y sin el arco del logo. El lema gira sobre él (eso no es el logo). Elimino el objeto 3D #1 y el logo va plano desde su SVG. Las gotas de gel (#9) sí van en 3D: son del patrón, no del logo. El "arco que barre" se vuelve una forma naranja genérica, no el arco del símbolo. |
+| D2 | **Tipografías.** El manual dice "máximo dos por pieza". Una página con League Spartan, Montserrat y Caveat Brush lleva tres. | Caveat Brush solo en la página donde vayan Los Colados (ver D5) y en ninguna otra. Si usted considera cada sección como una "pieza", puede quedar en el home. Decida usted. |
+| D3 | **"Cero diferencias" no se puede cumplir tal como está escrito.** Diferencias que ya sé que van a aparecer: (a) cabecera: +3 enlaces de segmento (Hogar, Restaurantes, Empresas) y +1 botón circular de WhatsApp; (b) sale la foto del hero y con ella su alt; (c) el lema, las etiquetas, "Baje para descubrir", "Arrastre" y el remate suben el conteo de palabras unas 25-40 por página; (d) al quitar duplicados salen 12 H3 repetidos del home. | Apruebe esta lista de antemano. Me comprometo a: los mismos 11 enlaces actuales de la cabecera (Inicio…Contacto, Alivio y Cotizar Ahora) y los mismos 22 del pie, dentro del HTML; el logo como `<img src="….svg">` con el mismo alt de hoy; y ninguna otra diferencia. ¿A qué rutas van los segmentos? Propongo residencial, restaurantes y comercial. |
+| D4 | **La entrada animada choca con "el H1 y WhatsApp se ven desde el primer pintado".** Cualquier overlay los tapa durante ese segundo. | Sin overlay. Las hojas y los puntos de gel caen por los bordes del hero, sin tapar el H1 ni los botones. |
+| D5 | **Los Colados.** El manual los permite "solo en hogar y redes", y el home habla también a restaurantes e industria. | Muevo el bloque a `/servicios/fumigacion-residencial` y dejo el home sin Colados. Alternativa: en el home, pero solo dentro de la sección "Hogar". |
+| D6 | **El código del favicon trae `og:image`**, y la metadata está congelada. | Adopto el favicon (SVG e ICO), el apple-touch y `theme-color` #164A38, pero no el `og:image`. Necesito que apruebe ese cambio en `metadata.icons`. |
+| D7 | **La galería sin fotos.** Marcos que digan "Foto real pendiente" en producción se ven a obra negra. | La galería solo se publica cuando haya al menos 4 fotos reales. En los previews sí se ve con los marcos. |
+| D8 | **Tabla Frecuencia/Garantía** (hallazgo 5). La garantía es una promesa comercial: no la invento. | Solo muestro columnas con el texto que ya existe. Para tenerlas en las 9 páginas necesito su política real de garantía por segmento. El manual trae las frases: hogar "Si la plaga vuelve, nosotros también", comercio "Si algo no quedó bien, volvemos sin costo", industria "Garantía según contrato". ¿Las puede cumplir tal cual? |
+| D9 | **Titular gigante de servicio.** | Uso el mismo H1 en mayúsculas por CSS (el DOM no cambia), con tamaño adaptado a su largo. No agrego un nombre corto aparte. |
+| D10 | **`/og-image.jpg` da 404** en el JSON-LD. | Subo `public/og-image.jpg` con la imagen oficial del manual. No toca el JSON-LD. |
+| D11 | **Lenguaje alarmista en el texto indexable.** | Queda fuera del rediseño. Lo propongo como una pasada de texto aparte, con su aprobación. |
+| D12 | **Alivio.** | Sin cambios de contenido ni de enlace. Solo hereda los tokens nuevos del contenedor, igual que el resto. ¿O lo dejo pixel a pixel como está hoy? |
+
+## Fases y tareas
+
+### Fase 1: base de marca (no cambia nada visible del recorrido)
+0. **Capturas "antes"** con Playwright de las landings y de las páginas principales, en 390 px y 1440 px, tomadas en `main` antes de tocar nada.
+1. **Contenedor por ruta** (A1 / D0).
+   - Acepto si: build OK, SEO 0 diferencias y capturas de `/lp/*` y `/tienda/*` idénticas al pixel con las de antes.
+2. **Tokens `marca.*` y fuentes del manual** (A2, A3). Acepto si: no queda Nunito en `(sitio)` y solo se precarga LS 800.
+3. **Cabecera nueva:**
+   - segmentos, logo SVG oficial centrado, "Menú" y botón circular de WhatsApp;
+   - menú con los mismos enlaces dentro del HTML.
+   - Acepto si: SEO 0 diferencias en la cabecera y el botón de WhatsApp se ve en el primer pantallazo, en celular y en escritorio.
+4. **Pie nuevo:** logo horizontal blanco a todo el ancho y los mismos 22 enlaces. Acepto si: SEO 0 diferencias en el pie.
+5. **Favicon y theme-color** (D6). **`og-image.jpg`** (D10).
+6. **Revisar los rastreadores en el preview:** que Pixel y PostHog no ensucien datos con los hostnames de vercel.app.
+- **Punto de control:** preview en Vercel, diff de SEO, Lighthouse y capturas de las landings.
+
+### Fase 2: 3D en Blender (puede correr en paralelo con la fase 1)
+1. Instalar las skills con `--project .` y dejar `.claude/skills` en `.gitignore`.
+2. Escena, rig de luz y cámara únicos (`blender-scene-setup`, `blender-lighting-lookdev`).
+3. Un objeto piloto: la casa. Modelado, materiales y QA. **Se lo muestro antes de seguir con los demás.**
+4. Los objetos restantes, según lo que decida en D1. QA obligatorio en cada uno.
+5. Render por lotes: AVIF/WebP 1x/2x de máximo 120 KB y sprites solo para escritorio. Los `.blend` van en `~/Desktop/agroincol-3d/`.
+- **Punto de control:** hoja de contacto con los renders para su aprobación.
+
+### Fase 3: home
+1. Hero estático: aro, H1, botones y reseñas. Sin JS. Acepto si: LCP < 2,5 s y CLS < 0,1 en Lighthouse móvil.
+2. Capa de movimiento con carga diferida: lema girando, desfile de objetos y cursor. Acepto si: con JS apagado la página se lee completa, y con reduce-motion no hay animación.
+3. Foco de servicio, segmentos y método (tabla con `<details>` donde aplique).
+4. Galería "Arrastre" (D7), "Otros servicios" con el patrón gel, y luego reseñas, FAQ, zonas, banda de CTA y formulario de contacto, todos conservados.
+- **Punto de control:** preview, diff (solo los cambios aprobados en D3), Lighthouse y revisión en celular.
+
+### Fase 4: plantilla de servicio
+1. Un componente de plantilla y su piloto en `/servicios/desratizacion`.
+2. Las otras 8 rutas, más los íconos de restaurantes pasados a verde y menta.
+- **Punto de control:** igual al de la fase 3.
+
+### Fase 5: resto del sitio
+Precios, blog, artículos, certificaciones, calculadora, zonas, reseña y privacidad reciben los tokens, el cromo, el cursor y los separadores. Al final: comparación SEO, Lighthouse y revisión en celular.
+
+## Riesgos
+
+| Riesgo | Impacto | Mitigación |
+|---|---|---|
+| Las landings cambian sin querer | Alto: es pauta pagada | A1, más capturas antes y después en cada fase |
+| El LCP empeora por el 3D o las fuentes | Alto: SEO | El H1 es de texto y es el LCP; tope de A6; Lighthouse en cada fase |
+| Lenis o el cursor dañan el INP | Medio | Solo escritorio y en carga diferida |
+| Los números locales salen optimistas, porque GTM no carga en localhost | Medio | Se compara local con local y producción con producción |
+| Ruido de Lighthouse (producción osciló entre 59 y 85) | Medio | 5 corridas en producción y en el preview |
+
+Notas:
+- El SEO local da 92 frente a 100 en producción solo por la auditoría `robots-txt` en localhost. No es una regresión.
+- Los reportes HTML pesan unos 7,7 MB por fase. Propongo versionar solo `resumen.json` e ignorar los `.html` en git.
