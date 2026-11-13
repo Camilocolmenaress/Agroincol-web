@@ -1,9 +1,14 @@
 import type { Metadata } from 'next';
-import { Shield, Award, Clock, MapPin, Phone } from 'lucide-react';
-import Hero from '@/components/sections/Hero';
-import AudienceSelector from '@/components/sections/AudienceSelector';
-import HomeProcess from '@/components/sections/HomeProcess';
-import ServicesGrid from '@/components/sections/ServicesGrid';
+import { Phone } from 'lucide-react';
+import HeroRecorrido from '@/components/recorrido/HeroRecorrido';
+import Cinta from '@/components/recorrido/Cinta';
+import Segmentos from '@/components/recorrido/Segmentos';
+import Metodo from '@/components/recorrido/Metodo';
+import Galeria from '@/components/recorrido/Galeria';
+import Lema from '@/components/recorrido/Lema';
+import OtrosServicios from '@/components/recorrido/OtrosServicios';
+import Movimiento from '@/components/recorrido/Movimiento';
+import Cursor from '@/components/recorrido/Cursor';
 import AlivioTeaser from '@/components/sections/AlivioTeaser';
 import WhyUs from '@/components/sections/WhyUs';
 import ServiceAreas from '@/components/sections/ServiceAreas';
@@ -43,96 +48,74 @@ export const metadata: Metadata = {
   },
 };
 
-const trustItems = [
-  { icon: Shield, text: '40+ Años de Experiencia' },
-  { icon: Award, text: 'Certificación Vigente' },
-  { icon: Clock, text: 'Respuesta < 5 Minutos' },
-  { icon: MapPin, text: 'Área Metropolitana de Bucaramanga' },
-];
-
+// Home: el recorrido (rediseño v2, docs/rediseno/plan-fases.md). Todas las secciones de antes siguen
+// con su texto; cambia la forma. Todo sale del servidor: sin JS se lee completo y en orden, y el
+// movimiento (Movimiento, Cursor) es una capa que llega después del primer pintado.
 export default function HomePage() {
   return (
     <>
-      {/* 1. Hero */}
-      <Hero
-        title="Fumigación y Control de Plagas en Bucaramanga"
-        subtitle="Más de 40 años protegiendo hogares, restaurantes e industrias en Bucaramanga, Floridablanca, Piedecuesta y Girón."
-        badgeText="Respondemos por WhatsApp en menos de 5 minutos"
-        primaryCta={{ text: 'Cotizar por WhatsApp', href: BUSINESS.whatsappLink }}
-        secondaryCta={{ text: 'Llamar ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        imageSrc="/images/hero/hero-home.jpg"
-        imageAlt="Técnico de AGROINCOL realizando fumigación profesional en Bucaramanga"
-      />
+      {/* 1. Hero: el aro, el H1 y WhatsApp desde el primer pintado; los objetos 3D desfilan */}
+      <HeroRecorrido />
 
-      {/* 2. Trust Bar */}
-      <section className="bg-brand-light py-8 md:py-10">
-        <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-            {trustItems.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-soft"
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-soft">
-                    <Icon size={20} className="text-brand-orange" />
-                  </span>
-                  <span className="text-brand-green font-semibold text-body-sm leading-tight">{item.text}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* 2. Confianza, como cinta continua sobre el verde */}
+      <Cinta />
 
-      {/* 3. Selector de público — cada visitante encuentra su caso */}
-      <AudienceSelector />
+      {/* 3. ¿Qué necesita proteger? — foco de servicio y segmentos */}
+      <Segmentos />
 
-      {/* 4. Cómo trabajamos — baja la ansiedad antes de pedir contacto */}
-      <HomeProcess />
+      {/* 4. Cómo trabajamos */}
+      <Metodo />
 
-      {/* 5. Services */}
-      <ServicesGrid />
+      {/* 5. Galería "Arrastre": marcos en blanco hasta tener fotos reales */}
+      <Galeria />
 
-      {/* 5.5 Alivio — línea hermana (zona /alivio, Multi-Zones) */}
+      {/* 6. El lema (Caveat Brush: única vez en la página) */}
+      <Lema />
+
+      {/* 7. Servicios */}
+      <OtrosServicios />
+
+      {/* 7.5 Alivio — línea hermana (zona /alivio, Multi-Zones). Sin cambios hasta que se decida. */}
       <AlivioTeaser />
 
-      {/* 6. Why Us */}
+      {/* 8. Por qué AGROINCOL */}
       <WhyUs />
 
-      {/* 7. Service Areas */}
+      {/* 9. Zonas */}
       <ServiceAreas />
 
-      {/* 8. Prueba social — reseñas reales de Google */}
+      {/* 10. Prueba social — reseñas reales de Google */}
       <Testimonials />
 
-      {/* 10. FAQ — resuelve objeciones que frenan la conversión */}
+      {/* 11. FAQ — resuelve objeciones que frenan la conversión */}
       <HomeFAQ />
 
-      {/* 6.5 Gradient CTA Band — impulsa el contacto inmediato por WhatsApp */}
-      <section className="bg-brand-light pt-section-mobile md:pt-section">
+      {/* 12. Banda de contacto inmediato por WhatsApp */}
+      <section className="bg-white pt-section-mobile md:pt-section">
         <div className="container-custom">
-          <div className="reveal relative overflow-hidden rounded-3xl bg-orange-gradient px-6 py-10 md:px-12 md:py-14 shadow-premium">
-            <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-30" aria-hidden />
-            <div className="relative flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left">
-              <div>
-                <h2 className="font-heading text-h2-mobile md:text-h2 text-white text-balance">
+          <div className="relative overflow-hidden rounded-[32px] bg-marca-verde px-6 py-12 md:px-14 md:py-16">
+            <div
+              className="pointer-events-none absolute inset-0 bg-[url('/images/patrones/patron-gel-oscuro.webp')] bg-[length:420px] opacity-25"
+              aria-hidden
+            />
+            <div className="relative flex flex-col items-center gap-8 text-center lg:flex-row lg:justify-between lg:text-left">
+              <div className="max-w-2xl">
+                <h2 className="font-display text-[clamp(1.9rem,3.6vw,3rem)] uppercase leading-[0.95] tracking-[-0.02em] text-white text-balance">
                   ¿Tiene una plaga ahora? Respondemos por WhatsApp en menos de 5 minutos
                 </h2>
-                <p className="text-white/85 text-body-lg mt-3 text-pretty">
+                <p className="mt-4 text-body-lg text-white/80 text-pretty">
                   Atención en Bucaramanga, Floridablanca, Piedecuesta y Girón. Cotización gratis y sin compromiso.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+              <div className="flex shrink-0 flex-col gap-3 sm:flex-row" data-cursor="WhatsApp">
                 <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
                   Escribir por WhatsApp
                 </Button>
                 <a
                   href={`tel:${BUSINESS.phoneRaw}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/15 px-6 py-3 font-heading font-semibold text-white ring-1 ring-white/40 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white hover:text-brand-orange"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-heading font-semibold text-white ring-2 ring-white/40 transition-colors hover:bg-white hover:text-marca-verde"
                 >
-                  <Phone size={18} /> Llamar ahora
+                  <Phone size={18} aria-hidden /> Llamar ahora
                 </a>
               </div>
             </div>
@@ -140,16 +123,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. CTA + Contact Form */}
-      <section className="section-padding bg-brand-light">
+      {/* 13. Formulario de contacto (sin cambios de lógica) */}
+      <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
-            {/* Left column — 40% */}
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-5 lg:gap-12">
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4vw,3.2rem)] uppercase leading-[0.95] tracking-[-0.02em] text-marca-verde">
                 Proteja su Hogar o Negocio Hoy
               </h2>
-              <p className="text-brand-gray text-body mt-4">
+              <p className="mt-4 text-body text-brand-gray">
                 Solicite una cotización sin compromiso. Le respondemos por WhatsApp en menos de
                 5 minutos para programar su servicio de fumigación.
               </p>
@@ -160,28 +142,30 @@ export default function HomePage() {
                   'Certificado válido ante INVIMA',
                   '40+ años de experiencia',
                 ].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-brand-black text-body">
-                    <span className="text-brand-orange">✓</span> {item}
+                  <li key={item} className="flex items-center gap-3 text-body text-marca-letra">
+                    <span className="punto-gel" aria-hidden /> {item}
                   </li>
                 ))}
               </ul>
-              <div className="mt-8">
+              <div className="mt-8" data-cursor="WhatsApp">
                 <Button variant="whatsapp" href={BUSINESS.whatsappLink} target="_blank">
                   O escríbanos por WhatsApp
                 </Button>
               </div>
             </div>
 
-            {/* Right column — 60% */}
             <div className="lg:col-span-3">
               <ContactForm formId="home-contact" compact />
             </div>
           </div>
 
-          {/* Google Maps — deferred 5s to protect INP */}
+          {/* Google Maps — diferido 5 s para proteger el INP */}
           <LazyMap />
         </div>
       </section>
+
+      <Movimiento />
+      <Cursor />
     </>
   );
 }

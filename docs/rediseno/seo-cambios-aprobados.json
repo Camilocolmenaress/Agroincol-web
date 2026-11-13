@@ -1,9 +1,370 @@
 {
   "nota": "Cambios de SEO aprobados por Camilo. Fase 0 → respuestas del 13-nov-2026 (D3). El comparador los descuenta; cualquier otra diferencia hay que aprobarla antes.",
   "cambios": [
-    { "fase": "1", "decision": "D3: +3 enlaces de segmento en la cabecera", "ruta": "*", "tipo": "enlace", "cambio": "+", "item": { "region": "cabecera", "href": "/servicios/fumigacion-residencial", "texto": "Hogar" } },
-    { "fase": "1", "decision": "D3: +3 enlaces de segmento en la cabecera", "ruta": "*", "tipo": "enlace", "cambio": "+", "item": { "region": "cabecera", "href": "/servicios/fumigacion-restaurantes", "texto": "Restaurantes" } },
-    { "fase": "1", "decision": "D3: +3 enlaces de segmento en la cabecera", "ruta": "*", "tipo": "enlace", "cambio": "+", "item": { "region": "cabecera", "href": "/servicios/fumigacion-industrial", "texto": "Empresas" } },
-    { "fase": "1", "decision": "D3: +1 botón circular de WhatsApp en la cabecera", "ruta": "*", "tipo": "enlace", "cambio": "+", "item": { "region": "cabecera", "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n", "texto": "Cotizar por WhatsApp" } }
+    {
+      "fase": "1",
+      "decision": "D3: +3 enlaces de segmento en la cabecera",
+      "ruta": "*",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "cabecera",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Hogar"
+      }
+    },
+    {
+      "fase": "1",
+      "decision": "D3: +3 enlaces de segmento en la cabecera",
+      "ruta": "*",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "cabecera",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Restaurantes"
+      }
+    },
+    {
+      "fase": "1",
+      "decision": "D3: +3 enlaces de segmento en la cabecera",
+      "ruta": "*",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "cabecera",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Empresas"
+      }
+    },
+    {
+      "fase": "1",
+      "decision": "D3: +1 botón circular de WhatsApp en la cabecera",
+      "ruta": "*",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "cabecera",
+        "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+        "texto": "Cotizar por WhatsApp"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Mi hogar"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Mi restaurante"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Mi empresa o industria"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Fumigación Residencial"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Control de Plagas Comercial"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Fumigación para Restaurantes"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Desratización"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Control de Insectos Voladores"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Fumigación Industrial"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Control de Comején y Termitas"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Retiro de Abejas y Avispas"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: −12 H3 duplicados (versión celular + escritorio de las mismas tarjetas)",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Control de Chinches de Cama"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Mi hogar Cucarachas, roedores o zancudos. Productos seguros para niños y mascotas. Proteger mi casa →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Más solicitado Mi restaurante Cumpla el INVIMA y evite multas. Certificado válido el mismo día. Cumplir con INVIMA →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Mi empresa o industria Bodegas y plantas. Documentación lista para auditorías e ISO. Proteger mi operación →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial Proteja su hogar y familia de plagas con nuestro servicio certificado para casas y apartamentos. Más información →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial Soluciones integrales para oficinas, locales y establecimientos comerciales en el área metropolitana. Más información →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes Cumpla con la Resolución 2674 del INVIMA. Servicio especializado para el sector de alimentos. Más información →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización Eliminación profesional de roedores con métodos seguros y seguimiento garantizado. Más información →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores Control efectivo de mosquitos, moscas y zancudos. Prevención de dengue y enfermedades vectoriales. Más información →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial Servicio de control de plagas para bodegas, plantas de producción y zonas industriales. Más información →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas Detección y eliminación de comején y termitas antes de que dañen la estructura de su propiedad. Más información →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas Retiro seguro de nidos de abejas y avispas con equipos especializados. Atención de urgencia. Más información →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: enlace duplicado de la misma tarjeta (celular + escritorio)",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama Eliminación profesional de chinches en hogares, hoteles y hospedajes con tratamiento de seguimiento. Más información →"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: sale la foto del hero",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Técnico de AGROINCOL realizando fumigación profesional en Bucaramanga"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "D3: cada render 3D lleva alt descriptivo",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Casa santandereana con techo de teja, en 3D: fumigación para hogares de AGROINCOL"
+      }
+    },
+    {
+      "fase": "3",
+      "ruta": "/",
+      "decision": "Consecuencia de D3: −duplicados + texto decorativo aprobado (cinta, etiquetas, remate)",
+      "tipo": "mainWords",
+      "valor": 1153
+    }
   ]
 }

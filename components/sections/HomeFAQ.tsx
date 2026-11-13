@@ -32,7 +32,7 @@ export default function HomeFAQ() {
       <div className="container-custom max-w-3xl">
         <div className="reveal text-center mb-10">
           <span className="eyebrow">Preguntas frecuentes</span>
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-3">
+          <h2 className="mt-5 font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
             Lo que suelen preguntarnos antes de contratar
           </h2>
         </div>
@@ -40,13 +40,13 @@ export default function HomeFAQ() {
           {faqs.map((f) => (
             <details
               key={f.q}
-              className="group rounded-2xl border border-brand-gray-light/70 bg-white p-5 shadow-soft transition-shadow open:shadow-card [&_summary]:list-none"
+              className="group rounded-[24px] border border-marca-verde/15 bg-white p-5 transition-colors open:bg-marca-menta/40 md:p-6 [&_summary]:list-none"
             >
               <summary className="flex cursor-pointer items-center justify-between gap-4 font-heading font-semibold text-brand-green">
                 {f.q}
                 <ChevronDown
                   size={20}
-                  className="shrink-0 text-brand-orange transition-transform duration-300 group-open:rotate-180"
+                  className="shrink-0 text-marca-verde transition-transform duration-300 group-open:rotate-180"
                 />
               </summary>
               <p className="text-brand-gray text-body mt-3 text-pretty">{f.a}</p>
@@ -55,7 +55,7 @@ export default function HomeFAQ() {
         </div>
         <p className="reveal text-center text-brand-gray text-body mt-8">
           ¿Otra duda?{' '}
-          <Link href="#contacto" className="font-semibold text-brand-orange hover:text-brand-orange-dark">
+          <Link href="#contacto" className="font-semibold text-marca-verde underline decoration-marca-naranja decoration-2 underline-offset-4 hover:text-marca-letra">
             Escríbanos y le respondemos hoy →
           </Link>
         </p>

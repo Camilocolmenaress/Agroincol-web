@@ -12,17 +12,17 @@ const benefits = [
 
 export default function WhyUs() {
   return (
-    <section className="section-padding bg-brand-light">
+    <section className="section-padding bg-marca-menta">
       <div className="container-custom">
         <div className="reveal text-center mb-12">
           <span className="eyebrow">Por qué AGROINCOL</span>
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-3">
+          <h2 className="mt-5 font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
             ¿Por Qué Elegir AGROINCOL para su Fumigación?
           </h2>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Image */}
-          <div className="reveal relative aspect-square rounded-3xl overflow-hidden ring-1 ring-brand-green/10 shadow-premium">
+          <div className="reveal relative aspect-square overflow-hidden rounded-[32px]">
             <Image
               src="/images/equipo/equipo-agroincol.webp"
               alt="Equipo completo de AGROINCOL con uniformes y equipos de bioseguridad"
@@ -42,10 +42,10 @@ export default function WhyUs() {
               return (
                 <li
                   key={benefit.text}
-                  className="flex h-full items-center gap-4 rounded-2xl bg-white p-5 shadow-card sm:flex-col sm:items-start sm:p-6"
+                  className="flex h-full items-center gap-4 rounded-[24px] bg-white p-5 sm:flex-col sm:items-start sm:p-6"
                 >
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-soft">
-                    <Icon size={24} className="text-brand-orange" />
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-marca-verde">
+                    <Icon size={22} className="text-white" aria-hidden />
                   </span>
                   <p className="text-brand-black text-body text-pretty">{benefit.text}</p>
                 </li>

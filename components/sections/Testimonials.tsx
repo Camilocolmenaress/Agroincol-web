@@ -12,13 +12,11 @@ const reviews = GOOGLE_REVIEWS.filter((r) => DESTACADAS.includes(r.name));
 
 export default function Testimonials() {
   return (
-    <section className="relative overflow-hidden section-padding bg-hero-radial">
-      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-50" aria-hidden />
-      <div className="glow-pulse pointer-events-none absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-brand-orange/25 blur-[120px]" aria-hidden />
+    <section className="relative overflow-hidden section-padding bg-marca-verde">
       <div className="container-custom relative">
         <div className="reveal text-center mb-10">
           <span className="eyebrow eyebrow-claro">Reseñas reales</span>
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-white mt-3">
+          <h2 className="mt-5 font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-white text-balance">
             Lo Que Dicen Nuestros Clientes
           </h2>
           <div className="mt-5 inline-flex items-center gap-3 rounded-full bg-white/10 px-5 py-2.5 ring-1 ring-white/15 backdrop-blur-sm">
@@ -36,7 +34,7 @@ export default function Testimonials() {
           {reviews.map((r) => (
             <figure
               key={r.name}
-              className="flex flex-col rounded-2xl border border-white/15 bg-white/10 p-6 shadow-premium backdrop-blur-md"
+              className="flex flex-col rounded-[28px] border border-white/15 bg-white/[0.06] p-7"
             >
               <div className="flex text-brand-amber" aria-hidden>
                 {[0, 1, 2, 3, 4].map((i) => (
@@ -64,7 +62,7 @@ export default function Testimonials() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 bg-white text-brand-green font-semibold px-6 py-3 rounded-full hover:bg-gray-100 transition-colors"
           >
-            <Star size={18} className="text-[#F59E0B]" /> Leer todas las reseñas
+            <Star size={18} className="text-marca-naranja" aria-hidden /> Leer todas las reseñas
           </a>
           <a
             href={BUSINESS.reviewLink}

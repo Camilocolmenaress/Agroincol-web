@@ -10,11 +10,11 @@ const areas = [
 
 export default function ServiceAreas() {
   return (
-    <section className="section-padding bg-brand-cream">
+    <section className="section-padding bg-white">
       <div className="container-custom">
         <div className="reveal text-center mb-12">
           <span className="eyebrow">Cobertura</span>
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-3">
+          <h2 className="mt-5 font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
             Cobertura en el Área Metropolitana de Bucaramanga
           </h2>
           <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto text-pretty">
@@ -28,12 +28,13 @@ export default function ServiceAreas() {
             <Link
               key={area.name}
               href={area.href}
-              className="group rounded-2xl border border-brand-gray-light/70 bg-white p-6 text-center shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-orange/30 hover:shadow-card-hover"
+              data-cursor="Ver zona"
+              className="group rounded-[28px] border border-marca-verde/15 bg-marca-menta/50 p-6 text-center transition-[transform,background-color] duration-500 [transition-timing-function:cubic-bezier(.2,.7,.2,1)] hover:-translate-y-1.5 hover:bg-marca-menta"
             >
-              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-soft transition-transform duration-300 group-hover:scale-110">
-                <MapPin size={26} className="text-brand-orange" />
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-marca-verde transition-transform duration-300 group-hover:scale-110">
+                <MapPin size={22} className="text-white" aria-hidden />
               </span>
-              <h3 className="font-heading font-semibold text-brand-green mt-4 group-hover:text-brand-orange transition-colors">{area.name}</h3>
+              <h3 className="mt-4 font-display text-xl uppercase tracking-[0.01em] text-marca-verde">{area.name}</h3>
               <p className="text-brand-gray text-body-sm mt-1">{area.description}</p>
             </Link>
           ))}

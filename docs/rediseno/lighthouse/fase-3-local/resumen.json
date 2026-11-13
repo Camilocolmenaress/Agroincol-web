@@ -1,0 +1,25 @@
+{
+  "base": "http://localhost:3200",
+  "fecha": "2026-11-13T23:17:43.099Z",
+  "corridas": 3,
+  "nota": "Lighthouse móvil (preset por defecto: Moto G Power, 4G lento simulado). INP no se mide en laboratorio: se usa TBT como proxy y CrUX/Speed Insights para campo.",
+  "resumen": [
+    {
+      "url": "/",
+      "perf": 91,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 96,
+      "lcp_s": 3.44,
+      "cls": 0.001,
+      "tbt_ms": 2,
+      "fcp_s": 1.06,
+      "peso_kb": 500,
+      "perf_corridas": [
+        90,
+        91,
+        91
+      ]
+    }
+  ]
+}

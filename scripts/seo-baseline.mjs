@@ -47,6 +47,8 @@ const BASE = opt('--base', 'http://localhost:3200').replace(/\/$/, '');
 const OUT = resolve(opt('--out', DEFAULT_OUT));
 const COMPARE = flag('--compare');
 const SOLO_MAIN = flag('--solo-main');
+// Páginas cuyo texto cambia con la hora (horario de atención): ahí no se compara el conteo de palabras.
+const TEXTO_SEGUN_HORA = new Set(['/lp/restaurantes']);
 const APROBADOS_PATH = resolve(ROOT, 'docs/rediseno/seo-cambios-aprobados.json');
 let APROBADOS = [];
 try { APROBADOS = JSON.parse(readFileSync(APROBADOS_PATH, 'utf8')).cambios ?? []; } catch {}
@@ -141,7 +143,13 @@ function extract(html, headers) {
     }
     if (n.name === 'a' && a.href !== undefined) {
       const href = a.href.startsWith(PROD) ? a.href.slice(PROD.length) || '/' : a.href;
-      const t = norm(text(n)) || norm(a['aria-label']) || '';
+      // Como lo lee Google: si el enlace no tiene texto, cuenta el alt de su imagen.
+      const altImg = () => {
+        let alt = '';
+        walk(n, (c) => { if (!alt && c.name === 'img' && c.attribs?.alt) alt = c.attribs.alt; });
+        return norm(alt);
+      };
+      const t = norm(text(n)) || norm(a['aria-label']) || altImg() || '';
       r.links.push({ region: region(anc, n), href, texto: t });
     }
     if (n.name === 'img') {
@@ -204,6 +212,8 @@ function compare(antes, ahora) {
     const d = [];
     if (!a || !b) { lineas.push(`${p}: ${!a ? 'URL nueva' : 'URL desaparecida'}`); continue; }
     for (const campo of ['status', 'title', 'description', 'canonical', 'robots', 'xRobotsTag', 'mainWords']) {
+      if (campo === 'mainWords' && TEXTO_SEGUN_HORA.has(p)) continue;
+      if (campo === 'mainWords' && APROBADOS.some((x) => x.tipo === 'mainWords' && x.ruta === p && x.valor === b[campo])) continue;
       if (a[campo] !== b[campo]) d.push(`  ~ ${campo}: ${JSON.stringify(a[campo])} → ${JSON.stringify(b[campo])}`);
     }
     for (const campo of ['hreflang', 'jsonLd']) d.push(...diffLista(campo, a[campo], b[campo], p));
