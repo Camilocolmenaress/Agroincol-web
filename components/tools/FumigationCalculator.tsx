@@ -134,7 +134,7 @@ function getRiskLevel(score: number): RiskLevel {
   if (score <= 4) return { label: 'Bajo', color: '#22C55E', bg: 'bg-green-50', frequency: 'Cada 6 meses' };
   if (score <= 7) return { label: 'Moderado', color: '#EAB308', bg: 'bg-yellow-50', frequency: 'Cada 3 meses' };
   if (score <= 10) return { label: 'Alto', color: '#F46931', bg: 'bg-orange-50', frequency: 'Cada 2 meses' };
-  if (score <= 14) return { label: 'Muy alto', color: '#EF4444', bg: 'bg-red-50', frequency: 'Mensual' };
+  if (score <= 14) return { label: 'Muy alto', color: '#EF4444', bg: 'bg-marca-menta', frequency: 'Mensual' };
   return { label: 'Crítico', color: '#DC2626', bg: 'bg-red-100', frequency: 'Quincenal o inmediata' };
 }
 
@@ -245,7 +245,7 @@ export default function FumigationCalculator() {
                 {risk.label}
               </span>
             </div>
-            <h3 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+            <h3 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
               {risk.frequency}
             </h3>
             <p className="text-brand-gray text-body-sm mt-1">Frecuencia recomendada de fumigación</p>

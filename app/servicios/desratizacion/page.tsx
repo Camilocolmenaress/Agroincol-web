@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AlertTriangle, Zap, Bug, AlertCircle, Building2 } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
-import Hero from '@/components/sections/Hero';
+import HeroServicio from '@/components/recorrido/HeroServicio';
+import Galeria from '@/components/recorrido/Galeria';
+import OtrosServicios from '@/components/recorrido/OtrosServicios';
 import ProcessTimeline from '@/components/sections/ProcessTimeline';
 import PestCards from '@/components/sections/PestCards';
 import ContactForm from '@/components/forms/ContactForm';
@@ -86,28 +88,27 @@ export default function DesratizacionPage() {
     <>
       <SchemaMarkup schema={serviceSchema} />
       <SchemaMarkup schema={faqSchema} />
-      <Breadcrumbs items={[
+      <Breadcrumbs tono="claro" items={[
         { name: 'Inicio', href: '/' },
         { name: 'Servicios', href: '/servicios' },
         { name: 'Desratización' },
       ]} />
 
       {/* 1. Hero */}
-      <Hero
-        withBreadcrumbs
+      <HeroServicio
         title="Desratización Profesional en Bucaramanga y Área Metropolitana"
         subtitle="Eliminamos ratas y ratones identificando y sellando sus vías de entrada. Diagnóstico profesional, tratamiento efectivo y seguimiento para garantizar que no regresen."
         badgeText="Diagnóstico + eliminación + sellado de accesos"
         primaryCta={{ text: 'Solicitar Diagnóstico Gratis', href: '#contacto' }}
         secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        imageSrc="/images/hero/hero-home.jpg"
-        imageAlt="Desratización profesional en Bucaramanga — AGROINCOL"
+        objeto="estacion"
+        etiqueta="Ratas · Ratones"
       />
 
       {/* 2. The Problem */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Los Peligros Reales de los Roedores en su Propiedad
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -117,9 +118,9 @@ export default function DesratizacionPage() {
             {risks.map((risk, index) => {
               const Icon = risk.icon;
               return (
-                <div key={index} className="flex items-start gap-4 bg-white rounded-xl p-6 shadow-sm">
-                  <div className="bg-red-50 w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
-                    <Icon size={24} className="text-red-500" />
+                <div key={index} className="flex items-start gap-4 bg-white rounded-[24px] p-6 border border-marca-verde/15">
+                  <div className="bg-marca-menta w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon size={24} className="text-marca-verde" />
                   </div>
                   <p className="text-brand-black text-body">{risk.text}</p>
                 </div>
@@ -132,7 +133,7 @@ export default function DesratizacionPage() {
       {/* 3. Differentiator */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Nuestro Método: Eliminar la Causa, No Solo los Síntomas
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -145,11 +146,11 @@ export default function DesratizacionPage() {
               'Sellado y seguimiento: cerramos las vías de acceso identificadas y hacemos visitas de seguimiento para garantizar que la infestación no regrese',
             ].map((item) => (
               <li key={item} className="flex items-center gap-2 text-brand-black text-body">
-                <span className="text-brand-orange">✓</span> {item}
+                <span className="punto-gel" aria-hidden /> {item}
               </li>
             ))}
           </ul>
-          <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-6 mb-8">
+          <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-6 mb-8">
             <div className="flex items-start gap-3">
               <AlertCircle size={24} className="text-brand-orange shrink-0 mt-0.5" />
               <p className="text-brand-black text-body">
@@ -172,7 +173,7 @@ export default function DesratizacionPage() {
       {/* 6. FAQ */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
             Preguntas Frecuentes sobre Desratización
           </h2>
           <div className="max-w-3xl mx-auto">
@@ -181,12 +182,18 @@ export default function DesratizacionPage() {
         </div>
       </section>
 
+      {/* Galería "Arrastre": marcos en blanco hasta tener fotos reales */}
+      <Galeria />
+
+      {/* Otros servicios (rediseño v2) */}
+      <OtrosServicios excluir="/servicios/desratizacion" />
+
       {/* 7. CTA + Form */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                 Solucione el Problema Hoy
               </h2>
               <p className="text-brand-gray text-body mt-4">
@@ -201,7 +208,7 @@ export default function DesratizacionPage() {
                   '40+ años de experiencia',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brand-black text-body">
-                    <span className="text-brand-orange">✓</span> {item}
+                    <span className="punto-gel" aria-hidden /> {item}
                   </li>
                 ))}
               </ul>

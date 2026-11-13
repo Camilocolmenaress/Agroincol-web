@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Search, Bed, Droplets, Wind, Plane, Hotel, Sofa, Building2, SprayCan, RotateCcw, ShieldCheck, AlertCircle } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
-import Hero from '@/components/sections/Hero';
+import HeroServicio from '@/components/recorrido/HeroServicio';
+import Galeria from '@/components/recorrido/Galeria';
+import OtrosServicios from '@/components/recorrido/OtrosServicios';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
@@ -183,28 +185,27 @@ export default function ControlChinchesPage() {
     <>
       <SchemaMarkup schema={serviceSchema} />
       <SchemaMarkup schema={faqSchema} />
-      <Breadcrumbs items={[
+      <Breadcrumbs tono="claro" items={[
         { name: 'Inicio', href: '/' },
         { name: 'Servicios', href: '/servicios' },
         { name: 'Control de Chinches de Cama' },
       ]} />
 
       {/* 1. Hero */}
-      <Hero
-        withBreadcrumbs
+      <HeroServicio
         title="Control de Chinches de Cama en Bucaramanga"
         subtitle="Eliminación profesional con inspección minuciosa, tratamiento certificado y segunda visita para romper el ciclo de huevos. Más de 40 años protegiendo hogares y hoteles en Santander."
         badgeText="Servicio certificado INVIMA — 40+ años de experiencia"
         primaryCta={{ text: 'Elimine las Chinches Hoy', href: '#contacto' }}
         secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        imageSrc="/images/hero/hero-home.jpg"
-        imageAlt="Técnico de AGROINCOL realizando control de chinches de cama en Bucaramanga"
+        objeto="bomba"
+        etiqueta="Chinches · Descanso"
       />
 
       {/* 2. Cómo identificar chinches */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Cómo Saber si Tiene Chinches de Cama?
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -216,9 +217,9 @@ export default function ControlChinchesPage() {
             {signs.map((sign, index) => {
               const Icon = sign.icon;
               return (
-                <div key={index} className="flex items-start gap-4 bg-white rounded-xl p-6 shadow-sm">
-                  <div className="bg-red-50 w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
-                    <Icon size={24} className="text-red-500" />
+                <div key={index} className="flex items-start gap-4 bg-white rounded-[24px] p-6 border border-marca-verde/15">
+                  <div className="bg-marca-menta w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon size={24} className="text-marca-verde" />
                   </div>
                   <div>
                     <h3 className="font-heading font-semibold text-brand-black mb-1">{sign.title}</h3>
@@ -234,7 +235,7 @@ export default function ControlChinchesPage() {
       {/* 3. Por qué se propagan */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Por Qué las Chinches Llegan a su Casa o Negocio?
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -246,7 +247,7 @@ export default function ControlChinchesPage() {
             {spreadCauses.map((cause, index) => {
               const Icon = cause.icon;
               return (
-                <div key={index} className="flex items-start gap-4 bg-white rounded-xl p-6 shadow-sm">
+                <div key={index} className="flex items-start gap-4 bg-white rounded-[24px] p-6 border border-marca-verde/15">
                   <div className="bg-brand-orange/10 w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
                     <Icon size={24} className="text-brand-orange" />
                   </div>
@@ -261,7 +262,7 @@ export default function ControlChinchesPage() {
       {/* 4. Por qué los insecticidas caseros fallan */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Por Qué los Insecticidas Caseros No Funcionan Contra las Chinches
           </h2>
           <p className="text-brand-gray text-body-lg mb-6">
@@ -291,7 +292,7 @@ export default function ControlChinchesPage() {
               </p>
             </li>
           </ul>
-          <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-6">
+          <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-6">
             <div className="flex items-start gap-3">
               <AlertCircle size={24} className="text-brand-orange shrink-0 mt-0.5" />
               <p className="text-brand-black text-body">
@@ -306,7 +307,7 @@ export default function ControlChinchesPage() {
       {/* 5. Tratamiento profesional */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Nuestro Tratamiento Profesional Contra Chinches
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -316,7 +317,7 @@ export default function ControlChinchesPage() {
             {treatmentSteps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-sm">
+                <div key={index} className="bg-white rounded-[24px] p-6 border border-marca-verde/15">
                   <div className="bg-brand-green/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                     <Icon size={24} className="text-brand-green" />
                   </div>
@@ -360,7 +361,7 @@ export default function ControlChinchesPage() {
       {/* 6. Hoteles y hospedajes */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Hoteles y Hospedajes en Bucaramanga: el Riesgo es su Reputación
           </h2>
           <p className="text-brand-gray text-body-lg mb-6">
@@ -369,7 +370,7 @@ export default function ControlChinchesPage() {
             durante meses, y eliminarla es prácticamente imposible. La alta rotación de huéspedes hace que ningún
             hospedaje — por limpio que sea — esté exento del riesgo.
           </p>
-          <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-6 mb-8">
+          <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-6 mb-8">
             <div className="flex items-start gap-3">
               <ShieldCheck size={24} className="text-brand-orange shrink-0 mt-0.5" />
               <p className="text-brand-black text-body">
@@ -395,7 +396,7 @@ export default function ControlChinchesPage() {
       {/* 7. Prevención al viajar */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Cómo Evitar Traer Chinches de un Viaje
           </h2>
           <p className="text-brand-gray text-body-lg mb-6">
@@ -415,7 +416,7 @@ export default function ControlChinchesPage() {
       {/* 8. FAQ */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
             Preguntas Frecuentes sobre Control de Chinches
           </h2>
           <div className="max-w-3xl mx-auto">
@@ -424,12 +425,18 @@ export default function ControlChinchesPage() {
         </div>
       </section>
 
+      {/* Galería "Arrastre": marcos en blanco hasta tener fotos reales */}
+      <Galeria />
+
+      {/* Otros servicios (rediseño v2) */}
+      <OtrosServicios excluir="/servicios/control-chinches" />
+
       {/* 9. CTA + Form */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                 Recupere su Descanso — Elimine las Chinches de Raíz
               </h2>
               <p className="text-brand-gray text-body mt-4">
@@ -444,7 +451,7 @@ export default function ControlChinchesPage() {
                   'Certificación INVIMA — 40+ años de experiencia',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brand-black text-body">
-                    <span className="text-brand-orange">✓</span> {item}
+                    <span className="punto-gel" aria-hidden /> {item}
                   </li>
                 ))}
               </ul>

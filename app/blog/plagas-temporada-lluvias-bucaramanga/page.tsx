@@ -69,7 +69,7 @@ export default function PlagasLluviasPage() {
         </p>
 
         {/* Por Qué las Lluvias Aumentan las Plagas */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Por Qué las Lluvias Aumentan las Plagas?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -86,7 +86,7 @@ export default function PlagasLluviasPage() {
         </p>
 
         {/* Las 5 Plagas */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Las 5 Plagas más Comunes en Temporada de Lluvias en Santander
         </h2>
 
@@ -116,7 +116,7 @@ export default function PlagasLluviasPage() {
         </p>
 
         {/* Proteger su Hogar */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Cómo Proteger su Hogar Durante la Temporada de Lluvias
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -140,7 +140,7 @@ export default function PlagasLluviasPage() {
         </ul>
 
         {/* Proteger Restaurante/Negocio */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Cómo Proteger su Restaurante o Negocio
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -169,14 +169,14 @@ export default function PlagasLluviasPage() {
         </p>
 
         {/* Callout */}
-        <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
+        <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
             <strong>Dato de salud pública:</strong> En Bucaramanga, el dengue sigue siendo un problema serio. Según la Secretaría de Salud de Santander, la temporada de lluvias concentra el mayor número de casos. Eliminar criaderos de mosquitos en su propiedad no solo lo protege a usted: protege a toda su comunidad.
           </p>
         </div>
 
         {/* Cuándo Fumigar */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Cuándo Fumigar si ya Empezó la Temporada?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">

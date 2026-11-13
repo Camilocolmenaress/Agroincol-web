@@ -211,7 +211,7 @@ export default function FumigacionPiedecuestaPage() {
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div>
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                 Fumigación Profesional en Piedecuesta
               </h2>
               <p className="text-brand-gray text-body mt-4 leading-relaxed">
@@ -252,7 +252,7 @@ export default function FumigacionPiedecuestaPage() {
       <section className="section-padding">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
               Servicios de Fumigación en Piedecuesta
             </h2>
             <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto">
@@ -285,7 +285,7 @@ export default function FumigacionPiedecuestaPage() {
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="text-center mb-8">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
               Barrios de Piedecuesta que Atendemos
             </h2>
             <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto">
@@ -309,7 +309,7 @@ export default function FumigacionPiedecuestaPage() {
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
               Plagas Comunes en Piedecuesta
             </h2>
             <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto">
@@ -337,7 +337,7 @@ export default function FumigacionPiedecuestaPage() {
       <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-8">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-8">
               ¿Por Qué Elegir AGROINCOL en Piedecuesta?
             </h2>
             <div className="space-y-4">
@@ -436,7 +436,7 @@ export default function FumigacionPiedecuestaPage() {
       <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center">
               Preguntas Frecuentes sobre Fumigación en Piedecuesta
             </h2>
             <p className="text-brand-gray text-body-lg mt-4 mb-8 text-center">
@@ -469,7 +469,7 @@ export default function FumigacionPiedecuestaPage() {
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                 Cotice Fumigación en Piedecuesta
               </h2>
               <p className="text-brand-gray text-body mt-4">

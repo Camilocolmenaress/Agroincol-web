@@ -11,11 +11,22 @@ export type Objeto3D = {
   href: string;
 };
 
+// Orden = orden del desfile del hero (el del centro arranca nítido).
 export const OBJETOS: Objeto3D[] = [
+  {
+    id: 'cocina',
+    alt: 'Cocina de restaurante con estufa y ollas, en 3D: control de plagas para restaurantes de AGROINCOL',
+    href: '/servicios/fumigacion-restaurantes',
+  },
   {
     id: 'casa',
     alt: 'Casa santandereana con techo de teja, en 3D: fumigación para hogares de AGROINCOL',
     href: '/servicios/fumigacion-residencial',
+  },
+  {
+    id: 'bomba',
+    alt: 'Bomba de aspersión de espalda, en 3D: control de zancudos y moscas de AGROINCOL',
+    href: '/servicios/control-insectos-voladores',
   },
 ];
 

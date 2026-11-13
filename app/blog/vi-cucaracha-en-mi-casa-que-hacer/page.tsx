@@ -69,7 +69,7 @@ export default function CucarachaEnCasaPage() {
         </p>
 
         {/* Por Qué Aparecen */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Por Qué Aparecen Cucarachas en su Casa?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -89,7 +89,7 @@ export default function CucarachaEnCasaPage() {
         </p>
 
         {/* Dónde se Esconden */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Dónde se Esconden las Cucarachas?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -112,7 +112,7 @@ export default function CucarachaEnCasaPage() {
         </ul>
 
         {/* Cuándo Llamar a un Profesional */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Cuándo es Momento de Llamar a un Profesional?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -137,7 +137,7 @@ export default function CucarachaEnCasaPage() {
         </p>
 
         {/* Medidas Inmediatas */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Qué Puede Hacer Mientras Tanto (Medidas Inmediatas)
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -160,14 +160,14 @@ export default function CucarachaEnCasaPage() {
         </ul>
 
         {/* Callout */}
-        <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
+        <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
             <strong>Dato importante:</strong> Una sola cucaracha alemana hembra puede producir hasta 300 crías durante su vida. Cada ooteca contiene entre 30 y 40 huevos, y una hembra puede producir entre 4 y 8 ootecas. Por eso actuar rápido es fundamental: en cuestión de semanas, una pareja puede convertirse en cientos.
           </p>
         </div>
 
         {/* Control Profesional */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Cómo Funciona el Control Profesional de Cucarachas
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">

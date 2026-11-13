@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Bug, AlertTriangle, AlertCircle, Droplets, Users } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
-import Hero from '@/components/sections/Hero';
+import HeroServicio from '@/components/recorrido/HeroServicio';
+import Galeria from '@/components/recorrido/Galeria';
+import OtrosServicios from '@/components/recorrido/OtrosServicios';
 import ProcessTimeline from '@/components/sections/ProcessTimeline';
 import PestCards from '@/components/sections/PestCards';
 import ContactForm from '@/components/forms/ContactForm';
@@ -98,28 +100,27 @@ export default function ControlInsectosVoladoresPage() {
     <>
       <SchemaMarkup schema={serviceSchema} />
       <SchemaMarkup schema={faqSchema} />
-      <Breadcrumbs items={[
+      <Breadcrumbs tono="claro" items={[
         { name: 'Inicio', href: '/' },
         { name: 'Servicios', href: '/servicios' },
         { name: 'Control de Insectos Voladores' },
       ]} />
 
       {/* 1. Hero */}
-      <Hero
-        withBreadcrumbs
+      <HeroServicio
         title="Control de Mosquitos, Moscas y Zancudos en Bucaramanga"
         subtitle="Prevención de dengue, zika y chikungunya en el Área Metropolitana. Tratamiento profesional que elimina adultos, huevos y larvas. Especialmente efectivo en temporada de lluvias (mar-jun, sep-oct)."
         badgeText="Prevención de dengue, zika y chikungunya"
         primaryCta={{ text: 'Solicitar Control Urgente', href: '#contacto' }}
         secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        imageSrc="/images/hero/hero-home.jpg"
-        imageAlt="Control de mosquitos y zancudos en Bucaramanga — AGROINCOL"
+        objeto="bomba"
+        etiqueta="Zancudos · Moscas"
       />
 
       {/* 2. The Problem */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Por Qué los Insectos Voladores son una Amenaza Seria?
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -129,9 +130,9 @@ export default function ControlInsectosVoladoresPage() {
             {risks.map((risk, index) => {
               const Icon = risk.icon;
               return (
-                <div key={index} className="flex items-start gap-4 bg-white rounded-xl p-6 shadow-sm">
-                  <div className="bg-red-50 w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
-                    <Icon size={24} className="text-red-500" />
+                <div key={index} className="flex items-start gap-4 bg-white rounded-[24px] p-6 border border-marca-verde/15">
+                  <div className="bg-marca-menta w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon size={24} className="text-marca-verde" />
                   </div>
                   <p className="text-brand-black text-body">{risk.text}</p>
                 </div>
@@ -144,7 +145,7 @@ export default function ControlInsectosVoladoresPage() {
       {/* 3. Temporada de Lluvias */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Temporada de Lluvias en Bucaramanga: El Pico de Reproducción
           </h2>
           <p className="text-brand-gray text-body-lg mb-6">
@@ -153,7 +154,7 @@ export default function ControlInsectosVoladoresPage() {
           <p className="text-brand-gray text-body-lg mb-8">
             El tratamiento profesional de AGROINCOL no solo elimina los adultos visibles: incluye la aplicación de larvicidas y el tratamiento de posibles criaderos, interrumpiendo el ciclo de reproducción antes de que el problema escale.
           </p>
-          <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-6 mb-8">
+          <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-6 mb-8">
             <div className="flex items-start gap-3">
               <AlertCircle size={24} className="text-brand-orange shrink-0 mt-0.5" />
               <p className="text-brand-black text-body">
@@ -176,7 +177,7 @@ export default function ControlInsectosVoladoresPage() {
       {/* 6. FAQ */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
             Preguntas Frecuentes sobre Control de Insectos Voladores
           </h2>
           <div className="max-w-3xl mx-auto">
@@ -185,12 +186,18 @@ export default function ControlInsectosVoladoresPage() {
         </div>
       </section>
 
+      {/* Galería "Arrastre": marcos en blanco hasta tener fotos reales */}
+      <Galeria />
+
+      {/* Otros servicios (rediseño v2) */}
+      <OtrosServicios excluir="/servicios/control-insectos-voladores" />
+
       {/* 7. CTA + Form */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                 Protéjase Antes de la Próxima Temporada de Lluvias
               </h2>
               <p className="text-brand-gray text-body mt-4">
@@ -205,7 +212,7 @@ export default function ControlInsectosVoladoresPage() {
                   '40+ años de experiencia',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brand-black text-body">
-                    <span className="text-brand-orange">✓</span> {item}
+                    <span className="punto-gel" aria-hidden /> {item}
                   </li>
                 ))}
               </ul>

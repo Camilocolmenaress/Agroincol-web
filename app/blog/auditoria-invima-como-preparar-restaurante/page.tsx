@@ -69,7 +69,7 @@ export default function AuditoriaInvimaPage() {
         </p>
 
         {/* Qué Revisa el INVIMA */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Qué Revisa el INVIMA en una Auditoría a Restaurantes?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -93,7 +93,7 @@ export default function AuditoriaInvimaPage() {
         </p>
 
         {/* Checklist */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Checklist: 10 Puntos para Preparar su Restaurante
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -122,7 +122,7 @@ export default function AuditoriaInvimaPage() {
         </ol>
 
         {/* Resolución 2674 */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           La Resolución 2674 de 2013 y el Control de Plagas
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -142,7 +142,7 @@ export default function AuditoriaInvimaPage() {
         </p>
 
         {/* Errores Comunes */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Errores Comunes que Causan Sanciones
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -165,14 +165,14 @@ export default function AuditoriaInvimaPage() {
         </p>
 
         {/* Callout */}
-        <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
+        <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
             <strong>¿Sabía que...?</strong> Las multas del INVIMA por incumplimiento sanitario pueden ir de 5 a 1,000 SMMLV (entre $6.5 millones y $1,300 millones de pesos en 2026). Un programa de control de plagas profesional cuesta una fracción de una sola multa.
           </p>
         </div>
 
         {/* Cómo ayuda AGROINCOL */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Cómo AGROINCOL Ayuda a su Restaurante a Estar Siempre Preparado
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">

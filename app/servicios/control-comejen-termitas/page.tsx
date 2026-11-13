@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AlertTriangle, Home, Droplets, Search, Syringe, ClipboardCheck, XCircle } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
-import Hero from '@/components/sections/Hero';
+import HeroServicio from '@/components/recorrido/HeroServicio';
+import Galeria from '@/components/recorrido/Galeria';
+import OtrosServicios from '@/components/recorrido/OtrosServicios';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
@@ -156,28 +158,27 @@ export default function ComejenTermitasPage() {
     <>
       <SchemaMarkup schema={serviceSchema} />
       <SchemaMarkup schema={faqSchema} />
-      <Breadcrumbs items={[
+      <Breadcrumbs tono="claro" items={[
         { name: 'Inicio', href: '/' },
         { name: 'Servicios', href: '/servicios' },
         { name: 'Control de Comején y Termitas' },
       ]} />
 
       {/* 1. Hero */}
-      <Hero
-        withBreadcrumbs
+      <HeroServicio
         title="Control de Comején y Termitas en Bucaramanga"
         subtitle="Eliminamos la colonia completa, no solo los insectos visibles. Inspección, inyección directa y barreras químicas con más de 40 años de experiencia en Santander."
         badgeText="Empresa certificada ante INVIMA — 40+ años en Santander"
         primaryCta={{ text: 'Solicitar Inspección', href: '#contacto' }}
         secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        imageSrc="/images/hero/hero-home.jpg"
-        imageAlt="Técnico de AGROINCOL inspeccionando madera afectada por comején en Bucaramanga"
+        objeto="aplicador"
+        etiqueta="Comején · Madera"
       />
 
       {/* 2. The Problem in Bucaramanga */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Por Qué el Comején es tan Común en Bucaramanga?
           </h2>
           <p className="text-brand-gray text-body-lg mb-6">
@@ -209,7 +210,7 @@ export default function ComejenTermitasPage() {
       {/* 3. Warning Signs */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Señales de que Hay Comején en su Casa
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -220,7 +221,7 @@ export default function ComejenTermitasPage() {
             {signals.map((signal, index) => {
               const Icon = signal.icon;
               return (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-sm">
+                <div key={index} className="bg-white rounded-[24px] p-6 border border-marca-verde/15">
                   <div className="bg-brand-orange/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                     <Icon size={24} className="text-brand-orange" />
                   </div>
@@ -243,7 +244,7 @@ export default function ComejenTermitasPage() {
       {/* 4. Why Home Remedies Fail */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Por Qué los Remedios Caseros No Eliminan el Comején
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -252,9 +253,9 @@ export default function ComejenTermitasPage() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {homeRemedyFails.map((item, index) => (
-              <div key={index} className="flex items-start gap-4 bg-white rounded-xl p-6 shadow-sm">
-                <div className="bg-red-50 w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
-                  <XCircle size={24} className="text-red-500" />
+              <div key={index} className="flex items-start gap-4 bg-white rounded-[24px] p-6 border border-marca-verde/15">
+                <div className="bg-marca-menta w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
+                  <XCircle size={24} className="text-marca-verde" />
                 </div>
                 <p className="text-brand-black text-body">{item}</p>
               </div>
@@ -277,7 +278,7 @@ export default function ComejenTermitasPage() {
       {/* 5. Professional Treatment Process */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Nuestro Tratamiento Profesional contra el Comején
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -288,7 +289,7 @@ export default function ComejenTermitasPage() {
             {treatmentSteps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-sm">
+                <div key={index} className="bg-white rounded-[24px] p-6 border border-marca-verde/15">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="bg-brand-green w-10 h-10 rounded-full flex items-center justify-center">
                       <span className="font-heading font-bold text-white">{step.step}</span>
@@ -318,7 +319,7 @@ export default function ComejenTermitasPage() {
       {/* 6. FAQ */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
             Preguntas Frecuentes sobre Comején y Termitas
           </h2>
           <div className="max-w-3xl mx-auto">
@@ -336,12 +337,18 @@ export default function ComejenTermitasPage() {
         </div>
       </section>
 
+      {/* Galería "Arrastre": marcos en blanco hasta tener fotos reales */}
+      <Galeria />
+
+      {/* Otros servicios (rediseño v2) */}
+      <OtrosServicios excluir="/servicios/control-comejen-termitas" />
+
       {/* 7. CTA + Form */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                 Detenga el Daño Antes de que Avance
               </h2>
               <p className="text-brand-gray text-body mt-4">
@@ -356,7 +363,7 @@ export default function ComejenTermitasPage() {
                   '40+ años de experiencia en Santander',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brand-black text-body">
-                    <span className="text-brand-orange">✓</span> {item}
+                    <span className="punto-gel" aria-hidden /> {item}
                   </li>
                 ))}
               </ul>

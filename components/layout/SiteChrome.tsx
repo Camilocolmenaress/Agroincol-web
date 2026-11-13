@@ -1,7 +1,9 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { preload } from 'react-dom';
+import Cursor from '@/components/recorrido/Cursor';
 
 // Fuente del H1 del sitio v2. Si se cambia el archivo, cambiar el nombre: se sirve con caché inmutable.
 export const FUENTE_TITULAR = '/fonts/league-spartan-latin-800-normal.woff2';
@@ -31,6 +33,22 @@ export function MarcaRuta({ children }: { children: React.ReactNode }) {
   return (
     <div data-marca={v2 ? 'v2' : 'v1'} id="marca-raiz">
       {children}
+      {v2 && <Cursor />}
+      {v2 && <FundidoRuta pathname={pathname} />}
     </div>
   );
+}
+
+// Transición entre páginas del sitio: un fundido verde muy corto que se desvanece sobre la página
+// nueva ya pintada (no retrasa la navegación). Nunca en la primera carga ni con reduce-motion.
+function FundidoRuta({ pathname }: { pathname: string | null }) {
+  const anterior = useRef(pathname);
+  const [clave, setClave] = useState(0);
+  useEffect(() => {
+    if (anterior.current === pathname) return;
+    anterior.current = pathname;
+    setClave((c) => c + 1);
+  }, [pathname]);
+  if (!clave) return null;
+  return <div key={clave} className="fundido-ruta pointer-events-none fixed inset-0 z-[95] bg-marca-verde" aria-hidden />;
 }

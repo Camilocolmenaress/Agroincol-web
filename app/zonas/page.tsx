@@ -98,7 +98,7 @@ export default function ZonasHubPage() {
       {/* 2. Intro de cobertura */}
       <section className="section-padding bg-white">
         <div className="container-custom max-w-3xl">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Servicio en toda el Área Metropolitana
           </h2>
           <p className="text-brand-gray text-body-lg leading-relaxed">

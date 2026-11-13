@@ -117,7 +117,7 @@ export default function FumigacionRestaurantesNormaPage() {
         </p>
 
         {/* Qué Exige la Resolución 2674 */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Qué Exige la Resolución 2674 de 2013?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -134,7 +134,7 @@ export default function FumigacionRestaurantesNormaPage() {
         </p>
 
         {/* Frecuencia */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Cada Cuánto Debe Fumigar un Restaurante en Colombia?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -163,7 +163,7 @@ export default function FumigacionRestaurantesNormaPage() {
         </p>
 
         {/* Costos */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Cuánto Cuesta la Fumigación para Restaurantes en Bucaramanga?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -186,7 +186,7 @@ export default function FumigacionRestaurantesNormaPage() {
           Un programa recurrente siempre es más económico que servicios sueltos: previene infestaciones (más baratas de prevenir que de tratar), mantiene la certificación vigente todo el año, incluye garantía de re-servicio entre visitas, y reduce drásticamente el riesgo de sanciones.
         </p>
 
-        <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
+        <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
             <strong>Perspectiva:</strong> El costo de un programa anual de control de plagas es una fracción del costo de un solo día de cierre por sanción sanitaria. Si su restaurante factura $3 millones diarios, 5 días cerrado son $15 millones perdidos — más la multa. Conozca el impacto real en nuestro artículo sobre{' '}
             <Link href="/blog/cuanto-cuesta-multa-invima-restaurante" className="text-brand-orange underline hover:text-brand-orange-dark">
@@ -202,7 +202,7 @@ export default function FumigacionRestaurantesNormaPage() {
         </p>
 
         {/* Certificado vs Programa */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Diferencia entre Certificado Anual y Programa de Prevención
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -216,7 +216,7 @@ export default function FumigacionRestaurantesNormaPage() {
         </p>
 
         {/* Cómo Elegir Empresa */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Cómo Elegir una Empresa de Fumigación para su Restaurante
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -246,7 +246,7 @@ export default function FumigacionRestaurantesNormaPage() {
         </p>
 
         {/* Sanciones */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Qué Pasa si la Secretaría de Salud Encuentra Plagas?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -260,7 +260,7 @@ export default function FumigacionRestaurantesNormaPage() {
         </p>
 
         {/* FAQ */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Preguntas Frecuentes
         </h2>
 

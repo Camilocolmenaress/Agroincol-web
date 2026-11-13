@@ -8,7 +8,6 @@ import Galeria from '@/components/recorrido/Galeria';
 import Lema from '@/components/recorrido/Lema';
 import OtrosServicios from '@/components/recorrido/OtrosServicios';
 import Movimiento from '@/components/recorrido/Movimiento';
-import Cursor from '@/components/recorrido/Cursor';
 import AlivioTeaser from '@/components/sections/AlivioTeaser';
 import WhyUs from '@/components/sections/WhyUs';
 import ServiceAreas from '@/components/sections/ServiceAreas';
@@ -165,7 +164,6 @@ export default function HomePage() {
       </section>
 
       <Movimiento />
-      <Cursor />
     </>
   );
 }

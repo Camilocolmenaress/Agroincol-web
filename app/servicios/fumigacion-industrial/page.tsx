@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Factory, ClipboardList, AlertTriangle, TrendingDown, DollarSign, AlertCircle } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
-import Hero from '@/components/sections/Hero';
+import HeroServicio from '@/components/recorrido/HeroServicio';
+import Galeria from '@/components/recorrido/Galeria';
+import OtrosServicios from '@/components/recorrido/OtrosServicios';
 import ProcessTimeline from '@/components/sections/ProcessTimeline';
 import PestCards from '@/components/sections/PestCards';
 import ContactForm from '@/components/forms/ContactForm';
@@ -86,28 +88,27 @@ export default function FumigacionIndustrialPage() {
     <>
       <SchemaMarkup schema={serviceSchema} />
       <SchemaMarkup schema={faqSchema} />
-      <Breadcrumbs items={[
+      <Breadcrumbs tono="claro" items={[
         { name: 'Inicio', href: '/' },
         { name: 'Servicios', href: '/servicios' },
         { name: 'Fumigación Industrial' },
       ]} />
 
       {/* 1. Hero */}
-      <Hero
-        withBreadcrumbs
+      <HeroServicio
         title="Fumigación Industrial y Control de Plagas para Empresas en Bucaramanga"
         subtitle="Protocolo MIP documentado para plantas de producción, bodegas y zonas industriales. Certificados válidos ante INVIMA y Secretaría de Salud. Registros para auditorías de calidad."
         badgeText="Documentación completa para auditorías"
         primaryCta={{ text: 'Solicitar Diagnóstico Industrial', href: '#contacto' }}
         secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        imageSrc="/images/hero/hero-home.jpg"
-        imageAlt="Fumigación industrial en Bucaramanga — AGROINCOL"
+        objeto="bodega"
+        etiqueta="Industria · Auditorías"
       />
 
       {/* 2. Risks */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Qué Arriesga su Empresa Sin Control Profesional de Plagas?
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -118,9 +119,9 @@ export default function FumigacionIndustrialPage() {
             {risks.map((risk, index) => {
               const Icon = risk.icon;
               return (
-                <div key={index} className="flex items-start gap-4 bg-white rounded-xl p-6 shadow-sm">
-                  <div className="bg-red-50 w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
-                    <Icon size={24} className="text-red-500" />
+                <div key={index} className="flex items-start gap-4 bg-white rounded-[24px] p-6 border border-marca-verde/15">
+                  <div className="bg-marca-menta w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon size={24} className="text-marca-verde" />
                   </div>
                   <p className="text-brand-black text-body">{risk.text}</p>
                 </div>
@@ -133,7 +134,7 @@ export default function FumigacionIndustrialPage() {
       {/* 3. Differentiator */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Protocolo MIP Industrial: Documentado y Auditable
           </h2>
           <p className="text-brand-gray text-body-lg mb-6">
@@ -147,7 +148,7 @@ export default function FumigacionIndustrialPage() {
             intervención firmados por técnico certificado, mapas de ubicación de trampas y estaciones, e informes
             de seguimiento periódicos.
           </p>
-          <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-6 mb-8">
+          <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-6 mb-8">
             <div className="flex items-start gap-3">
               <AlertCircle size={24} className="text-brand-orange shrink-0 mt-0.5" />
               <p className="text-brand-black text-body">
@@ -172,7 +173,7 @@ export default function FumigacionIndustrialPage() {
       {/* 6. FAQ */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
             Preguntas Frecuentes sobre Fumigación Industrial
           </h2>
           <div className="max-w-3xl mx-auto">
@@ -181,12 +182,18 @@ export default function FumigacionIndustrialPage() {
         </div>
       </section>
 
+      {/* Galería "Arrastre": marcos en blanco hasta tener fotos reales */}
+      <Galeria />
+
+      {/* Otros servicios (rediseño v2) */}
+      <OtrosServicios excluir="/servicios/fumigacion-industrial" />
+
       {/* 7. CTA + Form */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                 Proteja su Empresa Hoy
               </h2>
               <p className="text-brand-gray text-body mt-4">
@@ -201,7 +208,7 @@ export default function FumigacionIndustrialPage() {
                   '40+ años de experiencia industrial',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brand-black text-body">
-                    <span className="text-brand-orange">✓</span> {item}
+                    <span className="punto-gel" aria-hidden /> {item}
                   </li>
                 ))}
               </ul>

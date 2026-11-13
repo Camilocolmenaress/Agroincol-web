@@ -125,7 +125,7 @@ export default function CertificacionesPage() {
       {/* 2. Decreto 1843 */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Decreto 1843 de 1991 — Uso y Manejo de Plaguicidas
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -150,7 +150,7 @@ export default function CertificacionesPage() {
       {/* 3. Resolución 2674 */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Resolución 2674 de 2013 — Establecimientos de Alimentos
           </h2>
           <p className="text-brand-gray text-body-lg mb-6">
@@ -177,7 +177,7 @@ export default function CertificacionesPage() {
               </span>
             </li>
           </ul>
-          <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-6 mb-8">
+          <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-6 mb-8">
             <div className="flex items-start gap-3">
               <AlertCircle size={24} className="text-brand-orange shrink-0 mt-0.5" />
               <p className="text-brand-black text-body">
@@ -198,7 +198,7 @@ export default function CertificacionesPage() {
       {/* 4. Certificado */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Certificado de Fumigación y Concepto Sanitario
           </h2>
           <p className="text-brand-gray text-body-lg mb-6">
@@ -258,7 +258,7 @@ export default function CertificacionesPage() {
       {/* 6. Preguntas frecuentes sobre el certificado */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-10">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-10">
             Preguntas Frecuentes sobre el Certificado de Fumigación
           </h2>
           <div className="max-w-3xl mx-auto space-y-6">
@@ -276,7 +276,7 @@ export default function CertificacionesPage() {
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
               ¿Necesita Certificación de Fumigación?
             </h2>
             <p className="text-brand-gray text-body-lg mt-4">

@@ -69,7 +69,7 @@ export default function MultaInvimaPage() {
         </p>
 
         {/* Tipos de Sanciones */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Tipos de Sanciones del INVIMA y la Secretaría de Salud
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -89,7 +89,7 @@ export default function MultaInvimaPage() {
         </p>
 
         {/* Costo Real de un Cierre Temporal */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Cuánto Cuesta Realmente un Cierre Temporal?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -112,14 +112,14 @@ export default function MultaInvimaPage() {
         </p>
 
         {/* Callout */}
-        <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
+        <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
             <strong>Ejemplo real:</strong> Un restaurante que factura $3 millones de pesos diarios y cierra 5 días por sanción pierde $15 millones en ventas, más la multa económica, más el costo de la fumigación de emergencia, más el daño reputacional incalculable. Un programa anual de control de plagas profesional con certificación INVIMA incluida cuesta una fracción de eso.
           </p>
         </div>
 
         {/* Los 3 Hallazgos */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Los 3 Hallazgos que Más Frecuentemente Causan Sanciones
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -139,7 +139,7 @@ export default function MultaInvimaPage() {
         </p>
 
         {/* Cómo Evitar Sanciones */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Cómo Evitar Sanciones: La Inversión que se Paga Sola
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">

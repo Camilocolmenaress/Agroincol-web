@@ -8,9 +8,12 @@ interface BreadcrumbItem {
 
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
+  // 'claro': sobre el menta del hero de servicio (rediseño v2). Por defecto, sobre verde.
+  tono?: 'oscuro' | 'claro';
 }
 
-export default function Breadcrumbs({ items }: BreadcrumbsProps) {
+export default function Breadcrumbs({ items, tono = 'oscuro' }: BreadcrumbsProps) {
+  const claro = tono === 'claro';
   const schemaItems = items.map((item, index) => {
     const entry: Record<string, unknown> = {
       '@type': 'ListItem',
@@ -42,7 +45,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
       {/* Visual breadcrumbs */}
       <nav
         aria-label="Breadcrumb"
-        className="bg-brand-green pt-20 md:pt-24 pb-0"
+        className={`${claro ? 'bg-marca-menta' : 'bg-brand-green'} pt-20 md:pt-24 pb-0`}
       >
         <div className="container-custom pt-4 pb-2">
           {/* Desktop: show all items */}
@@ -52,16 +55,16 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
               return (
                 <li key={index} className="flex items-center gap-1.5">
                   {index > 0 && (
-                    <span className="text-gray-500" aria-hidden="true">›</span>
+                    <span className={claro ? 'text-marca-letra/40' : 'text-gray-500'} aria-hidden="true">›</span>
                   )}
                   {isLast || !item.href ? (
-                    <span className="text-white font-semibold truncate max-w-[280px]">
+                    <span className={`${claro ? 'text-marca-letra' : 'text-white'} font-semibold truncate max-w-[280px]`}>
                       {item.name}
                     </span>
                   ) : (
                     <Link
                       href={item.href}
-                      className="text-gray-300 hover:text-brand-orange transition-colors"
+                      className={claro ? 'text-marca-letra/70 hover:text-marca-verde transition-colors' : 'text-gray-300 hover:text-brand-orange transition-colors'}
                     >
                       {item.name}
                     </Link>
@@ -76,7 +79,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
             {items.length >= 2 && (
               <Link
                 href={items[items.length - 2].href || '/'}
-                className="text-gray-300 hover:text-brand-orange transition-colors text-body-sm font-body inline-flex items-center gap-1"
+                className={`${claro ? 'text-marca-letra/70 hover:text-marca-verde' : 'text-gray-300 hover:text-brand-orange'} transition-colors text-body-sm font-body inline-flex items-center gap-1`}
               >
                 ← {items[items.length - 2].name}
               </Link>

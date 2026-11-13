@@ -81,7 +81,7 @@ export default function CalculadoraFumigacionPage() {
       {/* SEO Content: ¿Cada cuánto se debe fumigar? */}
       <section className="section-padding">
         <div className="container-custom max-w-3xl">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Cada Cuánto se Debe Fumigar en Colombia?
           </h2>
           <div className="prose-brand space-y-4">
@@ -114,7 +114,7 @@ export default function CalculadoraFumigacionPage() {
       {/* SEO Content: Factores */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom max-w-3xl">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Factores que Influyen en la Frecuencia de Fumigación
           </h2>
           <div className="space-y-4">
@@ -134,7 +134,7 @@ export default function CalculadoraFumigacionPage() {
       {/* SEO Content: Consecuencias */}
       <section className="section-padding">
         <div className="container-custom max-w-3xl">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Qué Pasa si No Fumigo a Tiempo?
           </h2>
           <div className="space-y-4">

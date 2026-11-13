@@ -30,7 +30,7 @@ export default function ProcessTimeline() {
   return (
     <section className="section-padding">
       <div className="container-custom">
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
           Nuestro Proceso de Fumigación para Restaurantes
         </h2>
         <div className="max-w-3xl mx-auto">

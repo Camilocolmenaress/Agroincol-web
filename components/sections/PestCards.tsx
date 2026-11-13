@@ -27,14 +27,14 @@ export default function PestCards() {
   return (
     <section className="section-padding bg-brand-light">
       <div className="container-custom">
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
           Plagas Comunes en Restaurantes de Bucaramanga
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {pests.map((pest) => {
             const Icon = pest.icon;
             return (
-              <div key={pest.name} className="bg-white rounded-xl p-6 shadow-sm">
+              <div key={pest.name} className="bg-white rounded-[24px] p-6 border border-marca-verde/15">
                 <div className="bg-brand-orange/10 w-14 h-14 rounded-lg flex items-center justify-center">
                   <Icon size={32} className="text-brand-orange" />
                 </div>

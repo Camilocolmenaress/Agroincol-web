@@ -277,7 +277,7 @@ export default function PricingTabs() {
           <div className="text-center mb-12">
             {activeTab === 'restaurantes' ? (
               <>
-                <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+                <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                   Programas de Protección para Restaurantes
                 </h2>
                 <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto">
@@ -287,7 +287,7 @@ export default function PricingTabs() {
               </>
             ) : (
               <>
-                <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+                <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                   Planes de Protección para Hogares
                 </h2>
                 <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto">

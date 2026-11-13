@@ -569,3 +569,10 @@ main:has(> [data-tienda]) {
 html.lenis, html.lenis body { height: auto; }
 html.lenis { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+/* Fundido verde corto entre páginas del sitio (SiteChrome.tsx): se desvanece en 0,35 s. */
+.fundido-ruta { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .fundido-ruta { animation: fundido-ruta 0.35s cubic-bezier(.2,.7,.2,1) both; }
+}
+@keyframes fundido-ruta { from { opacity: 0.85; } to { opacity: 0; } }

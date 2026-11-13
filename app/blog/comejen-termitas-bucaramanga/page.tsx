@@ -106,7 +106,7 @@ export default function ComejenTermitasPage() {
         </p>
 
         {/* Qué es el Comején */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Qué es el Comején y Por Qué es tan Peligroso?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -116,14 +116,14 @@ export default function ComejenTermitasPage() {
           Esta alimentación desde adentro es lo que hace al comején tan peligroso. Una viga de techo, un marco de puerta o una pieza de mobiliario pueden verse perfectamente normales por fuera mientras están completamente huecas por dentro. Cuando el daño se hace visible — la madera se hunde, se agrieta o se deshace al presionarla — la estructura ya está seriamente comprometida y la reparación es costosa.
         </p>
 
-        <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
+        <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
             <strong>Dato importante:</strong> Una colonia madura de termitas subterráneas puede consumir hasta 5 kg de madera por año. En una casa con estructura de madera en Bucaramanga, eso puede significar daño significativo en cuestión de meses. El clima cálido y húmedo de la ciudad permite que las colonias se mantengan activas todo el año, a diferencia de climas fríos donde la actividad se reduce en invierno.
           </p>
         </div>
 
         {/* Tipos de Termitas */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Tipos de Termitas Comunes en Santander
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -141,7 +141,7 @@ export default function ComejenTermitasPage() {
         </p>
 
         {/* Señales */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Señales de que Tiene Comején en su Propiedad
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -165,7 +165,7 @@ export default function ComejenTermitasPage() {
         </ul>
 
         {/* Actuar Rápido */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Por Qué Actuar Rápido es Fundamental
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -176,14 +176,14 @@ export default function ComejenTermitasPage() {
           (que son un problema de higiene), las termitas causan daño patrimonial real y progresivo. Pueden comprometer vigas de techo, marcos de puertas, closets de madera, muebles de valor, e incluso la estructura de una vivienda. El costo de reparación de daño por termitas puede superar fácilmente los millones de pesos, especialmente cuando se trata de elementos estructurales como vigas o columnas.
         </p>
 
-        <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
+        <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
             <strong>Experiencia real:</strong> En AGROINCOL hemos atendido casos en Bucaramanga donde el propietario descubrió el daño por termitas al renovar una habitación y encontrar vigas completamente huecas por dentro. La colonia llevaba años activa sin ser detectada. Una inspección profesional a tiempo habría evitado un costo de reparación de varios millones de pesos.
           </p>
         </div>
 
         {/* Tratamiento Profesional */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Tratamiento Profesional de Termitas
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -197,7 +197,7 @@ export default function ComejenTermitasPage() {
         </p>
 
         {/* Prevención */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Prevención de Termitas en Bucaramanga
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-6">
@@ -208,7 +208,7 @@ export default function ComejenTermitasPage() {
         </p>
 
         {/* FAQ */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Preguntas Frecuentes sobre Comején en Bucaramanga
         </h2>
 

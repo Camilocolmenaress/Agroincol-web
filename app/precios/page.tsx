@@ -143,7 +143,7 @@ export default function PreciosPage() {
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
               Qué Incluye Cada Visita
             </h2>
             <p className="text-brand-gray text-body-lg mt-4 max-w-3xl mx-auto">
@@ -187,7 +187,7 @@ export default function PreciosPage() {
       <section className="section-padding">
         <div className="container-custom">
           <div className="text-center mb-10">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">Formas de Pago</h2>
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">Formas de Pago</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {paymentMethods.map((method) => {
@@ -211,7 +211,7 @@ export default function PreciosPage() {
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
               ¿Cuánto Cuesta Fumigar en Bucaramanga en 2026?
             </h2>
 
@@ -278,7 +278,7 @@ export default function PreciosPage() {
               </p>
             </div>
 
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-6">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-6">
               ¿Cómo Elegir el Plan Correcto?
             </h2>
 
@@ -320,7 +320,7 @@ export default function PreciosPage() {
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                 Solicite su Cotización Personalizada
               </h2>
               <p className="text-brand-gray text-body mt-4">

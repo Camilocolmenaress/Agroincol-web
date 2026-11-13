@@ -23,7 +23,7 @@ export default function NormativaSection({
   return (
     <section className={`section-padding ${bgColor === 'light' ? 'bg-brand-light' : 'bg-white'}`}>
       <div className="container-custom">
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">{title}</h2>
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">{title}</h2>
         <p className="text-brand-gray text-body-lg mb-8">{description}</p>
 
         {subsectionTitle && (
@@ -42,7 +42,7 @@ export default function NormativaSection({
         )}
 
         {callout && (
-          <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-6 mb-8">
+          <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-6 mb-8">
             <div className="flex items-start gap-3">
               <AlertCircle size={24} className="text-brand-orange shrink-0 mt-0.5" />
               <p className="text-brand-black text-body">{callout}</p>

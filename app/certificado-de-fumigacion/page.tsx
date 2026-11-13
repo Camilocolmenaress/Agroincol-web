@@ -144,7 +144,7 @@ export default function CertificadoFumigacionPage() {
       {/* 2. Respuesta directa (citable) */}
       <section className="section-padding bg-white">
         <div className="container-custom max-w-3xl">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Qué es el certificado de fumigación y para qué sirve?
           </h2>
           <p className="text-brand-gray text-body-lg leading-relaxed mb-4">
@@ -165,7 +165,7 @@ export default function CertificadoFumigacionPage() {
       {/* 3. Cómo obtenerlo (3 pasos) */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
             Cómo obtener su certificado en 3 pasos
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -186,7 +186,7 @@ export default function CertificadoFumigacionPage() {
       <section className="section-padding bg-white">
         <div className="container-custom grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
               Qué incluye nuestro certificado
             </h2>
             <ul className="space-y-3">
@@ -219,7 +219,7 @@ export default function CertificadoFumigacionPage() {
       {/* 5. Quién lo necesita */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
             ¿Quién necesita certificado de fumigación?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -260,7 +260,7 @@ export default function CertificadoFumigacionPage() {
       {/* 7. FAQ visible */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-10">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-10">
             Preguntas frecuentes
           </h2>
           <div className="max-w-3xl mx-auto space-y-6">
@@ -278,7 +278,7 @@ export default function CertificadoFumigacionPage() {
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
               Solicite su certificado de fumigación
             </h2>
             <p className="text-brand-gray text-body-lg mt-4">

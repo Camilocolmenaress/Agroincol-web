@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AlertTriangle, ShieldAlert, Flame, Wind, MessageCircle, Phone, Leaf, Bug, Eye } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
-import Hero from '@/components/sections/Hero';
+import HeroServicio from '@/components/recorrido/HeroServicio';
+import Galeria from '@/components/recorrido/Galeria';
+import OtrosServicios from '@/components/recorrido/OtrosServicios';
 import ProcessTimeline from '@/components/sections/ProcessTimeline';
 import ContactForm from '@/components/forms/ContactForm';
 import Button from '@/components/ui/Button';
@@ -158,22 +160,21 @@ export default function AbejasAvispasPage() {
     <>
       <SchemaMarkup schema={serviceSchema} />
       <SchemaMarkup schema={faqSchema} />
-      <Breadcrumbs items={[
+      <Breadcrumbs tono="claro" items={[
         { name: 'Inicio', href: '/' },
         { name: 'Servicios', href: '/servicios' },
         { name: 'Retiro de Abejas y Avispas' },
       ]} />
 
       {/* 1. Hero — urgencia */}
-      <Hero
-        withBreadcrumbs
+      <HeroServicio
         title="Retiro de Abejas y Avispas en Bucaramanga"
         subtitle="¿Encontró un nido en su casa o negocio? No intente retirarlo: aléjese y escríbanos por WhatsApp con una foto. Retiro seguro con equipos de protección especializados y reubicación con apicultores cuando es viable. Más de 40 años protegiendo Santander."
         badgeText="Atención prioritaria en Bucaramanga y Área Metropolitana"
         primaryCta={{ text: 'WhatsApp con foto del nido', href: BUSINESS.whatsappLink }}
         secondaryCta={{ text: 'Llamar Ahora', href: `tel:${BUSINESS.phoneRaw}` }}
-        imageSrc="/images/hero/hero-home.jpg"
-        imageAlt="Técnico de AGROINCOL con equipo de protección retirando nido de abejas en Bucaramanga"
+        objeto="gorra"
+        etiqueta="Abejas · Avispas"
       />
 
       {/* 2. Barra de urgencia */}
@@ -202,7 +203,7 @@ export default function AbejasAvispasPage() {
       {/* 3. Peligro: abejas africanizadas */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Abejas Africanizadas en Santander: por Qué un Nido es una Emergencia
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -215,9 +216,9 @@ export default function AbejasAvispasPage() {
             {dangers.map((danger, index) => {
               const Icon = danger.icon;
               return (
-                <div key={index} className="flex items-start gap-4 bg-white rounded-xl p-6 shadow-sm">
-                  <div className="bg-red-50 w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
-                    <Icon size={24} className="text-red-500" />
+                <div key={index} className="flex items-start gap-4 bg-white rounded-[24px] p-6 border border-marca-verde/15">
+                  <div className="bg-marca-menta w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon size={24} className="text-marca-verde" />
                   </div>
                   <p className="text-brand-black text-body">{danger.text}</p>
                 </div>
@@ -230,7 +231,7 @@ export default function AbejasAvispasPage() {
       {/* 4. Por qué NO retirarlo usted mismo */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Por Qué NO Debe Intentar Retirar el Nido Usted Mismo
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -241,9 +242,9 @@ export default function AbejasAvispasPage() {
             {errors.map((error, index) => {
               const Icon = error.icon;
               return (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-sm">
-                  <div className="bg-red-50 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                    <Icon size={24} className="text-red-500" />
+                <div key={index} className="bg-white rounded-[24px] p-6 border border-marca-verde/15">
+                  <div className="bg-marca-menta w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                    <Icon size={24} className="text-marca-verde" />
                   </div>
                   <h3 className="font-heading font-semibold text-brand-black text-h3 mb-2">
                     {error.title}
@@ -253,7 +254,7 @@ export default function AbejasAvispasPage() {
               );
             })}
           </div>
-          <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-6">
+          <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-6">
             <div className="flex items-start gap-3">
               <ShieldAlert size={24} className="text-brand-orange shrink-0 mt-0.5" />
               <p className="text-brand-black text-body">
@@ -269,7 +270,7 @@ export default function AbejasAvispasPage() {
       {/* 5. Qué hacer mientras llega el técnico */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Qué Hacer Mientras Llega el Técnico
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -290,7 +291,7 @@ export default function AbejasAvispasPage() {
       {/* 6. Abejas vs Avispas */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mb-6">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Abejas o Avispas? Cómo Diferenciarlas a Distancia Segura
           </h2>
           <p className="text-brand-gray text-body-lg mb-8">
@@ -298,7 +299,7 @@ export default function AbejasAvispasPage() {
             envíenos una foto por WhatsApp — nunca se acerque al nido para mirar de cerca.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-sm">
+            <div className="bg-white rounded-[24px] p-6 border border-marca-verde/15">
               <h3 className="font-heading font-semibold text-brand-black text-h3 mb-4">Abejas</h3>
               <ul className="space-y-3">
                 {[
@@ -314,7 +315,7 @@ export default function AbejasAvispasPage() {
                 ))}
               </ul>
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm">
+            <div className="bg-white rounded-[24px] p-6 border border-marca-verde/15">
               <h3 className="font-heading font-semibold text-brand-black text-h3 mb-4">Avispas</h3>
               <ul className="space-y-3">
                 {[
@@ -341,7 +342,7 @@ export default function AbejasAvispasPage() {
             <div className="bg-brand-green/10 w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
               <Leaf size={24} className="text-brand-green" />
             </div>
-            <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+            <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
               Retiro Responsable: las Abejas se Reubican Cuando es Posible
             </h2>
           </div>
@@ -374,7 +375,7 @@ export default function AbejasAvispasPage() {
       {/* 9. FAQ */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green text-center mb-12">
+          <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance text-center mb-12">
             Preguntas Frecuentes sobre Retiro de Abejas y Avispas
           </h2>
           <div className="max-w-3xl mx-auto">
@@ -391,12 +392,18 @@ export default function AbejasAvispasPage() {
         </div>
       </section>
 
+      {/* Galería "Arrastre": marcos en blanco hasta tener fotos reales */}
+      <Galeria />
+
+      {/* Otros servicios (rediseño v2) */}
+      <OtrosServicios excluir="/servicios/eliminacion-abejas-avispas" />
+
       {/* 10. CTA + Form */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2">
-              <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green">
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance">
                 No se Arriesgue: Solicite el Retiro Profesional
               </h2>
               <p className="text-brand-gray text-body mt-4">
@@ -411,7 +418,7 @@ export default function AbejasAvispasPage() {
                   '40+ años de experiencia en Santander',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brand-black text-body">
-                    <span className="text-brand-orange">✓</span> {item}
+                    <span className="punto-gel" aria-hidden /> {item}
                   </li>
                 ))}
               </ul>

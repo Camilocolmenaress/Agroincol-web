@@ -125,6 +125,7 @@ export default function Navbar() {
             rel="noopener noreferrer"
             aria-label="Cotizar por WhatsApp"
             data-cta="header-whatsapp"
+            data-cursor="WhatsApp"
             className="flex h-11 w-11 items-center justify-center rounded-full bg-marca-naranja text-white shadow-brand transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marca-naranja/50 focus-visible:ring-offset-2 md:h-12 md:w-12"
           >
             <MessageCircle size={20} fill="currentColor" aria-hidden />

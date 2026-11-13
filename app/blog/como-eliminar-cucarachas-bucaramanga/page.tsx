@@ -109,7 +109,7 @@ export default function CucarachasBucaramangaPage() {
         </p>
 
         {/* Por Qué Bucaramanga Tiene Tantas Cucarachas */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           ¿Por Qué Bucaramanga Tiene Tantas Cucarachas?
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -127,7 +127,7 @@ export default function CucarachasBucaramangaPage() {
         </p>
 
         {/* Tipos de Cucarachas */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Tipos de Cucarachas Comunes en Bucaramanga
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -144,7 +144,7 @@ export default function CucarachasBucaramangaPage() {
         </p>
 
         {/* Por Qué los Remedios Caseros No Funcionan */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Por Qué los Remedios Caseros No Funcionan a Largo Plazo
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -154,14 +154,14 @@ export default function CucarachasBucaramangaPage() {
           Las trampas adhesivas de supermercado capturan individuos sueltos pero no controlan la población. Si tiene una colonia de 200 cucarachas detrás de la nevera y una trampa captura 5, la colonia sigue intacta y reproduciéndose.
         </p>
 
-        <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
+        <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
             <strong>Dato importante:</strong> Si ve 1 cucaracha durante el día, se estima que puede haber entre 100 y 200 más ocultas en su propiedad. Las cucarachas son nocturnas — verlas de día indica que la población es tan grande que algunas son empujadas fuera de sus escondites por falta de espacio.
           </p>
         </div>
 
         {/* Control Profesional */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Cómo Funciona el Control Profesional de Cucarachas
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -184,7 +184,7 @@ export default function CucarachasBucaramangaPage() {
         </p>
 
         {/* Cuándo Llamar a un Profesional */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Cuándo es Momento de Llamar a un Profesional
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
@@ -207,21 +207,21 @@ export default function CucarachasBucaramangaPage() {
         </ul>
 
         {/* Prevención */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Prevención: Cómo Evitar que las Cucarachas Regresen
         </h2>
         <p className="text-brand-black text-body-lg leading-relaxed mb-4">
           Después del tratamiento profesional, estas prácticas ayudan a mantener su propiedad libre de cucarachas: no dejar comida expuesta ni platos sucios durante la noche, sellar la basura herméticamente y sacarla diariamente, reparar goteras y fugas (las cucarachas necesitan agua para sobrevivir), sellar grietas y espacios debajo de puertas con silicona o burletes, limpiar periódicamente detrás de la nevera y debajo de la estufa, no acumular cartón ni papel periódico (las cucarachas usan la celulosa como alimento), y revisar sifones y desagües (colocar rejillas).
         </p>
 
-        <div className="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-lg p-5 mb-8">
+        <div className="bg-white border-l-4 border-marca-naranja rounded-r-[20px] p-5 mb-8">
           <p className="text-brand-black text-body-lg leading-relaxed">
             <strong>Importante:</strong> En Bucaramanga, la prevención es especialmente crítica porque el clima nunca &quot;mata&quot; las cucarachas como en ciudades con inviernos fríos. Sin un programa de control profesional, la reinfestación es cuestión de semanas, no de meses.
           </p>
         </div>
 
         {/* FAQ */}
-        <h2 className="font-heading text-h2-mobile md:text-h2 text-brand-green mt-12 mb-4">
+        <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mt-12 mb-4">
           Preguntas Frecuentes sobre Cucarachas en Bucaramanga
         </h2>
 
