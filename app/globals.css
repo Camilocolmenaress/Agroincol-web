@@ -399,77 +399,83 @@ main:has(> [data-tienda]) {
 }
 
 /* ══ Recorrido del home (rediseño v2) ═════════════════════════════════════════════════════════
-   Geometría del aro: --d = diámetro, --top = dónde empieza el verde. El H1 siempre cae dentro
-   del verde: en celular el aro es más ancho que la pantalla. */
+   Medido contra agrumeafarm.it: el aro mide ~3/4 del ancho y empieza a media pantalla; los
+   objetos son grandes y van por un arco encima. --d diámetro, --top inicio del verde.
+   El H1 y los botones van en la cuerda verde y caben a 1280×720, 1366×768, 1440×900 y en celular. */
 .hero-recorrido {
-  --d: max(900px, 235vw);
-  --top: 104px;
-  --cab: 72px;
-  display: flex;
-  flex-direction: column;
+  --d: 232vw;
+  --top: max(40svh, 290px);
+  height: max(100svh, 620px);
 }
-@media (min-width: 768px) {
-  .hero-recorrido { --d: 1400px; --top: 210px; --cab: 88px; }
+@media (min-width: 640px) {
+  .hero-recorrido { --d: 150vw; --top: max(42svh, 330px); }
 }
 @media (min-width: 1024px) {
-  .hero-recorrido { --d: clamp(1300px, 112vw, 1800px); --top: 216px; }
+  .hero-recorrido { --d: min(78vw, 1240px); --top: max(45svh, 300px); height: max(100svh, 640px); }
 }
+.hero-recorrido .aro { top: var(--top); width: var(--d); height: var(--d); }
 .hero-recorrido .aro-base { top: calc(var(--top) + var(--d) / 2); }
+/* El lema solo se ve en la mitad de arriba del aro (la máscara no gira; el anillo sí). */
 .hero-recorrido .aro-mascara {
-  -webkit-mask-image: linear-gradient(to bottom, #000 34%, transparent 46%);
-  mask-image: linear-gradient(to bottom, #000 34%, transparent 46%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 42%);
+  mask-image: linear-gradient(to bottom, #000 30%, transparent 42%);
 }
-.hero-recorrido .aro {
-  top: var(--top);
-  width: var(--d);
-  height: var(--d);
-}
-.hero-recorrido .hero-contenido {
-  padding-top: calc(var(--top) - var(--cab) + var(--d) * 0.075 + 12px);
-  padding-bottom: 3rem;
+/* El contenido arranca debajo de la banda del lema. */
+.hero-recorrido .hero-contenido { top: calc(var(--top) + var(--d) * 0.1 + 6px); }
+.hero-recorrido .hero-h1 { font-size: clamp(1.9rem, min(8.4vw, 4.6svh), 2.6rem); }
+@media (min-width: 1024px) {
+  .hero-recorrido .hero-contenido { top: calc(var(--top) + var(--d) * 0.095 + 8px); }
+  .hero-recorrido .hero-h1 { font-size: clamp(2rem, min(3.7vw, 5.4svh), 4rem); }
 }
 
-/* Desfile: en celular, carrusel horizontal con scroll-snap debajo de los botones. */
-.desfile-orbita { order: 2; position: relative; padding-bottom: 2.5rem; }
+/* Desfile en celular: carrusel con scroll-snap en la parte de arriba, como en la referencia. */
+.desfile-orbita {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(72px + 1svh);
+  height: calc(var(--top) - 72px - 1svh);
+  display: flex;
+  align-items: center;
+}
 .desfile-lista {
   display: flex;
-  gap: 1rem;
+  width: 100%;
+  gap: 0.5rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 0 1rem;
-  justify-content: safe center;
+  padding: 0 24vw;
   scrollbar-width: none;
 }
 .desfile-lista::-webkit-scrollbar { display: none; }
-.desfile-objeto { flex: 0 0 46vw; scroll-snap-align: center; }
+.desfile-objeto { flex: 0 0 52vw; max-width: 260px; scroll-snap-align: center; }
 
-/* Escritorio: los objetos van sobre el arco del aro. --a ángulo (0° = cima), --s escala y
-   --b desenfoque por profundidad (los calcula el servidor y luego Movimiento.tsx al bajar). */
+/* Escritorio: los objetos van por un arco concéntrico al aro, por encima del borde.
+   --a ángulo (0° = cima), --s escala, --b desenfoque (servidor; Movimiento.tsx al bajar). */
 @media (min-width: 1024px) {
   .desfile-orbita {
-    order: 0;
-    position: absolute;
+    display: block;
+    inset-inline: auto;
     left: 50%;
     top: var(--top);
     width: var(--d);
     height: var(--d);
     transform: translateX(-50%);
-    padding: 0;
     pointer-events: none;
   }
-  .desfile-lista { display: block; overflow: visible; padding: 0; height: 100%; }
+  .desfile-lista { display: block; overflow: visible; padding: 0; height: 100%; width: auto; }
   .desfile-objeto {
+    --t: clamp(240px, 40svh, 400px);
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 240px;
-    margin: -120px 0 0 -120px;
+    width: var(--t);
+    max-width: none;
+    margin: calc(var(--t) / -2) 0 0 calc(var(--t) / -2);
     pointer-events: auto;
-    transform: rotate(var(--a)) translateY(calc(var(--d) / -2 - 10px)) rotate(calc(var(--a) * -1)) scale(var(--s));
+    transform: rotate(var(--a)) translateY(calc(var(--d) / -2 - var(--t) * 0.18)) rotate(calc(var(--a) * -0.55)) scale(var(--s));
     filter: blur(var(--b));
-    will-change: transform;
+    will-change: transform, filter;
   }
-  .hero-contenido { order: 1; }
 }
 
 /* El lema gira sobre el borde: una vuelta por minuto (Movimiento.tsx la acelera con el scroll). */
@@ -479,28 +485,27 @@ main:has(> [data-tienda]) {
 }
 @keyframes aro-girar { to { transform: rotate(360deg); } }
 
-/* Entrada (primera visita de la sesión, máx. 1,2 s): el contorno del aro se dibuja, el arco naranja
-   barre el fondo y caen hojas y gotas de gel hasta su lugar. Todo detrás del contenido: el H1 y
-   WhatsApp ya están desde el primer pintado. Sin data-entrada (o con reduce-motion) todo queda
-   en su estado final. */
-.entrada-barrido { opacity: 0; }
+/* Entrada (primera visita de la sesión, ≤1,2 s), detrás del contenido: el contorno del aro se
+   dibuja, el arco naranja barre el fondo y caen hojas y gotas de gel que salen por abajo. Sin
+   data-entrada o con reduce-motion no hay nada: ni piezas regadas ni barrido. */
+.entrada-barrido, .entrada-pieza { opacity: 0; }
 .aro-contorno { stroke-dasharray: 1; stroke-dashoffset: 0; }
 @media (prefers-reduced-motion: no-preference) {
   [data-entrada] .aro-contorno { animation: aro-dibuja 1.1s cubic-bezier(.2,.7,.2,1) both; }
-  [data-entrada] .entrada-barrido { animation: entrada-barre 1.1s cubic-bezier(.2,.7,.2,1) both; }
-  [data-entrada] .entrada-pieza { animation: pieza-cae 0.9s cubic-bezier(.2,.7,.2,1) both; }
+  [data-entrada] .entrada-barrido { animation: entrada-barre 1.15s cubic-bezier(.2,.7,.2,1) both; }
+  [data-entrada] .entrada-pieza { animation: pieza-cae 1s cubic-bezier(.45,.05,.55,.95) both; }
 }
 @keyframes aro-dibuja { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes entrada-barre {
-  0% { opacity: 0.95; transform: rotate(-80deg); }
-  70% { opacity: 0.9; }
-  100% { opacity: 0; transform: rotate(35deg); }
+  0% { opacity: 1; transform: translateX(-50%) rotate(-120deg); }
+  75% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-50%) rotate(40deg); }
 }
 @keyframes pieza-cae {
-  from { transform: translateY(-40vh) rotate(calc(var(--r) - 90deg)); opacity: 0; }
-  to { transform: translateY(0) rotate(var(--r)); opacity: 1; }
+  0% { transform: translateY(0) rotate(var(--r)); opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(115svh) rotate(calc(var(--r) + 160deg)); opacity: 0; }
 }
-.entrada-pieza { transform: rotate(var(--r)); }
 
 /* Separador de la marca: punto de gel (círculo naranja pequeño). */
 .punto-gel { display: inline-block; width: 0.45rem; height: 0.45rem; border-radius: 9999px; background: #F5682E; flex-shrink: 0; }

@@ -76,10 +76,12 @@ export default function Navbar() {
   }, [abierto]);
 
   const alternar = () => setAbierto((v) => !v);
+  // En el home la cabecera arranca transparente sobre el menta del hero (sin franja blanca).
+  const transparente = pathname === '/' && !conSombra && !abierto;
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 bg-white transition-shadow duration-300 ${conSombra || abierto ? 'shadow-soft' : ''}`}
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300 ${transparente ? 'bg-transparent' : 'bg-white'} ${conSombra || abierto ? 'shadow-soft' : ''}`}
     >
       <nav aria-label="Principal" className="container-custom grid h-[72px] grid-cols-[1fr_auto_1fr] items-center md:h-[88px]">
         {/* Izquierda: menú en celular; segmentos en escritorio */}

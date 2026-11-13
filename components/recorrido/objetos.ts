@@ -30,8 +30,12 @@ export function fuentes(id: string, pose: Pose) {
   };
 }
 
-// Profundidad del desfile: el objeto más lejos de la cima del aro se ve más chico y desenfocado.
+// Separación angular entre objetos en el arco del desfile.
+export const PASO_DESFILE = 30;
+
+// Profundidad del desfile: el objeto del centro, grande y nítido; los de los lados, más chicos y
+// borrosos (como en la referencia).
 export function profundidad(angulo: number) {
   const a = Math.min(Math.abs(angulo), 120);
-  return { escala: 1 - a / 260, desenfoque: Math.max(0, a - 40) / 18 };
+  return { escala: 1 - a / 140, desenfoque: Math.max(0, a - 15) / 9 };
 }

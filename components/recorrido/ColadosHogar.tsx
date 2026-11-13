@@ -40,7 +40,7 @@ export default function ColadosHogar() {
           style={{ backgroundImage: `url(${c.img})`, animationDelay: c.d, transitionDelay: c.d }}
         />
       ))}
-      <span className="colados-remate absolute right-0 top-1 whitespace-nowrap md:left-[44%] md:right-auto md:top-12 rounded-full bg-marca-verde px-4 py-2 font-display text-sm uppercase tracking-[0.06em] text-white">
+      <span className="colados-remate absolute right-0 -top-4 whitespace-nowrap md:left-[42%] md:right-auto rounded-full bg-marca-verde px-4 py-2 font-display text-sm uppercase tracking-[0.06em] text-white">
         Llegó AGROINCOL. Nos vamos.
       </span>
     </div>

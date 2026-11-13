@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { profundidad } from './objetos';
+import { profundidad, PASO_DESFILE } from './objetos';
 
 // Capa de movimiento del recorrido: mejora progresiva. Se carga cuando la página ya pintó y el
 // navegador está libre; sin JS o con reduce-motion la página se lee completa y quieta.
@@ -36,18 +36,22 @@ export default function Movimiento() {
       const ctx = gsap.context(() => {
         const mm = gsap.matchMedia();
 
-        // Desfile: al bajar, el aro lleva los objetos por su arco; el más lejano, chico y borroso.
+        // Desfile (como la referencia): el hero queda fijo mientras los objetos recorren el arco;
+        // el del centro, grande y nítido; los de los lados, chicos y borrosos.
         mm.add('(min-width: 1024px)', () => {
           const objetos = gsap.utils.toArray<HTMLElement>('.desfile-objeto');
+          if (!objetos.length) return;
           const base = objetos.map((o) => parseFloat(getComputedStyle(o).getPropertyValue('--a')) || 0);
+          const recorrido = PASO_DESFILE * Math.max(objetos.length, 2);
           const st = ScrollTrigger.create({
             trigger: '.hero-recorrido',
             start: 'top top',
-            end: 'bottom top',
+            end: `+=${Math.min(45 * objetos.length + 45, 260)}%`,
+            pin: true,
             scrub: 0.8,
             onUpdate: (self) => {
               objetos.forEach((o, i) => {
-                const a = base[i] - 75 * self.progress;
+                const a = base[i] - recorrido * self.progress;
                 const { escala, desenfoque } = profundidad(a);
                 o.style.setProperty('--a', `${a}deg`);
                 o.style.setProperty('--s', String(escala));
