@@ -176,3 +176,35 @@ Precios, blog, artículos, certificaciones, calculadora, zonas, reseña y privac
 Notas:
 - El SEO local da 92 frente a 100 en producción solo por la auditoría `robots-txt` en localhost. No es una regresión.
 - Los reportes HTML pesan unos 7,7 MB por fase. Propongo versionar solo `resumen.json` e ignorar los `.html` en git.
+
+## Resultado Fase 1 (13-nov)
+
+Preview: `agroincol-web-git-rediseno-recorrido-camilos-projects-1d68bc1f.vercel.app` (protegido con login de Vercel).
+
+- **SEO:** 0 diferencias sin aprobar en las 39 URLs. Los únicos cambios son los 4 enlaces aprobados de la cabecera.
+- **Landings:** `/lp/*` y `/tienda/*` idénticas al píxel en 390 y 1440 px. Las diferencias que quedan están por debajo del 0,4 % y vienen de los bordes del video enmascarado.
+- **Lighthouse local** (producción, 3 corridas, `main` → rama):
+
+| URL | Rendimiento | LCP | Peso |
+|---|---|---|---|
+| `/` | 90 → 91 | 3,44 → 3,39 s | 351 → 343 KB |
+| residencial | 82 → 90 | 3,78 → 3,48 s | 408 → 360 KB |
+| blog | 91 → 93 | 3,33 → 3,23 s | 395 → 336 KB |
+| zonas | 88 → 92 | 3,75 → 3,34 s | 413 → 365 KB |
+
+- **Preview con GTM contra producción** (5 corridas cada uno, mismo momento):
+
+| URL | LCP producción | LCP preview | TBT producción | TBT preview |
+|---|---|---|---|---|
+| `/` | 6,21 s | **2,59 s** | 408 ms | 1.304 ms |
+| residencial | 6,43 s | **2,59 s** | 393 ms | 593 ms |
+| blog | 6,35 s | **2,30 s** | 345 ms | 438 ms |
+| zonas | 4,74 s | 4,49 s | 308 ms | 550 ms |
+
+**Lectura de los números:**
+- El LCP baja entre 3,6 y 3,8 s en tres de las cuatro páginas. El H1 y el texto ya no arrancan invisibles.
+- El TBT del preview sale más alto. En el preview GTM bloqueó 1.007 ms, contra unos 250 ms en producción.
+- Hay dos causas probables que todavía no separo:
+  1. GTM se comporta distinto en el host vercel.app.
+  2. El render 3D corría en paralelo en la misma máquina.
+- Se repite cuando termine el render. El SEO del preview da 69 por el `noindex` que Vercel pone a todos los previews: es esperado.

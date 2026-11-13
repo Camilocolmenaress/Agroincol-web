@@ -4,6 +4,8 @@
 //
 //   node scripts/lighthouse-fase.mjs fase-0-local  http://localhost:3100
 //   node scripts/lighthouse-fase.mjs fase-0-prod   https://agroincol.com
+//   LH_QUERY='?_vercel_share=…&gtm=1' node scripts/lighthouse-fase.mjs fase-1-preview https://<preview>.vercel.app
+//     (preview protegido + GTM cargado como en producción)
 //
 // Ojo: en localhost no carga GTM (está restringido al dominio), así que los números
 // locales salen optimistas frente a producción. Compare local con local y prod con prod.
@@ -29,7 +31,7 @@ for (const path of PATHS) {
   const corridas = [];
   for (let i = 0; i < RUNS; i++) {
     const out = resolve(DIR, `${slug}-run${i}`);
-    execFileSync('npx', ['--yes', 'lighthouse@12', base + path, '--quiet', '--chrome-flags=--headless=new',
+    execFileSync('npx', ['--yes', 'lighthouse@12', base + path + (process.env.LH_QUERY ?? ''), '--quiet', '--chrome-flags=--headless=new',
       '--only-categories=performance,accessibility,seo,best-practices', '--output=json', '--output=html', `--output-path=${out}`],
       { stdio: 'ignore', timeout: 180000 });
     const r = JSON.parse(readFileSync(`${out}.report.json`, 'utf8'));
