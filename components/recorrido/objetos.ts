@@ -28,6 +28,11 @@ export const OBJETOS: Objeto3D[] = [
     alt: 'Bomba de aspersión de espalda, en 3D: control de zancudos y moscas de AGROINCOL',
     href: '/servicios/control-insectos-voladores',
   },
+  {
+    id: 'bodega',
+    alt: 'Estiba con cajas de bodega, en 3D: fumigación industrial y control de plagas para empresas de AGROINCOL',
+    href: '/servicios/fumigacion-industrial',
+  },
 ];
 
 export const objetoPorId = (id: string) => OBJETOS.find((o) => o.id === id);

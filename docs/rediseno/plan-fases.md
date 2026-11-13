@@ -284,3 +284,40 @@ Preview: `agroincol-web-git-rediseno-recorrido-camilos-projects-1d68bc1f.vercel.
   1. La revisión de GTM que ya está aprobada.
   2. Probar CSS crítico en línea: hoy hay dos CSS que bloquean el render, unos 85 KB.
   3. Sacar el lema del aro de la carrera por el LCP: que aparezca después del H1, sin opacidad en el H1.
+
+## Trabajo autónomo (13-nov, noche): hero rehecho y fases 4 y 5
+
+Camilo: "Se ve horrible, ese hero… compara con la referencia con Playwright. Termina el trabajo, completamente autónomo."
+
+**Hero, medido contra agrumeafarm.it.** Capturé la referencia en vivo con Playwright a 1440×900, 1280×720 y 390×844.
+
+| Qué | Referencia | Hero viejo | Hero nuevo |
+|---|---|---|---|
+| Aro | ~3/4 del ancho, desde media pantalla | Más ancho que la pantalla ("loma") | `min(78vw, 1240px)`, desde el 45 % del alto |
+| Dentro del aro | Solo el texto curvo | Píldora, H1, párrafo, 2 botones, reseñas, hojas regadas | Lema curvo, H1 y botones (WhatsApp, Llamar), y las reseñas. La píldora y el párrafo bajan justo después, con el mismo texto. |
+| Objetos | 3–4 grandes por un arco; el hero queda fijo mientras desfilan | 1 casa chica al borde | Arco concéntrico al aro, objetos de 40svh, el hero fijo (ScrollTrigger `pin`) durante el desfile |
+| Fondo | Crema | Blanco y cabecera blanca | Menta En Paz y cabecera transparente en el home |
+
+- **WhatsApp en el primer pantallazo:** borde inferior del botón en y = 735 (1440×900), 614 (1280×720), 649 (1366×768), 604 (390×844) y 549 (360×740).
+- **Naranja en el primer pantallazo:** 3,4 % (1440), 3,9 % (1280) y 8,0 % (390). Todos bajo el tope de 10 %.
+- **Entrada:** las piezas caen y salen por abajo; ya no quedan regadas.
+
+**Fase 4, plantilla de servicio en las 9 rutas:**
+- `HeroServicio`: el H1 de siempre gigante, con el objeto 3D cruzando su última línea y etiquetas laterales.
+- FAQ con `<details>`.
+- Íconos de riesgo a verde y menta.
+- Galería en blanco.
+- "Otros servicios" con solo los nombres.
+
+**Fase 5, resto del sitio:**
+- Hero compartido en verde liso con patrón gel.
+- Títulos, viñetas y tarjetas al estilo v2.
+- El texto pequeño en naranja pasa a verde con subrayado naranja.
+- Cursor y fundido verde entre páginas en todo el sitio v2.
+- SEO: 0 diferencias en estas páginas.
+
+**SEO pendiente de aprobación:** ver `docs/rediseno/seo-cambios-pendientes.md` (home y 9 servicios).
+
+**3D:** el agente produce los 9 objetos en el Blender en vivo y registra cada uno en `~/Desktop/agroincol-3d/ESTADO.md`. Para integrar uno:
+1. `scripts/3d-web.sh <id> B frente34 picado`
+2. `python3 -I scripts/integrar-objeto.py <id> "<alt>" <href>`
