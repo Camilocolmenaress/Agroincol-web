@@ -47,7 +47,7 @@ export default function HeroServicio({ title, subtitle, badgeText, primaryCta, s
           </span>
           {o ? (
             <div className="foco-caida w-[min(56vw,360px)] -rotate-[8deg]">
-              <Objeto objeto={o} decorativo sizes="(min-width: 768px) 360px, 56vw" className="h-auto w-full" />
+              <Objeto objeto={o} decorativo prioridad="alta" sizes="(min-width: 768px) 360px, 56vw" className="h-auto w-full" />
             </div>
           ) : (
             <span className="block h-10" aria-hidden />

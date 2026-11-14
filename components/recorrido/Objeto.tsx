@@ -10,10 +10,12 @@ type Props = {
   className?: string;
   // Si es decorativo (el mismo objeto ya está descrito en otra parte de la página), alt vacío.
   decorativo?: boolean;
+  // Visible en el primer pantallazo: carga inmediata (y prioridad alta si es el LCP).
+  prioridad?: 'alta' | 'visible';
 };
 
-// Render 3D con AVIF y respaldo WebP. Nunca con prioridad: el LCP del sitio es el H1 de texto.
-export default function Objeto({ objeto, pose = 'frente34', sizes, className = '', decorativo = false }: Props) {
+// Render 3D con AVIF y respaldo WebP. Por defecto en diferido; los del primer pantallazo, no.
+export default function Objeto({ objeto, pose = 'frente34', sizes, className = '', decorativo = false, prioridad }: Props) {
   const f = fuentes(objeto.id, pose);
   return (
     <picture>
@@ -25,7 +27,8 @@ export default function Objeto({ objeto, pose = 'frente34', sizes, className = '
         alt={decorativo ? '' : objeto.alt}
         width={512}
         height={512}
-        loading="lazy"
+        loading={prioridad ? 'eager' : 'lazy'}
+        fetchPriority={prioridad === 'alta' ? 'high' : undefined}
         decoding="async"
         draggable={false}
         className={className}
