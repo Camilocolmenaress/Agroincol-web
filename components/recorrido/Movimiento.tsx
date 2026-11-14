@@ -23,6 +23,8 @@ export default function Movimiento() {
         const { default: Lenis } = await import('lenis');
         if (cancelado) return;
         const lenis = new Lenis({ lerp: 0.1 });
+        // La cabecera lo detiene con el menú abierto (si no, la página de atrás se desplaza).
+        (window as Window & { __lenis?: { stop: () => void; start: () => void } }).__lenis = lenis;
         lenis.on('scroll', ScrollTrigger.update);
         const tic = (t: number) => lenis.raf(t * 1000);
         gsap.ticker.add(tic);
@@ -30,6 +32,7 @@ export default function Movimiento() {
         quitarLenis = () => {
           gsap.ticker.remove(tic);
           lenis.destroy();
+          delete (window as Window & { __lenis?: unknown }).__lenis;
         };
       }
 

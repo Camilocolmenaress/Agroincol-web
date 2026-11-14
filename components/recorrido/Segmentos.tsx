@@ -109,7 +109,7 @@ export default function Segmentos() {
                       <span className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden>→</span>
                     </span>
                     {objeto && (
-                      <span className="segmento-objeto pointer-events-none absolute -right-8 -top-24 hidden w-36 md:block" aria-hidden>
+                      <span className="segmento-objeto pointer-events-none absolute -right-14 -top-28 hidden w-32 md:block" aria-hidden>
                         <Objeto objeto={objeto} decorativo sizes="192px" className="h-auto w-full" />
                       </span>
                     )}

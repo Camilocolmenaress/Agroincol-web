@@ -67,10 +67,14 @@ export default function Navbar() {
   useEffect(() => {
     if (!abierto) return;
     document.body.style.overflow = 'hidden';
+    // Desplazamiento inercial del home (Movimiento.tsx): se detiene mientras el menú está abierto.
+    const lenis = (window as Window & { __lenis?: { stop: () => void; start: () => void } }).__lenis;
+    lenis?.stop();
     const alTeclear = (e: KeyboardEvent) => e.key === 'Escape' && setAbierto(false);
     window.addEventListener('keydown', alTeclear);
     return () => {
       document.body.style.overflow = '';
+      lenis?.start();
       window.removeEventListener('keydown', alTeclear);
     };
   }, [abierto]);
@@ -136,6 +140,7 @@ export default function Navbar() {
       {/* Panel del menú: en el DOM siempre (SEO), visible solo al abrir. */}
       <div
         id="menu-sitio"
+        data-lenis-prevent
         className={`fixed inset-x-0 bottom-0 top-[72px] overflow-y-auto bg-marca-verde md:top-[88px] ${abierto ? 'block motion-safe:animate-fade-in-up' : 'hidden'}`}
       >
         <div

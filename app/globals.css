@@ -405,13 +405,19 @@ main:has(> [data-tienda]) {
 .hero-recorrido {
   --d: 232vw;
   --top: max(40svh, 290px);
-  height: max(100svh, 620px);
+  /* Crece con su contenido (pantallas bajas, zoom de texto): nada se corta. */
+  min-height: max(100svh, 620px);
 }
 @media (min-width: 640px) {
   .hero-recorrido { --d: 150vw; --top: max(42svh, 330px); }
 }
 @media (min-width: 1024px) {
-  .hero-recorrido { --d: min(78vw, 1240px); --top: max(45svh, 300px); height: max(100svh, 640px); }
+  .hero-recorrido { --d: min(78vw, 1240px); --top: max(45svh, 300px); min-height: max(100svh, 640px); }
+}
+/* Pantallas bajas (celular horizontal): aro más chico y arriba, sin carrusel de objetos. */
+@media (max-height: 520px) and (max-width: 1023px) {
+  .hero-recorrido { --d: 100vw; --top: 96px; min-height: 100svh; }
+  .hero-recorrido .desfile-orbita { display: none; }
 }
 .hero-recorrido .aro { top: var(--top); width: var(--d); height: var(--d); }
 .hero-recorrido .aro-base { top: calc(var(--top) + var(--d) / 2); }
@@ -420,11 +426,11 @@ main:has(> [data-tienda]) {
   -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 42%);
   mask-image: linear-gradient(to bottom, #000 30%, transparent 42%);
 }
-/* El contenido arranca debajo de la banda del lema. */
-.hero-recorrido .hero-contenido { top: calc(var(--top) + var(--d) * 0.1 + 6px); }
+/* El contenido arranca debajo de la banda del lema (en flujo: si crece, la sección crece). */
+.hero-recorrido .hero-contenido { padding-top: calc(var(--top) + var(--d) * 0.1 + 6px); padding-bottom: 3.5rem; }
 .hero-recorrido .hero-h1 { font-size: clamp(1.9rem, min(8.4vw, 4.6svh), 2.6rem); }
 @media (min-width: 1024px) {
-  .hero-recorrido .hero-contenido { top: calc(var(--top) + var(--d) * 0.095 + 8px); }
+  .hero-recorrido .hero-contenido { padding-top: calc(var(--top) + var(--d) * 0.095 + 8px); padding-bottom: 4.5rem; }
   .hero-recorrido .hero-h1 { font-size: clamp(2rem, min(3.7vw, 5.4svh), 4rem); }
 }
 

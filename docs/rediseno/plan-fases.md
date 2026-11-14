@@ -391,3 +391,30 @@ Modelados en vivo en el Blender de Camilo por MCP y renderizados en cola por lí
 - Con GTM, cada URL alterna entre corridas de ~70 y de ~95. La mediana depende de cuántas corridas rápidas caen, y en el home de producción cayeron 3 de 5.
 - La medida confiable es la local (`main` contra rama en la misma máquina, sin GTM).
 - En producción, el LCP lo domina GTM (502 KB). Por eso la revisión de GTM sigue siendo la tarea que más mueve la velocidad.
+
+### Verificación final, segunda pasada (13-nov, noche)
+
+**Pantallas cortas.** El hero crece con su contenido (antes tenía alto fijo y el contenido en posición absoluta).
+
+| Pantalla | Resultado |
+|---|---|
+| 320×568 | WhatsApp en y = 562, dentro de los 568 de alto |
+| 375×667 | Todo dentro del primer pantallazo |
+| 844×390 (celular horizontal) | Aro chico y sin carrusel de objetos; WhatsApp en y = 350 |
+| Zoom de texto al 200 % | Nada se corta; la sección crece |
+
+**Menú con el desplazamiento inercial.** Lenis se detiene mientras el menú está abierto. Antes la página de atrás se movía con la rueda.
+
+**Anclas.** `#contacto` deja el formulario a la vista, a 96 px del borde, aunque el hero esté fijo durante el desfile.
+
+**Aprobaciones inferidas.** Varias entradas de `seo-cambios-aprobados.json` las deduje de D3 y no son una aprobación literal:
+- los 12 enlaces duplicados que salen junto con sus H3;
+- el conteo de palabras del home (1.153), que incluye el remate de Los Colados.
+
+Camilo debe confirmarlas.
+
+**Decisiones mías por confirmar:**
+- **Destinos de los enlaces del desfile:** gel y caja a comercial, acta a `/certificado-de-fumigacion`, gorra a abejas.
+- **El hero queda fijo unas 2,6 pantallas** mientras pasan los 10 objetos.
+
+La evidencia contra la referencia está en `docs/rediseno/comparacion-agrumea/`.

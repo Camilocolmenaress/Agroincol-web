@@ -111,7 +111,7 @@ export default function HeroRecorrido() {
         </div>
 
         {/* Dentro del verde: el H1 y los botones. */}
-        <div className="hero-contenido absolute inset-x-0 z-[3] flex flex-col items-center px-4 text-center">
+        <div className="hero-contenido relative z-[3] flex flex-col items-center px-4 text-center">
           <h1 className="hero-h1 max-w-[19ch] text-balance uppercase leading-[0.95] tracking-[-0.02em] text-white">
             Fumigación y Control de Plagas en Bucaramanga
           </h1>
