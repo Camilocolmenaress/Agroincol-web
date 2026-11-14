@@ -41,7 +41,7 @@ export function geometria(G: number, alto: number, n: number, sinTope = false): 
   // Nuestros objetos son cuadrados (los frascos de la referencia, de 630×1013): la caja ocupa casi
   // todo el paso y se limita por el alto para que el central (×1,35) no se salga de la pantalla.
   let u = N * (movil ? 1.3 : 0.95);
-  const tope = alto * (movil ? 0.36 : 0.46);
+  const tope = alto * (movil ? 0.36 : alto < 520 ? 0.36 : 0.46);
   if (!sinTope && u > tope) u = tope;
   return { G, movil, N, u, F: n * N };
 }

@@ -441,3 +441,41 @@ Camilo rechazó el hero y la página ("se ve feo, apretado, sin jerarquía; no d
 3. Página de servicio con la estructura de la página de producto.
 4. Resto del home.
 5. Familia de objetos y giro 3D.
+
+### Resultado: primera pantalla (selector), 14-nov
+
+El código está en `components/recorrido/Selector.tsx`, `SelectorMotor.tsx` y `selector/{geometria,vuelo}.ts`. La evidencia está en `docs/rediseno/comparacion-selector/`.
+
+**Mecánica medida contra la referencia** (mismos gestos, 1440×900)
+
+| Medida | Referencia | AGROINCOL |
+|---|---|---|
+| Una muesca de rueda (100) | 113 px | 114 px |
+| % del recorrido a los 257 ms | 42 % | 42 % |
+| Se detiene a los | 2,29 s | 2,30 s |
+| Giro del lema por cada 100 px | 1,22° | 1,21° |
+| Deriva quieta en 4 s | 0,1 px | 0,1 px |
+
+Las escalas por posición también coinciden.
+
+**Comportamiento verificado** (Chrome y WebKit, el motor de Safari)
+- **Vuelo del objeto** a su servicio (casa → residencial), en escritorio y con toque en celular. Al volver atrás, la fila queda entera.
+- **`/#contacto` por carga directa:** cae en el formulario.
+- **Celular:** el gesto vertical mueve la fila y la página sigue al terminar la vuelta.
+- **Teclado:** el foco centra el objeto y las flechas pasan al vecino; la ventana nunca se desplaza.
+- **Sin JS:** se ve igual, con la posición de reposo pintada por el servidor.
+- **Reducir movimiento:** no fija la pantalla.
+- **Naranja (medido en Chrome):** 3,8 % en reposo y 1,4 % a mitad del recorrido a 1440; 5,3 % a 390. En WebKit se ve igual, pero la medición automática de color falla con sus capturas.
+- **Pantallas bajas:** en celular horizontal la fila baja para no montarse en el H1. A 1280×650 cabe completo.
+- **Zoom de texto al 200 %:** el H1 crece y la fila no lo tapa.
+
+**SEO.** Sin diferencias nuevas fuera de las que ya estaban pendientes. WhatsApp, Llamar y reseñas pasan a la franja verde de después, con el mismo texto y el mismo `href`.
+
+**LCP simulado en celular: 3,9 s.** Antes era 3,54 s en la rama y 3,36 s en `main`.
+- Es una regresión que bloquea el merge.
+- El LCP observado sin limitar la red ni la CPU es de 0,09 s. La diferencia sale del modelo de simulación de Lighthouse (2,6 s de "retraso de render").
+- Precargar la imagen del centro lo empeoró (4,2 s) y se revirtió.
+
+**Pendiente de Camilo:** cuánto dura la pantalla fijada. Por defecto es una vuelta completa, unas 3,2 pantallas a 1440; con `?vuelta=0.6` son unas 1,9.
+
+**Falta construir:** el precargador, el menú en escalera, las transiciones, la plantilla de servicio, el resto del home y el giro 3D de los objetos.

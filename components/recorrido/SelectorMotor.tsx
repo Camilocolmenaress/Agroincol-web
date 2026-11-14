@@ -41,6 +41,7 @@ export default function SelectorMotor() {
     let recorrido = 0; // px de scroll que dura la pantalla fijada
     let origen = 0; // scroll en que empieza la pista
     let v = 0;
+    let filaY = 0; // eje de la fila en coordenadas de la sección (reacción local al puntero)
     // Resortes de inclinación por objeto (cada uno responde distinto, como en la referencia).
     const resortes = items.map((_, i) => ({ val: 0, vel: 0, k: 70 * (1 - 0.15 + 0.3 * ((i * 0.618034) % 1)) }));
 
@@ -54,6 +55,7 @@ export default function SelectorMotor() {
       recorrido = quieto ? 0 : (g.F * vuelta) / C.ganancia;
       pista.style.height = `calc(100svh + ${recorrido}px)`;
       origen = pista.getBoundingClientRect().top + scrollY;
+      filaY = parseFloat(getComputedStyle(seccion.querySelector('.sel-fila')!).top) || seccion.clientHeight * 0.55;
     };
     medir();
     seccion.dataset.motor = '';
@@ -206,8 +208,6 @@ export default function SelectorMotor() {
       }
       seccion.style.setProperty('--giro', `${(H * (g.movil ? C.giroLemaMovil : C.giroLema)).toFixed(3)}deg`);
 
-      // Eje de la fila en coordenadas de la sección, para la reacción local al puntero.
-      const filaY = seccion.clientHeight * (g.movil ? 0.47 : 0.55);
       const cos = Math.cos((ANGULO_FILA * Math.PI) / 180), sin = Math.sin((ANGULO_FILA * Math.PI) / 180);
       const lx = (punteroX - g.G / 2) * cos + (punteroY - filaY) * sin;
       const ly = -(punteroX - g.G / 2) * sin + (punteroY - filaY) * cos;

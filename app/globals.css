@@ -404,13 +404,27 @@ main:has(> [data-tienda]) {
    (SelectorMotor.tsx) toma el control sin salto. --u caja del objeto, --fila eje de la fila,
    --d diámetro de la cúpula, --cima donde empieza el verde. */
 .sel-pista { position: relative; height: 100svh; }
+/* El recorrido fijado se declara en CSS (no lo agrega el JS después del primer pintado), para que
+   un enlace a /#contacto caiga donde debe. Una vuelta = 10 pasos / ganancia 1,15: 2 anchos de
+   pantalla en escritorio, 3,667 en tablet y 3,333 en celular (geometria.ts). */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .sel-pista { height: calc(100svh + 200vw); }
+}
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) and (max-width: 1024px) {
+  .sel-pista { height: calc(100svh + 366.67vw); }
+}
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) and (max-width: 480px) {
+  .sel-pista { height: calc(100svh + 333.33vw); }
+}
 .sel {
   --u: 21.85vw; --fila: 55%; --d: 80vw; --radio: 15vw; --cima: 45%; --sello: 64vw; --sello-y: 6vw;
-  position: sticky; top: 0; height: 100svh; min-height: 520px; overflow: hidden;
+  position: sticky; top: 0; height: 100svh; overflow: hidden;
   background: #E1EBE3; touch-action: pan-y;
   -webkit-user-select: none; user-select: none;
 }
 @media (max-width: 1024px) { .sel { --u: min(40vw, 46svh); --fila: 52%; --d: 96vw; --radio: 20vw; --cima: 50%; --sello: 84vw; --sello-y: 8vw; } }
+/* Pantallas bajas (celular en horizontal): la fila baja para no montarse en el H1. */
+@media (max-height: 520px) { .sel { --fila: 66%; --cima: 60%; } .sel-h1 { top: 76px; } }
 @media (max-width: 480px) { .sel { --u: min(49.8vw, 36svh); --fila: 45%; --d: 124vw; --radio: 30vw; --cima: 57%; --sello: 118vw; --sello-y: 9vw; } }
 
 .sel-h1 {
