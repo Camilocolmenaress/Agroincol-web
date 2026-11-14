@@ -11,17 +11,18 @@ export type Objeto3D = {
   href: string;
 };
 
-// Orden = orden del desfile del hero (el del centro arranca nítido).
+// Orden = orden del desfile del hero: el 2.º arranca en la cima del aro (nítido) y el resto
+// entra por la derecha al bajar. En celular, el carrusel empieza por el primero.
 export const OBJETOS: Objeto3D[] = [
-  {
-    id: 'cocina',
-    alt: 'Cocina de restaurante con estufa y ollas, en 3D: control de plagas para restaurantes de AGROINCOL',
-    href: '/servicios/fumigacion-restaurantes',
-  },
   {
     id: 'casa',
     alt: 'Casa santandereana con techo de teja, en 3D: fumigación para hogares de AGROINCOL',
     href: '/servicios/fumigacion-residencial',
+  },
+  {
+    id: 'cocina',
+    alt: 'Cocina de restaurante con estufa y ollas, en 3D: control de plagas para restaurantes de AGROINCOL',
+    href: '/servicios/fumigacion-restaurantes',
   },
   {
     id: 'bomba',
@@ -44,9 +45,24 @@ export const OBJETOS: Objeto3D[] = [
     href: '/servicios/control-plagas-comercial',
   },
   {
+    id: 'aplicador',
+    alt: 'Aplicador de gel en jeringa, en 3D: tratamiento de comején y termitas de AGROINCOL',
+    href: '/servicios/control-comejen-termitas',
+  },
+  {
     id: 'caja',
     alt: 'Caja del kit de bienvenida para empresas con el logo de AGROINCOL, en 3D: control de plagas comercial',
     href: '/servicios/control-plagas-comercial',
+  },
+  {
+    id: 'acta',
+    alt: 'Acta de hallazgos con sello y código QR, en 3D: el documento que AGROINCOL entrega después de cada servicio',
+    href: '/certificado-de-fumigacion',
+  },
+  {
+    id: 'gorra',
+    alt: 'Gorra blanca con el símbolo de AGROINCOL bordado, en 3D: técnicos con equipo de protección para retiro de abejas y avispas',
+    href: '/servicios/eliminacion-abejas-avispas',
   },
 ];
 

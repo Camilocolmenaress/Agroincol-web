@@ -71,8 +71,8 @@ function Entrada() {
 }
 
 export default function HeroRecorrido() {
-  const n = OBJETOS.length;
-  const centro = (n - 1) / 2;
+  // El segundo objeto arranca en la cima; el primero a su izquierda y el resto a la derecha.
+  const centro = Math.min(1, OBJETOS.length - 1);
   return (
     <>
       <section className="hero-recorrido relative isolate overflow-hidden bg-marca-menta">
