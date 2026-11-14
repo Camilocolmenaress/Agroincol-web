@@ -1,0 +1,201 @@
+
+######## /en  (11 palabras)
+{"title":"Agrumea Farm | Jams, pestos and flavours of Sicily","desc":"Agrumea Farm transforms Sicilian citrus fruits, other fruits and produce into artisanal jams, pestos and preserves with an authentic flavour"}
+H1 [jar-slider]: Agrumea Farm: Sicilian artisan marmalades, spreads and preserves
+P [jar-slider]: Scroll to discover
+IMGS:
+(sin alt) <back-slider-home.svg>
+(sin alt) <circle-text-en.svg>
+Smeraldo - Pistachio pesto <ahvhgweQX7-eWdJF_Pesto-salato_result.webp?auto=for>
+Sliced Orange Marmalade <ahvgwQeQX7-eWdIy_arancia_result.webp?auto=format%2>
+Agrumea Farm - Sicilian Caponata <ahvhTgeQX7-eWdI0_caponata_result.webp?auto=format%>
+Agrumea Farm - Iblean Red Pesto <ahvhfQeQX7-eWdI__pesto-rosso_result.webp?auto=form>
+Extra Strawberry and Goji Berry Jam <ahvheAeQX7-eWdI6_fragole_result.webp?auto=format%2>
+Agrumea Farm - Crema splamabile al pistacchio <ahvhfweQX7-eWdJB_pesto_result.webp?auto=format%2Cc>
+GELSI NERI <ahvhegeQX7-eWdI8_gelsi_result.webp?auto=format%2Cc>
+Agrumea Farm - Sweet and Sour Onions <ahvhdQeQX7-eWdI3_cipolla_result.webp?auto=format%2>
+Mennullata - Almond Spread <ahvhfAeQX7-eWdI-_mandorla_result.webp?auto=format%>
+Extra Pear and Cinnamon Jam <ahvhgQeQX7-eWdJD_pera_result.webp?auto=format%2Cco>
+
+######## /en/dispensa  (345 palabras)
+{"title":"Sicilian jams, pestos and preserves | Agrumea Farm","desc":"Discover Agrumea’s products: jams, pestos, spreads and artisan preserves made in Sicily using fruit, citrus fruits and carefully selected ingredients."}
+H1 [page-hero]: Pantry
+H2 [page-hero]: Our land, one jar at a time.
+P [page-intro]: We have selected the finest of our harvests to craft a line of ready-to-enjoy delicacies. La dispensa is a showcase of our artisanal creations - a signature pantry where the purity of our fruit meets only the finest ingredients.
+H2 [product-section]: Marmelade & Jams
+P [product-section]: Sicilian artisanal marmalades and jams prepared the traditional way: pulp, peel and sugar slowly cook together to preserve their original colours and aromas, with a touch of innovation. Enjoy them at breakfast with warm bread, or pair them with aged cheeses and white meats.
+P [product-section]: Available weights
+LI [product-section]: 240g
+LI [product-section]: 1.2kg
+H2 [product-section]: Spreadable creams
+P [product-section]: The art of transformation reaches its most indulgent expression. Our Sicilian artisanal creams are made through a slow process that enhances the finest qualities of pistachio and almond, blending them with creamy bases of the highest quality.
+LI [product-section]: 190g
+LI [product-section]: 1kg
+LI [product-section]: 3kg
+H2 [product-section]: Savoury
+P [product-section]: Here, the freshness of Sicilian citrus fruits meets the richness of the vegetable garden: from marmalades made with our finest fruits to pestos and pâtés prepared with selected vegetables, sun-dried tomatoes and fleshy olives. Each jar contains a recipe designed to preserve the integrity of the raw ingredients, bringing to the table the scent and warmth of a day in the countryside. Ideal as pasta sauces, aperitif snacks and toppings for gourmet bruschetta.
+H2 [product-section]: Mono Pack
+P [product-section]: We know that breakfast is one of the most memorable moments of a guest’s stay. That is why we have captured the freshness of our fruits in an elegant and refined single-serve format. An Agrumea line dedicated to high-end hospitality, where the artisanal quality of our Sicilian jams and marmalades meets the practicality required by professional service. Bring the sunshine of our citrus grove directly to your guests’ table, ensuring hygiene, freshness and an unforgettable flavour from the very first taste.
+SPAN [product-section]: Product
+SPAN [product-section]: Shelf life
+SPAN [product-section]: Weight
+SPAN [product-section]: Orange Marmalade
+SPAN [product-section]: 36 months
+SPAN [product-section]: 30g
+SPAN [product-section]: Mandarin Marmalade
+SPAN [product-section]: Extra Strawberry Jam
+SPAN [product-section]: Extra Cherry Jam
+SPAN [product-section]: Extra Apricot Jam
+SPAN [product-section]: Extra Fig Jam
+SPAN [product-section]: Zagara Honey
+SPAN [product-section]: Pistachio Spread
+SPAN [product-section]: 18 months
+SPAN [product-section]: Almond Spread
+SPAN [product-section]: Hazelnut Spread
+IMGS:
+A Sicilian lunch featuring produce from Agrumea Farm <aiF5XQeQX7-eWvFc_foto_result.webp?auto=format%2Cco>
+Picnic with Sicilian produce – Jams and marmalades <aiHvzQeQX7-eWwLN_picnic2_result.webp?auto=format%2>
+Orange Marmalade <aiHjEweQX7-eWwIw_Frame42_result.webp?auto=format%2>
+Strawberry and Goji Berry <aiHltAeQX7-eWwJL_fragole_result.webp?auto=format%2>
+Extra Black Mulberry Jam <aiHkXgeQX7-eWwI5_gelsineri_result.webp?auto=format>
+Pear and Cinnamon <aiHmlweQX7-eWwJR_pera_result.webp?auto=format%2Cco>
+Pistachio Cream <aj0umFbRV8_Qf4LH_aiRHEgeQX7-eW8K6_prestorosso_resu>
+Almond Spread <aj0vFVbRV8_Qf4MP_aiRHEgeQX7-eW8K6_prestorosso_resu>
+(sin alt) <aiPUVweQX7-eW77T_fondo_salati_result.webp?auto=for>
+Sughi, patè e salse con ingredienti siciliani <aiPUYAeQX7-eW77U_primopianosalati_result.webp?auto>
+Pistachio Pesto <aiRE7geQX7-eW8Ku_smaraldo_result.webp?auto=format%>
+Sicilian Caponata <aiRGHgeQX7-eW8K0_sinfonia_result.webp?auto=format%>
+Iblean Red Pesto <aiRHEgeQX7-eW8K6_prestorosso_result.webp?auto=form>
+Sweet and Sour Onions <aiRFeQeQX7-eW8Kx_cipollsa_result.webp?auto=format%>
+Single-serve flavours for breakfasts in hotels and B&Bs <aiSJmgeQX7-eW8Qx_monodose.webp?auto=format%2Ccompr>
+Sicilian jams, pâtés and sauces, all locally sourced <aiUYyAeQX7-eW8UX_immaginefinale_result.webp?auto=f>
+
+######## /en/dispensa/mennulata  (51 palabras)
+{"title":"Almond Spread | Agrumea Farm","desc":"Agrumea Farm almond spread, sweet and rich, containing 40% almonds. Ideal for croissants, tarts and crêpes."}
+A [product-hero]: Spreadable Creams
+P [page-intro]: Sweetly flavored and enveloping. Spreadable texture.
+P [product-meta]: Useful tips
+P [product-meta]: Delicious for filling croissants, tarts or crepes. Keep away from heat sources and direct sunlight. After opening, store in the refrigerator and consume within 3-4 days.
+P [product-meta]: Available weights
+LI [product-meta]: 30g
+LI [product-meta]: 190g
+LI [product-meta]: 1kg
+LI [product-meta]: 3kg
+P [product-meta]: Shelf life
+P [product-meta]: 18 months
+P [photo-slider]: Use the left and right arrow keys to browse the photos.
+H2 [other-products]: The other products
+IMGS:
+Mennullata - Almond Spread <ahvhfAeQX7-eWdI-_mandorla_result.webp?auto=format,>
+Agrumea Farm - Mennullata - Almond Spread <ajv3OFbRV8_Qf1CD_mennullaata_result.webp?auto=form>
+Creme dolci spalmabili <ajv3sVbRV8_Qf1DQ_Frame85_result.webp?auto=format%2>
+Creme dolci spalmabili <ajvwJVbRV8_Qf00p_Frame82.jpg?auto=format%2Ccompres>
+Pistachio Cream <aj0umFbRV8_Qf4LH_aiRHEgeQX7-eW8K6_prestorosso_resu>
+Pistachio Pesto <aiRE7geQX7-eW8Ku_smaraldo_result.webp?auto=format%>
+Orange Marmalade <aiHjEweQX7-eWwIw_Frame42_result.webp?auto=format%2>
+Sicilian Caponata <aiRGHgeQX7-eW8K0_sinfonia_result.webp?auto=format%>
+Iblean Red Pesto <aiRHEgeQX7-eW8K6_prestorosso_result.webp?auto=form>
+Strawberry and Goji Berry <aiHltAeQX7-eWwJL_fragole_result.webp?auto=format%2>
+Extra Black Mulberry Jam <aiHkXgeQX7-eWwI5_gelsineri_result.webp?auto=format>
+Sweet and Sour Onions <aiRFeQeQX7-eW8Kx_cipollsa_result.webp?auto=format%>
+Pear and Cinnamon <aiHmlweQX7-eWwJR_pera_result.webp?auto=format%2Cco>
+
+######## /en/produzione  (291 palabras)
+{"title":"Citrus and Dried Fruit Production | Agrumea Farm","desc":"Discover Agrumea Farm agricultural production: Sicilian citrus fruits, almonds and pistachios, carefully grown and available according to se"}
+H1 [page-hero]: Production
+P [page-intro]: Our daily life is made of fragrant citrus fruits, freshly harvested almonds and emerald green pistachios, we respect our land and its rhythms. We cultivate, transform and preserve with the same care, generation after generation. This is Agrumea Farm.
+H2 [product-section]: Citrus Fruits
+H3 [product-section]: Crates / Box da: 10Kg
+SPAN [product-section]: Product
+SPAN [product-section]: Availability
+SPAN [product-section]: Navel Oranges for Fresh Consumption
+SPAN [product-section]: November 20 — January 15
+SPAN [product-section]: Navel Oranges for Juicing
+SPAN [product-section]: Moro Oranges for Fresh Consumption
+SPAN [product-section]: January 15 — February 28
+SPAN [product-section]: Moro Oranges for Juicing
+SPAN [product-section]: Siracusa Femminello Lemon for Fresh Consumption
+SPAN [product-section]: November 15 — April 15
+SPAN [product-section]: Late Ciaculli Mandarin for Fresh Consumption
+SPAN [product-section]: Pomegranate var. Wonderful and var. Dente di Cavallo
+SPAN [product-section]: October 01 — November 31
+P [photo-slider]: Use the left and right arrow keys to browse the photos.
+H2 [product-section]: Pistachios & Almonds
+P [product-section]: Our dried fruits consist of almonds and pistachios. Among our almonds, we offer the Tuono variety: sweet, fragrant and versatile, telling the story of authentic Sicily. Our Sicilian pistachio, grown on volcanic soils rich in minerals, is harvested following the natural rhythms of the plant
+H3 [product-section]: VACUUM-PACKED / AVAILABLE ALL YEAR ROUND
+SPAN [product-section]: Weight
+SPAN [product-section]: Pcs x Ctn
+SPAN [product-section]: Shelled Almonds
+SPAN [product-section]: 500g
+SPAN [product-section]: 12
+SPAN [product-section]: Shelled Pistachios
+SPAN [product-section]: 1kg
+IMGS:
+Production of Sicilian citrus fruits and nuts <aiwEEalQnVZVESdk_limoni_result.webp?auto=format%2C>
+(sin alt) <aj06EVbRV8_Qf4Yp_Frame86_result.webp?auto=format%2>
+(sin alt) <aj06EVbRV8_Qf4Yq_Frame87_result.webp?auto=format%2>
+(sin alt) <GJcS5EfIPn_hXgmJ_piantaagrumi_result.webp?auto=for>
+Mandorla sgusciata <lleh6MQ6zt474MMc_mandorla_result.webp?auto=format%>
+(sin alt) <aj06ElbRV8_Qf4Yr_Frame88_result.webp?auto=format%2>
+Pistacchio sgusciato <liKtQXWakwhAh1BC_pistacchio_result.webp?auto=forma>
+(sin alt) <aj06E1bRV8_Qf4Ys_Frame90_result.webp?auto=format%2>
+
+######## /en/experience  (199 palabras)
+{"title":"Sicilian Citrus Grove Experience | Agrumea Farm","desc":"Discover Agrumea Farm experiences: citrus picking, taste workshops and guided tastings in a Sicilian citrus grove, surrounded by nature and authentic flavours."}
+H1 [page-hero]: Experience
+P [page-intro]: We believe that to truly understand the flavour of an orange or the intensity of a jam, you need to sink your feet into the soil where they were born. We invite you to discover our citrus grove not as spectators, but as protagonists. Among the scents of blossoming flowers and the gold of fruits ready for harvest, we have created paths designed for those who seek authenticity, the silence of nature and the pleasure of sharing.
+P [experience-proposals]: 01.
+H3 [experience-proposals]: The Golden Path (your basket)
+P [experience-proposals]: Duration
+P [experience-proposals]: 1 hour and 30 minutes
+P [experience-proposals]: The Experience
+P [experience-proposals]: Grab your basket, each guest will be able to pick citrus fruits directly from the tree to take home, learning how to recognise the perfect stage of ripeness.
+P [experience-proposals]: What’s included
+P [experience-proposals]: Guided walk through the rows of trees, explanation of the varieties and organic farming techniques.
+P [experience-proposals]: 02.
+H3 [experience-proposals]: Flavour Workshop (from Plant to Jar)
+P [experience-proposals]: Each participant will prepare their own personalised jar, complete with a handwritten label, to take home and treasure in their own pantry.
+P [experience-proposals]: A hands-on workshop where our experts reveal the secrets behind making authentic citrus jam or a Mediterranean pesto.
+P [experience-proposals]: 03.
+H3 [experience-proposals]: The Citrus Gathering (sensory tasting)
+P [experience-proposals]: A gastronomic journey engaging all the senses, in the shade of our trees or in our dedicated tasting room
+P [experience-proposals]: Tasting of bruschetta and local cheeses paired with our homemade jams, fresh seasonal juices and local wines.
+IMGS:
+An experience of places and flavours in Sicily <aiq0MqlQnVZVENrK_experience_result.webp?auto=forma>
+Agrumea Farm  - Esperienza - Il Percorso dell'Oro <aivBdalQnVZVERGJ_arance_result.webp?auto=format%2C>
+Agrumea Farm - Esperienza - Officina del Gusto <aiu8IalQnVZVEQ9V_vasetto_result.webp?auto=format%2>
+Agrumea Farm - Esperienza - Il Convivio Agrumato <aiu8IqlQnVZVEQ9X_fiore_result.webp?auto=format%2Cc>
+
+######## /en/chi-siamo  (244 palabras)
+{"title":"Agrumea Farm – The history, land and flavours of Sicily","desc":"For three generations, Agrumea Farm has been cultivating the Sicilian land in Solarino, combining agriculture, tradition and the artisanal processing of its own produce."}
+H1 [page-hero]: About
+H2 [page-hero]: A treasure guarded since 1968
+P [page-intro]: Our story is rooted in Floridia (Syracuse), just a few kilometers from the town center, where our grandfather purchased his first citrus grove 50 years ago, recognizing in those trees a priceless heritage of aromas and flavors. A story that spans generations, all the way to the
+P [page-intro]: present day. Today, this "treasure" is in our hands, and we protect it with the same love as always, tending to each individual plant to harvest the finest fruit, respecting nature's rhythms and caring for the land.
+P [about-pause]: It’s not just a brand, but a promise that has been kept over time.
+P [page-intro]: Since 2018, with the arrival of a new, highly specialized generation, holding degrees in Agriculture and Food Technology, we made the decision to convert the entire farm to organic farming. We introduced innovations such as fully automated irrigation to minimize water waste, planted a pistachio and almond grove, installed photovoltaic panels for complete energy autonomy, and closed the supply chain by creating our own processing laboratory. Here we produce a full line of jams and preserves, savory pestos to accompany meals, pasta sauces, and sweet spreads perfect for breakfast. We process our own raw materials directly, to bring you the pure essence of quality, handcrafted, just like in the old days.
+H2 [vision]: Vision
+P [vision]: Growing the future, starting from the earth.
+P [page-intro]: We preserve the authentic flavor of our fruit through careful, slow, and artisanal processing that honors nature's rhythms and reflects the true essence of our land. We are committed to delivering a genuine, high-quality product, from raw materials to the finished jar.
+IMGS:
+Agrumea Farm – A Sicilian farm and food production business <aivGNKlQnVZVERR7_chisiamo_result.webp?auto=format%>
+(sin alt) <aivXv6lQnVZVER1t_fondo_result.webp?auto=format%2Cc>
+Sebastiano Piazza <aivdLKlQnVZVER_r_sebastiano_result.webp?auto=forma>
+Agrumea Farm Jars <aivfU6lQnVZVESDc_barattolisalati2_result.webp?auto>
+
+######## /en/contatti  (47 palabras)
+{"title":"Contact | Agrumea Farm","desc":"Discover Agrumea Farm agricultural production: Sicilian citrus fruits, almonds and pistachios, carefully grown and available according to season."}
+H1 [contatti]: Contact
+H2 [contatti]: Agrumea springs from the earth and thrives through connection.
+P [contatti]: Registered office
+P [contatti]: Via Generale Ameglio, 13
+P [contatti]: 95123 - Catania
+P [contatti]: Operational office
+P [contatti]: Seconda strada c.da piana s. Croce sn
+P [contatti]: 96014 - Floridia (SR)
+P [contatti]: Follow us
+A [contatti]: @instagram
+P [contatti]: Do you have a question or would you like to find out more about us? Drop us a line, we’d be delighted to tell you all about Agrumea Farm.
+A [contatti]: info@agrumeafarm.it
+IMGS:
+
