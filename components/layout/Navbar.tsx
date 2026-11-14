@@ -47,7 +47,7 @@ function BotonMenu({ abierto, onClick, compacto = false, className = '' }: { abi
 export default function Navbar() {
   const [abierto, setAbierto] = useState(false);
   const [conSombra, setConSombra] = useState(false);
-  // No todas las páginas tienen formulario (#contacto): sin él, el CTA lleva al del home.
+  // No todas las páginas tienen formulario (#contacto): sin él, el CTA lleva al de /contacto.
   const [ctaHref, setCtaHref] = useState('#contacto');
   const pathname = usePathname();
 
@@ -65,7 +65,7 @@ export default function Navbar() {
 
   useEffect(() => {
     setAbierto(false);
-    setCtaHref(document.getElementById('contacto') ? '#contacto' : '/#contacto');
+    setCtaHref(document.getElementById('contacto') ? '#contacto' : '/contacto#contacto');
   }, [pathname]);
 
   // Menú abierto: bloquea el scroll de fondo y cierra con Escape.

@@ -22,6 +22,13 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   return <>{children}</>;
 }
 
+// El home es una sola pantalla sin scroll (como agrumeafarm.it): no lleva pie. El resto, sí.
+export function FueraDelHome({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  if (pathname === '/') return null;
+  return <>{children}</>;
+}
+
 // Marca visual por ruta: v1 para las landings, v2 (manual oct-2026) para el resto.
 // usePathname también corre en el servidor, así que el atributo sale en el HTML inicial
 // (sin parpadeo). El contenedor es display: contents: no agrega caja ni cambia el layout.

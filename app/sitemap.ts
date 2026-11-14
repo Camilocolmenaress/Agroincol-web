@@ -9,6 +9,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
+      url: 'https://agroincol.com/nosotros',
+      lastModified: new Date('2026-11-14'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://agroincol.com/contacto',
+      lastModified: new Date('2026-11-14'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: 'https://agroincol.com/servicios',
       lastModified: new Date('2026-04-17'),
       changeFrequency: 'monthly',

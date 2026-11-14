@@ -119,13 +119,14 @@ export const SERVICES = [
 
 export const NAV_LINKS = [
   { label: 'Inicio', href: '/' },
+  { label: 'Nosotros', href: '/nosotros' },
   { label: 'Servicios', href: '/servicios' },
   { label: 'Fumigación Restaurantes', href: '/servicios/fumigacion-restaurantes' },
   { label: 'Certificaciones', href: '/certificaciones-y-normativa' },
   { label: 'Herramientas', href: '/herramientas/calculadora-fumigacion' },
   { label: 'Cotización', href: '/precios' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Contacto', href: '#contacto' },
+  { label: 'Contacto', href: '/contacto' },
 ] as const;
 
 export const SERVICE_TYPE_OPTIONS = [

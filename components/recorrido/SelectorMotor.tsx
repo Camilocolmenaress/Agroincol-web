@@ -5,17 +5,11 @@ import { useRouter } from 'next/navigation';
 import { ANGULO_FILA, C, geometria, inicio, pose, type Geometria } from './selector/geometria';
 import { volar } from './selector/vuelo';
 
-// Motor del selector (mejora progresiva sobre el HTML del servidor). Copia la física del slider de
-// agrumeafarm.it: el desplazamiento H sigue a un objetivo con una exponencial (2,3/s libre, 11/s
-// arrastrando). Diferencia con la referencia: nuestro home sigue después, así que el objetivo sale
-// del scroll de la página (la pantalla queda fijada durante una vuelta) más un desfase propio del
-// arrastre, la rueda horizontal y el teclado.
-
-// Fracción de vuelta que se recorre con el scroll mientras la pantalla está fijada (1 = los 10
-// objetos). Se puede probar otra con ?vuelta=0.6 en la URL.
-const VUELTA_POR_DEFECTO = 1;
-
-type LenisLike = { targetScroll: number };
+// Motor del selector (mejora progresiva sobre el HTML del servidor). Copia el slider de
+// agrumeafarm.it: el home es una sola pantalla que no baja; la rueda (vertical u horizontal), el
+// arrastre y el teclado mueven un objetivo, y el desplazamiento H lo sigue con una exponencial
+// (2,3/s libre, 11/s arrastrando). En táctil, el deslizamiento vertical también mueve la fila
+// (decisión del 14-nov; en la referencia no hace nada).
 
 export default function SelectorMotor() {
   const router = useRouter();
@@ -31,15 +25,11 @@ export default function SelectorMotor() {
     const mouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const n = items.length;
     const enlaces = items.map((it) => it.querySelector<HTMLAnchorElement>('a')!);
-    const vueltaParam = Number(new URLSearchParams(location.search).get('vuelta'));
-    const vuelta = vueltaParam > 0 && vueltaParam <= 2 ? vueltaParam : VUELTA_POR_DEFECTO;
 
     let g: Geometria = geometria(innerWidth, innerHeight, n);
     let H = inicio(g);
     let Hprev = H;
-    let desfase = 0; // arrastre, rueda horizontal, teclado
-    let recorrido = 0; // px de scroll que dura la pantalla fijada
-    let origen = 0; // scroll en que empieza la pista
+    let desfase = 0; // rueda, arrastre y teclado
     let v = 0;
     let filaY = 0; // eje de la fila en coordenadas de la sección (reacción local al puntero)
     // Resortes de inclinación por objeto (cada uno responde distinto, como en la referencia).
@@ -52,34 +42,26 @@ export default function SelectorMotor() {
     const medir = () => {
       g = geometria(innerWidth, innerHeight, n);
       seccion.style.setProperty('--u', `${g.u}px`);
-      recorrido = quieto ? 0 : (g.F * vuelta) / C.ganancia;
-      pista.style.height = `calc(100svh + ${recorrido}px)`;
-      origen = pista.getBoundingClientRect().top + scrollY;
       filaY = parseFloat(getComputedStyle(seccion.querySelector('.sel-fila')!).top) || seccion.clientHeight * 0.55;
     };
     medir();
     seccion.dataset.motor = '';
 
-    const destinoScroll = () => {
-      const lenis = (window as Window & { __lenis?: LenisLike }).__lenis;
-      return lenis ? lenis.targetScroll : scrollY;
-    };
-    const objetivo = () => {
-      const avance = Math.min(Math.max(destinoScroll() - origen, 0), recorrido);
-      return inicio(g) - avance * C.ganancia + desfase;
-    };
+    const objetivo = () => inicio(g) + desfase;
     H = objetivo();
     Hprev = H;
 
-    // ── Arrastre (mouse y dedo). touch-action: pan-y deja el gesto vertical al navegador.
-    let apretado = false, arrastrando = false, x0 = 0, y0 = 0, xUlt = 0, tUlt = 0, vel = 0, movido = 0;
+    // ── Arrastre (mouse y dedo), por el eje dominante: horizontal como en la referencia y, en
+    // táctil, también vertical (deslizar hacia arriba = avanzar, como la rueda hacia abajo).
+    let apretado = false, arrastrando = false, eje: 'x' | 'y' = 'x', x0 = 0, y0 = 0, xUlt = 0, yUlt = 0, tUlt = 0, vel = 0, movido = 0, tactil = false;
     const bajar = (e: PointerEvent) => {
       if (e.button !== 0) return;
       apretado = true;
       arrastrando = false;
       movido = 0;
+      tactil = e.pointerType !== 'mouse';
       x0 = xUlt = e.clientX;
-      y0 = e.clientY;
+      y0 = yUlt = e.clientY;
       tUlt = performance.now();
       vel = 0;
     };
@@ -93,23 +75,24 @@ export default function SelectorMotor() {
         dentro = true;
       }
       if (!apretado) return;
-      const dx = e.clientX - xUlt;
       if (!arrastrando) {
         const tx = e.clientX - x0, ty = e.clientY - y0;
-        if (Math.abs(tx) < C.umbralArrastre || Math.abs(tx) < Math.abs(ty)) {
-          if (Math.abs(ty) > C.umbralArrastre) apretado = false; // gesto vertical: es scroll
-          return;
-        }
+        if (Math.max(Math.abs(tx), Math.abs(ty)) < C.umbralArrastre) return;
+        eje = Math.abs(tx) >= Math.abs(ty) || !tactil ? 'x' : 'y';
         arrastrando = true;
+        xUlt = e.clientX;
+        yUlt = e.clientY;
         seccion.setPointerCapture?.(e.pointerId);
         seccion.dataset.arrastrando = '';
       }
+      const d = eje === 'x' ? e.clientX - xUlt : e.clientY - yUlt;
       const t = performance.now();
       const dt = Math.max(1, t - tUlt);
-      vel = vel * 0.72 + (dx / dt) * 0.28;
-      desfase += dx * C.arrastre;
-      movido += Math.abs(dx);
+      vel = vel * 0.72 + (d / dt) * 0.28;
+      desfase += d * C.arrastre;
+      movido += Math.abs(d);
       xUlt = e.clientX;
+      yUlt = e.clientY;
       tUlt = t;
     };
     const soltar = () => {
@@ -136,11 +119,10 @@ export default function SelectorMotor() {
       const i = enlaces.indexOf(a);
       volar({ item: items[i], rotacion: actual[i].rot + ANGULO_FILA, escala: actual[i].escala, href: a.getAttribute('href')!, seccion, ir: (h) => router.push(h) });
     };
-    // Rueda horizontal (trackpad de lado): mueve la fila sin tocar la página.
+    // Rueda (como la referencia): el eje dominante mueve la fila; la página no se desplaza.
     const rueda = (e: WheelEvent) => {
-      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
       e.preventDefault();
-      desfase -= e.deltaX * C.ganancia;
+      desfase -= (Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * C.ganancia;
     };
 
     // ── Teclado: el foco nunca desplaza la ventana (falla de la referencia): el objeto enfocado
@@ -161,10 +143,14 @@ export default function SelectorMotor() {
       if (i >= 0) centrar(i);
     };
     const tecla = (e: KeyboardEvent) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
       const i = enlaces.indexOf(document.activeElement as HTMLAnchorElement);
-      if (i < 0 || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+      const objetivoTecla = e.target as HTMLElement;
+      if (i < 0 && objetivoTecla !== document.body) return; // no robar las flechas a otros controles
       e.preventDefault();
-      enlaces[(i + (e.key === 'ArrowRight' ? 1 : n - 1)) % n].focus({ preventScroll: true });
+      // Con un objeto enfocado, pasa al vecino; si no, la fila avanza un paso.
+      if (i >= 0) enlaces[(i + (e.key === 'ArrowRight' ? 1 : n - 1)) % n].focus({ preventScroll: true });
+      else desfase += e.key === 'ArrowRight' ? -g.N : g.N;
     };
 
     seccion.addEventListener('pointerdown', bajar);
@@ -176,7 +162,7 @@ export default function SelectorMotor() {
     seccion.addEventListener('wheel', rueda, { passive: false });
     ventana.addEventListener('scroll', sinScroll);
     seccion.addEventListener('focusin', foco);
-    seccion.addEventListener('keydown', tecla);
+    window.addEventListener('keydown', tecla);
     const alCambiar = () => {
       medir();
     };
@@ -263,9 +249,8 @@ export default function SelectorMotor() {
       seccion.removeEventListener('wheel', rueda);
       ventana.removeEventListener('scroll', sinScroll);
       seccion.removeEventListener('focusin', foco);
-      seccion.removeEventListener('keydown', tecla);
+      window.removeEventListener('keydown', tecla);
       window.removeEventListener('resize', alCambiar);
-      pista.style.height = '';
     };
   }, [router]);
 

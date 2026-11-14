@@ -241,3 +241,35 @@ Generado con `node scripts/seo-baseline.mjs --compare` contra la línea base de 
 - + img: alt vacío (decorativa)
 - + img: alt vacío (decorativa)
 
+
+## Opción B (14-nov): home de una sola pantalla y páginas /nosotros y /contacto
+
+Camilo eligió la opción B: el home igual a la referencia (una pantalla, sin bajar) y su contenido en páginas aparte. La comparación completa está en `scripts/seo-baseline.mjs --compare`.
+
+**Home `/`**
+- **Texto en `<main>`:** pasa de 1337 a 13 palabras. Queda el H1, que no cambia.
+- **Se quitan del home:**
+  - los 18 H2/H3 del contenido;
+  - el formulario;
+  - los enlaces a zonas, reseñas, WhatsApp y Llamar;
+  - el bloque de Alivio, que pasa tal cual a `/nosotros`;
+  - el pie completo, como en la referencia (sin pie en el home).
+- **Se agregan:** los 10 enlaces de los objetos, con sus alt; ya estaban en la lista pendiente.
+- **Lo que sigue enlazando el home:** el menú de la cabecera (Inicio, Nosotros, Servicios, Fumigación Restaurantes, Certificaciones, Herramientas, Cotización, Blog, Contacto), Alivio y los segmentos Hogar, Restaurantes y Empresas.
+- **Riesgo:** el home deja de enlazar las 4 páginas de zonas y varias de servicio que antes enlazaba desde el pie.
+- **Search Console, 90 días:**
+  - el home trajo 85 de 308 clics, casi todos de búsquedas de la marca ("agroincol": 41);
+  - "fumigación bucaramanga" en el home: 2 o 3 clics, en posición 5,8. También la cubre `/zonas/fumigacion-bucaramanga`.
+
+**URL nuevas** (en `sitemap.ts`)
+- **`/nosotros`:** el texto que tenía el home, con un H1 nuevo ("Nosotros"), title y description nuevos y migas de pan.
+- **`/contacto`:** el formulario (mismo `formId="home-contact"`, para no cortar la medición de leads), el mapa, la franja de WhatsApp y Llamar, y las reseñas.
+  - H1 nuevo: "Contacto".
+  - Title y description nuevos.
+
+**En todas las páginas (cabecera)**
+- El menú agrega "Nosotros" (`/nosotros`).
+- "Contacto" pasa de `#contacto` a `/contacto`.
+- En las páginas sin formulario, el botón "Cotizar" lleva a `/contacto#contacto` en vez de `/#contacto`.
+
+**Pendiente.** `public/llms.txt` no menciona las páginas nuevas. Es un archivo congelado: lo actualizo cuando usted lo apruebe.

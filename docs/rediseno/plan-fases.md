@@ -476,6 +476,11 @@ Las escalas por posición también coinciden.
 - El LCP observado sin limitar la red ni la CPU es de 0,09 s. La diferencia sale del modelo de simulación de Lighthouse (2,6 s de "retraso de render").
 - Precargar la imagen del centro lo empeoró (4,2 s) y se revirtió.
 
-**Pendiente de Camilo:** cuánto dura la pantalla fijada. Por defecto es una vuelta completa, unas 3,2 pantallas a 1440; con `?vuelta=0.6` son unas 1,9.
+**Cambio posterior (14-nov, opción B).** Camilo pidió el home exactamente igual a la referencia: una sola pantalla que no baja.
+- La rueda, el arrastre, el teclado y el deslizamiento (vertical u horizontal) solo mueven la fila.
+- El contenido del home pasó a `/nosotros` y el formulario a `/contacto`.
+- El home no lleva pie.
+- La lista de SEO está en `seo-cambios-pendientes.md`.
+- Ya no aplica la pantalla fijada ni `?vuelta=`.
 
 **Falta construir:** el precargador, el menú en escalera, las transiciones, la plantilla de servicio, el resto del home y el giro 3D de los objetos.
