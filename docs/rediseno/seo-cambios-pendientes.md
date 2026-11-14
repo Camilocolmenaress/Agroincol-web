@@ -272,4 +272,4 @@ Camilo eligió la opción B: el home igual a la referencia (una pantalla, sin ba
 - "Contacto" pasa de `#contacto` a `/contacto`.
 - En las páginas sin formulario, el botón "Cotizar" lleva a `/contacto#contacto` en vez de `/#contacto`.
 
-**Pendiente.** `public/llms.txt` no menciona las páginas nuevas. Es un archivo congelado: lo actualizo cuando usted lo apruebe.
+**Aprobado el 14-nov.** Camilo aprobó toda esta lista. Las entradas quedaron en `seo-cambios-aprobados.json` (fase "B") y el comparador da 0 diferencias sin aprobar en 41 URL. `public/llms.txt` ya incluye /nosotros y /contacto.

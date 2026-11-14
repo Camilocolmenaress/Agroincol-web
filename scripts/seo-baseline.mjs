@@ -21,6 +21,7 @@
 //
 // Cambios aprobados: docs/rediseno/seo-cambios-aprobados.json. Cada entrada es
 //   { "fase": "...", "ruta": "*" | "/ruta", "tipo": "enlace" | "heading" | "img", "cambio": "+" | "-", "item": {...} }
+//   { "tipo": "mainWords", "ruta": "/ruta", "valor": N }   { "tipo": "url", "ruta": "/ruta" } (URL nueva)
 // y saca ese cambio del diff. Lo que no esté en esa lista cuenta como diferencia.
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -210,6 +211,7 @@ function compare(antes, ahora) {
   for (const p of paths) {
     const a = antes.paginas[p], b = ahora.paginas[p];
     const d = [];
+    if (!a && APROBADOS.some((x) => x.tipo === 'url' && x.ruta === p)) continue; // URL nueva aprobada
     if (!a || !b) { lineas.push(`${p}: ${!a ? 'URL nueva' : 'URL desaparecida'}`); continue; }
     for (const campo of ['status', 'title', 'description', 'canonical', 'robots', 'xRobotsTag', 'mainWords']) {
       if (campo === 'mainWords' && TEXTO_SEGUN_HORA.has(p)) continue;

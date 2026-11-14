@@ -6,6 +6,10 @@
 > conforme al Decreto 1843 de 1991 y la Resolución 2674 de 2013 (INVIMA).
 > Contacto: +57 310 789 1948 | https://agroincol.com
 
+## Empresa
+- [Nosotros](https://agroincol.com/nosotros): quiénes somos, cómo trabajamos, zonas que atendemos, reseñas y preguntas frecuentes.
+- [Contacto](https://agroincol.com/contacto): formulario de cotización, WhatsApp, teléfono y ubicación.
+
 ## Servicios
 - [Fumigación Residencial](https://agroincol.com/servicios/fumigacion-residencial): tratamiento certificado para casas y apartamentos en Bucaramanga y el área metropolitana.
 - [Control de Plagas Comercial](https://agroincol.com/servicios/control-plagas-comercial): oficinas, locales y establecimientos comerciales.

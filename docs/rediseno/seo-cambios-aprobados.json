@@ -365,6 +365,2123 @@
       "decision": "Consecuencia de D3: −duplicados + texto decorativo aprobado (cinta, etiquetas, remate)",
       "tipo": "mainWords",
       "valor": 1153
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "mainWords",
+      "valor": 13
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "¿Qué necesita proteger?"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "Simple, profesional y con respaldo"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Diagnóstico gratis"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Tratamiento certificado"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Certificado y garantía"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "Nuestros Servicios de Fumigación y Control de Plagas"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "Alivio Renovamos tu descanso."
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "¿Por Qué Elegir AGROINCOL para su Fumigación?"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "Cobertura en el Área Metropolitana de Bucaramanga"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Bucaramanga"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Floridablanca"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Piedecuesta"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "main",
+        "texto": "Girón"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "Lo Que Dicen Nuestros Clientes"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "Lo que suelen preguntarnos antes de contratar"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "¿Tiene una plaga ahora? Respondemos por WhatsApp en menos de 5 minutos"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "Proteja su Hogar o Negocio Hoy"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h2",
+        "region": "main",
+        "texto": "Solicite su Cotización Gratis"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "pie",
+        "texto": "Servicios"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "pie",
+        "texto": "Normativa"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "pie",
+        "texto": "Zonas de Servicio"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "heading",
+      "cambio": "-",
+      "item": {
+        "nivel": "h3",
+        "region": "pie",
+        "texto": "Contacto"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "*",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "cabecera",
+        "href": "#contacto",
+        "texto": "Contacto"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+        "texto": "Cotizar por WhatsApp"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "tel:+573107891948",
+        "texto": "Llamar ahora"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "https://maps.google.com/?cid=5252561969072218591",
+        "texto": "4.9 · 33 reseñas en Google"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/alivio",
+        "texto": "Conoce Alivio"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/zonas/fumigacion-bucaramanga",
+        "texto": "Bucaramanga Capital de Santander"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/zonas/fumigacion-floridablanca",
+        "texto": "Floridablanca Sede principal — Cra. 36 #197-30"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/zonas/fumigacion-piedecuesta",
+        "texto": "Piedecuesta Cobertura completa"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/zonas/fumigacion-giron",
+        "texto": "Girón Cobertura completa"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "https://maps.google.com/?cid=5252561969072218591",
+        "texto": "Leer todas las reseñas"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "https://g.page/r/Cd-hRhdI2eRIEBM/review",
+        "texto": "Dejar una reseña"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "#contacto",
+        "texto": "Escríbanos y le respondemos hoy →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+        "texto": "Escribir por WhatsApp"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+        "texto": "O escríbanos por WhatsApp"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "href": "/politica-de-privacidad",
+        "texto": "Política de Tratamiento de Datos Personales"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/",
+        "texto": "AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/precios",
+        "texto": "Cotización"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/alivio",
+        "texto": "Alivio · Lavado de muebles"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/certificaciones-y-normativa",
+        "texto": "Certificaciones y Normativa"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/politica-de-privacidad",
+        "texto": "Política de Privacidad"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/herramientas/calculadora-fumigacion",
+        "texto": "Calculadora de Fumigación"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/blog",
+        "texto": "Blog"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/zonas/fumigacion-bucaramanga",
+        "texto": "Fumigación en Bucaramanga"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/zonas/fumigacion-floridablanca",
+        "texto": "Fumigación en Floridablanca"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/zonas/fumigacion-piedecuesta",
+        "texto": "Fumigación en Piedecuesta"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "/zonas/fumigacion-giron",
+        "texto": "Fumigación en Girón"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "tel:+573107891948",
+        "texto": "+57 310 789 1948"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+        "texto": "WhatsApp"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "*",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "cabecera",
+        "href": "/nosotros",
+        "texto": "Nosotros"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "*",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "cabecera",
+        "href": "/contacto",
+        "texto": "Contacto"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Casa santandereana con techo de teja, en 3D: fumigación para hogares de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Cocina de restaurante con estufa y ollas, en 3D: control de plagas para restaurantes de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Bomba de aspersión de espalda, en 3D: control de zancudos y moscas de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Estiba con cajas de bodega, en 3D: fumigación industrial y control de plagas para empresas de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Estación cebadera para roedores, en 3D: desratización de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Gotas de gel insecticida sobre una baldosa, en 3D: control de cucarachas en negocios de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Aplicador de gel en jeringa, en 3D: tratamiento de comején y termitas de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Caja del kit de bienvenida para empresas con el logo de AGROINCOL, en 3D: control de plagas comercial"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/certificado-de-fumigacion",
+        "texto": "Acta de hallazgos con sello y código QR, en 3D: el documento que AGROINCOL entrega después de cada servicio"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Gorra blanca con el símbolo de AGROINCOL bordado, en 3D: técnicos con equipo de protección para retiro de abejas y avispas"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Equipo completo de AGROINCOL con uniformes y equipos de bioseguridad"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "pie",
+        "alt": "AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Cocina de restaurante con estufa y ollas, en 3D: control de plagas para restaurantes de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Bomba de aspersión de espalda, en 3D: control de zancudos y moscas de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Estiba con cajas de bodega, en 3D: fumigación industrial y control de plagas para empresas de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Estación cebadera para roedores, en 3D: desratización de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Gotas de gel insecticida sobre una baldosa, en 3D: control de cucarachas en negocios de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Aplicador de gel en jeringa, en 3D: tratamiento de comején y termitas de AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Caja del kit de bienvenida para empresas con el logo de AGROINCOL, en 3D: control de plagas comercial"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Acta de hallazgos con sello y código QR, en 3D: el documento que AGROINCOL entrega después de cada servicio"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": "Gorra blanca con el símbolo de AGROINCOL bordado, en 3D: técnicos con equipo de protección para retiro de abejas y avispas"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "mainWords",
+      "valor": 985
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Técnico de AGROINCOL inspeccionando cocina de restaurante en Bucaramanga"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-restaurantes",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": ""
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "mainWords",
+      "valor": 987
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Técnico de AGROINCOL realizando fumigación residencial en Bucaramanga"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-residencial",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": ""
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "mainWords",
+      "valor": 938
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Control de plagas comercial en Bucaramanga — AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-plagas-comercial",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": ""
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "mainWords",
+      "valor": 1019
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Desratización profesional en Bucaramanga — AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/desratizacion",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": ""
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "mainWords",
+      "valor": 1049
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Control de mosquitos y zancudos en Bucaramanga — AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-insectos-voladores",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": ""
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "mainWords",
+      "valor": 1012
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Fumigación industrial en Bucaramanga — AGROINCOL"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/fumigacion-industrial",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": ""
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "mainWords",
+      "valor": 1366
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Técnico de AGROINCOL inspeccionando madera afectada por comején en Bucaramanga"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-comejen-termitas",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": ""
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "mainWords",
+      "valor": 1528
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-chinches",
+        "texto": "Control de Chinches de Cama Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Técnico de AGROINCOL con equipo de protección retirando nido de abejas en Bucaramanga"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/eliminacion-abejas-avispas",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": ""
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "mainWords",
+      "valor": 1394
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-residencial",
+        "texto": "Fumigación Residencial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-plagas-comercial",
+        "texto": "Control de Plagas Comercial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-restaurantes",
+        "texto": "Fumigación para Restaurantes Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/desratizacion",
+        "texto": "Desratización Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-insectos-voladores",
+        "texto": "Control de Insectos Voladores Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/fumigacion-industrial",
+        "texto": "Fumigación Industrial Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/control-comejen-termitas",
+        "texto": "Control de Comején y Termitas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "enlace",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "href": "/servicios/eliminacion-abejas-avispas",
+        "texto": "Retiro de Abejas y Avispas Más información →"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "img",
+      "cambio": "-",
+      "item": {
+        "region": "main",
+        "alt": "Técnico de AGROINCOL realizando control de chinches de cama en Bucaramanga"
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/servicios/control-chinches",
+      "tipo": "img",
+      "cambio": "+",
+      "item": {
+        "region": "main",
+        "alt": ""
+      }
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/nosotros",
+      "tipo": "url"
+    },
+    {
+      "fase": "B",
+      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
+      "ruta": "/contacto",
+      "tipo": "url"
     }
   ]
 }
