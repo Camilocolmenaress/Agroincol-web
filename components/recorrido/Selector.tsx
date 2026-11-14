@@ -20,7 +20,7 @@ const LEMA = 'LAS PLAGAS SE VAN · LA TRANQUILIDAD SE QUEDA · ';
 // y la fila se asienta. Todo con transform: el H1 y los objetos se ven desde el primer pintado.
 // Sin JS o con reduce-motion no pasa nada.
 const ENTRADA = `(function(){try{
-if(sessionStorage.getItem('ag_entrada')||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+if(sessionStorage.getItem('ag_entrada')||location.search.indexOf('sin-entrada')>-1||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 sessionStorage.setItem('ag_entrada','1');
 var d=document.documentElement;d.setAttribute('data-entrada','');
 var cv=document.getElementById('sel-gotas');if(!cv)return;var sec=cv.parentNode;

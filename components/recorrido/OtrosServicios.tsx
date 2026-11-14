@@ -60,12 +60,12 @@ export default function OtrosServicios({ excluir }: { excluir?: string } = {}) {
                   className="tarjeta-patron pointer-events-none absolute inset-0 bg-[url('/images/patrones/patron-gel-oscuro.webp')] bg-[length:360px] opacity-0 transition-opacity duration-500"
                   aria-hidden
                 />
-                <span className="relative flex items-start justify-between gap-4">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-marca-verde text-white transition-colors duration-500 group-hover:bg-white group-hover:text-marca-verde">
+                <span className="tarjeta-cabeza relative flex items-start justify-between gap-4">
+                  <span className="tarjeta-icono flex h-12 w-12 items-center justify-center rounded-full bg-marca-verde text-white transition-colors duration-500 group-hover:bg-white group-hover:text-marca-verde">
                     <Icono size={22} aria-hidden />
                   </span>
                   {objeto && (
-                    <span className="-mr-3 -mt-6 w-28 transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110" aria-hidden>
+                    <span className="tarjeta-objeto -mr-3 -mt-6 w-28 transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110" aria-hidden>
                       <Objeto objeto={objeto} decorativo sizes="112px" className="h-auto w-full" />
                     </span>
                   )}

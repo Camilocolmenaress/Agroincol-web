@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Heart, Bug, ShieldAlert, Home } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
-import HeroServicio from '@/components/recorrido/HeroServicio';
+import HeroFicha from '@/components/recorrido/HeroFicha';
 import Galeria from '@/components/recorrido/Galeria';
 import OtrosServicios from '@/components/recorrido/OtrosServicios';
 import ProcessTimeline from '@/components/sections/ProcessTimeline';
@@ -118,8 +118,9 @@ const risks = [
 ];
 
 export default function ResidencialPage() {
+  // Piloto de la plantilla de servicio con el sistema de la referencia (data-plantilla="ficha").
   return (
-    <>
+    <div data-plantilla="ficha">
       <SchemaMarkup schema={serviceSchema} />
       <SchemaMarkup schema={faqSchema} />
       <Breadcrumbs tono="claro" items={[
@@ -129,7 +130,7 @@ export default function ResidencialPage() {
       ]} />
 
       {/* 1. Hero */}
-      <HeroServicio
+      <HeroFicha
         title="Fumigación Residencial en Bucaramanga y Área Metropolitana"
         subtitle="Proteja su hogar y familia con productos seguros aprobados por la OMS y el ICA. Sin riesgo para niños ni mascotas. Más de 40 años de experiencia en Bucaramanga, Floridablanca, Piedecuesta y Girón."
         badgeText="Productos seguros para niños y mascotas"
@@ -145,7 +146,7 @@ export default function ResidencialPage() {
           <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             ¿Por Qué Su Hogar Necesita Fumigación Profesional?
           </h2>
-          <p className="text-brand-gray text-body-lg mb-8">
+          <p className="text-brand-gray text-body-lg mb-8" data-revelar="lineas">
             Las plagas en el hogar van mucho más allá de ser una molestia. En Bucaramanga y el Área Metropolitana, el
             clima cálido y húmedo durante todo el año crea condiciones ideales para su proliferación. Los riesgos para
             su familia son reales:
@@ -166,13 +167,13 @@ export default function ResidencialPage() {
         </div>
       </section>
 
-      {/* 3. Productos Seguros */}
-      <section className="section-padding bg-brand-light">
+      {/* 3. Productos Seguros: la caja oscura de la página (como "Savoury" en la referencia) */}
+      <section className="section-padding bg-brand-light ficha-caja">
         <div className="container-custom">
           <h2 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[0.95] tracking-[-0.025em] text-marca-verde text-balance mb-6">
             Productos Seguros para su Familia
           </h2>
-          <p className="text-brand-gray text-body-lg mb-8">
+          <p className="text-brand-gray text-body-lg mb-8" data-revelar="lineas">
             En AGROINCOL utilizamos exclusivamente productos registrados ante el ICA (Instituto Colombiano
             Agropecuario) y aprobados por la OMS para uso en zonas residenciales. Esto significa que son efectivos
             contra las plagas pero seguros para las personas, animales domésticos y el medio ambiente cuando se aplican
@@ -259,6 +260,6 @@ export default function ResidencialPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

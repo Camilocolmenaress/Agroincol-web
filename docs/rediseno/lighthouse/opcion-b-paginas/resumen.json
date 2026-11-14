@@ -1,0 +1,59 @@
+{
+  "base": "http://localhost:3200",
+  "fecha": "2026-11-14T16:35:24.393Z",
+  "corridas": 3,
+  "nota": "Lighthouse móvil (preset por defecto: Moto G Power, 4G lento simulado). INP no se mide en laboratorio: se usa TBT como proxy y CrUX/Speed Insights para campo.",
+  "resumen": [
+    {
+      "url": "/nosotros",
+      "perf": 91,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 96,
+      "lcp_s": 3.49,
+      "cls": 0.001,
+      "tbt_ms": 17,
+      "fcp_s": 1.52,
+      "peso_kb": 513,
+      "perf_corridas": [
+        90,
+        91,
+        91
+      ]
+    },
+    {
+      "url": "/contacto",
+      "perf": 93,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 96,
+      "lcp_s": 3.21,
+      "cls": 0.001,
+      "tbt_ms": 0,
+      "fcp_s": 1.37,
+      "peso_kb": 356,
+      "perf_corridas": [
+        92,
+        93,
+        93
+      ]
+    },
+    {
+      "url": "/servicios/fumigacion-residencial",
+      "perf": 92,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 96,
+      "lcp_s": 3.3,
+      "cls": 0.003,
+      "tbt_ms": 3,
+      "fcp_s": 1.37,
+      "peso_kb": 382,
+      "perf_corridas": [
+        92,
+        92,
+        92
+      ]
+    }
+  ]
+}

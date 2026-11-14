@@ -484,3 +484,35 @@ Las escalas por posición también coinciden.
 - Ya no aplica la pantalla fijada ni `?vuelta=`.
 
 **Falta construir:** el precargador, el menú en escalera, las transiciones, la plantilla de servicio, el resto del home y el giro 3D de los objetos.
+
+### Resultado: entrada, menú, telón, revelado y ficha de servicio piloto (14-nov)
+
+- **Entrada:** gotas de gel con física, 1,2 s y solo en la primera visita.
+- **Menú en escalera** a pantalla completa.
+- **Telón verde** entre páginas.
+- **Revelado de texto** por máscara.
+- **Piloto de la ficha de servicio** en `/servicios/fumigacion-residencial` (`HeroFicha` y `[data-plantilla='ficha']`). Las otras 8 páginas de servicio siguen como estaban hasta que Camilo apruebe el piloto.
+- **Probado en Chrome y WebKit:**
+  - la entrada no se repite en la sesión;
+  - con el menú abierto, las flechas no mueven la fila;
+  - Esc cierra el menú;
+  - el telón no se queda colgado al volver atrás;
+  - "Cotizar" lleva a `/contacto#contacto`;
+  - el texto no se duplica mientras espera su revelado;
+  - el vuelo aterriza en el hero nuevo;
+  - la consola no muestra errores.
+- **SEO:** 0 diferencias sin aprobar.
+- **Landings:** 0 píxeles distintos frente a `main`; las diferencias sueltas eran ruido de captura y no se repiten.
+- **Velocidad** (mediana de 5 corridas, en local):
+
+  | Página | Rendimiento | LCP |
+  |---|---|---|
+  | Home con entrada | 95 | 2,93 s |
+  | Home sin entrada | 96 | 2,78 s |
+  | Ficha residencial | 92 | 3,25 s |
+  | Contacto | 93 | 3,07 s |
+  | Nosotros | 91 | 3,31 s |
+
+  Mejoró al quitar la precarga de las tres fuentes de títulos en el sitio; las landings la conservan. El presupuesto de 2,5 s sigue sin cumplirse.
+
+**Hallazgo de contenido (ya está así en producción):** `/servicios/fumigacion-residencial` muestra `ProcessTimeline` ("Nuestro proceso de fumigación para restaurantes") y `PestCards` ("Plagas comunes en restaurantes"), que son componentes del servicio de restaurantes. Corregirlo cambia texto indexable: necesita la aprobación de Camilo.

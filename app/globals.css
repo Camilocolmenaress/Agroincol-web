@@ -639,3 +639,86 @@ body[data-telon] { cursor: progress; }
   text-underline-offset: 3px;
 }
 [data-marca='v2'] a.text-brand-orange:not(.no-underline) { text-decoration-line: underline; }
+
+/* ══ Plantilla de servicio "ficha" (piloto: /servicios/fumigacion-residencial, 14-nov) ════════════
+   La ficha de producto de agrumeafarm.it (descomposición §3–4): un solo fondo, una idea por
+   pantalla, títulos gigantes centrados, 200 px entre secciones (96 en celular), texto de 20 px y
+   una caja oscura que rompe el ritmo. El texto y los enlaces de la página no cambian. */
+[data-plantilla='ficha'] { background: #E1EBE3; }
+[data-plantilla='ficha'] > nav, [data-plantilla='ficha'] > div:first-of-type { position: relative; z-index: 3; }
+
+.ficha-hero { --ph: 0; position: relative; height: calc(100svh - 64px); min-height: 520px; }
+.ficha-titulo {
+  position: absolute; left: 0; right: 0; top: max(150px, 19svh); z-index: 1; margin: 0 auto; padding: 0 30px;
+  max-width: 17ch; text-align: center; text-transform: uppercase; text-wrap: balance; color: #164A38;
+  font-size: clamp(2.6rem, min(7.4vw, 11svh), 8.4rem); line-height: 0.9; letter-spacing: -0.03em;
+  transform: translateY(calc(var(--ph) * 30svh));
+}
+.ficha-titulo.ficha-titulo-largo { max-width: 20ch; font-size: clamp(2.2rem, min(5.8vw, 8.6svh), 6.6rem); }
+.ficha-lado {
+  position: absolute; top: 76svh; z-index: 1; display: none;
+  font: 700 1.15rem/1.15 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; color: #143C2C;
+  transform: translateY(calc(var(--ph) * 12svh));
+}
+.ficha-lado-izq { left: 30px; }
+.ficha-lado-der { right: 30px; text-align: right; }
+@media (min-width: 1025px) { .ficha-lado { display: block; } }
+/* El objeto asoma por abajo a 1,25 y con el scroll sube 24svh, baja a 0,8 y gira 20°. */
+.ficha-objeto {
+  position: absolute; left: 50%; bottom: 0; z-index: 2; width: clamp(240px, 26vw, 460px);
+  transform: translate(-50%, calc(34% - var(--ph) * 24svh)) rotate(calc(var(--ph) * 20deg)) scale(calc(1.25 - var(--ph) * 0.45));
+  will-change: transform;
+}
+@media (max-width: 1024px) { .ficha-objeto { width: clamp(240px, 56vw, 340px); } }
+.ficha-intro {
+  position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 22svh 30px 0;
+}
+.ficha-rombo { width: 13px; height: 13px; }
+.ficha-intro-texto {
+  margin: 56px auto; max-width: 1100px; color: #143C2C; text-wrap: pretty;
+  font-size: clamp(1.35rem, 2.2vw, 2rem); line-height: 1.3; font-weight: 500;
+}
+.ficha-nota { margin: 0; font: 700 0.8125rem/1.2 var(--font-display); letter-spacing: 0.12em; text-transform: uppercase; color: #164A38; }
+
+/* Secciones: 200 px arriba (96 en celular), sin fondos alternos; título gigante centrado y 60 px de aire. */
+[data-plantilla='ficha'] section.section-padding { padding-top: 200px; padding-bottom: 0; }
+[data-plantilla='ficha'] section:is(.bg-white, .bg-brand-light, .bg-marca-menta) { background: transparent; }
+@media (max-width: 767px) { [data-plantilla='ficha'] section.section-padding { padding-top: 96px; } }
+[data-plantilla='ficha'] section h2:not([class*='col-span'] h2) {
+  max-width: 16ch; margin: 0 auto 60px; text-align: center; text-transform: uppercase; color: #164A38;
+  font-size: clamp(2.4rem, 6.6vw, 7.6rem); line-height: 0.92; letter-spacing: -0.03em;
+}
+[data-plantilla='ficha'] section h2:not([class*='col-span'] h2) + p { max-width: 680px; margin-inline: auto; text-align: center; font-size: clamp(1.05rem, 1.4vw, 1.25rem); }
+
+/* La caja oscura (como "Savoury"): verde a sangre con esquinas superiores redondeadas. */
+[data-plantilla='ficha'] section.ficha-caja {
+  margin-top: 200px; padding: 140px 0 140px; border-radius: 30px 30px 0 0; background: #164A38;
+}
+[data-plantilla='ficha'] section.ficha-caja h2 { color: #fff; }
+[data-plantilla='ficha'] section.ficha-caja p { color: rgb(255 255 255 / 0.82); }
+[data-plantilla='ficha'] section.ficha-caja .bg-white { background: rgb(255 255 255 / 0.08); }
+[data-plantilla='ficha'] section.ficha-caja .bg-white p, [data-plantilla='ficha'] section.ficha-caja .bg-white strong { color: #fff; }
+[data-plantilla='ficha'] section.ficha-caja a.text-brand-orange { color: #E1EBE3; }
+[data-plantilla='ficha'] section.ficha-caja > .container-custom { display: flex; flex-direction: column; align-items: center; text-align: center; }
+@media (max-width: 767px) { [data-plantilla='ficha'] section.ficha-caja { margin-top: 96px; padding: 80px 0; } }
+
+/* "Otros servicios" como "The other products": fila horizontal de tarjetas; al pasar el cursor la
+   tarjeta se achica e inclina, toma el verde y el objeto crece. */
+[data-plantilla='ficha'] .servicios-lista {
+  display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 30px 30px; margin-top: 100px; max-width: none;
+}
+[data-plantilla='ficha'] .servicios-lista > li { flex: 0 0 min(80vw, 334px); width: auto; scroll-snap-align: start; }
+[data-plantilla='ficha'] .tarjeta-servicio {
+  aspect-ratio: 367.5 / 480.8; min-height: 0; border: 0; border-radius: 15px; background: #fff; padding: 22px;
+  transition: transform 0.6s cubic-bezier(.22,1,.36,1), background-color 0.6s cubic-bezier(.22,1,.36,1);
+}
+[data-plantilla='ficha'] .tarjeta-cabeza { flex: 1; align-items: center; justify-content: center; }
+[data-plantilla='ficha'] .tarjeta-icono { display: none; }
+[data-plantilla='ficha'] .tarjeta-objeto { width: 74%; margin: 0; transition: transform 1s cubic-bezier(.22,1,.36,1); }
+@media (hover: hover) and (pointer: fine) {
+  [data-plantilla='ficha'] .tarjeta-servicio:hover { transform: scale(0.96) rotate(2deg); background: #164A38; box-shadow: none; }
+  [data-plantilla='ficha'] .tarjeta-servicio:hover .tarjeta-objeto { transform: scale(1.1) rotate(4deg); }
+}
+[data-plantilla='ficha'] section:has(.servicios-lista) { background: transparent; padding-top: 200px; }
+[data-plantilla='ficha'] section:has(.servicios-lista) > .container-custom > p:first-child { text-align: center; font-size: clamp(2.4rem, 6.6vw, 7.6rem); }

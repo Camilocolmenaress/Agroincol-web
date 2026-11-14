@@ -70,8 +70,11 @@ export function volar({ item, rotacion, escala, href, seccion, ir }: Opciones) {
   function aterrizar(destino: HTMLElement) {
     const d = destino.getBoundingClientRect();
     const ladoD = destino.offsetWidth;
-    const rotD = new DOMMatrix(getComputedStyle(destino).transform);
-    const angD = (Math.atan2(rotD.b, rotD.a) * 180) / Math.PI;
+    // El destino puede venir rotado y escalado (el hero de ficha arranca a 1,25): se aterriza con
+    // la misma rotación y escala para que el relevo no salte.
+    const m = new DOMMatrix(getComputedStyle(destino).transform);
+    const angD = (Math.atan2(m.b, m.a) * 180) / Math.PI;
+    const escD = Math.hypot(m.a, m.b) || 1;
     const dx = d.left + d.width / 2 - ladoD / 2;
     const dy = d.top + d.height / 2 - ladoD / 2;
     const s0 = lado / ladoD;
@@ -80,7 +83,7 @@ export function volar({ item, rotacion, escala, href, seccion, ir }: Opciones) {
     const anim = copia.animate(
       [
         { transform: `translate(${cx - ladoD / 2}px, ${cy - ladoD / 2}px) rotate(${rotacion}deg) scale(${s0})` },
-        { transform: `translate(${dx}px, ${dy}px) rotate(${angD}deg) scale(1)` },
+        { transform: `translate(${dx}px, ${dy}px) rotate(${angD}deg) scale(${escD})` },
       ],
       { duration: DURACION, easing: CURVA, fill: 'forwards' }
     );
