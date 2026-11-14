@@ -321,3 +321,73 @@ Camilo: "Se ve horrible, ese hero… compara con la referencia con Playwright. T
 **3D:** el agente produce los 9 objetos en el Blender en vivo y registra cada uno en `~/Desktop/agroincol-3d/ESTADO.md`. Para integrar uno:
 1. `scripts/3d-web.sh <id> B frente34 picado`
 2. `python3 -I scripts/integrar-objeto.py <id> "<alt>" <href>`
+
+### Los 10 objetos 3D (13-nov, 18:34 a 19:31)
+
+Modelados en vivo en el Blender de Camilo por MCP y renderizados en cola por línea de comandos (2048 px, 128 muestras). QA aprobado en todos. Quedan llenando ~84 % del cuadro, con cuerpos blancos o menta para que no se pierdan sobre el verde.
+
+| Objeto | Enlace en el desfile | En servicio |
+|---|---|---|
+| casa (re-encuadrada) | residencial | residencial |
+| cocina | restaurantes | restaurantes |
+| bomba | insectos voladores | insectos voladores, chinches |
+| bodega | industrial | industrial |
+| estación cebadera | desratización | desratización |
+| gel | comercial | — |
+| aplicador | comején | comején |
+| caja kit B2B | comercial | comercial |
+| acta de hallazgos | `/certificado-de-fumigacion` | — |
+| gorra v2 | abejas y avispas | abejas y avispas |
+
+**Rechazos y arreglos:** la gorra v1 se rechazó (visera plana despegada, símbolo de lado) y se rehizo como v2.
+
+**Pendientes de arte que reportó el agente:**
+- La caja es verde y sobre el aro se lee poco.
+- El gel tiene 41 % de naranja dentro del objeto.
+- El sello del acta puede leerse como una diana.
+- La gorra en frente34 llena solo el 59 % del cuadro.
+- El perfil y el giro de la casa siguen con el encuadre viejo.
+
+**Desfile:** la cocina arranca en la cima, la casa a su izquierda y la bomba a su derecha. El resto entra al bajar, mientras el hero queda fijo.
+
+### Verificación final (máquina libre, sin Blender renderizando)
+
+- **SEO:** solo cambian el home y los 9 servicios. Todo está detallado en `seo-cambios-pendientes.md`. El resto del sitio y las landings: 0 diferencias.
+- **Landings:** 0 píxeles distintos en las 10 capturas frente a `main` capturado a la misma hora.
+- **Consola:** 0 errores en las 39 URLs.
+- **Lighthouse local** (producción, 3 corridas, `main` → rama): ver `lighthouse/final-local*/resumen.json`.
+
+| Página | Rendimiento | LCP |
+|---|---|---|
+| `/` | 92 → 91 | 3,36 → 3,54 s |
+| residencial | 89 → 92 | 3,65 → 3,29 s |
+| blog | 91 → 93 | 3,31 → 3,20 s |
+| zonas | 89 → 90 | 3,65 → 3,51 s |
+
+- El LCP del home es el texto del aro (SVG). Probé cargar sin diferir los objetos del primer pantallazo y empeoró a 3,89 s, así que lo revertí.
+- En servicios, el render 3D del hero es el LCP. Ahora carga sin diferir y con prioridad alta: la espera para empezar a cargarlo bajó de 1,2 s a 0,38 s.
+
+## Pendiente para Camilo (no se decidió en su ausencia)
+
+1. **Aprobar o rechazar** `seo-cambios-pendientes.md`.
+2. **Las cinco preguntas abiertas de la fase 3:**
+   - textos de Frecuencia y Garantía;
+   - el paso 3 del método contradice la política de garantía;
+   - ¿la foto del equipo en "Por qué AGROINCOL" es real?;
+   - los ajustes de arte de la caja, el gel, el acta y la gorra;
+   - el giro de 24 cuadros (no se hizo).
+3. **Revisión de GTM** (tarea aprobada, aparte). Sigue siendo la palanca más grande para el LCP en producción.
+4. **Merge a `main`:** solo con su aprobación.
+
+**Preview con GTM contra producción** (5 corridas cada uno, mismo momento). No es concluyente: las corridas son bimodales.
+
+| Página | Preview: rendimiento / LCP | Producción: rendimiento / LCP | Rango del preview |
+|---|---|---|---|
+| `/` | 74 / 5,72 s | 93 / 2,66 s | 72–94 (producción: 69–95) |
+| residencial | 74 / 6,49 s | 72 / 7,06 s | 68–96 |
+| blog | 76 / 5,38 s | 74 / 6,25 s | 68–83 |
+| zonas | 73 / 6,87 s | 72 / 7,31 s | 69–94 |
+
+- Con GTM, cada URL alterna entre corridas de ~70 y de ~95. La mediana depende de cuántas corridas rápidas caen, y en el home de producción cayeron 3 de 5.
+- La medida confiable es la local (`main` contra rama en la misma máquina, sin GTM).
+- En producción, el LCP lo domina GTM (502 KB). Por eso la revisión de GTM sigue siendo la tarea que más mueve la velocidad.

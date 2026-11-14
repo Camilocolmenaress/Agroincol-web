@@ -1,0 +1,76 @@
+{
+  "base": "http://localhost:3201",
+  "fecha": "2026-11-14T00:39:07.299Z",
+  "corridas": 3,
+  "nota": "Lighthouse móvil (preset por defecto: Moto G Power, 4G lento simulado). INP no se mide en laboratorio: se usa TBT como proxy y CrUX/Speed Insights para campo.",
+  "resumen": [
+    {
+      "url": "/",
+      "perf": 92,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 96,
+      "lcp_s": 3.36,
+      "cls": 0,
+      "tbt_ms": 0,
+      "fcp_s": 1.51,
+      "peso_kb": 351,
+      "perf_corridas": [
+        91,
+        92,
+        92
+      ]
+    },
+    {
+      "url": "/servicios/fumigacion-residencial",
+      "perf": 89,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 96,
+      "lcp_s": 3.65,
+      "cls": 0,
+      "tbt_ms": 0,
+      "fcp_s": 1.81,
+      "peso_kb": 408,
+      "perf_corridas": [
+        89,
+        89,
+        90
+      ]
+    },
+    {
+      "url": "/blog/como-eliminar-cucarachas-bucaramanga",
+      "perf": 91,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 96,
+      "lcp_s": 3.31,
+      "cls": 0,
+      "tbt_ms": 0,
+      "fcp_s": 1.81,
+      "peso_kb": 395,
+      "perf_corridas": [
+        91,
+        91,
+        91
+      ]
+    },
+    {
+      "url": "/zonas/fumigacion-bucaramanga",
+      "perf": 89,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 96,
+      "lcp_s": 3.65,
+      "cls": 0,
+      "tbt_ms": 0,
+      "fcp_s": 1.81,
+      "peso_kb": 413,
+      "perf_corridas": [
+        89,
+        89,
+        90
+      ]
+    }
+  ]
+}
