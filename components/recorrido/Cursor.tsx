@@ -1,46 +1,62 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
-// Cursor de la marca: un punto naranja que sigue al mouse y crece con su etiqueta
-// ("Ver servicio", "Arrastre", "WhatsApp") sobre los elementos con data-cursor.
-// Solo con mouse (pointer: fine). El cursor nativo se queda: esto lo acompaña, no lo reemplaza.
+// Cursor con texto, como el de agrumeafarm.it: una píldora blanca con el punto de gel que aparece
+// solo sobre los elementos con data-cursor ("Ver servicio", "Arrastre", "WhatsApp"), sigue al
+// mouse con retraso (lerp 0,12) desplazada 18 px y entra creciendo de 0,4 a 1 en 0,5 s.
+// Solo con mouse; el cursor nativo se queda.
 export default function Cursor() {
   const [activo, setActivo] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const texto = useRef<HTMLSpanElement>(null);
+  const pathname = usePathname();
 
-  useEffect(() => setActivo(window.matchMedia('(pointer: fine)').matches), []);
+  // Al cambiar de página la píldora se va aunque el mouse no se haya movido.
+  useEffect(() => {
+    if (ref.current) delete ref.current.dataset.visible;
+  }, [pathname]);
+
+  useEffect(() => setActivo(window.matchMedia('(hover: hover) and (pointer: fine)').matches), []);
 
   useEffect(() => {
     const el = ref.current;
     if (!activo || !el) return;
     const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let x = -100, y = -100, tx = x, ty = y, raf = 0;
+    let x = -100, y = -100, tx = x, ty = y, raf = 0, ocultar = 0;
+    let visible = false;
 
     const mover = (e: PointerEvent) => {
-      tx = e.clientX + 14;
-      ty = e.clientY + 14;
-      const destino = (e.target as Element | null)?.closest?.('[data-cursor]');
-      const etiqueta = destino?.getAttribute('data-cursor');
-      if (etiqueta) {
-        el.dataset.etiqueta = '';
+      tx = e.clientX;
+      ty = e.clientY;
+      const etiqueta = (e.target as Element | null)?.closest?.('[data-cursor]')?.getAttribute('data-cursor');
+      if (etiqueta && !document.documentElement.hasAttribute('data-vuelo')) {
+        window.clearTimeout(ocultar);
+        if (!visible && Math.hypot(tx - x, ty - y) > 80) {
+          x = tx;
+          y = ty;
+        }
+        visible = true;
+        el.dataset.visible = '';
         if (texto.current && texto.current.textContent !== etiqueta) texto.current.textContent = etiqueta;
-      } else {
-        delete el.dataset.etiqueta;
+      } else if (visible) {
+        visible = false;
+        window.clearTimeout(ocultar);
+        ocultar = window.setTimeout(() => delete el.dataset.visible, 90);
       }
     };
     const paso = () => {
-      x += (tx - x) * (quieto ? 1 : 0.22);
-      y += (ty - y) * (quieto ? 1 : 0.22);
-      el.style.setProperty('--cx', `${x}px`);
-      el.style.setProperty('--cy', `${y}px`);
+      x += (tx - x) * (quieto ? 1 : 0.12);
+      y += (ty - y) * (quieto ? 1 : 0.12);
+      el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
       raf = requestAnimationFrame(paso);
     };
     window.addEventListener('pointermove', mover, { passive: true });
     raf = requestAnimationFrame(paso);
     return () => {
       window.removeEventListener('pointermove', mover);
+      window.clearTimeout(ocultar);
       cancelAnimationFrame(raf);
     };
   }, [activo]);
@@ -48,8 +64,9 @@ export default function Cursor() {
   if (!activo) return null;
   return (
     <div ref={ref} className="cursor-marca" aria-hidden>
-      <span className="cursor-marca-punto">
-        <span ref={texto} className="cursor-marca-texto" />
+      <span className="cursor-marca-pildora">
+        <span className="punto-gel" />
+        <span ref={texto} />
       </span>
     </div>
   );

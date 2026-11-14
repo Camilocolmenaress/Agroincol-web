@@ -52,7 +52,12 @@ export default function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const alDesplazar = () => setConSombra(window.scrollY > 8);
+    // En el home, mientras el selector está fijado la cabecera sigue transparente (como en la referencia).
+    const alDesplazar = () => {
+      const pista = document.querySelector<HTMLElement>('[data-selector]');
+      const umbral = pista ? pista.offsetTop + pista.offsetHeight - window.innerHeight : 0;
+      setConSombra(window.scrollY > Math.max(8, umbral));
+    };
     alDesplazar();
     window.addEventListener('scroll', alDesplazar, { passive: true });
     return () => window.removeEventListener('scroll', alDesplazar);

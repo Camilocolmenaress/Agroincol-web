@@ -418,3 +418,26 @@ Camilo debe confirmarlas.
 - **El hero queda fijo unas 2,6 pantallas** mientras pasan los 10 objetos.
 
 La evidencia contra la referencia está en `docs/rediseno/comparacion-agrumea/`.
+
+## Rehacer desde la referencia (14-nov)
+
+Camilo rechazó el hero y la página ("se ve feo, apretado, sin jerarquía; no deja escoger"). Antes de volver a construir, desarmamos agrumeafarm.it por completo: `docs/rediseno/descomposicion-agrumea/` (dirección creativa, sistema, jerarquías, movimiento, uso y tres anexos con valores exactos).
+
+### Decisiones de Camilo (14-nov) que cambian el brief
+
+1. **H1:** visible pero pequeño (~28 px), como etiqueta fuera de la forma. Los botones salen del hero; WhatsApp queda en el botón de la cabecera, que se ve desde el primer pintado.
+2. **WebGL:** se permite Three.js solo para el giro de los objetos, cargado después del primer pintado, con imagen quieta de respaldo. Esto revierte el "no uses Three.js ni WebGL" del brief para ese único uso.
+3. **El home es un selector en la primera pantalla.** La rueda, el arrastre y el clic escogen el servicio. Al terminar la vuelta la página sigue con el texto indexable, rehecho con el sistema escaso de la referencia.
+4. **Familia de objetos:** queda para el final. Por ahora se usan los 10 objetos actuales y el trabajo se enfoca en el funcionamiento.
+5. **Celular:** el deslizamiento vertical también mueve la fila mientras la primera pantalla está fijada.
+6. **Precargador:** máximo 1,2 s, detrás del contenido y solo en la primera visita. Son gotas de gel que caen con física y se van.
+7. **Menú en escalera:** Hogar, Restaurantes, Empresas y Servicios en grande; el resto, pequeño abajo.
+8. **"Personaje" con física:** ambos. Las gotas de gel van en general y Los Colados en el contexto de Hogar.
+
+### Orden de trabajo
+
+1. **Primera pantalla (selector).** Se aprueba con números medidos contra la referencia y con video del mismo gesto lado a lado.
+2. Precargador, menú y transiciones.
+3. Página de servicio con la estructura de la página de producto.
+4. Resto del home.
+5. Familia de objetos y giro 3D.

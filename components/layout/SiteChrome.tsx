@@ -47,6 +47,8 @@ function FundidoRuta({ pathname }: { pathname: string | null }) {
   useEffect(() => {
     if (anterior.current === pathname) return;
     anterior.current = pathname;
+    // Con el vuelo del objeto (selector del home) no hay fundido: la copia es la transición.
+    if (document.documentElement.hasAttribute('data-vuelo')) return;
     setClave((c) => c + 1);
   }, [pathname]);
   if (!clave) return null;
