@@ -486,6 +486,20 @@ html:has(.sel-pista), html:has(.sel-pista) body { overflow: hidden; overscroll-b
 @media (hover: none) { .sel-aviso-escritorio { display: none; } .sel-aviso-movil { display: inline; } }
 @media (max-width: 767px) { .sel-aviso { bottom: calc(92px + env(safe-area-inset-bottom)); } }
 
+/* Entrada (primera visita, ≤ 1,2 s): las gotas caen detrás de la fila; la forma sube 24 px, el
+   sello llega girando desde -18° y la fila se asienta (56 px, escala 0,9 → 1). Solo transform:
+   nada se oculta esperando JS. Sin data-entrada (o sin JS) el lienzo no se ve. */
+.sel-gotas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; display: none; }
+[data-entrada] .sel-gotas { display: block; }
+@media (prefers-reduced-motion: no-preference) {
+  [data-entrada] .sel-cupula { animation: sel-sube 1.15s cubic-bezier(.215,.61,.355,1) both; }
+  [data-entrada] .sel-sello svg { animation: sel-sello 1.15s cubic-bezier(.215,.61,.355,1) both; }
+  [data-entrada] .sel-fila { animation: sel-fila 1.15s cubic-bezier(.215,.61,.355,1) both; }
+}
+@keyframes sel-sube { from { translate: 0 24px; } to { translate: 0 0; } }
+@keyframes sel-sello { from { transform: translateY(12px) rotate(-18deg); } to { transform: none; } }
+@keyframes sel-fila { from { translate: 0 56px; scale: 0.9; } to { translate: 0 0; scale: 1; } }
+
 /* Clic con vuelo: todo lo demás se desvanece en 0,42 s; el destino espera oculto a la copia. */
 .sel > *:not(.sel-ventana), .sel-item { transition: opacity 0.42s cubic-bezier(.22,1,.36,1); }
 .sel[data-saliendo] > *:not(.sel-ventana), .sel[data-saliendo] .sel-item { opacity: 0; }
@@ -552,12 +566,68 @@ html.lenis, html.lenis body { height: auto; }
 html.lenis { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 
-/* Fundido verde corto entre páginas del sitio (SiteChrome.tsx): se desvanece en 0,35 s. */
-.fundido-ruta { opacity: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .fundido-ruta { animation: fundido-ruta 0.35s cubic-bezier(.2,.7,.2,1) both; }
+/* Telón entre páginas (Telon.tsx), como el de la referencia: panel verde que sube desde abajo,
+   cubre y sigue subiendo; una línea menta barre de izquierda a derecha. */
+.telon {
+  position: fixed; left: 0; right: 0; top: 100%; height: 100vh; height: 100lvh; z-index: 200;
+  background: #164A38; visibility: hidden; pointer-events: none;
 }
-@keyframes fundido-ruta { from { opacity: 0.85; } to { opacity: 0; } }
+.telon-linea {
+  position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgb(225 235 227 / 0.65);
+  transform: scaleX(0); transform-origin: left center;
+}
+body[data-telon] { cursor: progress; }
+
+/* Revelado de texto por máscara (Revelar.tsx): sin fundido, la letra o la línea sube dentro de
+   un recorte. */
+.rvl-palabra { display: inline-block; white-space: nowrap; }
+.rvl-mascara { display: inline-block; overflow: hidden; vertical-align: top; margin: -0.14em 0 -0.1em; padding: 0.14em 0 0.1em; }
+.rvl-linea { display: block; }
+.rvl-u { display: inline-block; will-change: transform; }
+.rvl-linea .rvl-u { display: block; }
+
+/* Rodillo (hover de la referencia): la palabra sube y entra su copia desde abajo. La copia es un
+   ::after con attr(data-texto): el HTML del servidor no cambia. */
+.rodillo { position: relative; display: inline-flex; overflow: hidden; vertical-align: top; }
+.rodillo-texto { display: block; transition: transform 0.35s cubic-bezier(.4,0,.2,1); }
+.rodillo::after {
+  content: attr(data-texto); position: absolute; left: 0; top: 100%;
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .rodillo:hover .rodillo-texto, .group:hover .rodillo .rodillo-texto { transform: translateY(-100%); }
+  .rodillo:hover::after, .group:hover .rodillo::after { transform: translateY(-100%); }
+}
+
+/* Menú a pantalla completa (Navbar.tsx), como el de la referencia: baja en 0,9 s; los cuatro
+   destinos en escalera, cada uno entra desde abajo de su fila y los filetes se dibujan. */
+.menu-panel {
+  position: fixed; inset: 0; z-index: 0; overflow-y: auto; overscroll-behavior: contain;
+  background: #164A38; visibility: hidden; transform: translate3d(0, -100%, 0);
+  transition: transform 0.975s cubic-bezier(.645,.045,.355,1), visibility 0s linear 0.975s;
+}
+.menu-panel[data-abierto] { visibility: visible; transform: none; transition: transform 0.9s cubic-bezier(.645,.045,.355,1), visibility 0s; }
+.menu-escalera { margin: 0; padding: 0; list-style: none; }
+.menu-fila { position: relative; overflow: hidden; padding: 0.35rem 0 0.5rem; }
+.menu-fila::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: rgb(255 255 255 / 0.22);
+  transform: scaleX(0); transform-origin: left center; transition: transform 0.4s cubic-bezier(.645,.045,.355,1);
+}
+.menu-panel[data-abierto] .menu-fila::after { transform: scaleX(1); transition: transform 0.6s cubic-bezier(.645,.045,.355,1) calc(0.45s + var(--i) * 0.08s); }
+.menu-grande {
+  margin-left: calc(var(--i) / var(--n) * 100%); transform: translateX(calc(var(--i) / var(--n) * -100%));
+  align-items: center; gap: 0.25em; color: #fff;
+  font: 800 clamp(2.4rem, min(8vw, 11svh), 7.2rem)/1 var(--font-display); letter-spacing: -0.02em; text-transform: uppercase;
+  translate: 0 110%; transition: translate 0.45s cubic-bezier(.645,.045,.355,1);
+}
+.menu-panel[data-abierto] .menu-grande { translate: 0 0; transition: translate 0.95s cubic-bezier(.165,1,.32,1) calc(0.45s + var(--i) * 0.08s); }
+.menu-grande.is-activo { color: #E1EBE3; }
+.menu-grande::after { color: #E1EBE3; }
+.menu-activo { width: 0.3em; height: 0.3em; flex-shrink: 0; border-radius: 9999px; background: #F5682E; }
+.menu-secundario { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin: 0; padding: 0; list-style: none; max-width: 46rem; }
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel, .menu-panel[data-abierto], .menu-grande, .menu-panel[data-abierto] .menu-grande, .menu-fila::after { transition: none; }
+}
 
 /* Manual v2: nunca texto pequeño en naranja sobre blanco o verde. En el sitio, el texto que venía
    en naranja (enlaces de artículos, "Ver más", etiquetas) pasa a Verde Con Sello con el naranja

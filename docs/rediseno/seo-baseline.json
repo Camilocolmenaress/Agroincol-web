@@ -18059,6 +18059,1104 @@
         }
       ],
       "mainWords": 469
+    },
+    "/nosotros": {
+      "status": 200,
+      "title": "Nosotros: Control de Plagas en Bucaramanga desde 1985 | AGROINCOL",
+      "description": "Más de 40 años protegiendo hogares, restaurantes e industrias en Bucaramanga, Floridablanca, Piedecuesta y Girón. Cómo trabajamos, zonas, reseñas y preguntas frecuentes.",
+      "canonical": "https://agroincol.com/nosotros",
+      "hreflang": [],
+      "robots": null,
+      "xRobotsTag": null,
+      "social": {
+        "og:title": "Nosotros | AGROINCOL",
+        "og:description": "Más de 40 años protegiendo hogares, restaurantes e industrias en Bucaramanga, Floridablanca, Piedecuesta y Girón.",
+        "og:url": "https://agroincol.com/nosotros",
+        "og:site_name": "AGROINCOL",
+        "og:locale": "es_CO",
+        "og:type": "website",
+        "twitter:card": "summary",
+        "twitter:title": "Nosotros | AGROINCOL",
+        "twitter:description": "Más de 40 años protegiendo hogares, restaurantes e industrias en Bucaramanga, Floridablanca, Piedecuesta y Girón."
+      },
+      "headings": [
+        {
+          "nivel": "h1",
+          "region": "main",
+          "texto": "Nosotros"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "¿Qué necesita proteger?"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Mi hogar"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Mi restaurante"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Mi empresa o industria"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "Simple, profesional y con respaldo"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Diagnóstico gratis"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Tratamiento certificado"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Certificado y garantía"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "Nuestros Servicios de Fumigación y Control de Plagas"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Fumigación Residencial"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Control de Plagas Comercial"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Fumigación para Restaurantes"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Desratización"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Control de Insectos Voladores"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Fumigación Industrial"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Control de Comején y Termitas"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Retiro de Abejas y Avispas"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Control de Chinches de Cama"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "Alivio Renovamos tu descanso."
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "¿Por Qué Elegir AGROINCOL para su Fumigación?"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "Cobertura en el Área Metropolitana de Bucaramanga"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Bucaramanga"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Floridablanca"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Piedecuesta"
+        },
+        {
+          "nivel": "h3",
+          "region": "main",
+          "texto": "Girón"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "Lo Que Dicen Nuestros Clientes"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "Lo que suelen preguntarnos antes de contratar"
+        },
+        {
+          "nivel": "h3",
+          "region": "pie",
+          "texto": "Servicios"
+        },
+        {
+          "nivel": "h3",
+          "region": "pie",
+          "texto": "Normativa"
+        },
+        {
+          "nivel": "h3",
+          "region": "pie",
+          "texto": "Zonas de Servicio"
+        },
+        {
+          "nivel": "h3",
+          "region": "pie",
+          "texto": "Contacto"
+        }
+      ],
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@id": "https://agroincol.com/#organization",
+          "@type": [
+            "LocalBusiness",
+            "PestControlService"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "CO",
+            "addressLocality": "Floridablanca",
+            "addressRegion": "Santander",
+            "postalCode": "681003",
+            "streetAddress": "Cra. 36 #197-30 local A11, Paseo Comercial Paraguitas, Casco Antiguo"
+          },
+          "areaServed": [
+            {
+              "@type": "City",
+              "containedInPlace": {
+                "@type": "AdministrativeArea",
+                "name": "Santander"
+              },
+              "name": "Bucaramanga"
+            },
+            {
+              "@type": "City",
+              "containedInPlace": {
+                "@type": "AdministrativeArea",
+                "name": "Santander"
+              },
+              "name": "Floridablanca"
+            },
+            {
+              "@type": "City",
+              "containedInPlace": {
+                "@type": "AdministrativeArea",
+                "name": "Santander"
+              },
+              "name": "Piedecuesta"
+            },
+            {
+              "@type": "City",
+              "containedInPlace": {
+                "@type": "AdministrativeArea",
+                "name": "Santander"
+              },
+              "name": "Girón"
+            }
+          ],
+          "description": "Empresa de fumigación y control de plagas con más de 40 años de experiencia en el Área Metropolitana de Bucaramanga, Santander, Colombia.",
+          "foundingDate": "1985",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 7.0650746,
+            "longitude": -73.0848828
+          },
+          "image": "https://agroincol.com/og-image.jpg",
+          "name": "AGROINCOL",
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "closes": "17:00",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+              ],
+              "opens": "07:00"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "closes": "12:00",
+              "dayOfWeek": "Saturday",
+              "opens": "07:00"
+            }
+          ],
+          "priceRange": "$$",
+          "sameAs": [
+            "https://www.instagram.com/agroincolcorp",
+            "https://maps.google.com/?cid=5252561969072218591"
+          ],
+          "telephone": "+573107891948",
+          "url": "https://agroincol.com"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "item": "https://agroincol.com/",
+              "name": "Inicio",
+              "position": 1
+            },
+            {
+              "@type": "ListItem",
+              "name": "Nosotros",
+              "position": 2
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "region": "cabecera",
+          "href": "/servicios/fumigacion-residencial",
+          "texto": "Hogar"
+        },
+        {
+          "region": "cabecera",
+          "href": "/servicios/fumigacion-restaurantes",
+          "texto": "Restaurantes"
+        },
+        {
+          "region": "cabecera",
+          "href": "/servicios/fumigacion-industrial",
+          "texto": "Empresas"
+        },
+        {
+          "region": "cabecera",
+          "href": "/",
+          "texto": "AGROINCOL — Fumigación y Control de Plagas"
+        },
+        {
+          "region": "cabecera",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "Cotizar por WhatsApp"
+        },
+        {
+          "region": "cabecera",
+          "href": "/",
+          "texto": "Inicio"
+        },
+        {
+          "region": "cabecera",
+          "href": "/nosotros",
+          "texto": "Nosotros"
+        },
+        {
+          "region": "cabecera",
+          "href": "/servicios",
+          "texto": "Servicios"
+        },
+        {
+          "region": "cabecera",
+          "href": "/servicios/fumigacion-restaurantes",
+          "texto": "Fumigación Restaurantes"
+        },
+        {
+          "region": "cabecera",
+          "href": "/certificaciones-y-normativa",
+          "texto": "Certificaciones"
+        },
+        {
+          "region": "cabecera",
+          "href": "/herramientas/calculadora-fumigacion",
+          "texto": "Herramientas"
+        },
+        {
+          "region": "cabecera",
+          "href": "/precios",
+          "texto": "Cotización"
+        },
+        {
+          "region": "cabecera",
+          "href": "/blog",
+          "texto": "Blog"
+        },
+        {
+          "region": "cabecera",
+          "href": "/contacto",
+          "texto": "Contacto"
+        },
+        {
+          "region": "cabecera",
+          "href": "/alivio",
+          "texto": "Alivio"
+        },
+        {
+          "region": "cabecera",
+          "href": "#contacto",
+          "texto": "Cotizar Ahora"
+        },
+        {
+          "region": "main",
+          "href": "/",
+          "texto": "Inicio"
+        },
+        {
+          "region": "main",
+          "href": "/",
+          "texto": "← Inicio"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/fumigacion-residencial",
+          "texto": "Mi hogar Cucarachas, roedores o zancudos. Productos seguros para niños y mascotas. Proteger mi casa →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/fumigacion-restaurantes",
+          "texto": "Más solicitado Mi restaurante Cumpla el INVIMA y evite multas. Certificado válido el mismo día. Cumplir con INVIMA →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/fumigacion-industrial",
+          "texto": "Mi empresa o industria Bodegas y plantas. Documentación lista para auditorías e ISO. Proteger mi operación →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/fumigacion-residencial",
+          "texto": "Fumigación Residencial Proteja su hogar y familia de plagas con nuestro servicio certificado para casas y apartamentos. Más información →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/control-plagas-comercial",
+          "texto": "Control de Plagas Comercial Soluciones integrales para oficinas, locales y establecimientos comerciales en el área metropolitana. Más información →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/fumigacion-restaurantes",
+          "texto": "Fumigación para Restaurantes Cumpla con la Resolución 2674 del INVIMA. Servicio especializado para el sector de alimentos. Más información →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/desratizacion",
+          "texto": "Desratización Eliminación profesional de roedores con métodos seguros y seguimiento garantizado. Más información →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/control-insectos-voladores",
+          "texto": "Control de Insectos Voladores Control efectivo de mosquitos, moscas y zancudos. Prevención de dengue y enfermedades vectoriales. Más información →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/fumigacion-industrial",
+          "texto": "Fumigación Industrial Servicio de control de plagas para bodegas, plantas de producción y zonas industriales. Más información →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/control-comejen-termitas",
+          "texto": "Control de Comején y Termitas Detección y eliminación de comején y termitas antes de que dañen la estructura de su propiedad. Más información →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/eliminacion-abejas-avispas",
+          "texto": "Retiro de Abejas y Avispas Retiro seguro de nidos de abejas y avispas con equipos especializados. Atención de urgencia. Más información →"
+        },
+        {
+          "region": "main",
+          "href": "/servicios/control-chinches",
+          "texto": "Control de Chinches de Cama Eliminación profesional de chinches en hogares, hoteles y hospedajes con tratamiento de seguimiento. Más información →"
+        },
+        {
+          "region": "main",
+          "href": "/alivio",
+          "texto": "Conoce Alivio"
+        },
+        {
+          "region": "main",
+          "href": "/zonas/fumigacion-bucaramanga",
+          "texto": "Bucaramanga Capital de Santander"
+        },
+        {
+          "region": "main",
+          "href": "/zonas/fumigacion-floridablanca",
+          "texto": "Floridablanca Sede principal — Cra. 36 #197-30"
+        },
+        {
+          "region": "main",
+          "href": "/zonas/fumigacion-piedecuesta",
+          "texto": "Piedecuesta Cobertura completa"
+        },
+        {
+          "region": "main",
+          "href": "/zonas/fumigacion-giron",
+          "texto": "Girón Cobertura completa"
+        },
+        {
+          "region": "main",
+          "href": "https://maps.google.com/?cid=5252561969072218591",
+          "texto": "Leer todas las reseñas"
+        },
+        {
+          "region": "main",
+          "href": "https://g.page/r/Cd-hRhdI2eRIEBM/review",
+          "texto": "Dejar una reseña"
+        },
+        {
+          "region": "main",
+          "href": "#contacto",
+          "texto": "Escríbanos y le respondemos hoy →"
+        },
+        {
+          "region": "pie",
+          "href": "/",
+          "texto": "AGROINCOL"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/fumigacion-residencial",
+          "texto": "Fumigación Residencial"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/control-plagas-comercial",
+          "texto": "Control de Plagas Comercial"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/fumigacion-restaurantes",
+          "texto": "Fumigación para Restaurantes"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/desratizacion",
+          "texto": "Desratización"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/control-insectos-voladores",
+          "texto": "Control de Insectos Voladores"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/fumigacion-industrial",
+          "texto": "Fumigación Industrial"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/control-comejen-termitas",
+          "texto": "Control de Comején y Termitas"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/eliminacion-abejas-avispas",
+          "texto": "Retiro de Abejas y Avispas"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/control-chinches",
+          "texto": "Control de Chinches de Cama"
+        },
+        {
+          "region": "pie",
+          "href": "/precios",
+          "texto": "Cotización"
+        },
+        {
+          "region": "pie",
+          "href": "/alivio",
+          "texto": "Alivio · Lavado de muebles"
+        },
+        {
+          "region": "pie",
+          "href": "/certificaciones-y-normativa",
+          "texto": "Certificaciones y Normativa"
+        },
+        {
+          "region": "pie",
+          "href": "/politica-de-privacidad",
+          "texto": "Política de Privacidad"
+        },
+        {
+          "region": "pie",
+          "href": "/herramientas/calculadora-fumigacion",
+          "texto": "Calculadora de Fumigación"
+        },
+        {
+          "region": "pie",
+          "href": "/blog",
+          "texto": "Blog"
+        },
+        {
+          "region": "pie",
+          "href": "/zonas/fumigacion-bucaramanga",
+          "texto": "Fumigación en Bucaramanga"
+        },
+        {
+          "region": "pie",
+          "href": "/zonas/fumigacion-floridablanca",
+          "texto": "Fumigación en Floridablanca"
+        },
+        {
+          "region": "pie",
+          "href": "/zonas/fumigacion-piedecuesta",
+          "texto": "Fumigación en Piedecuesta"
+        },
+        {
+          "region": "pie",
+          "href": "/zonas/fumigacion-giron",
+          "texto": "Fumigación en Girón"
+        },
+        {
+          "region": "pie",
+          "href": "tel:+573107891948",
+          "texto": "+57 310 789 1948"
+        },
+        {
+          "region": "pie",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "WhatsApp"
+        },
+        {
+          "region": "otro",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "Contactar por WhatsApp"
+        },
+        {
+          "region": "otro",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "WhatsApp"
+        },
+        {
+          "region": "otro",
+          "href": "tel:+573107891948",
+          "texto": "Llamar"
+        }
+      ],
+      "images": [
+        {
+          "region": "cabecera",
+          "alt": "AGROINCOL — Fumigación y Control de Plagas"
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": ""
+        },
+        {
+          "region": "main",
+          "alt": "Equipo completo de AGROINCOL con uniformes y equipos de bioseguridad"
+        },
+        {
+          "region": "pie",
+          "alt": "AGROINCOL"
+        }
+      ],
+      "mainWords": 951
+    },
+    "/contacto": {
+      "status": 200,
+      "title": "Contacto: Cotice su Fumigación en Bucaramanga | AGROINCOL",
+      "description": "Cotice gratis su fumigación o control de plagas en Bucaramanga, Floridablanca, Piedecuesta y Girón. Respondemos por WhatsApp en menos de 5 minutos.",
+      "canonical": "https://agroincol.com/contacto",
+      "hreflang": [],
+      "robots": null,
+      "xRobotsTag": null,
+      "social": {
+        "og:title": "Contacto | AGROINCOL",
+        "og:description": "Cotice gratis su fumigación en Bucaramanga. Respondemos por WhatsApp en menos de 5 minutos.",
+        "og:url": "https://agroincol.com/contacto",
+        "og:site_name": "AGROINCOL",
+        "og:locale": "es_CO",
+        "og:type": "website",
+        "twitter:card": "summary",
+        "twitter:title": "Contacto | AGROINCOL",
+        "twitter:description": "Cotice gratis su fumigación en Bucaramanga. Respondemos por WhatsApp en menos de 5 minutos."
+      },
+      "headings": [
+        {
+          "nivel": "h1",
+          "region": "main",
+          "texto": "Contacto"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "¿Tiene una plaga ahora? Respondemos por WhatsApp en menos de 5 minutos"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "Proteja su Hogar o Negocio Hoy"
+        },
+        {
+          "nivel": "h2",
+          "region": "main",
+          "texto": "Solicite su Cotización Gratis"
+        },
+        {
+          "nivel": "h3",
+          "region": "pie",
+          "texto": "Servicios"
+        },
+        {
+          "nivel": "h3",
+          "region": "pie",
+          "texto": "Normativa"
+        },
+        {
+          "nivel": "h3",
+          "region": "pie",
+          "texto": "Zonas de Servicio"
+        },
+        {
+          "nivel": "h3",
+          "region": "pie",
+          "texto": "Contacto"
+        }
+      ],
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@id": "https://agroincol.com/#organization",
+          "@type": [
+            "LocalBusiness",
+            "PestControlService"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "CO",
+            "addressLocality": "Floridablanca",
+            "addressRegion": "Santander",
+            "postalCode": "681003",
+            "streetAddress": "Cra. 36 #197-30 local A11, Paseo Comercial Paraguitas, Casco Antiguo"
+          },
+          "areaServed": [
+            {
+              "@type": "City",
+              "containedInPlace": {
+                "@type": "AdministrativeArea",
+                "name": "Santander"
+              },
+              "name": "Bucaramanga"
+            },
+            {
+              "@type": "City",
+              "containedInPlace": {
+                "@type": "AdministrativeArea",
+                "name": "Santander"
+              },
+              "name": "Floridablanca"
+            },
+            {
+              "@type": "City",
+              "containedInPlace": {
+                "@type": "AdministrativeArea",
+                "name": "Santander"
+              },
+              "name": "Piedecuesta"
+            },
+            {
+              "@type": "City",
+              "containedInPlace": {
+                "@type": "AdministrativeArea",
+                "name": "Santander"
+              },
+              "name": "Girón"
+            }
+          ],
+          "description": "Empresa de fumigación y control de plagas con más de 40 años de experiencia en el Área Metropolitana de Bucaramanga, Santander, Colombia.",
+          "foundingDate": "1985",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 7.0650746,
+            "longitude": -73.0848828
+          },
+          "image": "https://agroincol.com/og-image.jpg",
+          "name": "AGROINCOL",
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "closes": "17:00",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+              ],
+              "opens": "07:00"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "closes": "12:00",
+              "dayOfWeek": "Saturday",
+              "opens": "07:00"
+            }
+          ],
+          "priceRange": "$$",
+          "sameAs": [
+            "https://www.instagram.com/agroincolcorp",
+            "https://maps.google.com/?cid=5252561969072218591"
+          ],
+          "telephone": "+573107891948",
+          "url": "https://agroincol.com"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "item": "https://agroincol.com/",
+              "name": "Inicio",
+              "position": 1
+            },
+            {
+              "@type": "ListItem",
+              "name": "Contacto",
+              "position": 2
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "region": "cabecera",
+          "href": "/servicios/fumigacion-residencial",
+          "texto": "Hogar"
+        },
+        {
+          "region": "cabecera",
+          "href": "/servicios/fumigacion-restaurantes",
+          "texto": "Restaurantes"
+        },
+        {
+          "region": "cabecera",
+          "href": "/servicios/fumigacion-industrial",
+          "texto": "Empresas"
+        },
+        {
+          "region": "cabecera",
+          "href": "/",
+          "texto": "AGROINCOL — Fumigación y Control de Plagas"
+        },
+        {
+          "region": "cabecera",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "Cotizar por WhatsApp"
+        },
+        {
+          "region": "cabecera",
+          "href": "/",
+          "texto": "Inicio"
+        },
+        {
+          "region": "cabecera",
+          "href": "/nosotros",
+          "texto": "Nosotros"
+        },
+        {
+          "region": "cabecera",
+          "href": "/servicios",
+          "texto": "Servicios"
+        },
+        {
+          "region": "cabecera",
+          "href": "/servicios/fumigacion-restaurantes",
+          "texto": "Fumigación Restaurantes"
+        },
+        {
+          "region": "cabecera",
+          "href": "/certificaciones-y-normativa",
+          "texto": "Certificaciones"
+        },
+        {
+          "region": "cabecera",
+          "href": "/herramientas/calculadora-fumigacion",
+          "texto": "Herramientas"
+        },
+        {
+          "region": "cabecera",
+          "href": "/precios",
+          "texto": "Cotización"
+        },
+        {
+          "region": "cabecera",
+          "href": "/blog",
+          "texto": "Blog"
+        },
+        {
+          "region": "cabecera",
+          "href": "/contacto",
+          "texto": "Contacto"
+        },
+        {
+          "region": "cabecera",
+          "href": "/alivio",
+          "texto": "Alivio"
+        },
+        {
+          "region": "cabecera",
+          "href": "#contacto",
+          "texto": "Cotizar Ahora"
+        },
+        {
+          "region": "main",
+          "href": "/",
+          "texto": "Inicio"
+        },
+        {
+          "region": "main",
+          "href": "/",
+          "texto": "← Inicio"
+        },
+        {
+          "region": "main",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "Cotizar por WhatsApp"
+        },
+        {
+          "region": "main",
+          "href": "tel:+573107891948",
+          "texto": "Llamar ahora"
+        },
+        {
+          "region": "main",
+          "href": "https://maps.google.com/?cid=5252561969072218591",
+          "texto": "4.9 · 33 reseñas en Google"
+        },
+        {
+          "region": "main",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "Escribir por WhatsApp"
+        },
+        {
+          "region": "main",
+          "href": "tel:+573107891948",
+          "texto": "Llamar ahora"
+        },
+        {
+          "region": "main",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "O escríbanos por WhatsApp"
+        },
+        {
+          "region": "main",
+          "href": "/politica-de-privacidad",
+          "texto": "Política de Tratamiento de Datos Personales"
+        },
+        {
+          "region": "pie",
+          "href": "/",
+          "texto": "AGROINCOL"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/fumigacion-residencial",
+          "texto": "Fumigación Residencial"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/control-plagas-comercial",
+          "texto": "Control de Plagas Comercial"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/fumigacion-restaurantes",
+          "texto": "Fumigación para Restaurantes"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/desratizacion",
+          "texto": "Desratización"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/control-insectos-voladores",
+          "texto": "Control de Insectos Voladores"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/fumigacion-industrial",
+          "texto": "Fumigación Industrial"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/control-comejen-termitas",
+          "texto": "Control de Comején y Termitas"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/eliminacion-abejas-avispas",
+          "texto": "Retiro de Abejas y Avispas"
+        },
+        {
+          "region": "pie",
+          "href": "/servicios/control-chinches",
+          "texto": "Control de Chinches de Cama"
+        },
+        {
+          "region": "pie",
+          "href": "/precios",
+          "texto": "Cotización"
+        },
+        {
+          "region": "pie",
+          "href": "/alivio",
+          "texto": "Alivio · Lavado de muebles"
+        },
+        {
+          "region": "pie",
+          "href": "/certificaciones-y-normativa",
+          "texto": "Certificaciones y Normativa"
+        },
+        {
+          "region": "pie",
+          "href": "/politica-de-privacidad",
+          "texto": "Política de Privacidad"
+        },
+        {
+          "region": "pie",
+          "href": "/herramientas/calculadora-fumigacion",
+          "texto": "Calculadora de Fumigación"
+        },
+        {
+          "region": "pie",
+          "href": "/blog",
+          "texto": "Blog"
+        },
+        {
+          "region": "pie",
+          "href": "/zonas/fumigacion-bucaramanga",
+          "texto": "Fumigación en Bucaramanga"
+        },
+        {
+          "region": "pie",
+          "href": "/zonas/fumigacion-floridablanca",
+          "texto": "Fumigación en Floridablanca"
+        },
+        {
+          "region": "pie",
+          "href": "/zonas/fumigacion-piedecuesta",
+          "texto": "Fumigación en Piedecuesta"
+        },
+        {
+          "region": "pie",
+          "href": "/zonas/fumigacion-giron",
+          "texto": "Fumigación en Girón"
+        },
+        {
+          "region": "pie",
+          "href": "tel:+573107891948",
+          "texto": "+57 310 789 1948"
+        },
+        {
+          "region": "pie",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "WhatsApp"
+        },
+        {
+          "region": "otro",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "Contactar por WhatsApp"
+        },
+        {
+          "region": "otro",
+          "href": "https://wa.me/573107891948?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20fumigaci%C3%B3n",
+          "texto": "WhatsApp"
+        },
+        {
+          "region": "otro",
+          "href": "tel:+573107891948",
+          "texto": "Llamar"
+        }
+      ],
+      "images": [
+        {
+          "region": "cabecera",
+          "alt": "AGROINCOL — Fumigación y Control de Plagas"
+        },
+        {
+          "region": "pie",
+          "alt": "AGROINCOL"
+        }
+      ],
+      "mainWords": 215
     }
-  }
+  },
+  "nota_paginas_nuevas": "14-nov: /nosotros y /contacto se agregaron desde la rama (opción B aprobada) para vigilar su texto en los rediseños siguientes."
 }

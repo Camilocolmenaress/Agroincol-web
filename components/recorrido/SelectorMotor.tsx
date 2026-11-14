@@ -144,6 +144,7 @@ export default function SelectorMotor() {
     };
     const tecla = (e: KeyboardEvent) => {
       if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      if (document.body.hasAttribute('data-menu')) return; // con el menú abierto, las flechas no mueven la fila
       const i = enlaces.indexOf(document.activeElement as HTMLAnchorElement);
       const objetivoTecla = e.target as HTMLElement;
       if (i < 0 && objetivoTecla !== document.body) return; // no robar las flechas a otros controles

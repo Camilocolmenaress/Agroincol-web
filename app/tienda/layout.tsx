@@ -1,5 +1,6 @@
 import localFont from 'next/font/local';
 import MetaPixel from '@/components/analytics/MetaPixel';
+import { titulosLanding } from '@/components/layout/titulos-landing';
 import PostHogInit from '@/components/analytics/PostHogInit';
 
 // Tipografías del manual de marca (v2, oct-2026), archivos WOFF2 del propio
@@ -30,7 +31,10 @@ const caveat = localFont({
 export default function TiendaLayout({ children }: { children: React.ReactNode }) {
   return (
     <div data-tienda className={`${montserrat.variable} ${caveat.variable} bg-[#FBFBF7] font-body text-brand-black`}>
-      {children}
+      {/* Títulos con precarga solo aquí (components/layout/titulos-landing.ts). */}
+      <div className={titulosLanding.variable} style={{ display: 'contents' }}>
+        {children}
+      </div>
       <MetaPixel />
       <PostHogInit />
     </div>

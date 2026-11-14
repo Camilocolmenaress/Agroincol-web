@@ -2470,18 +2470,6 @@
         "region": "main",
         "alt": ""
       }
-    },
-    {
-      "fase": "B",
-      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
-      "ruta": "/nosotros",
-      "tipo": "url"
-    },
-    {
-      "fase": "B",
-      "decision": "14-nov: Camilo aprueba la lista pendiente (seo-cambios-pendientes.md), incluida la opción B",
-      "ruta": "/contacto",
-      "tipo": "url"
     }
   ]
 }

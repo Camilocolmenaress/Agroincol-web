@@ -1,4 +1,5 @@
 import MetaPixel from '@/components/analytics/MetaPixel';
+import { titulosLanding } from '@/components/layout/titulos-landing';
 import PostHogInit from '@/components/analytics/PostHogInit';
 
 /**
@@ -26,7 +27,10 @@ import PostHogInit from '@/components/analytics/PostHogInit';
 export default function LandingLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      {children}
+      {/* Títulos con precarga solo aquí (components/layout/titulos-landing.ts). */}
+      <div className={titulosLanding.variable} style={{ display: 'contents' }}>
+        {children}
+      </div>
       <MetaPixel />
       <PostHogInit />
     </>

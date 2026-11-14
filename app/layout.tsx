@@ -21,7 +21,9 @@ const heading = localFont({
   variable: '--font-heading',
   display: 'swap',
   fallback: ['sans-serif'],
-  preload: true,
+  // Sin precarga en el sitio (14-nov): +2 puntos y -0,35 s de LCP en el home. Las landings la
+  // siguen precargando con su propia declaración (components/layout/titulos-landing.ts).
+  preload: false,
 });
 
 const body = localFont({
