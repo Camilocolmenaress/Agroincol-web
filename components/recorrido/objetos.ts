@@ -33,6 +33,21 @@ export const OBJETOS: Objeto3D[] = [
     alt: 'Estiba con cajas de bodega, en 3D: fumigación industrial y control de plagas para empresas de AGROINCOL',
     href: '/servicios/fumigacion-industrial',
   },
+  {
+    id: 'estacion',
+    alt: 'Estación cebadera para roedores, en 3D: desratización de AGROINCOL',
+    href: '/servicios/desratizacion',
+  },
+  {
+    id: 'gel',
+    alt: 'Gotas de gel insecticida sobre una baldosa, en 3D: control de cucarachas en negocios de AGROINCOL',
+    href: '/servicios/control-plagas-comercial',
+  },
+  {
+    id: 'caja',
+    alt: 'Caja del kit de bienvenida para empresas con el logo de AGROINCOL, en 3D: control de plagas comercial',
+    href: '/servicios/control-plagas-comercial',
+  },
 ];
 
 export const objetoPorId = (id: string) => OBJETOS.find((o) => o.id === id);
