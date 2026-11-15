@@ -1,36 +1,74 @@
-# Qué texto publicado hoy en agroincol.com (dentro de <main>) no aparece en el prototipo aprobado.
-# Compara frase por frase (8+ palabras, sin mayúsculas ni puntuación). Escribe
-# docs/rediseno-prototipo/texto-faltante.md. Uso: python3 scripts/rediseno/texto-faltante.py
-import json,re,sys,urllib.request,html
+#!/usr/bin/env python3
+"""Qué texto publicado hoy en agroincol.com no está en la página nueva.
+
+Compara elemento por elemento: cada H1/H2/H3, párrafo, ítem de lista, pregunta y respuesta del
+<main> de producción se busca (sin mayúsculas, tildes ni puntuación) dentro del texto de la página
+nueva (content/rediseno/paginas.json). Lo que no aparece se lista agrupado por la sección (H2) de
+producción en que estaba, para decidir si es contenido o cromo (formularios, llamados, reseñas,
+tarjetas de navegación).
+
+Escribe docs/rediseno-prototipo/texto-faltante.md. Uso: python3 scripts/rediseno/texto-faltante.py
+"""
+import html, json, re, unicodedata, urllib.request
 from html.parser import HTMLParser
-P=json.load(open('content/rediseno/paginas.json'))
-class T(HTMLParser):
-    def __init__(s): super().__init__(); s.d=0; s.skip=0; s.out=[]
-    def handle_starttag(s,t,a):
-        if t=='main': s.d+=1
-        if t in('script','style'): s.skip+=1
-    def handle_endtag(s,t):
-        if t=='main': s.d-=1
-        if t in('script','style'): s.skip-=1
-    def handle_data(s,x):
-        if s.d>0 and not s.skip: s.out.append(x)
-def texto(h):
-    t=T(); t.feed(h); return re.sub(r'\s+',' ',' '.join(t.out))
-norm=lambda x: re.sub(r'[^a-záéíóúñü0-9 ]','',x.lower())
-md=['# Texto de producción que no está en el prototipo','','Generado por `scripts/rediseno/texto-faltante.py`. Frases de 8+ palabras del `<main>` publicado hoy que no aparecen en la página del prototipo. Incluye formularios y llamados a la acción (esperable) y contenido (a decidir).','','| Ruta | Frases | Faltan | Palabras faltantes |','|---|---|---|---|']
-detalle=[]
-for arch,v in P.items():
-    ruta=v['ruta']
-    try: prod=urllib.request.urlopen(urllib.request.Request('https://agroincol.com'+ruta,headers={'User-Agent':'Mozilla/5.0'}),timeout=20).read().decode()
-    except Exception as e: print(ruta,'sin página en producción'); continue
-    tp=texto(prod); proto=norm(re.sub(r'<[^>]+>',' ',html.unescape(v['main'] or '')))
-    proto=re.sub(r'\s+',' ',proto)
-    frases=[f.strip() for f in re.split(r'(?<=[.!?¿:])\s+',tp) if len(f.split())>=8]
-    falt=[f for f in frases if re.sub(r'\s+',' ',norm(f)).strip() not in proto]
-    pal=sum(len(f.split()) for f in falt); tot=sum(len(f.split()) for f in frases) or 1
-    md.append(f"| {ruta} | {len(frases)} | {len(falt)} | {pal} de {tot} ({pal*100//tot} %) |")
-    if falt: detalle += ['', f'## {ruta}', ''] + ['- ' + f for f in falt]
-    print(f"{ruta:48s} frases {len(frases):3d}  faltan {len(falt):3d}  palabras faltantes {pal:4d}/{tot} ({pal*100//tot}%)")
 
+P = json.load(open('content/rediseno/paginas.json', encoding='utf-8'))
 
-open('docs/rediseno-prototipo/texto-faltante.md','w').write('\n'.join(md+detalle)+'\n')
+def norm(t):
+    t = unicodedata.normalize('NFD', html.unescape(t).lower())
+    t = ''.join(c for c in t if unicodedata.category(c) != 'Mn')
+    return re.sub(r'[^a-z0-9ñ]+', ' ', t).strip()
+
+class Items(HTMLParser):
+    BLOQUES = ('h1', 'h2', 'h3', 'p', 'li', 'span', 'blockquote')
+    def __init__(self):
+        super().__init__(); self.pila = []; self.items = []; self.saltar = 0; self.en_boton = 0
+    def handle_starttag(self, tag, a):
+        if tag in ('script', 'style', 'svg'): self.saltar += 1
+        if tag == 'button': self.en_boton += 1
+        if tag in self.BLOQUES and (tag != 'span' or self.en_boton): self.pila.append([tag, ''])
+    def handle_endtag(self, tag):
+        if tag in ('script', 'style', 'svg'): self.saltar -= 1
+        if tag == 'button': self.en_boton -= 1
+        if tag in self.BLOQUES and self.pila and self.pila[-1][0] == tag:
+            t, txt = self.pila.pop()
+            txt = re.sub(r'\s+', ' ', txt).strip()
+            if self.pila: self.pila[-1][1] += ' ' + txt
+            elif txt: self.items.append(('PREGUNTA' if t == 'span' else t.upper(), txt))
+    def handle_data(self, d):
+        if not self.saltar and self.pila: self.pila[-1][1] += d
+
+def produccion(ruta):
+    doc = urllib.request.urlopen(urllib.request.Request('https://agroincol.com' + ruta, headers={'User-Agent': 'agroincol-rediseno'})).read().decode('utf-8')
+    main = re.search(r'<main[^>]*>(.*)</main>', doc, re.S).group(1)
+    p = Items(); p.feed(main)
+    return p.items
+
+filas, detalle = [], []
+for arch, v in sorted(P.items(), key=lambda x: x[1]['ruta']):
+    ruta = v['ruta']
+    try:
+        items = produccion(ruta)
+    except Exception:
+        continue  # Página nueva: no existe en producción.
+    nuevo = ' ' + norm(re.sub(r'<[^>]+>', ' ', v['main'] or '')) + ' '
+    seccion, faltan, total, palabras_f = '(antes del primer H2)', {}, 0, 0
+    for tag, t in items:
+        if tag == 'H2': seccion = t
+        n = norm(re.sub(r'^\s*(\d+\.?|[✓›•])\s*', '', t))  # numeración y viñetas: el prototipo las pone con <ol>/<ul>
+        if len(n.split()) < 4: continue  # botones, cifras y rótulos sueltos
+        total += len(n.split())
+        if f' {n} ' not in nuevo:
+            faltan.setdefault(seccion, []).append(f'{tag}: {t}')
+            palabras_f += len(n.split())
+    filas.append(f'| {ruta} | {palabras_f} de {total} ({palabras_f * 100 // max(total, 1)} %) | {len(faltan)} |')
+    if faltan:
+        detalle += ['', f'## {ruta}']
+        for sec, lineas in faltan.items():
+            detalle += ['', f'**{sec}**', ''] + [f'- {l}' for l in lineas]
+
+md = ['# Texto de producción que no está en la página nueva', '',
+      'Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, ítem, pregunta y respuesta del `<main>` publicado hoy (4 palabras o más) se busca en la página nueva. Lo que falta se agrupa por la sección de producción en que estaba.', '',
+      '| Ruta | Palabras que faltan | Secciones con faltantes |', '|---|---|---|'] + filas + detalle
+open('docs/rediseno-prototipo/texto-faltante.md', 'w', encoding='utf-8').write('\n'.join(md) + '\n')
+print('\n'.join(filas))

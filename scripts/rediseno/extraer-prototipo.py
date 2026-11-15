@@ -96,7 +96,116 @@ pages["articulo-vi-una-cucaracha.html"] = article_page("articulo-vi-una-cucarach
         os.chdir(cwd)
 
 pages = g['pages']
-datos = {k: g[k] for k in ['S', 'Z', 'T', 'POSTS', 'BLOG', 'ORB', 'ILU', 'MENU', 'FAQ_ALL', 'SERV_OPTS', 'FACT', 'WA']
+originales = dict(pages)
+
+# ---------------------------------------------------------------------------------------------
+# Texto recuperado (decisión de Camilo, 15-nov): todo el texto publicado hoy que no está en el
+# prototipo vuelve, con el diseño del prototipo y sus propias funciones:
+#  - las preguntas frecuentes completas, en el acordeón (faq_raw);
+#  - el resto, en la "Guía completa" (guia), armada con el texto publicado hoy en vez del corte
+#    viejo de contenido-sitio-actual. Sigue el mismo filtro del prototipo (_clean): fuera
+#    llamados a cotizar, formularios, reseñas y tarjetas de navegación;
+#  - en los servicios que no son de restaurantes se elimina el texto de restaurantes repetido.
+# Las páginas originales del prototipo quedan intactas en _rediseno; esto solo cambia la salida.
+# ---------------------------------------------------------------------------------------------
+import urllib.request
+_cache = {}
+def _publicado(ruta_prod):
+    if ruta_prod not in _cache:
+        _cache[ruta_prod] = urllib.request.urlopen(urllib.request.Request(
+            'https://agroincol.com' + ruta_prod, headers={'User-Agent': 'agroincol-rediseno'})).read().decode('utf-8')
+    return _cache[ruta_prod]
+
+def _faq_publicada(ruta_prod):
+    """Preguntas y respuestas visibles en producción (botón con la pregunta, div con la respuesta)."""
+    main = re.search(r'<main[^>]*>(.*)</main>', _publicado(ruta_prod), re.S).group(1)
+    i = main.find('Preguntas Frecuentes')
+    if i < 0: return []
+    fin = main.find('</section>', i)
+    trozo = main[i:fin if fin > 0 else None]
+    limpio = lambda x: re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', x))).strip()
+    pares = []
+    for m in re.finditer(r'<button[^>]*>\s*<span[^>]*>(.*?)</span>.*?</button>\s*<div[^>]*>(.*?)</div>', trozo, re.S):
+        q, a = limpio(m.group(1)), ' '.join(limpio(p) for p in re.findall(r'<p[^>]*>(.*?)</p>', m.group(2), re.S))
+        if q and a: pares.append((html.escape(q, quote=False), html.escape(a, quote=False)))
+    return pares
+
+RESTAURANTE_REPETIDO = re.compile(r'^(Nuestro Proceso de Fumigación para Restaurantes|Plagas Comunes en Restaurantes de Bucaramanga)$', re.I)
+CTA_EXTRA = re.compile(r'^(¿No encuentra su zona\?|Recupere su Descanso)', re.I)
+NAVEGACION = re.compile(r'Ver cobertura en|^Leer más|^Más información', re.I)
+SKIP_PROTOTIPO = g['SKIP_H2']
+# En las zonas, "Servicios de Fumigación en <municipio>" es texto local propio de cada zona: vuelve.
+SKIP_ZONAS = re.compile(SKIP_PROTOTIPO.pattern.replace('|^servicios de fumigaci', ''), re.I)
+_n = lambda t: re.sub(r'[^a-z0-9ñáéíóúü]+', ' ', html.unescape(t).lower()).strip()
+def _items_publicados(ruta_prod, quitar_restaurantes=False, doc=''):
+    g['SKIP_H2'] = SKIP_ZONAS if ruta_prod.startswith('/zonas/') else SKIP_PROTOTIPO
+    try:
+        items = g['_clean'](g['_items'](texto_publicado(ruta_prod)), keep_lead=True)
+    finally:
+        g['SKIP_H2'] = SKIP_PROTOTIPO
+    # La entrada de producción va solo si la página no la tiene ya (el prototipo la resume en el héroe).
+    texto_doc = ' ' + _n(re.sub(r'<[^>]+>', ' ', doc)) + ' '
+    if items and items[0][0] == 'P' and f' {_n(items[0][1])} ' in texto_doc:
+        items = items[1:]
+    out, saltar = [], False
+    for tag, t in items:
+        if NAVEGACION.search(t): continue  # tarjetas de navegación ("Ver cobertura en…"): el prototipo ya las tiene
+        if tag == 'H2':
+            saltar = bool((quitar_restaurantes and RESTAURANTE_REPETIDO.match(t)) or CTA_EXTRA.match(t))
+        if not saltar: out.append((tag, t))
+    return out
+
+GUIA_RE = re.compile(r'<section class="guia" aria-label="Guía completa">.*?\n</section>', re.S)
+FAQ_RE = re.compile(r'<section class="voces"[^>]*>\s*<div class="faq-wrap" style="margin-top:0">.*?</section>', re.S)
+def _cambiar_guia(f, ruta_prod, quitar_restaurantes=False, tema=None, antes_de=None):
+    doc = pages[f]
+    items = _items_publicados(ruta_prod, quitar_restaurantes, doc)
+    m = GUIA_RE.search(doc)
+    if m:
+        tema = tema or re.search(r'<p class="display" data-reveal>(.*?)</p>', m.group(0)).group(1)
+        pages[f] = doc[:m.start()] + g['guia'](tema, items) + doc[m.end():]
+    else:  # Página sin guía en el prototipo: se agrega antes de la sección indicada.
+        i = doc.index(antes_de)
+        pages[f] = doc[:i] + g['guia'](tema, items) + '\n' + doc[i:]
+
+def _cambiar_faq(f, ruta_prod):
+    pares = _faq_publicada(ruta_prod)
+    if not pares: return 0
+    nueva = g['faq_raw']('Preguntas<br>frecuentes', pares)
+    doc = pages[f]
+    m = FAQ_RE.search(doc)
+    if m:
+        pages[f] = doc[:m.start()] + nueva + doc[m.end():]
+    else:  # Sin acordeón en el prototipo: va justo después de la guía.
+        m = GUIA_RE.search(doc)
+        pages[f] = doc[:m.end()] + '\n' + nueva + doc[m.end():]
+    return len(pares)
+
+recuperado = {}
+for f in sorted(pages):
+    if f.startswith('servicio-'):
+        r = ruta(f)
+        _cambiar_guia(f, r, quitar_restaurantes=(f != 'servicio-fumigacion-restaurantes.html'))
+        recuperado[f] = _cambiar_faq(f, r)
+    elif f.startswith('zona-'):
+        r = ruta(f)
+        _cambiar_guia(f, r)
+        recuperado[f] = _cambiar_faq(f, r)
+_cambiar_guia('index.html', '/')
+_cambiar_guia('precios.html', '/precios')
+_cambiar_guia('herramienta-calculadora.html', '/herramientas/calculadora-fumigacion',
+              tema='Cada cuánto<br>fumigar', antes_de='<section class="cta-final')
+_cambiar_guia('zonas.html', '/zonas', tema='Cobertura en el<br>Área Metropolitana', antes_de='<section class="cta-final')
+print('Preguntas frecuentes recuperadas:', recuperado)
+
+# "Dejar una reseña en Google" en "Lo que dicen" (decisión de Camilo, 15-nov). Evento click_resena:
+# lib/rediseno/motor.ts, por el atributo data-resena.
+RESENA = '<a class="call" href="https://g.page/r/Cd-hRhdI2eRIEBM/review" target="_blank" rel="noopener" data-resena>Dejar una reseña en Google</a>'
+for f, doc in pages.items():
+    if '<div class="voces-head">' in doc and 'data-resena' not in doc:
+        pages[f] = re.sub(r'(<div class="voces-head">.*?<span class="rating">[^<]*</span>)', lambda m: m.group(1) + RESENA, doc, count=1, flags=re.S)
+
+datos ={k: g[k] for k in ['S', 'Z', 'T', 'POSTS', 'BLOG', 'ORB', 'ILU', 'MENU', 'FAQ_ALL', 'SERV_OPTS', 'FACT', 'WA']
          if k in g and serializable(g[k])}
 faltan = [k for k in ['S', 'Z', 'T', 'POSTS', 'BLOG', 'ORB'] if k not in datos]
 if faltan: print('Aviso: no se pudieron serializar', faltan, file=sys.stderr)
@@ -129,7 +238,9 @@ for f, doc in pages.items():  # El cromo es igual en todas las páginas.
 REF = os.path.join(RAIZ, 'docs', 'rediseno-prototipo', 'referencia')
 shutil.rmtree(REF, ignore_errors=True)
 shutil.copytree(os.path.join(ORIGEN, 'site'), REF)
-open(os.path.join(REF, 'articulo-vi-una-cucaracha.html'), 'w', encoding='utf-8').write(pages['articulo-vi-una-cucaracha.html'])
+for f, doc in pages.items():  # Artículo completo, texto recuperado y enlace de reseña.
+    if f == 'articulo-vi-una-cucaracha.html' or doc != originales[f]:
+        open(os.path.join(REF, f), 'w', encoding='utf-8').write(doc)
 
 os.makedirs(SALIDA, exist_ok=True)
 json.dump(cromo, open(os.path.join(SALIDA, 'cromo.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

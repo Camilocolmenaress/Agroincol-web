@@ -13,10 +13,19 @@ export default function Motor() {
   useEffect(() => {
     let desmontar: (() => void) | undefined;
     let cancelado = false;
-    import('@/lib/rediseno/motor').then(({ montar }) => {
-      if (cancelado) return;
-      desmontar = montar({ ir: (href) => router.push(href) });
-    });
+    // Si la descarga del motor falla (conexión inestable), se reintenta una vez: sin motor tampoco
+    // queda conectado el formulario de cotización.
+    const cargar = (intento: number): void => {
+      import('@/lib/rediseno/motor')
+        .then(({ montar }) => {
+          if (cancelado) return;
+          desmontar = montar({ ir: (href) => router.push(href) });
+        })
+        .catch(() => {
+          if (!cancelado && intento === 0) window.setTimeout(() => cargar(1), 1500);
+        });
+    };
+    cargar(0);
     return () => {
       cancelado = true;
       desmontar?.();

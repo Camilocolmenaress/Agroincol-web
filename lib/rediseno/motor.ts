@@ -361,6 +361,15 @@ export function montar({ ir }: Opciones): () => void {
         };
         const raf = requestAnimationFrame(start);
         window.addEventListener('load', start);
+        // El rótulo se vuelve a calcular cuando ya hay fuentes e imágenes: si nearest() mide antes de
+        // que la tira tenga su ancho, puede rotular "Industria" con la tira en "Hogar". Solo relee la
+        // posición actual: no mueve la tira ni pelea con la mano de arrastre.
+        const releer = () => {
+          if (orbit.classList.contains('is-strip')) nearest();
+        };
+        document.fonts?.ready.then(releer);
+        objs.forEach((o) => o.querySelector('img')?.addEventListener('load', releer, { once: true }));
+        const tRe = window.setTimeout(releer, 600);
         orbit.addEventListener('scroll', nearest, { passive: true });
         /* Guía de arrastre en la tira del hero (celular) */
         let hc: HTMLElement | null = null;
@@ -429,6 +438,7 @@ export function montar({ ir }: Opciones): () => void {
           }, 1400);
         return () => {
           cancelAnimationFrame(raf);
+          window.clearTimeout(tRe);
           window.clearTimeout(coachT);
           htl?.kill();
           hc?.remove();
@@ -477,6 +487,20 @@ export function montar({ ir }: Opciones): () => void {
     conectarFormularios(on, (done) => {
       if (!RM) gsap.from(done, { opacity: 0, y: 12, duration: 0.4, ease: 'power2.out' });
     });
+
+    /* "Dejar una reseña en Google": mismo evento que medía el botón del sitio anterior
+       (components/ui/ReviewButton.tsx). Captura, para registrarlo antes de abrir la pestaña. */
+    on(
+      document,
+      'click',
+      ((e: MouseEvent) => {
+        if (!(e.target as Element | null)?.closest?.('a[data-resena]')) return;
+        const w = window as Window & { dataLayer?: Record<string, unknown>[] };
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({ event: 'click_resena', destino: 'google_review' });
+      }) as EventListener,
+      true
+    );
 
     /* Herramientas (js/tools.js): calculadora, identificador de plagas y lista. */
     montarHerramientas(on);
@@ -889,6 +913,12 @@ export function montar({ ir }: Opciones): () => void {
       upd();
       limpiar.push(() => document.body.classList.remove('is-article'));
     }
+
+    /* Objetos del carrusel diferidos (lib/rediseno/contenido.ts): se piden apenas termina la carga. */
+    const traerDiferidas = () =>
+      document.querySelectorAll<HTMLImageElement>('img[data-diferida]').forEach((im) => (im.loading = 'eager'));
+    if (document.readyState === 'complete') traerDiferidas();
+    else on(window, 'load', traerDiferidas);
 
     /* Enlaces simulados del prototipo */
     document.querySelectorAll('a[href="#"]').forEach((a) => on(a, 'click', (e) => e.preventDefault()));

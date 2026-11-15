@@ -23,8 +23,8 @@ const ok = (nombre, cond, detalle = '') => {
     await ctx.route(/vercel\.live/, (r) => r.abort());
     if (process.env.VERCEL_JWT) await ctx.addCookies([{ name: '_vercel_jwt', value: process.env.VERCEL_JWT, url: BASE }]);
     const p = await ctx.newPage();
-    p.on('pageerror', (e) => errores.push(e.message));
-    p.on('console', (m) => m.type() === 'error' && !/insights|speed-insights|Failed to load resource/.test(m.text()) && errores.push(m.text()));
+    p.on('pageerror', (e) => errores.push(e.message + ' @ ' + p.url()));
+    p.on('console', (m) => m.type() === 'error' && !/insights|speed-insights|Failed to load resource/.test(m.text()) && errores.push(m.text().slice(0, 80) + ' @ ' + p.url()));
     return { ctx, p };
   };
 
@@ -245,6 +245,64 @@ const ok = (nombre, cond, detalle = '') => {
     const primero = await p.evaluate(() => document.activeElement?.textContent?.trim());
     ok('Teclado: el primer Tab es "Saltar al contenido"', /Saltar al contenido/.test(primero || ''), primero || '');
     await ctx.close();
+  }
+
+  // 12. Cambios del 15-nov.
+  {
+    // La casilla de autorización no se mueve cuando aparece el error del teléfono.
+    const { ctx, p } = await nueva();
+    await p.route('**/api/contact', (r) => r.fulfill({ status: 200, body: '{}' }));
+    await p.goto(BASE + '/', { waitUntil: 'networkidle' });
+    const f = p.locator('form[data-lead-form]');
+    await f.scrollIntoViewIfNeeded();
+    await p.waitForTimeout(1500);
+    await f.locator('input[name=telefono]').fill('300 12');
+    const caja = f.locator('input[name=aceptaTerminos]');
+    const antes = (await caja.boundingBox()).y;
+    await f.locator('input[name=nombre]').focus(); // el teléfono pierde el foco: aparece su error
+    await p.waitForTimeout(300);
+    const despues = (await caja.boundingBox()).y;
+    const errorVisible = await p.evaluate(() => getComputedStyle(document.querySelector('form[data-lead-form] .is-error .err')).visibility === 'visible');
+    ok('Formulario: el error del teléfono aparece y la casilla no se mueve', errorVisible && Math.abs(antes - despues) < 0.5, `${antes.toFixed(1)} → ${despues.toFixed(1)}`);
+    await caja.click();
+    ok('Formulario: el clic en la casilla no se pierde', await caja.isChecked());
+    await ctx.close();
+  }
+  {
+    // "Dejar una reseña en Google" en "Lo que dicen", con click_resena.
+    const { ctx, p } = await nueva();
+    await ctx.route(/g\.page|google\.com/, (r) => r.abort());
+    await p.addInitScript(() => { window.dataLayer = []; });
+    await p.goto(BASE + '/', { waitUntil: 'networkidle' });
+    const a = p.locator('.voces a[data-resena]');
+    const href = await a.getAttribute('href');
+    await a.evaluate((el) => { el.addEventListener('click', (e) => e.preventDefault(), { once: true }); el.click(); });
+    const ev = await p.evaluate(() => (window.dataLayer || []).find((e) => e.event === 'click_resena'));
+    ok('Reseña: enlace en "Lo que dicen" con el evento click_resena', /g\.page\/r\/Cd-hRhdI2eRIEBM\/review/.test(href || '') && ev && ev.destino === 'google_review', href || '');
+    await ctx.close();
+  }
+  {
+    // Texto recuperado: preguntas frecuentes completas (y su esquema) y guía de la calculadora.
+    const { ctx, p } = await nueva();
+    await p.goto(BASE + '/servicios/control-chinches', { waitUntil: 'networkidle' });
+    const vis = await p.locator('.faq details').count();
+    const esquema = await p.evaluate(() => [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => JSON.parse(s.textContent)).find((j) => j['@type'] === 'FAQPage')?.mainEntity.length);
+    ok('Texto recuperado: chinches con sus 6 preguntas y el mismo número en FAQPage', vis === 6 && esquema === 6, `${vis} visibles, ${esquema} en el esquema`);
+    await p.goto(BASE + '/herramientas/calculadora-fumigacion', { waitUntil: 'load' });
+    const h2 = await p.locator('.guia h2').count();
+    ok('Texto recuperado: la calculadora tiene su guía completa', h2 === 3, `${h2} secciones`);
+    await ctx.close();
+  }
+  {
+    // En celular el carrusel empieza en "Hogar", con y sin reducir movimiento.
+    for (const rm of ['no-preference', 'reduce']) {
+      const { ctx, p } = await nueva({ viewport: { width: 390, height: 844 }, hasTouch: true, reducedMotion: rm });
+      await p.goto(BASE + '/', { waitUntil: 'networkidle' });
+      await p.waitForTimeout(700);
+      const palabra = await p.textContent('.orbit-word span');
+      ok(`Inicio celular (${rm}): el carrusel empieza en Hogar`, (palabra || '').trim() === 'Hogar', palabra || '');
+      await ctx.close();
+    }
   }
 
   // 11. 404 con el diseño del sitio.

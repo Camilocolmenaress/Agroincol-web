@@ -47,10 +47,33 @@ function imagen(etiqueta: string, primera: boolean): string {
   return out;
 }
 
+// Rendimiento sin cambiar el diseño (Lighthouse móvil del inicio, 15-nov):
+// - Imágenes de la tercera sección en adelante: diferidas (loading="lazy"). Las dos primeras
+//   secciones quedan como están, porque ahí puede estar el LCP (por ejemplo, la portada de las zonas).
+// - Carrusel del hero: solo los dos primeros objetos cargan de entrada; el resto lleva
+//   data-diferida y el motor los pide apenas termina la carga (lib/rediseno/motor.ts), antes de que
+//   alguien alcance a deslizar la tira.
+function diferir(html: string): string {
+  const secciones: number[] = [];
+  for (let i = html.indexOf('<section'); i >= 0; i = html.indexOf('<section', i + 1)) secciones.push(i);
+  const orbita = html.indexOf('<div class="orbit">');
+  const finOrbita = orbita >= 0 ? html.indexOf('</div>\n', orbita) : -1;
+  let enOrbita = 0;
+  return html.replace(/<img\b[^>]*>/g, (tag, pos: number) => {
+    if (/\sloading=/.test(tag) || /\.svg"/.test(tag)) return tag;
+    if (orbita >= 0 && pos > orbita && pos < finOrbita) {
+      enOrbita++;
+      return enOrbita > 2 ? tag.replace('<img', '<img loading="lazy" data-diferida') : tag;
+    }
+    const seccion = secciones.filter((s) => s < pos).length;
+    return seccion >= 3 ? tag.replace('<img', '<img loading="lazy"') : tag;
+  });
+}
+
 export function transformar(html: string): string {
   let primera = true;
   return (
-    html
+    diferir(html)
       // Enlaces del prototipo (servicio-x.html) -> URL de producción.
       .replace(/href="([a-z0-9-]+\.html)(#[^"]*)?"/g, (m, archivo: string, hash = '') => {
         const ruta = RUTA_DE_ARCHIVO[archivo];
