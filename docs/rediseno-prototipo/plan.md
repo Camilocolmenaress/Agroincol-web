@@ -114,3 +114,23 @@ Las fases 1 a 6 se hicieron de corrido (instrucción de Camilo). Todo está en l
 
   El CLS del inicio (0,056) viene de la tira del hero en celular, que se centra un cuadro después de cargar; es el mismo código del prototipo.
 - **Observación heredada del prototipo.** Si el teléfono es inválido y el usuario marca la casilla de autorización, el mensaje de error del teléfono aparece al perder el foco y empuja la casilla. Ese clic se pierde. No se cambió porque el prototipo hace lo mismo.
+
+## Segunda ronda (15-nov), con las decisiones de Camilo
+
+1. **Texto recuperado.**
+   - Las preguntas frecuentes de producción van completas en el acordeón: 5 o 6 por servicio, 6 en Bucaramanga y 6 en Piedecuesta.
+   - El resto va en la "Guía completa", armada con el texto publicado hoy: servicios, zonas (incluida "Servicios de Fumigación en <municipio>"), inicio, precios, la calculadora (guía nueva) y /zonas (guía nueva).
+   - Se eliminó el texto de restaurantes repetido en 6 servicios.
+   - Se hace en `scripts/rediseno/extraer-prototipo.py`, con las funciones del prototipo (`guia`, `faq_raw`, `_clean`); `_rediseno` no cambia.
+   - Lo que no se recupera, a propósito: llamados a cotizar, formularios, reseñas de producción, tarjetas de navegación, Alivio (§6.6) y la caja "Sobre AGROINCOL" de los artículos.
+   - Detalle en `texto-faltante.md` (elemento por elemento) y `seo-diferencias.md`.
+2. **Reseña.** "Dejar una reseña en Google" en "Lo que dicen" (inicio), con el evento `click_resena` (`destino: google_review`), el mismo del botón anterior.
+3. **Formulario.** Sin correo ni dirección.
+4. **Casilla.** Los mensajes de error tienen su espacio reservado: el formulario es unos 97 px más alto y nada se mueve al validar.
+5. **Tira del hero en celular.** Empieza en "Hogar"; el rótulo se recalcula cuando ya hay fuentes e imágenes.
+6. **Rendimiento del inicio**, sin cambiar el diseño:
+   - imágenes de la tercera sección en adelante diferidas;
+   - el carrusel carga 2 objetos de entrada y el resto al terminar la carga;
+   - la tira de celular se arma desde el primer pintado (CLS de 0,056 a 0);
+   - el lema del aro se pinta con la League Spartan del sitio (antes salía con la de respaldo).
+7. **`docs/rediseno` borrado.**

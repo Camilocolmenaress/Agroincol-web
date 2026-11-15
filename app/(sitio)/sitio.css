@@ -570,3 +570,6 @@ body.is-article .progress{display:block}
   .orbit-word{top:90px} /* lo mismo que pone el motor en celular: tope de la tira (84 px) + 6 */
 }
 .dome-text text{font-family:var(--ls)}
+/* Mientras el motor ajusta los titulares (fitTitles), sin transiciones: con reducir movimiento la regla de
+   arriba les da .01 ms y getComputedStyle devolvía el tamaño anterior. */
+html.ajustando-titulares .display, html.ajustando-titulares .display *, html.ajustando-titulares h1, html.ajustando-titulares h1 *{transition-property:none !important}

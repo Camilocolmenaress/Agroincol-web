@@ -938,46 +938,49 @@ export function montar({ ir }: Opciones): () => void {
   });
 
   /* Ajusta titulares: ninguna palabra se sale de su caja */
-  // Misma regla que site.js (si la palabra más ancha no cabe, tamaño = base × cabida × 0,98), medida
-  // de otra forma. site.js limpia el tamaño, lee el tamaño base y mide en un lienzo. En la red, el
-  // lienzo podía medir con la fuente de respaldo, y la lectura justo después de limpiar a veces
-  // devolvía el tamaño anterior: el titular quedaba sin ajustar (Bucaramanga a 187 px en vez de 173).
-  // Aquí una copia oculta del titular, sin estilo en línea y en el mismo padre, da el tamaño base de
-  // la hoja de estilos y mide cada palabra con la fuente que se está pintando. No depende del estado
-  // previo del titular.
+  // Misma regla y misma medición que site.js (si la palabra más ancha, medida en un lienzo, no cabe:
+  // tamaño = base × cabida × 0,98), pero por lotes: primero se limpian todos los titulares, después se
+  // lee todo y al final se escribe. Así hay un solo cálculo de diseño por llamada. Medir palabra por
+  // palabra en el DOM forzaba cientos y, en la red, retrasaba el primer pintado más de un segundo.
+  // El lienzo es nuevo en cada llamada y se vuelve a medir cuando la fuente ya se pinta (fitLuego).
   const fitTitles = () => {
-    document.querySelectorAll<HTMLElement>('.display, h1:not(.sr)').forEach((el) => {
+    const els = Array.from(document.querySelectorAll<HTMLElement>('.display, h1:not(.sr)'));
+    // Con reducir movimiento, la hoja del prototipo da a todo una transición de .01 ms; aun así,
+    // getComputedStyle devuelve el tamaño anterior hasta el siguiente cuadro y el titular se
+    // "ajustaba" con el tamaño viejo. Sin transición mientras se mide, la lectura es la real.
+    // (título y descendientes: el span con "Bucaramanga" hereda el tamaño y también tenía transición).
+    document.documentElement.classList.add('ajustando-titulares');
+    els.forEach((el) => {
+      if (el.style.fontSize) el.style.fontSize = '';
+    });
+    const lienzo = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D;
+    const tamanos = els.map((el) => {
       const cs = getComputedStyle(el);
-      const padre = el.parentElement;
-      if (!padre || el.clientWidth < 60 || cs.display === 'inline') {
-        el.style.fontSize = '';
-        return;
-      }
-      const palabras: string[] = [];
+      if (el.clientWidth < 60 || cs.display === 'inline') return '';
+      const base = parseFloat(cs.fontSize);
+      const ls = parseFloat(cs.letterSpacing) || 0;
+      lienzo.font = cs.fontWeight + ' ' + base + 'px ' + cs.fontFamily;
+      let ancho = 0;
       const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
       while (walker.nextNode()) {
         const nd = walker.currentNode,
           pe = nd.parentElement as HTMLElement;
         if (getComputedStyle(pe).fontSize !== cs.fontSize) continue;
-        (nd.textContent || '').split(/\s+/).forEach((w) => w && palabras.push(w));
+        let t = nd.textContent || '';
+        if (cs.textTransform === 'uppercase') t = t.toUpperCase();
+        t.split(/\s+/).forEach((w) => {
+          if (w) ancho = Math.max(ancho, lienzo.measureText(w).width + ls * w.length);
+        });
       }
-      const copia = el.cloneNode(false) as HTMLElement;
-      copia.removeAttribute('id');
-      copia.removeAttribute('style');
-      copia.setAttribute('aria-hidden', 'true');
-      copia.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;left:0;top:0;width:auto;max-width:none;margin:0;padding:0';
-      padre.appendChild(copia);
-      const base = parseFloat(getComputedStyle(copia).fontSize);
-      let ancho = 0;
-      palabras.forEach((w) => {
-        copia.textContent = w;
-        ancho = Math.max(ancho, copia.getBoundingClientRect().width);
-      });
-      copia.remove();
       const avail = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
       const ratio = ancho ? avail / ancho : 1;
-      el.style.fontSize = ratio < 0.97 ? Math.floor(base * ratio * 0.98) + 'px' : '';
+      return ratio < 0.97 ? Math.floor(base * ratio * 0.98) + 'px' : '';
     });
+    els.forEach((el, i) => {
+      if (tamanos[i]) el.style.fontSize = tamanos[i];
+    });
+    void document.body.offsetWidth; // el tamaño nuevo queda aplicado sin transición
+    document.documentElement.classList.remove('ajustando-titulares');
   };
   fitTitles();
   // Medir otra vez cuando las fuentes ya se pintan. Al dispararse load o loadingdone, la fuente puede
