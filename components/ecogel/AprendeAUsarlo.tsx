@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import Marcador from './Marcador';
 import { useCarrusel } from './useCarrusel';
-import type { VideoAprender } from '@/app/ecogel/fotos';
+import type { VideoAprender } from '@/app/(actual)/ecogel/fotos';
 
 // Tres videos verticales (9:16, no se recortan) como el bloque "Aprende a
 // usarlo" de Lummia. Rotan solos cada 6s, como un carrusel de a uno, y se

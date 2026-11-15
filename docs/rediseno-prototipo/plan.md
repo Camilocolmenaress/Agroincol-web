@@ -38,16 +38,16 @@ Rama `rediseno-prototipo`, creada desde `main` (producción) el 14-nov-2026. Sol
 
 ## Arquitectura
 
-1. **Dos layouts raíz** con grupos de rutas: `app/(sitio)` y `app/(landings)`.
+1. **Dos layouts raíz** con grupos de rutas: `app/(sitio)` y `app/(actual)`.
    - `(sitio)` carga solo el CSS y las fuentes del prototipo.
-   - `(landings)` lleva el layout raíz actual, sin cambios, para `/lp`, `/ecogel`, `/tienda` y `/resena`.
+   - `(actual)` lleva el layout raíz actual, sin cambios, para `/lp`, `/ecogel`, `/tienda` y `/resena`.
    - El código de las landings no cambia: solo se mueve de carpeta. Así Tailwind (preflight) no altera el prototipo y el CSS del prototipo no toca las landings.
    - Navegar entre los dos grupos hace una carga completa de página: es el aislamiento que se busca.
    - Verificación: las landings con 0 píxeles distintos frente a producción.
 2. **CSS.** `site.css` se usa tal cual en `(sitio)`. Las fuentes WOFF2 de `_rediseno/site/fonts` se sirven con `next/font/local`, no en base64.
-3. **Marcado.** Componentes de servidor que producen el mismo HTML que las funciones del generador, con las mismas clases y la misma estructura: `hero_fall`, `hero_title`, `tabla`, `chips`, `faq`, `galeria`, `cards`, `rows`, `cta`, `cotizar`, `guia`, `colados_block`, cabecera, menú y pie.
-   - Los datos salen de `content/rediseno/datos.json`.
-   - Los bloques largos de texto actual (guía, artículos y páginas legales) salen del HTML extraído, con los enlaces del prototipo (`servicio-x.html`) reescritos a las URL finales.
+3. **Marcado.** El `<main>` de cada página y la cabecera, el menú y el pie son el HTML que produce el generador del prototipo (`site_build.py`), extraído por `scripts/rediseno/extraer-prototipo.py` a `content/rediseno/`.
+   - Se inyecta tal cual (`components/rediseno/Pagina.tsx`): mismas clases, misma estructura y mismo texto. React no administra esos nodos, así que el motor de `site.js` los manipula sin chocar con React.
+   - `lib/rediseno/contenido.ts` solo cambia rutas (`servicio-x.html` → URL final) e imágenes (optimizador de Next con `srcset` y `sizes`).
    - El artículo "Vi una cucaracha" usa el texto completo publicado hoy, con el diseño del prototipo (README §6.4).
 4. **Movimiento.**
    - `site.js` y `tools.js` se pasan a módulos que se montan en cada cambio de ruta (limpian y vuelven a crear ScrollTrigger, Lenis y los listeners), como pide el README §4.
@@ -75,3 +75,34 @@ Rama `rediseno-prototipo`, creada desde `main` (producción) el 14-nov-2026. Sol
 | 4. Zonas, herramientas y precios | `/zonas` y sus 4 municipios. `/herramientas` y las 3 herramientas (`tools.js`, que termina en WhatsApp). `/precios`. | Igual que la fase 2, más las herramientas probadas a mano. |
 | 5. Blog y legales | `/blog`, 7 artículos, certificado, normativa y privacidad. | Igual que la fase 2. |
 | 6. Cierre | Schema, sitemap y robots. SEO contra producción con la lista de cambios. Accesibilidad (teclado, sin JS, reducir movimiento). Safari (WebKit). Lighthouse frente a la línea base. Medición intacta. | Preview final para aprobación. El merge a `main` solo con aprobación. |
+
+## Resultados de la migración (14-nov)
+
+Las fases 1 a 6 se hicieron de corrido (instrucción de Camilo). Todo está en la rama `rediseno-prototipo`; nada en `main`.
+
+- **Igual al prototipo.** `scripts/rediseno/comparar-prototipo.cjs` compara las 33 páginas en 1440, 834 y 390 contra `docs/rediseno-prototipo/referencia` (el prototipo con el artículo completo).
+  - Estructura de `<main>` (títulos, enlaces, alt, formularios y texto): igual en las 99 capturas. La única excepción es el texto del inicio en 390, que cambia según el objeto en que esté la tira del hero en el momento de la captura (el prototipo hace lo mismo).
+  - Píxeles: 0 % a 0,5 % en casi todo. Lo que queda es la recompresión de las imágenes por el optimizador (q75), no el diseño.
+- **Funcionamiento.** `scripts/rediseno/probar-funcionamiento.cjs`: 34/34 en Chrome y 34/34 en WebKit (Safari).
+  - Hero fijado y con acomodo, tira en celular con mano de arrastre, carruseles, menú, velo entre páginas, guía, herramientas, 404, reducir movimiento, sin JavaScript, teclado y consola sin errores.
+  - Formulario contra `/api/contact` interceptado (no se enviaron leads): mismos campos, `formId` de antes, servicio preseleccionado, evento `form_submission`, validación y mensaje de error si la API falla.
+- **Landings.** `/lp/*`, `/tienda/*`, `/ecogel/terminos` y `/resena`: 0 píxeles distintos frente a `main` local en 1440 y 390, y la misma `<head>` (GTM, schema, metadatos). En git son movimientos al 100 %.
+- **SEO frente a producción** (`node scripts/seo-baseline.mjs --compare`):
+  - title, description, canonical, hreflang, robots, Open Graph y JSON-LD iguales, salvo FAQPage.
+  - FAQPage se arma con las preguntas visibles. En servicios y zonas producción tiene 5 o 6 y el prototipo muestra 3.
+  - Cambian los encabezados, los enlaces y las imágenes (es el rediseño) y baja el conteo de palabras (ver abajo).
+- **Texto que no está en el prototipo.** `scripts/rediseno/texto-faltante.py` → `docs/rediseno-prototipo/texto-faltante.md`. Pendiente de decisión de Camilo.
+  - La calculadora pierde toda su explicación (unas 500 palabras: "¿Cada cuánto se debe fumigar en Colombia?", "Factores…" y "¿Qué pasa si no fumigo a tiempo?").
+  - Servicios y zonas pierden parte del texto y de las preguntas frecuentes.
+  - Parte de lo que falta está mal en producción: la página residencial muestra el proceso y las plagas de restaurantes.
+- **Lighthouse local**, móvil, mediana de 3, en las mismas condiciones (sin GTM):
+
+  | Página | `main`: rendimiento / LCP | Rama: rendimiento / LCP |
+  |---|---|---|
+  | Inicio | 92 / 3,36 s | 89 / 3,68 s |
+  | Residencial | 89 / 3,66 s | 90 / 3,60 s |
+  | Blog | 91 / 3,31 s | 96 / 2,71 s |
+  | Bucaramanga | 89 / 3,66 s | 93 / 3,16 s |
+
+  El CLS del inicio (0,056) viene de la tira del hero en celular, que se centra un cuadro después de cargar; es el mismo código del prototipo.
+- **Observación heredada del prototipo.** Si el teléfono es inválido y el usuario marca la casilla de autorización, el mensaje de error del teléfono aparece al perder el foco y empuja la casilla. Ese clic se pierde. No se cambió porque el prototipo hace lo mismo.

@@ -43,3 +43,4 @@ next-env.d.ts
 /.claude/skills/
 /docs/rediseno-prototipo/capturas/
 /docs/rediseno-prototipo/lighthouse/**/*.html
+/docs/rediseno-prototipo/referencia/

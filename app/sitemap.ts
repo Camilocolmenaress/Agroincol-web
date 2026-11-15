@@ -170,6 +170,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.85,
     },
+    // Páginas nuevas del rediseño (_rediseno, README §5).
+    {
+      url: 'https://agroincol.com/empresas',
+      lastModified: new Date('2026-11-14'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://agroincol.com/herramientas',
+      lastModified: new Date('2026-11-14'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://agroincol.com/herramientas/plaga',
+      lastModified: new Date('2026-11-14'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://agroincol.com/herramientas/checklist',
+      lastModified: new Date('2026-11-14'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
     {
       url: 'https://agroincol.com/politica-de-privacidad',
       lastModified: new Date('2026-03-07'),

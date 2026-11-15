@@ -17,6 +17,9 @@
 - [Retiro de Abejas y Avispas](https://agroincol.com/servicios/eliminacion-abejas-avispas): retiro seguro de nidos con equipos especializados, atención de urgencia.
 - [Control de Chinches de Cama](https://agroincol.com/servicios/control-chinches): eliminación profesional en hogares, hoteles y hospedajes.
 
+## Empresas
+- [Control de plagas para empresas e industria](https://agroincol.com/empresas): programa de Manejo Integrado de Plagas (MIP) documentado para negocios, bodegas y plantas de producción.
+
 ## Zonas de servicio
 - [Fumigación en Bucaramanga](https://agroincol.com/zonas/fumigacion-bucaramanga)
 - [Fumigación en Floridablanca](https://agroincol.com/zonas/fumigacion-floridablanca)
@@ -25,7 +28,10 @@
 
 ## Precios y herramientas
 - [Precios de fumigación en Bucaramanga](https://agroincol.com/precios): qué define el valor de cada servicio y cómo pedir cotización.
-- [Calculadora de fumigación](https://agroincol.com/herramientas/calculadora-fumigacion): estimador según tipo de propiedad y plaga.
+- [Herramientas gratis](https://agroincol.com/herramientas): calculadora de frecuencia, identificador de plagas y lista para preparar la fumigación.
+- [Calculadora de frecuencia de fumigación](https://agroincol.com/herramientas/calculadora-fumigacion): cada cuánto fumigar según el tipo de propiedad, la zona y el historial.
+- [¿Qué plaga tengo?](https://agroincol.com/herramientas/plaga): identificador de plagas según las señales que ha visto.
+- [Antes de fumigar](https://agroincol.com/herramientas/checklist): lista para preparar la casa o el negocio.
 
 ## Normativa y certificaciones
 - [Certificaciones y normativa](https://agroincol.com/certificaciones-y-normativa): Decreto 1843 de 1991, Resolución 2674 de 2013 (INVIMA), registro ICA.

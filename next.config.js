@@ -46,15 +46,19 @@ const nextConfig = {
       { source: '/ingest/:path*', destination: `${posthogHost}/:path*` },
     ];
 
+    // beforeFiles: se resuelven antes que las rutas del sitio. El sitio tiene una ruta comodín
+    // (app/(sitio)/[...resto]) para su página 404; sin esto, la 404 se tragaría /alivio e /ingest.
     const alivio = process.env.ALIVIO_ZONE_URL;
-    if (!alivio) return posthog;
+    if (!alivio) return { beforeFiles: posthog };
     const base = alivio.replace(/\/$/, '');
-    return [
-      ...posthog,
-      { source: '/alivio', destination: `${base}/alivio` },
-      // cubre páginas, /api y /_next (assetPrefix también es /alivio)
-      { source: '/alivio/:path+', destination: `${base}/alivio/:path+` },
-    ];
+    return {
+      beforeFiles: [
+        ...posthog,
+        { source: '/alivio', destination: `${base}/alivio` },
+        // cubre páginas, /api y /_next (assetPrefix también es /alivio)
+        { source: '/alivio/:path+', destination: `${base}/alivio/:path+` },
+      ],
+    };
   },
   async headers() {
     return [
