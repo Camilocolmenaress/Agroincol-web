@@ -67,6 +67,9 @@ function difPx(a, b) {
     for (const [w, h] of ANCHOS) {
       const ctx = await b.newContext({ viewport: { width: w, height: h }, reducedMotion: 'reduce', deviceScaleFactor: 1 });
       // Preview protegido de Vercel: VERCEL_JWT=<cookie _vercel_jwt>.
+    // La barra de Vercel (vercel.live) solo se inyecta en los previews y altera el ajuste de los
+    // titulares (fitTitles); agroincol.com no la carga. Se bloquea para medir lo que ve un visitante.
+    await ctx.route(/vercel\.live/, (r) => r.abort());
       if (process.env.VERCEL_JWT && !BASE.includes('localhost')) await ctx.addCookies([{ name: '_vercel_jwt', value: process.env.VERCEL_JWT, url: BASE }]);
       const p = await ctx.newPage();
       const errores = [];

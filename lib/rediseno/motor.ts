@@ -933,6 +933,8 @@ export function montar({ ir }: Opciones): () => void {
       const width = regla.getBoundingClientRect().width;
       if (width > max) max = width;
     });
+    const dbg = (window as unknown as { __fitLog?: string[] }).__fitLog;
+    if (dbg && el.tagName === 'H1') dbg.push(`  palabras=${palabras.join('|')} reglaCS=${getComputedStyle(regla).fontFamily.slice(0, 14)} ${getComputedStyle(regla).display} w=${getComputedStyle(regla).width}`);
     regla.remove();
     return max;
   };
@@ -943,8 +945,11 @@ export function montar({ ir }: Opciones): () => void {
       if (el.clientWidth < 60 || cs.display === 'inline') return;
       const fs = parseFloat(cs.fontSize);
       const avail = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-      const ratio = avail / widestWord(el, fs);
+      const ancho = widestWord(el, fs);
+      const ratio = avail / ancho;
       if (ratio < 0.97) el.style.fontSize = Math.floor(fs * ratio * 0.98) + 'px';
+      const dbg = (window as unknown as { __fitLog?: string[] }).__fitLog;
+      if (dbg && el.tagName === 'H1') dbg.push(`${Math.round(performance.now())} fs=${fs} avail=${avail} ancho=${ancho.toFixed(1)} sale=${el.style.fontSize}`);
     });
   };
   fitTitles();
