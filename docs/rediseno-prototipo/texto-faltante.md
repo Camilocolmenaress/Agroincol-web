@@ -10,29 +10,29 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 | /blog/comejen-termitas-bucaramanga | 164 de 1583 (10 %) | 3 |
 | /blog/como-eliminar-cucarachas-bucaramanga | 164 de 1652 (9 %) | 3 |
 | /blog/cuanto-cuesta-multa-invima-restaurante | 164 de 1323 (12 %) | 3 |
-| /blog/fumigacion-restaurantes-bucaramanga-norma | 192 de 1483 (12 %) | 5 |
+| /blog/fumigacion-restaurantes-bucaramanga-norma | 164 de 1483 (11 %) | 3 |
 | /blog/plagas-temporada-lluvias-bucaramanga | 171 de 1334 (12 %) | 4 |
 | /blog/vi-cucaracha-en-mi-casa-que-hacer | 178 de 1300 (13 %) | 3 |
 | /certificaciones-y-normativa | 66 de 742 (8 %) | 2 |
-| /certificado-de-fumigacion | 86 de 594 (14 %) | 3 |
+| /certificado-de-fumigacion | 73 de 594 (12 %) | 2 |
 | /herramientas/calculadora-fumigacion | 5 de 665 (0 %) | 1 |
 | /politica-de-privacidad | 0 de 311 (0 %) | 0 |
-| /precios | 147 de 1163 (12 %) | 3 |
+| /precios | 123 de 1163 (10 %) | 2 |
 | /servicios | 38 de 164 (23 %) | 6 |
 | /servicios/control-chinches | 107 de 1250 (8 %) | 4 |
-| /servicios/control-comejen-termitas | 142 de 1217 (11 %) | 6 |
+| /servicios/control-comejen-termitas | 106 de 1217 (8 %) | 4 |
 | /servicios/control-insectos-voladores | 322 de 908 (35 %) | 6 |
-| /servicios/control-plagas-comercial | 315 de 786 (40 %) | 6 |
+| /servicios/control-plagas-comercial | 304 de 786 (38 %) | 5 |
 | /servicios/desratizacion | 310 de 865 (35 %) | 5 |
-| /servicios/eliminacion-abejas-avispas | 232 de 1361 (17 %) | 5 |
+| /servicios/eliminacion-abejas-avispas | 220 de 1361 (16 %) | 4 |
 | /servicios/fumigacion-industrial | 320 de 860 (37 %) | 5 |
-| /servicios/fumigacion-residencial | 317 de 833 (38 %) | 6 |
-| /servicios/fumigacion-restaurantes | 104 de 828 (12 %) | 4 |
+| /servicios/fumigacion-residencial | 306 de 833 (36 %) | 5 |
+| /servicios/fumigacion-restaurantes | 83 de 828 (10 %) | 3 |
 | /zonas | 93 de 178 (52 %) | 2 |
-| /zonas/fumigacion-bucaramanga | 124 de 1273 (9 %) | 5 |
+| /zonas/fumigacion-bucaramanga | 87 de 1273 (6 %) | 5 |
 | /zonas/fumigacion-floridablanca | 228 de 771 (29 %) | 4 |
 | /zonas/fumigacion-giron | 226 de 951 (23 %) | 4 |
-| /zonas/fumigacion-piedecuesta | 271 de 1193 (22 %) | 5 |
+| /zonas/fumigacion-piedecuesta | 234 de 1193 (19 %) | 5 |
 
 ## /
 
@@ -234,14 +234,6 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 
 ## /blog/fumigacion-restaurantes-bucaramanga-norma
 
-**¿Cada Cuánto Debe Fumigar un Restaurante en Colombia?**
-
-- P: ¿No está seguro de la frecuencia ideal para su restaurante? Use nuestra herramienta gratuita para calcular la frecuencia recomendada →
-
-**¿Cuánto Cuesta la Fumigación para Restaurantes en Bucaramanga?**
-
-- P: Vea nuestros programas para restaurantes y pida su cotización →
-
 **Preguntas Frecuentes**
 
 - P: 40+ años protegiendo Bucaramanga y Santander
@@ -323,10 +315,6 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 
 ## /certificado-de-fumigacion
 
-**Qué incluye nuestro certificado**
-
-- P: ¿Quiere conocer el detalle normativo? Vea el Decreto 1843 y la Resolución 2674 →
-
 **Solicite su certificado de fumigación**
 
 - H2: Solicite su certificado de fumigación
@@ -345,10 +333,6 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 - PREGUNTA: Conjunto residencial o propiedad horizontal
 
 ## /precios
-
-**¿Cómo Elegir el Plan Correcto?**
-
-- P: ¿No está seguro de la frecuencia ideal para su propiedad? Use nuestra calculadora gratuita para determinar la frecuencia ideal de fumigación para su propiedad →
 
 **Solicite su Cotización Personalizada**
 
@@ -418,18 +402,9 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 
 - H1: Control de Comején y Termitas en Bucaramanga
 
-**¿Por Qué el Comején es tan Común en Bucaramanga?**
-
-- P: Lea nuestra guía completa: Comején y Termitas en Bucaramanga — Cómo Identificar y Eliminar →
-
-**Nuestro Tratamiento Profesional contra el Comején**
-
-- P: ¿Quiere conocer los rangos de costos de nuestros servicios? Vea cómo cotizamos →
-
 **Preguntas Frecuentes sobre Comején y Termitas**
 
 - H2: Preguntas Frecuentes sobre Comején y Termitas
-- P: ¿Busca otro servicio? Vea todos nuestros servicios de control de plagas →
 
 **Detenga el Daño Antes de que Avance**
 
@@ -483,10 +458,6 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 - P: AGROINCOL tratará tus datos para enviarte cotizaciones, agendar servicios de fumigación y comunicarnos contigo con fines comerciales. Puedes ejercer tus derechos de actualización o eliminación en cualquier momento escribiendo a agroincol.1985@gmail.com
 
 ## /servicios/control-plagas-comercial
-
-**Programa MIP: Control Inteligente, No Solo Fumigación**
-
-- P: Calcule la frecuencia ideal para su negocio con nuestra herramienta gratuita →
 
 **Nuestro Proceso de Fumigación para Restaurantes**
 
@@ -559,10 +530,6 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 
 ## /servicios/eliminacion-abejas-avispas
 
-**Retiro Responsable: las Abejas se Reubican Cuando es Posible**
-
-- P: ¿Problemas con mosquitos, moscas o zancudos? Conozca nuestro control de insectos voladores →
-
 **Nuestro Proceso de Fumigación para Restaurantes**
 
 - H2: Nuestro Proceso de Fumigación para Restaurantes
@@ -629,10 +596,6 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 
 ## /servicios/fumigacion-residencial
 
-**Productos Seguros para su Familia**
-
-- P: Calcule la frecuencia ideal para su hogar con nuestra herramienta gratuita →
-
 **Nuestro Proceso de Fumigación para Restaurantes**
 
 - H2: Nuestro Proceso de Fumigación para Restaurantes
@@ -667,11 +630,6 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 - P: AGROINCOL tratará tus datos para enviarte cotizaciones, agendar servicios de fumigación y comunicarnos contigo con fines comerciales. Puedes ejercer tus derechos de actualización o eliminación en cualquier momento escribiendo a agroincol.1985@gmail.com
 
 ## /servicios/fumigacion-restaurantes
-
-**Cumpla con la Resolución 2674 de 2013 del INVIMA**
-
-- P: Calcule la frecuencia ideal para su restaurante con nuestra herramienta gratuita →
-- P: Conozca el certificado de fumigación que entregamos el mismo día →
 
 **Preguntas Frecuentes sobre Fumigación de Restaurantes**
 
@@ -715,8 +673,6 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 **Preguntas Frecuentes sobre Fumigación en Bucaramanga**
 
 - H2: Preguntas Frecuentes sobre Fumigación en Bucaramanga
-- P: Resolvemos las dudas más comunes sobre precios, frecuencia y certificados de fumigación en la ciudad.
-- P: ¿Necesita el documento para una inspección? Conozca el certificado de fumigación, consulte precios de fumigación o calcule cada cuánto fumigar su propiedad.
 
 **Cotice Fumigación en Bucaramanga**
 
@@ -786,8 +742,6 @@ Generado por `scripts/rediseno/texto-faltante.py`. Cada encabezado, párrafo, í
 **Preguntas Frecuentes sobre Fumigación en Piedecuesta**
 
 - H2: Preguntas Frecuentes sobre Fumigación en Piedecuesta
-- P: Resolvemos las dudas más comunes sobre precios, frecuencia y certificados de fumigación en el municipio.
-- P: ¿Necesita el documento para una inspección? Conozca el certificado de fumigación, consulte precios de fumigación o calcule cada cuánto fumigar su propiedad.
 
 **Lo Que Dicen Nuestros Clientes**
 

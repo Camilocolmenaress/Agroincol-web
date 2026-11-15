@@ -149,3 +149,13 @@ Las fases 1 a 6 se hicieron de corrido (instrucción de Camilo). Todo está en l
   - Medir en el DOM retrasaba el primer pintado. Ahora mide por lotes y con lienzo.
   - Con reducir movimiento, la transición de .01 ms del prototipo hacía leer el tamaño viejo.
 - **Motor:** si su descarga falla, se reintenta.
+
+**Enlaces internos (15-nov, por pregunta de Camilo sobre SEO).**
+- Al recuperar el texto, los párrafos venían sin sus enlaces: faltaban unos 60 de los 195 enlaces internos que tiene producción dentro de `<main>`.
+- Ahora el texto llega de producción con sus enlaces marcados (⟦/ruta|texto⟧). Las marcas pasan por las funciones del prototipo y al final vuelven a ser `<a data-transition>`. Aplica a la guía, a las preguntas (respuestas, introducción y cierre), a los artículos, al certificado y a la normativa.
+- Los artículos, el certificado y la normativa quedan con el texto publicado hoy.
+- `scripts/rediseno/enlaces-faltantes.py` mide lo que falta: 22 de 195, todos esperados.
+  - La privacidad en los artículos venía del formulario y el pie la enlaza desde todo el sitio.
+  - `/alivio` queda fuera (§6.6).
+  - Las tarjetas de navegación (zonas en el inicio; blog, normativa, calculadora y un artículo en las zonas) no vuelven como tarjetas. Su texto sí volvió, y el pie del prototipo enlaza zonas, blog y normativa desde todas las páginas.
+- Los enlaces en las preguntas usan el mismo estilo que `.article a`.

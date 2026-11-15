@@ -37,8 +37,17 @@ def ruta(f):
     if f.startswith('zona-'): return '/zonas/' + f[len('zona-'):-5]
     raise SystemExit('Página sin ruta en el mapa: ' + f)
 
-def texto_publicado(ruta):
-    """Texto de una página en producción, en el formato de sitio.json (una línea por H1/H2/H3/P/LI de <main>)."""
+# Enlaces internos del texto publicado: viajan como marcas ⟦/ruta|texto⟧ por las funciones del
+# prototipo (que trabajan con texto plano y lo escapan) y al final vuelven a ser <a> (enlazar()).
+MARCA = re.compile(r'⟦(/[^|⟧]*)\|([^⟧]*)⟧')
+def sin_marcas(t):
+    return MARCA.sub(lambda m: m.group(2), t)
+def enlazar(doc):
+    return MARCA.sub(lambda m: f'<a href="{m.group(1)}" data-transition>{m.group(2)}</a>', doc)
+
+def texto_publicado(ruta, enlaces=False):
+    """Texto de una página en producción, en el formato de sitio.json (una línea por H1/H2/H3/P/LI de <main>).
+    Con enlaces=True, los enlaces internos dentro de párrafos e ítems quedan como marcas ⟦/ruta|texto⟧."""
     import urllib.request
     from html.parser import HTMLParser
     doc = urllib.request.urlopen(urllib.request.Request('https://agroincol.com' + ruta, headers={'User-Agent': 'agroincol-rediseno'})).read().decode('utf-8')
@@ -50,12 +59,48 @@ def texto_publicado(ruta):
             super().__init__(); self.pila = []; self.lineas = []; self.saltar = 0
         def handle_starttag(self, tag, attrs):
             if tag in ('script', 'style', 'svg'): self.saltar += 1
+            su = getattr(self, 'suelto', None)
+            if tag in ('h1', 'h2', 'h3') and su is not None and not su['tarjeta']:
+                # Es una tarjeta: se suelta el enlace y su texto sigue como títulos y párrafos normales.
+                su['tarjeta'] = True
+                self.pila.pop()
             if tag in ('h1', 'h2', 'h3', 'p', 'li'): self.pila.append([tag.upper(), ''])
+            # Enlace suelto (fuera de párrafo): es texto con enlace salvo que envuelva un título (tarjeta
+            # de navegación; el pie del prototipo ya enlaza esas páginas desde todo el sitio).
+            if tag == 'a' and enlaces and not self.pila and not self.saltar:
+                href = (dict(attrs).get('href') or '').split('#')[0]
+                if href.startswith('/') and not href.startswith('//'):
+                    self.suelto = {'href': href.rstrip('/') or '/', 'tarjeta': False}
+                    self.pila.append(['P', '⟦' + self.suelto['href'] + '|'])
+                    self.suelto['nivel'] = len(self.pila)
+                    return
+            if tag == 'a' and enlaces and self.pila and self.pila[-1][0] in ('P', 'LI'):
+                href = (dict(attrs).get('href') or '').split('#')[0]
+                if href.startswith('/') and not href.startswith('//'):
+                    self.pila[-1][1] += '⟦' + (href.rstrip('/') or '/') + '|'
+                    self.enlace_abierto = len(self.pila)
         def handle_endtag(self, tag):
+            su = getattr(self, 'suelto', None)
+            if tag == 'a' and su is not None and su['tarjeta'] and not self.pila:
+                self.suelto = None
+                return
+            if tag == 'a' and su is not None and not su['tarjeta'] and len(self.pila) == su['nivel']:
+                t, txt = self.pila.pop(); self.suelto = None
+                txt = re.sub(r'\s+', ' ', txt).strip() + '⟧'
+                if not su['tarjeta'] and len(sin_marcas(txt)) > 12: self.lineas.append(f'P: {txt}')
+                return
+            if tag == 'a' and getattr(self, 'enlace_abierto', 0) and len(self.pila) == self.enlace_abierto:
+                self.pila[-1][1] = self.pila[-1][1].rstrip() + '⟧'
+                self.enlace_abierto = 0
             if tag in ('script', 'style', 'svg'): self.saltar -= 1
             if tag in ('h1', 'h2', 'h3', 'p', 'li') and self.pila:
                 t, txt = self.pila.pop()
+                if getattr(self, 'enlace_abierto', 0) > len(self.pila): txt += '⟧'; self.enlace_abierto = 0
                 txt = re.sub(r'\s+', ' ', txt).strip()
+                txt = re.sub(r'⟦(/[^|⟧]*)\|\s*⟧', '', txt)  # enlace sin texto
+                txt = re.sub(r'⟦(/[^|⟧]*)\|\s+', r'⟦\1|', txt)
+                if t.startswith('H'): txt = sin_marcas(txt)  # los títulos van sin enlace (dan los id del índice)
+                if enlaces and sin_marcas(txt).rstrip().endswith('→') and '⟦' not in txt: txt = ''  # llamado "… →" sin enlace interno
                 if self.pila: self.pila[-1][1] += ' ' + txt  # anidado: el texto queda en el padre
                 elif txt: self.lineas.append(f'{t}: {txt}')
         def handle_data(self, data):
@@ -82,9 +127,14 @@ with tempfile.TemporaryDirectory() as tmp:
     VI = '/blog/vi-cucaracha-en-mi-casa-que-hacer'
     sitio_json = os.path.join(tmp, 'contenido-sitio-actual', 'sitio.json')
     act = json.load(open(sitio_json, encoding='utf-8'))
-    if VI not in act:
-        act[VI] = texto_publicado(VI)
-        json.dump(act, open(sitio_json, 'w', encoding='utf-8'), ensure_ascii=False)
+    # Artículos, certificado y normativa: el texto publicado hoy, con sus enlaces internos (decisión
+    # de Camilo, 15-nov: recuperar todo el texto, y los enlaces son parte de él).
+    for r in [VI, '/blog/auditoria-invima-como-preparar-restaurante', '/blog/plagas-temporada-lluvias-bucaramanga',
+              '/blog/cuanto-cuesta-multa-invima-restaurante', '/blog/como-eliminar-cucarachas-bucaramanga',
+              '/blog/fumigacion-restaurantes-bucaramanga-norma', '/blog/comejen-termitas-bucaramanga',
+              '/certificado-de-fumigacion', '/certificaciones-y-normativa']:
+        act[r] = texto_publicado(r, enlaces=True)
+    json.dump(act, open(sitio_json, 'w', encoding='utf-8'), ensure_ascii=False)
     fuente += '''
 pages["articulo-vi-una-cucaracha.html"] = article_page("articulo-vi-una-cucaracha.html", "/blog/vi-cucaracha-en-mi-casa-que-hacer", ["¿Vi una cucaracha", "en mi casa?"], "Significa que hay más", "Hogar", [("index.html", "Inicio"), ("blog.html", "Blog"), (None, "Hogar")], colado=("colado-dona-cuca-cucaracha.webp", 317))
 '''
@@ -117,18 +167,24 @@ def _publicado(ruta_prod):
     return _cache[ruta_prod]
 
 def _faq_publicada(ruta_prod):
-    """Preguntas y respuestas visibles en producción (botón con la pregunta, div con la respuesta)."""
+    """Preguntas y respuestas visibles en producción (botón con la pregunta, div con la respuesta) y los
+    párrafos sueltos de la sección. Los enlaces internos quedan como marcas."""
     main = re.search(r'<main[^>]*>(.*)</main>', _publicado(ruta_prod), re.S).group(1)
     i = main.find('Preguntas Frecuentes')
-    if i < 0: return []
+    if i < 0: return [], []
     fin = main.find('</section>', i)
     trozo = main[i:fin if fin > 0 else None]
-    limpio = lambda x: re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', x))).strip()
+    marcar = lambda x: re.sub(r'<a [^>]*href="(/[^"#]*)[^"]*"[^>]*>(.*?)</a>',
+                              lambda m: '⟦' + (m.group(1).rstrip('/') or '/') + '|' + re.sub(r'<[^>]+>', '', m.group(2)).strip() + '⟧', x, flags=re.S)
+    limpio = lambda x: re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', marcar(x)))).strip()
     pares = []
     for m in re.finditer(r'<button[^>]*>\s*<span[^>]*>(.*?)</span>.*?</button>\s*<div[^>]*>(.*?)</div>', trozo, re.S):
         q, a = limpio(m.group(1)), ' '.join(limpio(p) for p in re.findall(r'<p[^>]*>(.*?)</p>', m.group(2), re.S))
-        if q and a: pares.append((html.escape(q, quote=False), html.escape(a, quote=False)))
-    return pares
+        if q and a: pares.append((html.escape(sin_marcas(q), quote=False), html.escape(a, quote=False)))
+    sin_qa = re.sub(r'<button.*?</button>\s*<div[^>]*>.*?</div>', ' ', trozo, flags=re.S)
+    sueltos = [limpio(p) for p in re.findall(r'<p[^>]*>(.*?)</p>', sin_qa, re.S)]
+    sueltos = [html.escape(t, quote=False) for t in sueltos if ('⟦' in t and len(sin_marcas(t)) > 12) or (len(sin_marcas(t)) > 20 and not sin_marcas(t).endswith('→'))]
+    return pares, sueltos
 
 RESTAURANTE_REPETIDO = re.compile(r'^(Nuestro Proceso de Fumigación para Restaurantes|Plagas Comunes en Restaurantes de Bucaramanga)$', re.I)
 CTA_EXTRA = re.compile(r'^(¿No encuentra su zona\?|Recupere su Descanso)', re.I)
@@ -140,16 +196,16 @@ _n = lambda t: re.sub(r'[^a-z0-9ñáéíóúü]+', ' ', html.unescape(t).lower()
 def _items_publicados(ruta_prod, quitar_restaurantes=False, doc=''):
     g['SKIP_H2'] = SKIP_ZONAS if ruta_prod.startswith('/zonas/') else SKIP_PROTOTIPO
     try:
-        items = g['_clean'](g['_items'](texto_publicado(ruta_prod)), keep_lead=True)
+        items = g['_clean'](g['_items'](texto_publicado(ruta_prod, enlaces=True)), keep_lead=True)
     finally:
         g['SKIP_H2'] = SKIP_PROTOTIPO
     # La entrada de producción va solo si la página no la tiene ya (el prototipo la resume en el héroe).
     texto_doc = ' ' + _n(re.sub(r'<[^>]+>', ' ', doc)) + ' '
-    if items and items[0][0] == 'P' and f' {_n(items[0][1])} ' in texto_doc:
+    if items and items[0][0] == 'P' and f' {_n(sin_marcas(items[0][1]))} ' in texto_doc:
         items = items[1:]
     out, saltar = [], False
     for tag, t in items:
-        if NAVEGACION.search(t): continue  # tarjetas de navegación ("Ver cobertura en…"): el prototipo ya las tiene
+        if NAVEGACION.search(sin_marcas(t)): continue  # tarjetas de navegación ("Ver cobertura en…"): el prototipo ya las tiene
         if tag == 'H2':
             saltar = bool((quitar_restaurantes and RESTAURANTE_REPETIDO.match(t)) or CTA_EXTRA.match(t))
         if not saltar: out.append((tag, t))
@@ -169,9 +225,11 @@ def _cambiar_guia(f, ruta_prod, quitar_restaurantes=False, tema=None, antes_de=N
         pages[f] = doc[:i] + g['guia'](tema, items) + '\n' + doc[i:]
 
 def _cambiar_faq(f, ruta_prod):
-    pares = _faq_publicada(ruta_prod)
+    pares, sueltos = _faq_publicada(ruta_prod)
     if not pares: return 0
-    nueva = g['faq_raw']('Preguntas<br>frecuentes', pares)
+    for q, a in pares: g['FAQ_ALL'][q] = a
+    aside = ''.join(f'<p class="zonas">{t}</p>' for t in sueltos)
+    nueva = g['faq']('Preguntas<br>frecuentes', [q for q, _ in pares], aside)
     doc = pages[f]
     m = FAQ_RE.search(doc)
     if m:
@@ -197,6 +255,9 @@ _cambiar_guia('herramienta-calculadora.html', '/herramientas/calculadora-fumigac
               tema='Cada cuánto<br>fumigar', antes_de='<section class="cta-final')
 _cambiar_guia('zonas.html', '/zonas', tema='Cobertura en el<br>Área Metropolitana', antes_de='<section class="cta-final')
 print('Preguntas frecuentes recuperadas:', recuperado)
+for f in pages:
+    pages[f] = enlazar(pages[f])
+assert not any('⟦' in d or '⟧' in d for d in pages.values()), 'quedaron marcas de enlace sin convertir'
 
 # "Dejar una reseña en Google" en "Lo que dicen" (decisión de Camilo, 15-nov). Evento click_resena:
 # lib/rediseno/motor.ts, por el atributo data-resena.

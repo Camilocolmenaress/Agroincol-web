@@ -573,3 +573,5 @@ body.is-article .progress{display:block}
 /* Mientras el motor ajusta los titulares (fitTitles), sin transiciones: con reducir movimiento la regla de
    arriba les da .01 ms y getComputedStyle devolvía el tamaño anterior. */
 html.ajustando-titulares .display, html.ajustando-titulares .display *, html.ajustando-titulares h1, html.ajustando-titulares h1 *{transition-property:none !important}
+/* Enlaces internos recuperados dentro de las preguntas frecuentes: el mismo estilo que en el texto (.article a). */
+.faq details p a, .faq-wrap .zonas a{text-decoration:underline; text-decoration-color:var(--naranja); text-decoration-thickness:2px; text-underline-offset:4px; font-weight:700}
