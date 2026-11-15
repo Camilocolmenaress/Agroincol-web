@@ -297,8 +297,10 @@ const ok = (nombre, cond, detalle = '') => {
     // En celular el carrusel empieza en "Hogar", con y sin reducir movimiento.
     for (const rm of ['no-preference', 'reduce']) {
       const { ctx, p } = await nueva({ viewport: { width: 390, height: 844 }, hasTouch: true, reducedMotion: rm });
-      await p.goto(BASE + '/', { waitUntil: 'networkidle' });
-      await p.waitForTimeout(700);
+      // Se lee al arrancar: después la mano de arrastre hace su demostración (Hogar ↔ Restaurantes).
+      await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
+      await p.waitForFunction(() => document.querySelector('.orbit')?.classList.contains('is-strip'));
+      await p.waitForTimeout(300);
       const palabra = await p.textContent('.orbit-word span');
       ok(`Inicio celular (${rm}): el carrusel empieza en Hogar`, (palabra || '').trim() === 'Hogar', palabra || '');
       await ctx.close();
