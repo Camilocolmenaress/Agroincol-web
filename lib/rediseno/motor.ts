@@ -908,48 +908,47 @@ export function montar({ ir }: Opciones): () => void {
   });
 
   /* Ajusta titulares: ninguna palabra se sale de su caja */
-  // Se mide en el DOM, no en un lienzo como site.js. El lienzo puede resolver la fuente distinto de
-  // lo que el navegador pinta: en la red, al resolverse fonts.ready, medía con la de respaldo, creía
-  // que el titular cabía y le quitaba el ajuste (Bucaramanga quedaba a 187 px en vez de 173).
-  // Un span dentro del titular hereda fuente, peso, mayúsculas y espaciado; mide lo que se ve.
-  // Cuando llega League Spartan, 'loadingdone' vuelve a medir.
-  const widestWord = (el: HTMLElement, size: number) => {
-    const cs = getComputedStyle(el);
-    const palabras: string[] = [];
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    while (walker.nextNode()) {
-      const nd = walker.currentNode,
-        pe = nd.parentElement as HTMLElement;
-      if (getComputedStyle(pe).fontSize !== cs.fontSize) continue;
-      (nd.textContent || '').split(/\s+/).forEach((w) => w && palabras.push(w));
-    }
-    const regla = document.createElement('span');
-    regla.setAttribute('aria-hidden', 'true');
-    regla.style.cssText = `position:absolute;visibility:hidden;white-space:nowrap;left:0;top:0;font-size:${size}px`;
-    el.appendChild(regla);
-    let max = 0;
-    palabras.forEach((w) => {
-      regla.textContent = w;
-      const width = regla.getBoundingClientRect().width;
-      if (width > max) max = width;
-    });
-    const dbg = (window as unknown as { __fitLog?: string[] }).__fitLog;
-    if (dbg && el.tagName === 'H1') dbg.push(`  palabras=${palabras.join('|')} reglaCS=${getComputedStyle(regla).fontFamily.slice(0, 14)} ${getComputedStyle(regla).display} w=${getComputedStyle(regla).width}`);
-    regla.remove();
-    return max;
-  };
+  // Misma regla que site.js (si la palabra más ancha no cabe, tamaño = base × cabida × 0,98), medida
+  // de otra forma. site.js limpia el tamaño, lee el tamaño base y mide en un lienzo. En la red, el
+  // lienzo podía medir con la fuente de respaldo, y la lectura justo después de limpiar a veces
+  // devolvía el tamaño anterior: el titular quedaba sin ajustar (Bucaramanga a 187 px en vez de 173).
+  // Aquí una copia oculta del titular, sin estilo en línea y en el mismo padre, da el tamaño base de
+  // la hoja de estilos y mide cada palabra con la fuente que se está pintando. No depende del estado
+  // previo del titular.
   const fitTitles = () => {
     document.querySelectorAll<HTMLElement>('.display, h1:not(.sr)').forEach((el) => {
-      el.style.fontSize = '';
       const cs = getComputedStyle(el);
-      if (el.clientWidth < 60 || cs.display === 'inline') return;
-      const fs = parseFloat(cs.fontSize);
+      const padre = el.parentElement;
+      if (!padre || el.clientWidth < 60 || cs.display === 'inline') {
+        el.style.fontSize = '';
+        return;
+      }
+      const palabras: string[] = [];
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const nd = walker.currentNode,
+          pe = nd.parentElement as HTMLElement;
+        if (getComputedStyle(pe).fontSize !== cs.fontSize) continue;
+        (nd.textContent || '').split(/\s+/).forEach((w) => w && palabras.push(w));
+      }
+      const copia = el.cloneNode(false) as HTMLElement;
+      copia.removeAttribute('id');
+      copia.removeAttribute('style');
+      copia.setAttribute('aria-hidden', 'true');
+      copia.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;left:0;top:0;width:auto;max-width:none;margin:0;padding:0';
+      padre.appendChild(copia);
+      const base = parseFloat(getComputedStyle(copia).fontSize);
+      let ancho = 0;
+      palabras.forEach((w) => {
+        copia.textContent = w;
+        ancho = Math.max(ancho, copia.getBoundingClientRect().width);
+      });
+      copia.remove();
       const avail = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-      const ancho = widestWord(el, fs);
-      const ratio = avail / ancho;
-      if (ratio < 0.97) el.style.fontSize = Math.floor(fs * ratio * 0.98) + 'px';
+      const ratio = ancho ? avail / ancho : 1;
+      el.style.fontSize = ratio < 0.97 ? Math.floor(base * ratio * 0.98) + 'px' : '';
       const dbg = (window as unknown as { __fitLog?: string[] }).__fitLog;
-      if (dbg && el.tagName === 'H1') dbg.push(`${Math.round(performance.now())} fs=${fs} avail=${avail} ancho=${ancho.toFixed(1)} sale=${el.style.fontSize}`);
+      if (dbg && el.tagName === 'H1') dbg.push(`${Math.round(performance.now())} base=${base} avail=${avail} ancho=${ancho.toFixed(1)} sale=${el.style.fontSize}`);
     });
   };
   fitTitles();
