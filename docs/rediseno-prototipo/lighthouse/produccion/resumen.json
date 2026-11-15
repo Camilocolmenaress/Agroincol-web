@@ -1,0 +1,93 @@
+{
+  "base": "https://agroincol.com",
+  "fecha": "2026-11-15T01:43:33.486Z",
+  "corridas": 3,
+  "nota": "Lighthouse móvil (preset por defecto: Moto G Power, 4G lento simulado). INP no se mide en laboratorio: se usa TBT como proxy y CrUX/Speed Insights para campo.",
+  "resumen": [
+    {
+      "url": "/",
+      "perf": 77,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 79,
+      "lcp_s": 4.38,
+      "cls": 0,
+      "tbt_ms": 293,
+      "fcp_s": 1.47,
+      "peso_kb": 874,
+      "perf_corridas": [
+        61,
+        77,
+        87
+      ]
+    },
+    {
+      "url": "/servicios/fumigacion-residencial",
+      "perf": 76,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 79,
+      "lcp_s": 4.59,
+      "cls": 0,
+      "tbt_ms": 241,
+      "fcp_s": 1.98,
+      "peso_kb": 932,
+      "perf_corridas": [
+        69,
+        76,
+        78
+      ]
+    },
+    {
+      "url": "/zonas/fumigacion-bucaramanga",
+      "perf": 69,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 79,
+      "lcp_s": 6.3,
+      "cls": 0,
+      "tbt_ms": 308,
+      "fcp_s": 1.66,
+      "peso_kb": 935,
+      "perf_corridas": [
+        66,
+        69,
+        69
+      ]
+    },
+    {
+      "url": "/blog/como-eliminar-cucarachas-bucaramanga",
+      "perf": 65,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 79,
+      "lcp_s": 6.83,
+      "cls": 0,
+      "tbt_ms": 340,
+      "fcp_s": 1.73,
+      "peso_kb": 924,
+      "perf_corridas": [
+        64,
+        65,
+        94
+      ]
+    },
+    {
+      "url": "/precios",
+      "perf": 74,
+      "a11y": 96,
+      "seo": 100,
+      "bp": 79,
+      "lcp_s": 4.67,
+      "cls": 0,
+      "tbt_ms": 379,
+      "fcp_s": 1.08,
+      "peso_kb": 928,
+      "perf_corridas": [
+        64,
+        74,
+        86
+      ]
+    }
+  ]
+}

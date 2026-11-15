@@ -1,0 +1,342 @@
+{
+ "/servicios": {
+  "h1": "Nuestros Servicios de Control de Plagas",
+  "lead": "Soluciones profesionales y certificadas para hogares, restaurantes e industrias en Bucaramanga y el Área Metropolitana.",
+  "h2": [
+   "Fumigación Residencial",
+   "Control de Plagas Comercial",
+   "Fumigación para Restaurantes",
+   "Desratización",
+   "Control de Insectos Voladores",
+   "Fumigación Industrial",
+   "Control de Comején y Termitas",
+   "Retiro de Abejas y Avispas",
+   "Control de Chinches de Cama"
+  ],
+  "h3": [],
+  "faq": []
+ },
+ "/servicios/fumigacion-restaurantes": {
+  "h1": "Control de Plagas para Restaurantes en Bucaramanga",
+  "lead": "Cumpla con la Resolución 2674 del INVIMA y proteja su establecimiento. Servicio certificado con más de 40 años de experiencia en el sector de alimentos.",
+  "h2": [
+   "¿Por Qué los Restaurantes son Vulnerables a las Plagas?",
+   "Cumpla con la Resolución 2674 de 2013 del INVIMA",
+   "Nuestro Proceso de Fumigación para Restaurantes",
+   "Plagas Comunes en Restaurantes de Bucaramanga",
+   "Preguntas Frecuentes sobre Fumigación de Restaurantes",
+   "Proteja su Restaurante Hoy Mismo",
+   "Solicite su Cotización Gratis"
+  ],
+  "h3": [
+   "Inspección Inicial",
+   "Diagnóstico y Plan",
+   "Aplicación Profesional",
+   "Certificación",
+   "Seguimiento y Mantenimiento",
+   "Cucarachas",
+   "Roedores",
+   "Moscas",
+   "Hormigas"
+  ],
+  "faq": [
+   [
+    "¿Cada cuánto se debe fumigar un restaurante en Colombia?",
+    "Según la normativa colombiana y las recomendaciones del INVIMA, un restaurante debe fumigar como mínimo cada 3 meses. En AGROINCOL ofrecemos planes trimestrales con seguimiento mensual para garantizar el cumplimiento continuo de la Resolución 2674 de 2013."
+   ],
+   [
+    "¿Qué productos utilizan? ¿Son seguros para áreas de alimentos?",
+    "Utilizamos productos registrados ante el ICA (Instituto Colombiano Agropecuario) y aprobados por la OMS para uso en áreas de manipulación de alimentos. Son de baja toxicidad para humanos y animales domésticos, pero altamente efectivos contra plagas."
+   ],
+   [
+    "¿Necesito cerrar mi restaurante durante la fumigación?",
+    "Depende del tipo de tratamiento. Muchos de nuestros servicios se realizan en horarios de baja actividad (antes de la apertura o después del cierre) para no interrumpir su operación. Coordinamos con usted el mejor momento."
+   ],
+   [
+    "¿El certificado de fumigación es válido ante el INVIMA y la Secretaría de Salud?",
+    "Sí. AGROINCOL emite un certificado de fumigación que cumple con los requisitos del Decreto 1843 de 1991 y es válido como soporte documental ante visitas de inspección del INVIMA y la Secretaría de Salud de Santander."
+   ],
+   [
+    "¿Cuánto tiempo toma el servicio de fumigación en un restaurante?",
+    "El tiempo varía según el tamaño del establecimiento. Para un restaurante promedio, el servicio completo (inspección + aplicación) toma entre 1 y 3 horas. Entregamos el certificado el mismo día del servicio."
+   ],
+   [
+    "¿Ofrecen planes de mantenimiento para restaurantes?",
+    "Sí. Tenemos planes trimestrales, bimestrales y mensuales diseñados específicamente para el sector de alimentos. Cada plan incluye inspecciones programadas, aplicaciones preventivas, certificados actualizados y un informe de seguimiento."
+   ]
+  ]
+ },
+ "/servicios/fumigacion-residencial": {
+  "h1": "Fumigación Residencial en Bucaramanga y Área Metropolitana",
+  "lead": "Proteja su hogar y familia con productos seguros aprobados por la OMS y el ICA. Sin riesgo para niños ni mascotas. Más de 40 años de experiencia en Bucaramanga, Floridablanca, Piedecuesta y Girón.",
+  "h2": [
+   "¿Por Qué Su Hogar Necesita Fumigación Profesional?",
+   "Productos Seguros para su Familia",
+   "Preguntas Frecuentes sobre Fumigación Residencial",
+   "Proteja su Hogar Hoy"
+  ],
+  "h3": [],
+  "faq": [
+   [
+    "¿Cuánto tiempo debo salir de la casa después de fumigar?",
+    "Recomendamos ausentarse del hogar entre 2 y 4 horas después de la aplicación, dependiendo del tipo de tratamiento. Para familias con niños pequeños, adultos mayores o mascotas, podemos coordinar el servicio en un horario conveniente y utilizamos productos de baja toxicidad aprobados por la OMS."
+   ],
+   [
+    "¿Es seguro para mascotas y niños?",
+    "Sí. Utilizamos productos registrados ante el ICA y aprobados por la OMS específicamente para uso en zonas residenciales. Son de baja toxicidad para humanos y animales domésticos. Recomendamos mantener mascotas y niños fuera del área tratada durante el tiempo indicado y ventilar bien antes de regresar."
+   ],
+   [
+    "¿Cada cuánto se recomienda fumigar una vivienda?",
+    "Para una vivienda en Bucaramanga y el Área Metropolitana, recomendamos fumigación preventiva cada 3 a 6 meses dependiendo de la zona, el historial de plagas y las características del inmueble. Propiedades cercanas a zonas verdes, quebradas o con historial de infestaciones pueden requerir mayor frecuencia."
+   ],
+   [
+    "¿Qué debo hacer antes de la fumigación?",
+    "Le recomendamos: guardar o cubrir alimentos y utensilios de cocina, retirar mascotas y sus accesorios del área a tratar, cubrir peceras o terrarios, limpiar pisos y superficies para mejorar el contacto de los productos, y despejar debajo de muebles y camas para facilitar el acceso del técnico."
+   ],
+   [
+    "¿El servicio incluye certificado?",
+    "Sí. AGROINCOL emite un certificado de fumigación que detalla los productos utilizados, las áreas tratadas y la fecha del servicio. Este documento es válido para conjuntos residenciales, arrendadores, o cualquier entidad que lo requiera como soporte sanitario."
+   ]
+  ]
+ },
+ "/servicios/control-plagas-comercial": {
+  "h1": "Control de Plagas para Negocios en Bucaramanga",
+  "lead": "Proteja la imagen y operación de su negocio. Programa MIP documentado, visitas periódicas y certificado válido para inspecciones sanitarias. Más de 40 años de experiencia en el Área Metropolitana.",
+  "h2": [
+   "¿Qué Arriesga su Negocio Sin Control de Plagas?",
+   "Programa MIP: Control Inteligente, No Solo Fumigación",
+   "Preguntas Frecuentes sobre Control de Plagas Comercial",
+   "Proteja su Negocio Hoy"
+  ],
+  "h3": [],
+  "faq": [
+   [
+    "¿Debo cerrar el negocio durante la fumigación?",
+    "Depende del tipo de tratamiento y del negocio. En la mayoría de los casos programamos el servicio en horario de baja actividad (antes de la apertura, durante el cierre o en días no laborales) para no interrumpir su operación. Coordinamos con usted el momento más conveniente."
+   ],
+   [
+    "¿El servicio incluye certificado para inspecciones?",
+    "Sí. Emitimos un certificado de fumigación que cumple con los requisitos del Decreto 1843 de 1991, válido como soporte ante inspecciones de la Secretaría de Salud de Santander y del INVIMA. El certificado incluye fecha, productos utilizados, áreas tratadas y firma del técnico responsable."
+   ],
+   [
+    "¿Cada cuánto se recomienda el servicio para un negocio?",
+    "Para establecimientos comerciales en Bucaramanga recomendamos un mínimo de cada 3 meses. Negocios con mayor riesgo (restaurantes, panaderías, tiendas de alimentos) pueden requerir frecuencia mensual o bimestral. Diseñamos el plan según el tipo de negocio y sus necesidades específicas."
+   ],
+   [
+    "¿Trabajan fuera de horario comercial?",
+    "Sí. Ofrecemos servicios en horarios flexibles incluyendo antes de la apertura (desde las 6 AM), después del cierre y los sábados en la mañana. Para negocios con operación continua coordinamos ventanas de tiempo que minimicen el impacto en sus actividades."
+   ],
+   [
+    "¿Tienen programa de mantenimiento mensual?",
+    "Sí. Contamos con planes de mantenimiento mensual, bimestral y trimestral diseñados para negocios. Cada plan incluye visitas programadas, aplicaciones preventivas, monitoreo continuo, certificados actualizados e informes de seguimiento para su archivo."
+   ]
+  ]
+ },
+ "/servicios/desratizacion": {
+  "h1": "Desratización Profesional en Bucaramanga y Área Metropolitana",
+  "lead": "Eliminamos ratas y ratones identificando y sellando sus vías de entrada. Diagnóstico profesional, tratamiento efectivo y seguimiento para garantizar que no regresen.",
+  "h2": [
+   "Los Peligros Reales de los Roedores en su Propiedad",
+   "Nuestro Método: Eliminar la Causa, No Solo los Síntomas",
+   "Preguntas Frecuentes sobre Desratización",
+   "Solucione el Problema Hoy"
+  ],
+  "h3": [],
+  "faq": [
+   [
+    "¿Cómo sé si tengo ratas o ratones?",
+    "Las señales más comunes son: heces pequeñas en cajones, alacenas o detrás de electrodomésticos; marcas de mordeduras en cables, madera o alimentos; ruidos nocturnos en paredes o cielos rasos; manchas de grasa a lo largo de paredes (causadas por el pelaje de los roedores); y nidos hechos con materiales blandos. Si detecta alguna de estas señales, contáctenos para un diagnóstico."
+   ],
+   [
+    "¿Usan veneno o trampas?",
+    "Usamos la combinación más efectiva según el diagnóstico. Para infestaciones activas combinamos cebos rodenticidas de segunda generación (en estaciones de cebado seguras) con trampas mecánicas en puntos estratégicos. El método específico depende del nivel de infestación, el tipo de propiedad y si hay niños o mascotas presentes."
+   ],
+   [
+    "¿Es peligroso el tratamiento para personas o mascotas?",
+    "Los cebos rodenticidas se colocan en estaciones cerradas específicamente diseñadas para que solo los roedores puedan acceder. Esto los hace seguros en presencia de mascotas y niños cuando se instalan correctamente. Usamos productos registrados ante el ICA y seguimos protocolos de seguridad estrictos."
+   ],
+   [
+    "¿Cuánto tiempo tarda en hacer efecto?",
+    "Los primeros resultados visibles se observan entre 3 y 7 días después del tratamiento. La eliminación completa de la infestación puede tomar entre 2 y 4 semanas dependiendo del nivel de la misma. Realizamos visitas de seguimiento para verificar la efectividad y ajustar el tratamiento si es necesario."
+   ],
+   [
+    "¿Incluye sellado de puntos de entrada?",
+    "Sí. Nuestro servicio de desratización incluye la identificación de todos los puntos de acceso utilizados por los roedores y recomendaciones específicas de sellado. Para propiedades donde es posible, realizamos el sellado directamente durante el servicio. Esto es fundamental para evitar que la infestación regrese."
+   ]
+  ]
+ },
+ "/servicios/control-insectos-voladores": {
+  "h1": "Control de Mosquitos, Moscas y Zancudos en Bucaramanga",
+  "lead": "Prevención de dengue, zika y chikungunya en el Área Metropolitana. Tratamiento profesional que elimina adultos, huevos y larvas. Especialmente efectivo en temporada de lluvias (mar-jun, sep-oct).",
+  "h2": [
+   "¿Por Qué los Insectos Voladores son una Amenaza Seria?",
+   "Temporada de Lluvias en Bucaramanga: El Pico de Reproducción",
+   "Preguntas Frecuentes sobre Control de Insectos Voladores",
+   "Protéjase Antes de la Próxima Temporada de Lluvias"
+  ],
+  "h3": [],
+  "faq": [
+   [
+    "¿Por qué hay más zancudos en temporada de lluvias?",
+    "Las lluvias crean agua estancada en recipientes, canales, materas y cualquier superficie cóncava. El mosquito Aedes aegypti, principal vector del dengue en Bucaramanga, solo necesita agua limpia para reproducirse y completa su ciclo de larva a adulto en 7-10 días. Por eso las temporadas de lluvias (marzo-junio y septiembre-octubre) son el período de mayor riesgo en Santander."
+   ],
+   [
+    "¿El tratamiento elimina también huevos y larvas?",
+    "Sí. A diferencia de los insecticidas domésticos que solo eliminan adultos, nuestro tratamiento profesional incluye la aplicación de larvicidas en posibles criaderos y productos con efecto residual que interrumpen el ciclo reproductivo. Esto evita que nuevas generaciones emerjan y garantiza resultados duraderos."
+   ],
+   [
+    "¿Cada cuánto se necesita el servicio?",
+    "Para hogares y negocios sin historial severo de mosquitos, recomendamos tratamiento preventivo antes de cada temporada de lluvias (febrero y agosto). Para propiedades con mayor exposición (cercanas a quebradas, con jardines grandes o historial de dengue en el barrio) puede ser necesario un mantenimiento trimestral o bimestral."
+   ],
+   [
+    "¿Qué hago si tengo un nido de abejas o avispas?",
+    "No intente eliminarlo por su cuenta. Las abejas africanizadas, comunes en Bucaramanga, pueden atacar en grupo al sentirse amenazadas. AGROINCOL realiza el retiro seguro de nidos de abejas y avispas con equipos de protección especializados, minimizando el riesgo para usted, su familia o sus clientes."
+   ],
+   [
+    "¿El tratamiento es seguro cerca de alimentos?",
+    "Sí, utilizamos productos aprobados por la OMS y registrados ante el ICA para uso en áreas donde hay alimentos. Para restaurantes y cocinas comerciales seguimos protocolos específicos que garantizan la seguridad alimentaria. Recomendamos cubrir alimentos expuestos durante la aplicación y esperar el tiempo de secado indicado antes de reanudar actividades."
+   ]
+  ]
+ },
+ "/servicios/fumigacion-industrial": {
+  "h1": "Fumigación Industrial y Control de Plagas para Empresas en Bucaramanga",
+  "lead": "Protocolo MIP documentado para plantas de producción, bodegas y zonas industriales. Certificados válidos ante INVIMA y Secretaría de Salud. Registros para auditorías de calidad.",
+  "h2": [
+   "¿Qué Arriesga su Empresa Sin Control Profesional de Plagas?",
+   "Protocolo MIP Industrial: Documentado y Auditable",
+   "Preguntas Frecuentes sobre Fumigación Industrial",
+   "Proteja su Empresa Hoy"
+  ],
+  "h3": [],
+  "faq": [
+   [
+    "¿El servicio incluye documentación para auditorías?",
+    "Sí. Entregamos un expediente completo que incluye: fichas técnicas de todos los productos utilizados, registros de cada intervención firmados por técnico certificado, mapas de ubicación de trampas y estaciones de cebado, e informes de seguimiento periódicos. Esta documentación cumple con los requisitos del Decreto 1843 de 1991 y es válida para auditorías de INVIMA, Secretaría de Salud e ISO 22000."
+   ],
+   [
+    "¿Trabajan en plantas de producción activas?",
+    "Sí. Tenemos experiencia trabajando en plantas con producción activa, coordinando los tratamientos en horarios que minimicen la interferencia con sus procesos. Para áreas críticas como líneas de producción y salas blancas, utilizamos métodos y productos específicamente aprobados para estas condiciones."
+   ],
+   [
+    "¿Qué normativas cubre el certificado?",
+    "Nuestros certificados cumplen con el Decreto 1843 de 1991 (regulación de plaguicidas en Colombia), la Resolución 2674 de 2013 del INVIMA (para establecimientos de alimentos), y son compatibles con los requisitos de BPM (Buenas Prácticas de Manufactura) e ISO 22000 para gestión de seguridad alimentaria."
+   ],
+   [
+    "¿Tienen experiencia en sector agroindustrial?",
+    "Sí. AGROINCOL lleva más de 40 años atendiendo empresas del sector agroindustrial en Santander, incluyendo plantas procesadoras de alimentos, empresas lácteas, avícolas y bodegas de almacenamiento. Conocemos los requisitos específicos del sector y adaptamos nuestros protocolos a las normas de cada tipo de industria."
+   ],
+   [
+    "¿Ofrecen programa de mantenimiento con visitas periódicas?",
+    "Sí. Para industria recomendamos especialmente los planes de mantenimiento con visitas mensuales o bimestrales. Cada visita incluye inspección, monitoreo de trampas y estaciones, aplicaciones preventivas según necesidad, actualización de registros y entrega de informe. La frecuencia y el alcance se definen en el diagnóstico inicial según las características de su planta."
+   ]
+  ]
+ },
+ "/servicios/control-comejen-termitas": {
+  "h1": "Control de Comején y Termitas en Bucaramanga",
+  "lead": "Eliminamos la colonia completa, no solo los insectos visibles. Inspección, inyección directa y barreras químicas con más de 40 años de experiencia en Santander.",
+  "h2": [
+   "¿Por Qué el Comején es tan Común en Bucaramanga?",
+   "Señales de que Hay Comején en su Casa",
+   "Por Qué los Remedios Caseros No Eliminan el Comején",
+   "Nuestro Tratamiento Profesional contra el Comején",
+   "Preguntas Frecuentes sobre Comején y Termitas",
+   "Detenga el Daño Antes de que Avance"
+  ],
+  "h3": [
+   "Alas descartadas",
+   "Túneles de barro",
+   "Madera hueca",
+   "Inspección y diagnóstico",
+   "Inyección y barreras químicas",
+   "Seguimiento y verificación"
+  ],
+  "faq": [
+   [
+    "¿Cómo sé si tengo comején en mi casa?",
+    "Las señales más comunes son: alas descartadas cerca de ventanas o lámparas (los reproductores las pierden tras el vuelo nupcial), túneles de barro en paredes o cimientos, madera que suena hueca al golpearla, pequeños montículos de polvo similar al aserrín y puertas o ventanas que de repente cierran mal. Si detecta cualquiera de estas señales, solicite una inspección profesional cuanto antes: el daño avanza aunque no vea insectos."
+   ],
+   [
+    "¿El comején es lo mismo que las termitas?",
+    "En Colombia \"comején\" es el nombre popular de las termitas. En Bucaramanga encontramos principalmente dos tipos: las termitas subterráneas, que viven en el suelo y entran por cimientos construyendo túneles de barro, y las termitas de madera seca, que viven dentro de muebles, puertas y estructuras de madera sin necesidad de contacto con el suelo. Cada tipo requiere un tratamiento diferente, por eso la inspección inicial es fundamental."
+   ],
+   [
+    "¿Cuánto cuesta eliminar el comején en Bucaramanga?",
+    "El costo depende del tipo de termita, la extensión de la infestación y el tamaño del inmueble. Por eso realizamos primero una inspección para diagnosticar el problema y entregarle una cotización exacta sin compromiso. Contáctenos directamente para una cotización personalizada."
+   ],
+   [
+    "¿Los remedios caseros o insecticidas de supermercado funcionan contra el comején?",
+    "No. Los aerosoles y remedios caseros solo eliminan los individuos visibles en la superficie, pero la colonia (que puede tener cientos de miles de termitas) permanece intacta dentro de la madera o bajo el suelo. Peor aún: la aplicación superficial puede hacer que la colonia se reubique a zonas menos visibles de la estructura, donde el daño continúa sin que usted lo note. El control efectivo requiere productos profesionales de transferencia y técnicas de inyección que alcancen el corazón de la colonia."
+   ],
+   [
+    "¿Cuánto dura el tratamiento y cuándo veo resultados?",
+    "La aplicación inicial toma entre 2 y 4 horas para una vivienda promedio, según la extensión de la infestación. Los productos profesionales de transferencia actúan de forma progresiva: las termitas contaminadas llevan el producto al resto de la colonia, lo que elimina la infestación completa en un período de 2 a 6 semanas. Incluimos visitas de seguimiento para verificar la eliminación total y revisar que no haya actividad nueva."
+   ],
+   [
+    "¿El tratamiento daña los muebles o es tóxico para mi familia?",
+    "No daña los muebles: la inyección se realiza con perforaciones mínimas que luego se sellan, y las barreras químicas se aplican en el suelo y los cimientos, no sobre las superficies visibles. Utilizamos productos registrados ante el ICA, de baja toxicidad para personas y mascotas. Le indicamos los tiempos de ventilación y reingreso seguros para cada área tratada."
+   ]
+  ]
+ },
+ "/servicios/eliminacion-abejas-avispas": {
+  "h1": "Retiro de Abejas y Avispas en Bucaramanga",
+  "lead": "¿Encontró un nido en su casa o negocio? No intente retirarlo: aléjese y escríbanos por WhatsApp con una foto. Retiro seguro con equipos de protección especializados y reubicación con apicultores cuando es viable. Más de 40 años protegiendo Santander.",
+  "h2": [
+   "Abejas Africanizadas en Santander: por Qué un Nido es una Emergencia",
+   "Por Qué NO Debe Intentar Retirar el Nido Usted Mismo",
+   "Qué Hacer Mientras Llega el Técnico",
+   "¿Abejas o Avispas? Cómo Diferenciarlas a Distancia Segura",
+   "Retiro Responsable: las Abejas se Reubican Cuando es Posible",
+   "Preguntas Frecuentes sobre Retiro de Abejas y Avispas",
+   "No se Arriesgue: Solicite el Retiro Profesional"
+  ],
+  "h3": [
+   "Humo o fuego",
+   "Agua a presión o golpes",
+   "Insecticida de aerosol",
+   "Abejas",
+   "Avispas"
+  ],
+  "faq": [
+   [
+    "¿Qué hago si encuentro un nido de abejas o avispas en mi casa?",
+    "Aléjese del nido sin movimientos bruscos, mantenga a niños y mascotas dentro de la casa, cierre puertas y ventanas cercanas, y llame a AGROINCOL. No intente retirarlo, golpearlo ni rociarle nada: las abejas y avispas atacan en grupo cuando sienten el nido amenazado."
+   ],
+   [
+    "¿Las abejas se exterminan o se reubican?",
+    "Las abejas son polinizadores esenciales, por eso, cuando el nido es accesible y la colmena lo permite, AGROINCOL coordina su reubicación con apicultores en lugar de exterminarlas. Esto depende de cada caso: la ubicación del nido, su accesibilidad y el nivel de riesgo para las personas. Las avispas, en cambio, no se reubican y el nido se elimina de forma controlada."
+   ],
+   [
+    "¿Qué tan peligrosas son las abejas africanizadas?",
+    "Las abejas africanizadas están presentes en Santander y son mucho más defensivas que las abejas comunes: ante una amenaza pueden atacar en enjambre, perseguir a la persona por cientos de metros y causar decenas de picaduras. Por eso un nido cerca de viviendas, colegios o negocios debe ser manejado únicamente por personal con equipos de protección especializados."
+   ],
+   [
+    "¿Puedo retirar el nido yo mismo con humo, agua o insecticida?",
+    "No. El humo, el agua a presión, los golpes o los insecticidas caseros alteran la colmena y provocan un ataque masivo. La mayoría de los accidentes graves por picaduras ocurren cuando alguien intenta retirar el nido por su cuenta. AGROINCOL realiza el retiro seguro de nidos de abejas y avispas con equipos de protección especializados."
+   ],
+   [
+    "¿Cómo sé si tengo abejas o avispas?",
+    "Las abejas tienen el cuerpo robusto y velloso, de tonos café y dorado, y forman panales de cera. Las avispas tienen el cuerpo alargado y liso, con cintura marcada y colores amarillo y negro intensos, y construyen nidos grises de aspecto de papel. Si no está seguro, no se acerque: envíenos una foto por WhatsApp desde una distancia segura y nuestro equipo la identifica."
+   ],
+   [
+    "¿Cuánto cuesta el retiro de un nido de abejas o avispas?",
+    "El costo depende de la ubicación del nido, su altura, accesibilidad y tamaño de la colmena. Contáctenos por teléfono o WhatsApp con una foto del nido y le damos una cotización sin compromiso."
+   ]
+  ]
+ },
+ "/servicios/control-chinches": {
+  "h1": "Control de Chinches de Cama en Bucaramanga",
+  "lead": "Eliminación profesional con inspección minuciosa, tratamiento certificado y segunda visita para romper el ciclo de huevos. Más de 40 años protegiendo hogares y hoteles en Santander.",
+  "h2": [
+   "¿Cómo Saber si Tiene Chinches de Cama?",
+   "¿Por Qué las Chinches Llegan a su Casa o Negocio?",
+   "Por Qué los Insecticidas Caseros No Funcionan Contra las Chinches"
+  ],
+  "h3": [
+   "Picaduras en línea al despertar",
+   "Manchas en sábanas y colchón",
+   "Olor dulzón en la habitación",
+   "Insectos visibles en grietas y costuras"
+  ],
+  "faq": []
+ }
+}

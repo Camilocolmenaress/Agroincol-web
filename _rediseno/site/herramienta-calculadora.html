@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de Frecuencia de Fumigación | AGROINCOL</title>
+<meta name="description" content="Descubra cada cuánto debe fumigar su propiedad según la normativa colombiana y las condiciones de su zona.">
+<meta name="theme-color" content="#164A38">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<a class="sr" href="#contenido">Saltar al contenido</a>
+<div class="cursor" aria-hidden="true"><span></span></div>
+<div class="veil" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<header class="site-header">
+  <nav class="seg pill" aria-label="Segmentos"><a href="servicio-fumigacion-residencial.html" data-transition>HOGAR</a><span aria-hidden="true">·</span><a href="servicio-fumigacion-restaurantes.html" data-transition>RESTAURANTES</a><span aria-hidden="true">·</span><a href="empresas.html" data-transition>EMPRESAS</a></nav>
+  <a class="brand" href="index.html" data-transition aria-label="AGROINCOL, inicio"><img src="assets/agroincol-logo-principal.svg" alt="AGROINCOL" width="146" height="145"></a>
+  <div class="actions">
+    <button class="pill" type="button" data-menu aria-expanded="false" aria-controls="menu">MENÚ</button>
+    <a class="wa-circle" href="https://wa.me/573107891948" aria-label="Cotizar por WhatsApp" data-cursor="WHATSAPP"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#143C2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg></a>
+  </div>
+</header>
+<div class="menu" id="menu" role="dialog" aria-label="Menú">
+  <button class="pill close" type="button" data-menu>CERRAR</button>
+  <nav aria-label="Menú principal">
+    <a href="index.html" data-transition>Inicio</a>
+    <a href="servicios.html" data-transition>Servicios</a>
+    <a href="servicio-fumigacion-restaurantes.html" data-transition>Restaurantes</a>
+    <a href="empresas.html" data-transition>Empresas</a>
+    <a href="zonas.html" data-transition>Zonas</a>
+    <a href="herramientas.html" data-transition>Herramientas</a>
+    <a href="blog.html" data-transition>Blog</a>
+  </nav>
+  <div class="menu-foot"><span>Cra. 36 #197-30, Floridablanca · 310 789 1948</span><a class="btn btn-naranja" href="https://wa.me/573107891948">Cotizar por WhatsApp</a></div>
+</div>
+
+<main id="contenido">
+<section class="page-hero">
+  <p class="crumb"><a href="index.html" data-transition>Inicio</a> · <a href="herramientas.html" data-transition>Herramientas</a> · Calculadora</p>
+  <h1 class="display sm"><span>Calculadora</span> <span class="h1-small">de frecuencia de fumigación</span></h1>
+  <p class="page-lead" data-reveal>Descubra cada cuánto debe fumigar su propiedad según las condiciones de su zona. Cinco preguntas, resultado inmediato.</p>
+  
+</section>
+<section class="tool-sec"><form class="tool" id="calc" novalidate>
+  <div class="tool-top"><span class="label" id="calc-step">Pregunta 1 de 5</span><div class="bar"><span id="calc-bar"></span></div></div>
+  <fieldset data-q="tipo"><legend>¿Qué tipo de propiedad necesita fumigar?</legend><div class="opts">
+    <button type="button" data-v="casa">Casa o apartamento</button><button type="button" data-v="restaurante">Restaurante o negocio de alimentos</button><button type="button" data-v="oficina">Oficina o local comercial</button><button type="button" data-v="bodega">Bodega o planta industrial</button><button type="button" data-v="conjunto">Conjunto residencial</button><button type="button" data-v="institucion">Institución educativa o de salud</button></div></fieldset>
+  <fieldset data-q="entorno" hidden><legend>¿Qué hay cerca de su propiedad?</legend><div class="opts">
+    <button type="button" data-v="agua">Quebradas, río o agua estancada</button><button type="button" data-v="mercado">Plaza de mercado o comercio denso</button><button type="button" data-v="verde">Zonas verdes o rurales</button><button type="button" data-v="tranquilo">Zona residencial tranquila</button></div></fieldset>
+  <fieldset data-q="historial" hidden><legend>¿Ha tenido plagas en los últimos 6 meses?</legend><div class="opts">
+    <button type="button" data-v="nunca">No he visto nada</button><button type="button" data-v="ocasional">Las he visto de vez en cuando</button><button type="button" data-v="frecuente">Las veo casi todos los días</button></div></fieldset>
+  <fieldset data-q="construccion" hidden><legend>¿Cómo es la construcción?</legend><div class="opts">
+    <button type="button" data-v="nueva">Nueva, sin grietas</button><button type="button" data-v="antigua">Antigua o con grietas y tubería expuesta</button></div></fieldset>
+  <fieldset data-q="ultima" hidden><legend>¿Cuándo fue la última fumigación profesional?</legend><div class="opts">
+    <button type="button" data-v="reciente">Hace menos de 3 meses</button><button type="button" data-v="media">Hace 3 a 6 meses</button><button type="button" data-v="nunca">Hace más de 6 meses o nunca</button></div></fieldset>
+  <div class="result" id="calc-result" hidden aria-live="polite">
+    <span class="label">Su frecuencia recomendada</span>
+    <p class="result-big" id="calc-freq"></p>
+    <p id="calc-why"></p>
+    <div class="result-cta"><a class="btn btn-naranja" id="calc-wa" href="https://wa.me/573107891948">Cotizar por WhatsApp</a><a class="btn btn-linea" id="calc-srv" href="servicios.html" data-transition>Ver el servicio</a><button class="pill" type="button" id="calc-reset">VOLVER A EMPEZAR</button></div>
+    <p class="note">Recomendación orientativa. La frecuencia exacta se define en la inspección.</p>
+  </div>
+  <div class="tool-nav"><button class="pill" type="button" id="calc-back" hidden>ATRÁS</button></div>
+</form></section>
+<section class="cta-final">
+  <div data-reveal>
+    <h2 class="display">¿Tiene una plaga<br>ahora?</h2>
+    <p>Escríbanos. Le respondemos por WhatsApp en menos de 5 minutos.</p>
+    <div class="btns"><a class="btn btn-naranja" href="https://wa.me/573107891948">Cotizar por WhatsApp</a><a class="btn btn-linea" href="tel:+573107891948">Llamar 310 789 1948</a></div>
+  </div>
+</section>
+</main><footer class="site-footer">
+  <img class="giant" src="assets/agroincol-logo-horizontal-blanca.svg" alt="AGROINCOL" width="974" height="359" loading="lazy">
+  <div class="foot-grid">
+    <div><img src="assets/agroincol-logo-simbolo-blanco.svg" alt="" width="64" height="64" style="width:64px;margin-bottom:12px"><span class="olabel">© 2026 AGROINCOL</span>Agroindustria Colombiana SAS</div>
+    <nav aria-label="Pie de página"><a href="index.html" data-transition>Inicio</a><a href="servicios.html" data-transition>Servicios</a><a href="servicio-fumigacion-restaurantes.html" data-transition>Restaurantes</a><a href="empresas.html" data-transition>Empresas</a><a href="zonas.html" data-transition>Zonas</a><a href="herramientas.html" data-transition>Herramientas</a><a href="blog.html" data-transition>Blog</a></nav>
+    <div><span class="olabel">Sede</span>Cra. 36 #197-30<br>Floridablanca, Santander<br><br><span class="olabel">Contacto</span>310 789 1948</div>
+    <div><p class="big">¿Tiene una plaga ahora? Escríbanos: le respondemos por WhatsApp en menos de 5 minutos.</p><a href="https://wa.me/573107891948" style="color:#F5682E;font-weight:700">Cotizar por WhatsApp →</a></div>
+  </div>
+  <div class="foot-bottom"><span><a href="precios.html" data-transition>Precios</a> · <a href="certificado-de-fumigacion.html" data-transition>Certificado de fumigación</a> · <a href="certificaciones-y-normativa.html" data-transition>Normativa</a> · <a href="politica-de-privacidad.html" data-transition>Política de datos</a></span><span><a href="zona-fumigacion-bucaramanga.html" data-transition>Bucaramanga</a> · <a href="zona-fumigacion-floridablanca.html" data-transition>Floridablanca</a> · <a href="zona-fumigacion-piedecuesta.html" data-transition>Piedecuesta</a> · <a href="zona-fumigacion-giron.html" data-transition>Girón</a></span></div>
+</footer>
+<div class="mbar"><a class="btn btn-naranja" href="https://wa.me/573107891948">Cotizar por WhatsApp</a><a class="call" href="tel:+573107891948" aria-label="Llamar al 310 789 1948"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#164A38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></a></div>
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script src="js/lenis.min.js"></script>
+<script src="js/site.js"></script>
+<script src="js/tools.js"></script>
+</body>
+</html>
