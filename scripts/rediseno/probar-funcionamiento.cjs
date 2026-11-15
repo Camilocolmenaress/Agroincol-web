@@ -18,8 +18,8 @@ const ok = (nombre, cond, detalle = '') => {
   const nueva = async (opts = {}) => {
     const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, ...opts });
     // Preview protegido de Vercel: VERCEL_JWT=<cookie _vercel_jwt> (se obtiene abriendo el enlace con _vercel_share).
-    // La barra de Vercel (vercel.live) solo se inyecta en los previews y altera el ajuste de los
-    // titulares (fitTitles); agroincol.com no la carga. Se bloquea para medir lo que ve un visitante.
+    // La barra de Vercel (vercel.live) solo se inyecta en los previews; agroincol.com no la carga.
+    // Se bloquea para medir lo que ve un visitante.
     await ctx.route(/vercel\.live/, (r) => r.abort());
     if (process.env.VERCEL_JWT) await ctx.addCookies([{ name: '_vercel_jwt', value: process.env.VERCEL_JWT, url: BASE }]);
     const p = await ctx.newPage();

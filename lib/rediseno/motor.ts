@@ -947,8 +947,6 @@ export function montar({ ir }: Opciones): () => void {
       const avail = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
       const ratio = ancho ? avail / ancho : 1;
       el.style.fontSize = ratio < 0.97 ? Math.floor(base * ratio * 0.98) + 'px' : '';
-      const dbg = (window as unknown as { __fitLog?: string[] }).__fitLog;
-      if (dbg && el.tagName === 'H1') dbg.push(`${Math.round(performance.now())} base=${base} avail=${avail} ancho=${ancho.toFixed(1)} sale=${el.style.fontSize}`);
     });
   };
   fitTitles();
