@@ -37,3 +37,10 @@ next-env.d.ts
 # que documenta qué variables hay que configurar en Vercel.
 .env*
 !.env.example
+
+# Rediseño (prototipo aprobado en _rediseno/): las fuentes 3D pesan 23 MB y no se sirven.
+/_rediseno/renders-3d/
+/.claude/skills/
+/docs/rediseno-prototipo/capturas/
+/docs/rediseno-prototipo/lighthouse/**/*.html
+/docs/rediseno-prototipo/referencia/

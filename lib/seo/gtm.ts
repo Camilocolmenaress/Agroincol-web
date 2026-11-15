@@ -1,0 +1,5 @@
+// GTM del sitio (mismo código en el layout del sitio y en el de las landings). Tres salidas antes de
+// cargar nada: fuera de agroincol.com (localhost, previews), en /ecogel y /tienda (la tienda mide
+// solo con su Pixel, sin GTM) y en modo prueba (`?test=1`).
+export const GTM_ID = 'GTM-NLH5NQRR';
+export const GTM_INIT = `(function(w,d,s,l,i){var o=w.location,h=o.hostname,p=o.pathname;if(h!=='agroincol.com'&&h!=='www.agroincol.com')return;if(p==='/ecogel'||p.indexOf('/ecogel/')===0||p==='/tienda'||p.indexOf('/tienda/')===0)return;try{var t=new URLSearchParams(o.search).get('test');if(t==='1')w.sessionStorage.setItem('agroincol_test','1');if(t==='0')w.sessionStorage.removeItem('agroincol_test');if(w.sessionStorage.getItem('agroincol_test')==='1')return;}catch(e){if(/[?&]test=1(&|$)/.test(o.search))return;}w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NLH5NQRR');`;

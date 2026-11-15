@@ -1,5 +1,5 @@
 import type { EcogelConfig } from '@/lib/ecogel';
-import type { VideoAprender } from '@/app/ecogel/fotos';
+import type { VideoAprender } from '@/app/(actual)/ecogel/fotos';
 import { RESENAS_ECOGEL } from '@/lib/ecogel-resenas';
 import LandingContactTracker from '@/components/landing/LandingContactTracker';
 import { TierProvider } from './TierContext';
