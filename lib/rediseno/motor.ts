@@ -392,8 +392,28 @@ export function montar({ ir }: Opciones): () => void {
         orbit.addEventListener('pointerdown', killHc);
         orbit.addEventListener('touchstart', killHc, { passive: true });
         let coachT = 0;
+        let esperaPintado: PerformanceObserver | null = null;
+        // La mano mueve la tira con un desplazamiento suave nativo, y Chrome lo cuenta como desplazamiento
+        // del usuario: deja de registrar el LCP. Si arrancaba antes del primer pintado (en una carga lenta),
+        // la página quedaba sin LCP (PageSpeed: NO_LCP). Por eso cuenta los 1,4 s desde el primer pintado,
+        // no desde que monta el motor. La animación es la misma.
+        const trasPrimerPintado = (fn: () => void) => {
+          const yaPinto = () => performance.getEntriesByType('paint').some((e) => e.name === 'first-contentful-paint');
+          if (yaPinto() || typeof PerformanceObserver === 'undefined') return fn();
+          try {
+            esperaPintado = new PerformanceObserver(() => {
+              if (!yaPinto()) return;
+              esperaPintado?.disconnect();
+              esperaPintado = null;
+              fn();
+            });
+            esperaPintado.observe({ type: 'paint', buffered: true });
+          } catch {
+            fn();
+          }
+        };
         if (!RM)
-          coachT = window.setTimeout(() => {
+          trasPrimerPintado(() => { coachT = window.setTimeout(() => {
             /* En el prototipo la condición incluía "scrollY > 40" comparando la función: nunca era cierta. */
             if (hDone) return;
             hc = document.createElement('span');
@@ -435,10 +455,11 @@ export function montar({ ir }: Opciones): () => void {
                   '+=0.35'
                 );
             }
-          }, 1400);
+          }, 1400); });
         return () => {
           cancelAnimationFrame(raf);
           window.clearTimeout(tRe);
+          esperaPintado?.disconnect();
           window.clearTimeout(coachT);
           htl?.kill();
           hc?.remove();
