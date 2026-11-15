@@ -568,6 +568,13 @@ export function montar({ ir }: Opciones): () => void {
       if (!items.length) return;
       rail.querySelectorAll('a, img').forEach((nd) => nd.setAttribute('draggable', 'false'));
       const centered = box.classList.contains('track');
+      /* En pantallas táctiles: scroll horizontal nativo con imán. El navegador separa solo el gesto horizontal
+         del vertical (fix celular, _rediseno/fix-celular-agroincol/site.js). En escritorio sigue el arrastre. */
+      const native = window.matchMedia('(pointer: coarse)').matches;
+      if (native) {
+        box.classList.add('is-native');
+        rail.querySelectorAll<HTMLImageElement>('img[loading="lazy"]').forEach((im) => (im.loading = 'eager'));
+      }
       const count = box.id ? document.querySelector<HTMLElement>('[data-count="' + box.id + '"]') : null;
 
       const ui = document.createElement('div');
@@ -592,6 +599,11 @@ export function montar({ ir }: Opciones): () => void {
 
       const clamp = (v: number) => Math.max(min, Math.min(0, v));
       const measure = () => {
+        if (native) {
+          min = -(box.scrollWidth - box.clientWidth);
+          paint();
+          return;
+        }
         const cs = getComputedStyle(box);
         const vis = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
         min = Math.min(0, vis - rail.scrollWidth);
@@ -617,7 +629,37 @@ export function montar({ ir }: Opciones): () => void {
         if (v < min) return min + (v - min) * 0.3;
         return v;
       };
+      const paintNative = () => {
+        const maxS = box.scrollWidth - box.clientWidth,
+          sl = box.scrollLeft;
+        const prog = maxS > 0 ? sl / maxS : 1;
+        bar.style.transform = 'scaleX(' + Math.max(0.06, Math.min(1, prog)).toFixed(3) + ')';
+        ui.classList.toggle('to-left', prog > 0.97);
+        const mid = sl + box.clientWidth / 2;
+        let i = 0,
+          bd = 1e9;
+        items.forEach((it, k) => {
+          const d = Math.abs(it.offsetLeft + it.offsetWidth / 2 - mid);
+          if (d < bd) {
+            bd = d;
+            i = k;
+          }
+        });
+        if (prog > 0.99) i = items.length - 1;
+        if (count && i !== idx) {
+          idx = i;
+          count.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(items.length).padStart(2, '0');
+        }
+      };
+      const go = (v: number) => {
+        if (native) box.scrollTo({ left: -v, behavior: RM ? 'auto' : 'smooth' });
+        else tx = v;
+      };
       const paint = () => {
+        if (native) {
+          paintNative();
+          return;
+        }
         rail.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
         const prog = min < 0 ? x / min : 1;
         bar.style.transform = 'scaleX(' + Math.max(0.06, Math.min(1, prog)).toFixed(3) + ')';
@@ -637,6 +679,7 @@ export function montar({ ir }: Opciones): () => void {
         }
       };
       ticker(() => {
+        if (native) return;
         if (down) {
           x = tx;
         } else {
@@ -646,7 +689,9 @@ export function montar({ ir }: Opciones): () => void {
         paint();
       });
 
+      if (native) on(box, 'scroll', paint, { passive: true });
       on(box, 'pointerdown', ((e: PointerEvent) => {
+        if (native) return;
         if (e.button !== undefined && e.button !== 0) return;
         down = true;
         moved = false;
@@ -706,6 +751,10 @@ export function montar({ ir }: Opciones): () => void {
       on(box, 'keydown', ((e: KeyboardEvent) => {
         if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
         e.preventDefault();
+        if (native) {
+          box.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * items[0].offsetWidth, behavior: 'smooth' });
+          return;
+        }
         const k = snaps.indexOf(nearest(tx)) + (e.key === 'ArrowRight' ? 1 : -1);
         if (snaps[k] !== undefined) tx = snaps[k];
       }) as EventListener);
@@ -740,12 +789,22 @@ export function montar({ ir }: Opciones): () => void {
               coach.className = 'drag-coach';
               coach.setAttribute('aria-hidden', 'true');
               coach.innerHTML = HAND + '<i></i>';
-              box.appendChild(coach);
+              let host: HTMLElement = box,
+                ox = 0,
+                oy = 0;
+              if (native) {
+                /* en scroll nativo la mano no puede vivir dentro del contenedor que se desplaza */
+                host = box.parentNode as HTMLElement;
+                if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+                ox = box.offsetLeft;
+                oy = box.offsetTop;
+              }
+              host.appendChild(coach);
               const bw = box.clientWidth,
-                cy = box.clientHeight * (centered ? 0.42 : 0.4);
-              const x0 = bw * 0.68,
+                cy = oy + box.clientHeight * (centered ? 0.42 : 0.4);
+              const x0 = ox + bw * 0.68,
                 dist = Math.min(220, bw * 0.34);
-              const pull = Math.min(dist * 0.9, -min);
+              const pull = native && items[1] ? items[1].offsetLeft - items[0].offsetLeft : Math.min(dist * 0.9, -min);
               if (RM) {
                 coach.style.transform = 'translate(' + x0 + 'px,' + cy + 'px)';
                 coach.style.opacity = '1';
@@ -774,7 +833,7 @@ export function montar({ ir }: Opciones): () => void {
                     duration: 0.9,
                     ease: 'power2.inOut',
                     onStart: () => {
-                      if (!down) tx = -pull;
+                      if (!down) go(-pull);
                     },
                   })
                   .to(coach, { scale: 1, duration: 0.18 })
@@ -785,7 +844,7 @@ export function montar({ ir }: Opciones): () => void {
                       opacity: 0,
                       duration: 0.3,
                       onStart: () => {
-                        if (!down && !touched) tx = 0;
+                        if (!down && !touched) go(0);
                       },
                     },
                     '+=0.15'

@@ -22,12 +22,23 @@ function imagen(etiqueta: string, primera: boolean): string {
   if (!src) return etiqueta;
   const local = `/rediseno/${src}`;
   if (src.endsWith('.svg')) return etiqueta.replace(`src="assets/${src}"`, `src="${local}"`);
+  // Figuras 3D (obj-*.webp): directas, sin el optimizador (decisión de Camilo, 15-nov). La recompresión
+  // a AVIF ensuciaba el canal alfa (menos píxeles del todo transparentes y más casi transparentes) y el
+  // drop-shadow del prototipo lo convertía en un cuadro de fondo en el iPhone.
+  // Para no mandar el original de 900 px a todos los celulares, hay copias estáticas de 300, 450 y 600 px
+  // con el alfa sin pérdida (scripts/rediseno/figuras.sh): también van directas, sin optimizador.
+  if (src.startsWith('obj-')) {
+    const b = local.replace(/\.webp$/, '');
+    const srcset = `${b}-300.webp 300w, ${b}-450.webp 450w, ${b}-600.webp 600w, ${local} 900w`;
+    let out = etiqueta.replace(`src="assets/${src}"`, `src="${b}-600.webp" srcset="${srcset}" sizes="(max-width: 699px) 50vw, 300px"`);
+    if (!/\sdecoding=/.test(out)) out = out.replace('<img', '<img decoding="async"');
+    if (primera && !/\sloading="lazy"/.test(out)) out = out.replace('<img', '<img fetchpriority="high"');
+    return out;
+  }
   const ancho = Number(etiqueta.match(/\swidth="(\d+)"/)?.[1] ?? 800);
   // Ancho con que el CSS del prototipo pinta cada tipo de imagen (para que el navegador no baje
   // una imagen más grande de la que muestra).
-  const sizes = src.startsWith('obj-')
-    ? '(max-width: 699px) 50vw, 300px'
-    : src.startsWith('colado-')
+  const sizes = src.startsWith('colado-')
       ? '(max-width: 699px) 140px, 260px'
       : src.startsWith('ilustracion-') && ancho >= 1800
         ? // Portadas en .frame: el atributo height="1013" del prototipo fija el alto y object-fit:cover
@@ -36,7 +47,7 @@ function imagen(etiqueta: string, primera: boolean): string {
         : src.startsWith('ilustracion-')
           ? '(max-width: 699px) 74vw, min(56vw, 760px)'
           : `(max-width: 699px) min(100vw, ${ancho}px), ${ancho}px`;
-  const tope = src.startsWith('obj-') || src.startsWith('colado-') ? 640 : 1920;
+  const tope = src.startsWith('colado-') ? 640 : 1920;
   const anchos = ANCHOS.filter((w) => w <= tope);
   const url = (w: number) => `/_next/image?url=${encodeURIComponent(local)}&amp;w=${w}&amp;q=75`;
   const srcset = anchos.map((w) => `${url(w)} ${w}w`).join(', ');
@@ -53,7 +64,37 @@ function imagen(etiqueta: string, primera: boolean): string {
 // - Carrusel del hero: solo los dos primeros objetos cargan de entrada; el resto lleva
 //   data-diferida y el motor los pide apenas termina la carga (lib/rediseno/motor.ts), antes de que
 //   alguien alcance a deslizar la tira.
+// Zonas de los carruseles (.track "Así trabajamos" y .cards "Otros servicios"): [inicio, fin) del div.
+function carruseles(html: string): Array<[number, number]> {
+  const zonas: Array<[number, number]> = [];
+  const re = /<div class="(?:track|cards)(?:\s[^"]*)?"[^>]*>/g;
+  for (let m = re.exec(html); m; m = re.exec(html)) {
+    let nivel = 1;
+    const etiquetas = /<\/?div\b[^>]*>/g;
+    etiquetas.lastIndex = m.index + m[0].length;
+    for (let t = etiquetas.exec(html); t; t = etiquetas.exec(html)) {
+      nivel += t[0].startsWith('</') ? -1 : 1;
+      if (nivel === 0) {
+        zonas.push([m.index, t.index]);
+        break;
+      }
+    }
+  }
+  return zonas;
+}
+
+// Dentro de los carruseles, sin loading="lazy" (decisión de Camilo, 15-nov): Safari no cargaba las
+// imágenes diferidas que quedan fuera de la vista dentro del riel horizontal.
+function sinDiferirEnCarruseles(html: string): string {
+  const zonas = carruseles(html);
+  if (!zonas.length) return html;
+  return html.replace(/<img\b[^>]*>/g, (tag, pos: number) =>
+    zonas.some(([a, b]) => pos > a && pos < b) ? tag.replace(/\sloading="lazy"/, '') : tag
+  );
+}
+
 function diferir(html: string): string {
+  const zonasCarrusel = carruseles(html);
   const secciones: number[] = [];
   for (let i = html.indexOf('<section'); i >= 0; i = html.indexOf('<section', i + 1)) secciones.push(i);
   const orbita = html.indexOf('<div class="orbit">');
@@ -65,6 +106,7 @@ function diferir(html: string): string {
       enOrbita++;
       return enOrbita > 2 ? tag.replace('<img', '<img loading="lazy" data-diferida') : tag;
     }
+    if (zonasCarrusel.some(([a, b]) => pos > a && pos < b)) return tag; // carruseles: sin diferir
     const seccion = secciones.filter((s) => s < pos).length;
     return seccion >= 3 ? tag.replace('<img', '<img loading="lazy"') : tag;
   });
@@ -73,7 +115,7 @@ function diferir(html: string): string {
 export function transformar(html: string): string {
   let primera = true;
   return (
-    diferir(html)
+    diferir(sinDiferirEnCarruseles(html))
       // Enlaces del prototipo (servicio-x.html) -> URL de producción.
       .replace(/href="([a-z0-9-]+\.html)(#[^"]*)?"/g, (m, archivo: string, hash = '') => {
         const ruta = RUTA_DE_ARCHIVO[archivo];
