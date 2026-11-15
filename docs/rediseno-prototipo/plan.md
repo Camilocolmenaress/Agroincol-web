@@ -134,3 +134,18 @@ Las fases 1 a 6 se hicieron de corrido (instrucción de Camilo). Todo está en l
    - la tira de celular se arma desde el primer pintado (CLS de 0,056 a 0);
    - el lema del aro se pinta con la League Spartan del sitio (antes salía con la de respaldo).
 7. **`docs/rediseno` borrado.**
+
+**Verificación de la segunda ronda (15-nov):**
+- **Comparación con el prototipo** (las 99 capturas, referencia con el texto recuperado): todo igual.
+  - Las únicas diferencias son el formulario, unos 97 px más alto en 17 páginas (punto 4), y el rótulo "Hogar" en el inicio a 390 px (punto 5).
+- **Funcionamiento:** 41/41 en Chrome y en WebKit, en local y en el preview. En el preview, WebKit solo marca el `manifest.json` bloqueado por la protección.
+- **Lighthouse móvil del inicio:**
+  - build de producción local: 92 a 94, sin GTM;
+  - preview con LCP: 97 a 100;
+  - cerca de la mitad de las corridas en el preview protegido no tienen LCP: la página queda en blanco unos 2,5 s. El sitio actual muestra el mismo blanco en ese entorno, y nunca pasó en local en unas 25 corridas;
+  - la medición que vale es PageSpeed en agroincol.com después del merge;
+  - GTM (Clarity, Ads, Bing, GA) suma entre 250 y 460 ms de TBT en producción.
+- **`fitTitles`:** se corrigieron dos fallos.
+  - Medir en el DOM retrasaba el primer pintado. Ahora mide por lotes y con lienzo.
+  - Con reducir movimiento, la transición de .01 ms del prototipo hacía leer el tamaño viejo.
+- **Motor:** si su descarga falla, se reintenta.
