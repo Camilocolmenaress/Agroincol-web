@@ -81,8 +81,10 @@ function difPx(a, b) {
         await p.goto(url, { waitUntil: 'networkidle' });
         await p.evaluate(async () => {
           document.querySelectorAll('img[loading="lazy"]').forEach((i) => (i.loading = 'eager'));
-          await Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
-          await Promise.all([...document.images].map((i) => (i.decode ? i.decode().catch(() => null) : null)));
+          // Tope de 8 s: una imagen que nunca dispara load/error no puede colgar la comparación.
+          const tope = (pr) => Promise.race([pr, new Promise((r) => setTimeout(r, 8000))]);
+          await tope(Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => { i.addEventListener('load', r, { once: true }); i.addEventListener('error', r, { once: true }); })))));
+          await tope(Promise.all([...document.images].map((i) => (i.decode ? i.decode().catch(() => null) : null))));
           await document.fonts.ready;
         });
         await p.waitForTimeout(1200);
