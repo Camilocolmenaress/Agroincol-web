@@ -575,3 +575,14 @@ body.is-article .progress{display:block}
 html.ajustando-titulares .display, html.ajustando-titulares .display *, html.ajustando-titulares h1, html.ajustando-titulares h1 *{transition-property:none !important}
 /* Enlaces internos recuperados dentro de las preguntas frecuentes: el mismo estilo que en el texto (.article a). */
 .faq details p a, .faq-wrap .zonas a{text-decoration:underline; text-decoration-color:var(--naranja); text-decoration-thickness:2px; text-underline-offset:4px; font-weight:700}
+
+/* ── Fix celular (15-nov, _rediseno/fix-celular-agroincol/site.css) ───────────────────────────────── */
+/* Carruseles en pantallas táctiles: scroll nativo con imán (sin pelear con el scroll vertical) */
+.track.is-native, .cards.is-native{overflow-x:auto; overflow-y:hidden; cursor:auto; touch-action:pan-x pan-y; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-left:0; padding-right:0}
+.track.is-native::-webkit-scrollbar, .cards.is-native::-webkit-scrollbar{display:none}
+.is-native .rail{transform:none !important}
+.track.is-native .rail{padding:0 calc((100vw - var(--sw)) / 2)}
+.cards.is-native .rail{padding:0 var(--pad)}
+.track.is-native .slide{scroll-snap-align:center; scroll-snap-stop:always}
+.cards.is-native .card{scroll-snap-align:start}
+.cards.is-native{scroll-padding-left:var(--pad)}

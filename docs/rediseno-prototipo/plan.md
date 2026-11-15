@@ -159,3 +159,21 @@ Las fases 1 a 6 se hicieron de corrido (instrucción de Camilo). Todo está en l
   - `/alivio` queda fuera (§6.6).
   - Las tarjetas de navegación (zonas en el inicio; blog, normativa, calculadora y un artículo en las zonas) no vuelven como tarjetas. Su texto sí volvió, y el pie del prototipo enlaza zonas, blog y normativa desde todas las páginas.
 - Los enlaces en las preguntas usan el mismo estilo que `.article a`.
+
+## Fix celular (15-nov, en producción)
+
+Referencia: `_rediseno/fix-celular-agroincol/` (site.css y site.js de Camilo).
+
+1. **Figuras 3D sin optimizador.** La recompresión a AVIF ensuciaba el alfa: 49,5 % de píxeles transparentes contra 51,3 % del original, y más casi transparentes. El drop-shadow lo volvía un cuadro en el iPhone.
+   - Ahora salen directas: el original de 900 px y copias estáticas de 300, 450 y 600 px con el alfa sin pérdida (0 píxeles de alfa distintos), generadas con `scripts/rediseno/figuras.sh`.
+   - El drop-shadow se mantiene.
+2. **Carruseles en pantallas táctiles** ("Así trabajamos" y "Otros servicios"): scroll horizontal nativo con imán, con la lógica `is-native` de site.js y las reglas `.is-native` de site.css. En escritorio sigue el arrastre con mouse.
+3. **Imágenes dentro de los carruseles sin `loading="lazy"`**, porque Safari no las cargaba.
+4. **Va en el mismo despliegue:** la mano del hero arranca 1,4 s después del primer pintado. Así PageSpeed ya no queda sin LCP.
+
+Pruebas:
+- `scripts/rediseno/probar-celular.cjs` (iPhone 13 en WebKit y Pixel 7 en Chrome): todo OK.
+- `probar-funcionamiento`: 41/41 en Chrome y WebKit.
+- Lighthouse local del inicio: 90–91. Era 86 con los originales de 900 px.
+
+`extraer-prototipo.py` ahora se niega a correr contra producción, porque se leería a sí mismo.

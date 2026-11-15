@@ -114,6 +114,18 @@ def serializable(v):
     except TypeError:
         return False
 
+# Guarda: el texto "publicado hoy" se tomó del sitio ANTERIOR. Desde el 15-nov-2026 producción ya es este
+# sitio rediseñado, así que leerla otra vez sería leerse a sí mismo (pasó: las preguntas de chinches
+# volvieron a 3). content/rediseno/*.json es ahora la fuente de verdad; este script ya no se corre contra
+# producción. Para cambiar textos, editar el contenido directamente.
+def _produccion_es_el_sitio_nuevo():
+    import urllib.request
+    doc = urllib.request.urlopen(urllib.request.Request('https://agroincol.com/', headers={'User-Agent': 'agroincol-rediseno'})).read().decode('utf-8')
+    return 'data-lead-form' in doc
+if _produccion_es_el_sitio_nuevo() and '--forzar' not in sys.argv:
+    sys.exit('agroincol.com ya sirve el sitio rediseñado: este extractor leería sus propias páginas como "texto '
+             'publicado" y perdería lo recuperado. content/rediseno/*.json es la fuente de verdad (ver el comentario).')
+
 with tempfile.TemporaryDirectory() as tmp:
     shutil.copytree(os.path.join(ORIGEN, 'site'), os.path.join(tmp, 'site'))
     shutil.copytree(os.path.join(ORIGEN, 'contenido-sitio-actual'), os.path.join(tmp, 'contenido-sitio-actual'))
