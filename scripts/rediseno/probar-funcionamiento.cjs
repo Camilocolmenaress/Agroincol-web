@@ -2,7 +2,7 @@
 // Prueba de funcionamiento del sitio rediseñado (lo que la comparación de píxeles no ve):
 // movimiento, navegación con velo, menú, formulario (interceptado: no se envían leads reales),
 // herramientas, guía, accesibilidad básica y versiones sin movimiento / sin JavaScript.
-// Uso: NODE_PATH=<playwright> node scripts/rediseno/probar-funcionamiento.cjs [base] [chromium|webkit]
+// Uso: NODE_PATH=<playwright> [VERCEL_JWT=…] node scripts/rediseno/probar-funcionamiento.cjs [base] [chromium|webkit]
 const pw = require('playwright');
 const BASE = (process.argv[2] || 'http://localhost:3200').replace(/\/$/, '');
 const MOTOR = process.argv[3] || 'chromium';
@@ -17,6 +17,8 @@ const ok = (nombre, cond, detalle = '') => {
   const errores = [];
   const nueva = async (opts = {}) => {
     const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, ...opts });
+    // Preview protegido de Vercel: VERCEL_JWT=<cookie _vercel_jwt> (se obtiene abriendo el enlace con _vercel_share).
+    if (process.env.VERCEL_JWT) await ctx.addCookies([{ name: '_vercel_jwt', value: process.env.VERCEL_JWT, url: BASE }]);
     const p = await ctx.newPage();
     p.on('pageerror', (e) => errores.push(e.message));
     p.on('console', (m) => m.type() === 'error' && !/insights|speed-insights|Failed to load resource/.test(m.text()) && errores.push(m.text()));
