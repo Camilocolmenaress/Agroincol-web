@@ -81,20 +81,28 @@ Rama `rediseno-prototipo`, creada desde `main` (producción) el 14-nov-2026. Sol
 Las fases 1 a 6 se hicieron de corrido (instrucción de Camilo). Todo está en la rama `rediseno-prototipo`; nada en `main`.
 
 - **Igual al prototipo.** `scripts/rediseno/comparar-prototipo.cjs` compara las 33 páginas en 1440, 834 y 390 contra `docs/rediseno-prototipo/referencia` (el prototipo con el artículo completo).
-  - Estructura de `<main>` (títulos, enlaces, alt, formularios y texto): igual en las 99 capturas. La única excepción es el texto del inicio en 390, que cambia según el objeto en que esté la tira del hero en el momento de la captura (el prototipo hace lo mismo).
-  - Píxeles: 0 % a 0,5 % en casi todo. Lo que queda es la recompresión de las imágenes por el optimizador (q75), no el diseño.
+  - Estructura de `<main>` (títulos, enlaces, alt, formularios y texto): igual en las 99 capturas. La excepción es el inicio en 390 px con reducir movimiento: el prototipo muestra "Industria" bajo la tira y Next "Hogar", que es el objeto en que está la tira. Una vez, en local, Next también mostró "Industria". Solo afecta ese rótulo y solo con reducir movimiento.
+  - Píxeles en local: 0 % a 0,5 % en casi todo; lo que queda es la recompresión de las imágenes por el optimizador (q75).
+  - Las portadas `.frame` (zonas) pedían una imagen de 640 px en celular y se veían borrosas; corregido con `sizes`. /zonas en 390 pasó de 3,75 % a 0,59 % en el preview.
+  - En el preview, Bucaramanga salía 12 px más alto. `fitTitles` medía cuando la fuente figuraba como cargada pero el navegador aún pintaba la de respaldo. Creía que el titular cabía, le quitaba el ajuste y nadie volvía a medir; con reducir movimiento se veía siempre. `site.js` tiene el mismo fallo latente; en el prototipo no se nota porque las fuentes cargan al instante desde el disco. Arreglo: se mide en el DOM, no en un lienzo, y se vuelve a medir tras dos cuadros y a los 500 ms de cada `load`, `fonts.ready` y `loadingdone`. Verificado con fuentes demoradas 2,5 s y con 40 y 150 ms de latencia.
 - **Funcionamiento.** `scripts/rediseno/probar-funcionamiento.cjs`: 34/34 en Chrome y 34/34 en WebKit (Safari).
   - Hero fijado y con acomodo, tira en celular con mano de arrastre, carruseles, menú, velo entre páginas, guía, herramientas, 404, reducir movimiento, sin JavaScript, teclado y consola sin errores.
   - Formulario contra `/api/contact` interceptado (no se enviaron leads): mismos campos, `formId` de antes, servicio preseleccionado, evento `form_submission`, validación y mensaje de error si la API falla.
 - **Landings.** `/lp/*`, `/tienda/*`, `/ecogel/terminos` y `/resena`: 0 píxeles distintos frente a `main` local en 1440 y 390, y la misma `<head>` (GTM, schema, metadatos). En git son movimientos al 100 %.
+- **Formulario contra el `/api/contact` real** (servidor aislado, sin hoja, webhook ni CAPI): el payload exacto responde 200 y sin servicio responde 400. Los valores de servicio son los mismos 7 de producción. El formulario anterior tenía además correo y dirección opcionales; el prototipo no los tiene y la hoja tampoco los guarda.
+- **Medición:** GTM, Vercel Analytics, Speed Insights y `CTAClickTracker` se montan igual que antes. `whatsapp_click` y `phone_click` salen en el marcado nuevo con el número vigente, y `form_submission` también. El Pixel y PostHog solo existían en las landings y siguen allí. Se pierde `click_resena`, porque el prototipo no tiene el botón "Dejar una reseña".
 - **SEO frente a producción** (`node scripts/seo-baseline.mjs --compare`):
   - title, description, canonical, hreflang, robots, Open Graph y JSON-LD iguales, salvo FAQPage.
   - FAQPage se arma con las preguntas visibles. En servicios y zonas producción tiene 5 o 6 y el prototipo muestra 3.
   - Cambian los encabezados, los enlaces y las imágenes (es el rediseño) y baja el conteo de palabras (ver abajo).
-- **Texto que no está en el prototipo.** `scripts/rediseno/texto-faltante.py` → `docs/rediseno-prototipo/texto-faltante.md`. Pendiente de decisión de Camilo.
-  - La calculadora pierde toda su explicación (unas 500 palabras: "¿Cada cuánto se debe fumigar en Colombia?", "Factores…" y "¿Qué pasa si no fumigo a tiempo?").
-  - Servicios y zonas pierden parte del texto y de las preguntas frecuentes.
-  - Parte de lo que falta está mal en producción: la página residencial muestra el proceso y las plagas de restaurantes.
+- **Texto que no está en el prototipo** (detalle en `seo-diferencias.md`). Pendiente de decisión de Camilo; no se agregó nada porque la regla es no cambiar los textos.
+  - **Calculadora:** pasa de 685 a 188 palabras. Pierde sus tres secciones: "¿Cada cuánto se debe fumigar en Colombia?", "Factores…" y "¿Qué pasa si no fumigo a tiempo?".
+  - **Servicios:** entre 12 % y 32 % menos palabras. Las preguntas frecuentes bajan de 5 o 6 a 3.
+  - **Zonas:** Bucaramanga, Floridablanca y Girón bajan entre 17 % y 18 %; Piedecuesta baja 39 % y sus preguntas pasan de 6 a 1.
+  - **Artículos:** bajan alrededor de 10 % (la caja "¿Necesita control de plagas?" y el bloque "Sobre AGROINCOL").
+  - Parte de lo que se pierde está mal en producción: 6 servicios repiten "Nuestro proceso de fumigación para restaurantes" y "Plagas comunes en restaurantes".
+  - `texto-faltante.md` compara frase por frase y exagera la pérdida, porque cuenta formularios y migas; sirve para buscar una frase, no para medir.
+  - No hay cifras de precios de servicios en el prototipo. Las únicas cifras son multas del INVIMA y ejemplos.
 - **Lighthouse local**, móvil, mediana de 3, en las mismas condiciones (sin GTM):
 
   | Página | `main`: rendimiento / LCP | Rama: rendimiento / LCP |

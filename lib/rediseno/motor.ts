@@ -908,29 +908,32 @@ export function montar({ ir }: Opciones): () => void {
   });
 
   /* Ajusta titulares: ninguna palabra se sale de su caja */
-  // Un lienzo nuevo en cada medición. Con uno solo (como en site.js), si el motor mide antes de
-  // que llegue League Spartan, Chrome se queda con la fuente de respaldo para esa misma cadena
-  // `font`, y el titular no se ajusta nunca. En el prototipo no se nota porque, abierto desde
-  // archivo, las fuentes llegan al instante; en la red sí.
+  // Se mide en el DOM, no en un lienzo como site.js. El lienzo puede resolver la fuente distinto de
+  // lo que el navegador pinta: en la red, al resolverse fonts.ready, medía con la de respaldo, creía
+  // que el titular cabía y le quitaba el ajuste (Bucaramanga quedaba a 187 px en vez de 173).
+  // Un span dentro del titular hereda fuente, peso, mayúsculas y espaciado; mide lo que se ve.
+  // Cuando llega League Spartan, 'loadingdone' vuelve a medir.
   const widestWord = (el: HTMLElement, size: number) => {
-    const fitCtx = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D;
     const cs = getComputedStyle(el);
-    let max = 0;
+    const palabras: string[] = [];
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    const ls = parseFloat(cs.letterSpacing) || 0;
-    fitCtx.font = cs.fontWeight + ' ' + size + 'px ' + cs.fontFamily;
     while (walker.nextNode()) {
       const nd = walker.currentNode,
         pe = nd.parentElement as HTMLElement;
       if (getComputedStyle(pe).fontSize !== cs.fontSize) continue;
-      let t = nd.textContent || '';
-      if (cs.textTransform === 'uppercase') t = t.toUpperCase();
-      t.split(/\s+/).forEach((w) => {
-        if (!w) return;
-        const width = fitCtx.measureText(w).width + ls * w.length;
-        if (width > max) max = width;
-      });
+      (nd.textContent || '').split(/\s+/).forEach((w) => w && palabras.push(w));
     }
+    const regla = document.createElement('span');
+    regla.setAttribute('aria-hidden', 'true');
+    regla.style.cssText = `position:absolute;visibility:hidden;white-space:nowrap;left:0;top:0;font-size:${size}px`;
+    el.appendChild(regla);
+    let max = 0;
+    palabras.forEach((w) => {
+      regla.textContent = w;
+      const width = regla.getBoundingClientRect().width;
+      if (width > max) max = width;
+    });
+    regla.remove();
     return max;
   };
   const fitTitles = () => {
@@ -945,12 +948,20 @@ export function montar({ ir }: Opciones): () => void {
     });
   };
   fitTitles();
-  document.fonts?.ready.then(() => {
-    if (!desmontado) fitTitles();
-  });
-  if (document.readyState !== 'complete') on(window, 'load', fitTitles);
-  // Y se vuelve a medir cuando termina de cargar cualquier fuente (fonts.ready puede resolverse antes).
-  if (document.fonts) on(document.fonts, 'loadingdone', fitTitles);
+  // Medir otra vez cuando las fuentes ya se pintan. Al dispararse load o loadingdone, la fuente puede
+  // figurar como cargada pero el navegador sigue pintando la de respaldo: medir en ese instante hace
+  // creer que el titular cabe. Por eso se mide de inmediato, tras dos cuadros y al rato.
+  const timers: number[] = [];
+  const fitLuego = () => {
+    if (desmontado) return;
+    fitTitles();
+    requestAnimationFrame(() => requestAnimationFrame(() => !desmontado && fitTitles()));
+    timers.push(window.setTimeout(() => !desmontado && fitTitles(), 500));
+  };
+  document.fonts?.ready.then(fitLuego);
+  if (document.readyState !== 'complete') on(window, 'load', fitLuego);
+  if (document.fonts) on(document.fonts, 'loadingdone', fitLuego);
+  limpiar.push(() => timers.forEach((t) => window.clearTimeout(t)));
   let fitT = 0;
   on(window, 'resize', () => {
     window.clearTimeout(fitT);
