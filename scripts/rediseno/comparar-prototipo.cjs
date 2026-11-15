@@ -66,6 +66,8 @@ function difPx(a, b) {
     const ruta = RUTA[archivo];
     for (const [w, h] of ANCHOS) {
       const ctx = await b.newContext({ viewport: { width: w, height: h }, reducedMotion: 'reduce', deviceScaleFactor: 1 });
+      // Preview protegido de Vercel: VERCEL_JWT=<cookie _vercel_jwt>.
+      if (process.env.VERCEL_JWT && !BASE.includes('localhost')) await ctx.addCookies([{ name: '_vercel_jwt', value: process.env.VERCEL_JWT, url: BASE }]);
       const p = await ctx.newPage();
       const errores = [];
       p.on('pageerror', (e) => errores.push(e.message));
@@ -81,6 +83,9 @@ function difPx(a, b) {
           await document.fonts.ready;
         });
         await p.waitForTimeout(1200);
+        // Toda imagen debe cargar (en Vercel el optimizador ha devuelto 400 donde en local funcionaba).
+        const rotas = await p.evaluate(() => [...document.images].filter((i) => !i.naturalWidth).map((i) => (i.currentSrc || i.src).slice(-70)));
+        if (rotas.length) errores.push(`${cual}: ${rotas.length} imagen(es) sin cargar: ${rotas.slice(0, 2).join(' , ')}`);
         datos[cual] = await p.evaluate(extraer);
         const f = path.join(SALIDA, `${archivo.replace('.html', '')}-${w}-${cual}.png`);
         await p.screenshot({ path: f, fullPage: true });

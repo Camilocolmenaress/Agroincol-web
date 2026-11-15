@@ -908,8 +908,12 @@ export function montar({ ir }: Opciones): () => void {
   });
 
   /* Ajusta titulares: ninguna palabra se sale de su caja */
-  const fitCtx = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D;
+  // Un lienzo nuevo en cada medición. Con uno solo (como en site.js), si el motor mide antes de
+  // que llegue League Spartan, Chrome se queda con la fuente de respaldo para esa misma cadena
+  // `font`, y el titular no se ajusta nunca. En el prototipo no se nota porque, abierto desde
+  // archivo, las fuentes llegan al instante; en la red sí.
   const widestWord = (el: HTMLElement, size: number) => {
+    const fitCtx = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D;
     const cs = getComputedStyle(el);
     let max = 0;
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
@@ -945,6 +949,8 @@ export function montar({ ir }: Opciones): () => void {
     if (!desmontado) fitTitles();
   });
   if (document.readyState !== 'complete') on(window, 'load', fitTitles);
+  // Y se vuelve a medir cuando termina de cargar cualquier fuente (fonts.ready puede resolverse antes).
+  if (document.fonts) on(document.fonts, 'loadingdone', fitTitles);
   let fitT = 0;
   on(window, 'resize', () => {
     window.clearTimeout(fitT);
