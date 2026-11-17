@@ -1,4 +1,5 @@
 import SchemaMarkup from '@/components/seo/SchemaMarkup';
+import { ajustar } from '@/lib/rediseno/ajustes';
 import { paginaPrototipo, transformar } from '@/lib/rediseno/contenido';
 import { jsonLdDe } from '@/lib/rediseno/seo';
 import { conMensaje, mensajeWhatsApp } from '@/lib/rediseno/whatsapp';
@@ -7,7 +8,7 @@ import { conMensaje, mensajeWhatsApp } from '@/lib/rediseno/whatsapp';
 // JSON-LD de esa ruta. El movimiento lo monta <Motor/> (components/rediseno/Motor.tsx).
 export default function Pagina({ archivo, ruta }: { archivo: string; ruta: string }) {
   const mensaje = mensajeWhatsApp(ruta);
-  const html = conMensaje(transformar(paginaPrototipo(archivo).main as string), mensaje);
+  const html = conMensaje(transformar(ajustar(ruta, paginaPrototipo(archivo).main as string)), mensaje);
   return (
     <>
       {jsonLdDe(ruta, archivo).map((j, i) => (

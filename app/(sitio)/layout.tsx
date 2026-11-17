@@ -10,6 +10,7 @@ import { CROMO } from '@/lib/rediseno/contenido';
 import { globalSchema } from '@/lib/seo/esquema-global';
 import { GTM_ID, GTM_INIT } from '@/lib/seo/gtm';
 import './sitio.css';
+import './ajustes.css';
 
 // Layout raíz del sitio rediseñado (prototipo aprobado en _rediseno/). Las landings de pauta
 // (/lp, /ecogel, /tienda) y /resena viven en app/(actual) con su layout de siempre: cada grupo

@@ -178,7 +178,18 @@ export function montar({ ir }: Opciones): () => void {
       if (a.target && a.target !== '_self') return;
       const url = new URL(a.href, location.href);
       if (url.origin !== location.origin || url.pathname.startsWith('/api') || url.pathname.startsWith('/_next')) return;
-      if (url.pathname === location.pathname && url.hash) return; /* ancla en la misma página */
+      if (url.pathname === location.pathname && url.hash) {
+        /* Botones que bajan al formulario (data-ancla): scroll suave hasta el formulario mismo (en
+           celular el texto de la sección va antes y lo dejaría fuera de la pantalla). */
+        const sec = a.hasAttribute('data-ancla') ? document.getElementById(url.hash.slice(1)) : null;
+        const t = sec?.querySelector<HTMLElement>('form') ?? sec;
+        if (t) {
+          e.preventDefault();
+          if (lenis) lenis.scrollTo(t, { offset: -90 });
+          else t.scrollIntoView({ behavior: RM ? 'auto' : 'smooth' });
+        }
+        return; /* ancla en la misma página */
+      }
       if (url.pathname.startsWith('/alivio')) return; /* otra zona de Vercel: carga completa */
       e.preventDefault();
       const destino = url.pathname + url.search + url.hash;
