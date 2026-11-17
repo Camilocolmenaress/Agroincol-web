@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { MENSAJE_GENERAL, enlaceWhatsApp } from '@/lib/rediseno/whatsapp';
 
 export const metadata: Metadata = { title: 'Página no encontrada', robots: { index: false, follow: true } };
 
@@ -30,7 +31,7 @@ export default function NoEncontrada() {
             <a className="btn btn-naranja" href="/" data-transition>
               Volver al Inicio
             </a>
-            <a className="btn btn-linea" href="https://wa.me/573107891948">
+            <a className="btn btn-linea" href={enlaceWhatsApp(MENSAJE_GENERAL)}>
               Contactar por WhatsApp
             </a>
           </div>

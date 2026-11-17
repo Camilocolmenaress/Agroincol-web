@@ -2,6 +2,8 @@
 // a TypeScript sin cambiar su comportamiento. Solo cambian las rutas (las de producción) y la forma
 // de registrar listeners (se limpian al cambiar de página). Terminan en WhatsApp, como el prototipo.
 
+import { enlaceWhatsApp } from './whatsapp';
+
 type Registrar = (t: EventTarget, tipo: string, fn: EventListener, opts?: AddEventListenerOptions | boolean) => void;
 
 const SERVICIO = (slug: string) => `/servicios/${slug}`;
@@ -68,7 +70,7 @@ export function montarHerramientas(on: Registrar) {
       document.getElementById('calc-srv')?.setAttribute('href', srv[ans.tipo]);
       document
         .getElementById('calc-wa')
-        ?.setAttribute('href', 'https://wa.me/573107891948?text=' + encodeURIComponent('Hola, la calculadora me recomendó fumigar ' + txt.toLowerCase() + '. Quiero cotizar.'));
+        ?.setAttribute('href', enlaceWhatsApp('Hola, la calculadora me recomendó fumigar ' + txt.toLowerCase() + '. Quiero cotizar.'));
     };
     sets.forEach((f, k) => {
       f.querySelectorAll('button').forEach((b) => {

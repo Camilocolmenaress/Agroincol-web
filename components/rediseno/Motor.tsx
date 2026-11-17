@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { ponerMensajeEnCromo } from '@/lib/rediseno/whatsapp';
 
 // Monta el movimiento del prototipo (js/site.js, pasado a lib/rediseno/motor.ts) en cada cambio
 // de ruta y lo desmonta al salir: en Next la navegación no recarga la página, así que ScrollTrigger,
@@ -11,6 +12,7 @@ export default function Motor() {
   const router = useRouter();
 
   useEffect(() => {
+    ponerMensajeEnCromo();
     let desmontar: (() => void) | undefined;
     let cancelado = false;
     // Si la descarga del motor falla (conexión inestable), se reintenta una vez: sin motor tampoco

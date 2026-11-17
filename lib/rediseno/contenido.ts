@@ -4,9 +4,12 @@
 // queden idénticos (README §6). Aquí solo se cambian rutas, imágenes y detalles técnicos.
 import paginas from '@/content/rediseno/paginas.json';
 import cromo from '@/content/rediseno/cromo.json';
+import { MENSAJE_GENERAL, conMensaje } from './whatsapp';
+import { PAGINAS_NUEVAS } from './paginas-nuevas';
 
 type PaginaPrototipo = { ruta: string; title: string | null; description: string | null; main: string | null };
-const PAGINAS = paginas as Record<string, PaginaPrototipo>;
+// Las del prototipo y las creadas después (lib/rediseno/paginas-nuevas.ts).
+const PAGINAS = { ...(paginas as Record<string, PaginaPrototipo>), ...PAGINAS_NUEVAS } as Record<string, PaginaPrototipo>;
 
 // Mapa de URL del README §5: archivo del prototipo -> ruta de producción.
 const RUTA_DE_ARCHIVO: Record<string, string> = Object.fromEntries(
@@ -137,4 +140,8 @@ export function paginaPrototipo(archivo: string): PaginaPrototipo {
   return p;
 }
 
-export const CROMO = { antes: transformar(cromo.antes), despues: transformar(cromo.despues) };
+// Cabecera, menú, pie y barra móvil: WhatsApp con el mensaje general; el motor les pone el de cada página.
+export const CROMO = {
+  antes: conMensaje(transformar(cromo.antes), MENSAJE_GENERAL),
+  despues: conMensaje(transformar(cromo.despues), MENSAJE_GENERAL),
+};

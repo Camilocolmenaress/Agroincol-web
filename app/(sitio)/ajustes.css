@@ -1,0 +1,26 @@
+/* Ajustes de conversión sobre el diseño del prototipo (lib/rediseno/ajustes.ts). Solo tokens y piezas
+   del manual que ya usa sitio.css: colores, botones, tipografías. */
+
+/* Primer pantallazo de servicio: beneficio, CTA, reseñas y cómo cotizamos, justo bajo el H1.
+   z-index sobre la figura que cae desde el título (data-fall), para que no tape los botones. */
+.gancho{position:relative; z-index:3; max-width:800px; margin:clamp(16px, 2.2vw, 28px) auto 0; display:flex; flex-direction:column; align-items:center; gap:14px}
+.gancho-lead{margin:0; font-size:clamp(17px, 1.35vw, 20px); font-weight:500; line-height:1.4}
+.gancho-cta{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:12px 22px}
+.gancho-cta .call{font-weight:700; font-size:15px; text-decoration:underline; text-underline-offset:4px}
+.gancho-prueba{margin:0; display:flex; flex-wrap:wrap; justify-content:center; gap:4px 18px; font-size:14px; font-weight:500}
+.gancho-prueba a{font-weight:700; text-decoration:underline; text-underline-offset:3px}
+.gancho-prueba a:hover{color:var(--naranja)}
+@media (max-width:699px){
+  .gancho{gap:12px}
+  .gancho-cta .btn-naranja, .gancho-cta .call{display:none}
+  .gancho-cta .btn{min-height:50px; font-size:17px}
+}
+
+/* /empresas: hoteles y hospedajes (piezas de docs-sec) */
+.hoteles .label{display:block; margin-bottom:18px}
+.hoteles-lead{max-width:760px; margin:24px 0 0; font-size:clamp(19px, 1.8vw, 25px); line-height:1.5}
+.hoteles .note a{font-weight:700; text-decoration:underline; text-decoration-color:var(--naranja); text-decoration-thickness:2px; text-underline-offset:4px}
+
+/* Inicio: acceso temprano al formulario, en la sección que sigue al hero */
+.temprano{position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:clamp(26px, 3vw, 40px)}
+.temprano p{margin:0; font-size:14px; font-weight:500}
