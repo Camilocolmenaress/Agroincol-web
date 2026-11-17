@@ -15,3 +15,8 @@
   .gancho-cta .btn-naranja, .gancho-cta .call{display:none}
   .gancho-cta .btn{min-height:50px; font-size:17px}
 }
+
+/* /empresas: hoteles y hospedajes (piezas de docs-sec) */
+.hoteles .label{display:block; margin-bottom:18px}
+.hoteles-lead{max-width:760px; margin:24px 0 0; font-size:clamp(19px, 1.8vw, 25px); line-height:1.5}
+.hoteles .note a{font-weight:700; text-decoration:underline; text-decoration-color:var(--naranja); text-decoration-thickness:2px; text-underline-offset:4px}

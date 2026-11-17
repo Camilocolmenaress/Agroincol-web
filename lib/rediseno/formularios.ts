@@ -15,6 +15,7 @@ const FORM_ID: Record<string, string> = {
   '/servicios/control-comejen-termitas': 'comejen-contact',
   '/servicios/eliminacion-abejas-avispas': 'abejas-contact',
   '/servicios/control-chinches': 'chinches-contact',
+  '/empresas': 'empresas-contact',
   '/servicios/control-cucarachas': 'cucarachas-contact',
   '/zonas/fumigacion-bucaramanga': 'bucaramanga-contact',
   '/zonas/fumigacion-floridablanca': 'floridablanca-contact',
@@ -85,7 +86,11 @@ export function conectarFormularios(on: Registrar, animarExito: (el: HTMLElement
       errEnvio.classList.remove('is-on');
       const ruta = window.location.pathname;
       const formId = formIdDe(ruta);
-      const tipoServicio = String(datos.get('tipoServicio') || '');
+      // /empresas: la empresa viaja en el mismo campo (sin columna nueva en la hoja).
+      const empresa = String(datos.get('empresa') || '').trim();
+      const tipoServicio = empresa
+        ? `Empresas · ${String(datos.get('tipoServicio') || '')} · ${empresa}`
+        : String(datos.get('tipoServicio') || '');
       if (!trampa) {
         if (boton) boton.disabled = true;
         try {
