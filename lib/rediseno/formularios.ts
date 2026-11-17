@@ -86,11 +86,11 @@ export function conectarFormularios(on: Registrar, animarExito: (el: HTMLElement
       errEnvio.classList.remove('is-on');
       const ruta = window.location.pathname;
       const formId = formIdDe(ruta);
-      // /empresas: la empresa viaja en el mismo campo (sin columna nueva en la hoja).
+      const servicio = String(datos.get('tipoServicio') || '');
+      // /empresas: la empresa viaja a la hoja en el mismo campo (sin columna nueva). A GTM va solo la
+      // opción elegida: el nombre lo escribe el visitante y no debe salir hacia la medición.
       const empresa = String(datos.get('empresa') || '').trim();
-      const tipoServicio = empresa
-        ? `Empresas · ${String(datos.get('tipoServicio') || '')} · ${empresa}`
-        : String(datos.get('tipoServicio') || '');
+      const tipoServicio = empresa ? `Empresas · ${servicio} · ${empresa}` : servicio;
       if (!trampa) {
         if (boton) boton.disabled = true;
         try {
@@ -109,7 +109,7 @@ export function conectarFormularios(on: Registrar, animarExito: (el: HTMLElement
           });
           if (!res.ok) throw new Error(String(res.status));
           const w = window as Window & { dataLayer?: Record<string, unknown>[] };
-          w.dataLayer?.push({ event: 'form_submission', form_id: formId, form_page: ruta, form_service: tipoServicio });
+          w.dataLayer?.push({ event: 'form_submission', form_id: formId, form_page: ruta, form_service: servicio });
         } catch {
           if (boton) boton.disabled = false;
           errEnvio.classList.add('is-on');

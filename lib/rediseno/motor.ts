@@ -11,7 +11,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { conectarFormularios } from './formularios';
 import { montarHerramientas } from './herramientas';
-import { MENSAJE_GENERAL, WHATSAPP, enlaceWhatsApp } from './whatsapp';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
@@ -57,13 +56,6 @@ export function montar({ ir }: Opciones): () => void {
     limpiar.push(() => io.disconnect());
     return io;
   };
-
-  /* WhatsApp: la cabecera, el menú, el pie y la barra móvil no se vuelven a pintar entre páginas;
-     toman el mensaje de la página actual (<main data-wa>, ver lib/rediseno/whatsapp.ts). */
-  const mensaje = document.querySelector<HTMLElement>('main[data-wa]')?.dataset.wa ?? MENSAJE_GENERAL;
-  document.querySelectorAll<HTMLAnchorElement>(`a[href^="https://wa.me/${WHATSAPP}"]`).forEach((a) => {
-    if (!a.closest('main')) a.setAttribute('href', enlaceWhatsApp(mensaje));
-  });
 
   const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const FINE = window.matchMedia('(pointer: fine)').matches;

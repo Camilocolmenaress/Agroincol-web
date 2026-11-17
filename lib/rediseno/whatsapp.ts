@@ -1,8 +1,8 @@
 // Enlaces de WhatsApp del sitio con mensaje prellenado por página (un solo lugar para todos).
 // - El <main> de cada página se marca en el servidor (components/rediseno/Pagina.tsx).
 // - La cabecera, el menú, el pie y la barra móvil son HTML compartido que no sabe en qué ruta está:
-//   salen con el mensaje general y el motor les pone el de la página en cada cambio de ruta
-//   (lib/rediseno/motor.ts → ponerMensajeWhatsApp).
+//   salen con el mensaje general y Motor.tsx les pone el de la página en cada cambio de ruta
+//   (ponerMensajeEnCromo).
 // La medición no cambia: GTM (conversión de Ads) y CTAClickTracker reconocen el clic porque la URL
 // contiene "wa.me". No usar api.whatsapp.com.
 
@@ -42,6 +42,16 @@ export function mensajeWhatsApp(ruta: string): string {
 
 export function enlaceWhatsApp(mensaje: string): string {
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
+}
+
+// La cabecera, el menú, el pie y la barra móvil no se vuelven a pintar entre páginas: toman el mensaje
+// de la página actual (<main data-wa>). Lo llama components/rediseno/Motor.tsx en cada cambio de ruta,
+// sin esperar el chunk diferido del motor.
+export function ponerMensajeEnCromo() {
+  const mensaje = document.querySelector<HTMLElement>('main[data-wa]')?.dataset.wa ?? MENSAJE_GENERAL;
+  document.querySelectorAll<HTMLAnchorElement>(`a[href^="https://wa.me/${WHATSAPP}"]`).forEach((a) => {
+    if (!a.closest('main')) a.setAttribute('href', enlaceWhatsApp(mensaje));
+  });
 }
 
 // Enlaces wa.me sin mensaje dentro de un HTML -> con el mensaje dado. Los que ya traen ?text= se respetan.
