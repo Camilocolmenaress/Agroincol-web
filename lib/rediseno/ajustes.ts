@@ -47,6 +47,7 @@ const GANCHOS: Record<string, Gancho> = {
     beneficio: 'Restaurantes, hoteles, oficinas y bodegas: expediente completo para auditorías de INVIMA y Secretaría de Salud.',
     wa: 'Pedir visita técnica',
     form: 'Solicitar visita',
+    senal: 'Inspección gratuita hoy mismo', // frase de Camilo (17-nov-2026)
   },
   '/servicios/control-comejen-termitas': {
     beneficio: 'Eliminamos la colonia completa, no solo los insectos visibles.',
