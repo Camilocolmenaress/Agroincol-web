@@ -121,12 +121,20 @@ function empresas(ruta: string, html: string): string {
   return out + EMPRESAS_FORM;
 }
 
+// Inicio: el formulario está al final (~10.000 px). Acceso temprano en la sección que sigue al hero
+// (el hero no se toca): baja al formulario con el scroll suave del motor (data-ancla).
+const INICIO_FOCO = '<p data-reveal>Desde 1985 cuidamos la salud de las familias santandereanas, empezando por lo que no se ve.</p></div>';
+const INICIO_TEMPRANO =
+  '<div class="temprano"><a class="btn btn-linea" href="#cotizar" data-ancla>Solicitar cotización</a>' +
+  '<p>Gratis y sin compromiso · Le respondemos por WhatsApp en menos de 5 minutos</p></div>';
+
 export function ajustar(ruta: string, html: string): string {
   let out = html;
   const g = GANCHOS[ruta];
   if (g) out = conGancho(ruta, out, g);
   if (out.includes('<section class="otros">') && !out.includes('servicio-control-cucarachas.html')) out = insertarDespues(ruta, out, CARDS, TARJETA_CUCARACHAS + '\n');
   if (ruta === '/empresas') out = empresas(ruta, out);
+  if (ruta === '/') out = insertarDespues(ruta, out, INICIO_FOCO, INICIO_TEMPRANO);
   if (ruta === '/servicios') out = insertarDespues(ruta, out, ULTIMA_FILA, FILA_CUCARACHAS);
   return out;
 }
