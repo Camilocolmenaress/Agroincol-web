@@ -9,15 +9,29 @@ export const NOMBRE = 'Láminas de Captura AGROINCOL';
 export const CONTENT_ID = 'laminas-captura';
 export const CATEGORIA = 'laminas';
 
-export const MINIMO = 6;
+export const MINIMO = 3;
 /** Tope de cordura para el selector y el servidor; más que esto es un pedido por WhatsApp. */
 export const MAXIMO = 500;
-export const PAQUETES = [6, 12, 24] as const;
+export const PAQUETES = [3, 12, 24] as const;
 export const RECOMENDADO = 12;
+/** Para quién es cada paquete. Las mismas palabras en el selector y en "Cuántas necesita". */
+export const ETIQUETA_PAQUETE: Record<(typeof PAQUETES)[number], string> = {
+  3: 'Perfecto para el hogar',
+  12: 'Perfecto para un restaurante',
+  24: 'Perfecto para bodegas o fincas',
+};
 
-export const PRECIO_UNIDAD = 10_000;
-export const PRECIO_UNIDAD_24 = 9_000;
-export const DESDE_PRECIO_24 = 24;
+/**
+ * Escala de Camilo (17-nov-2026): el precio por lámina baja por tramos. El
+ * paquete de 3 es el ancla: el único ahorro que se muestra es contra su
+ * precio. Sin precios tachados ni "antes": nadie vio otro precio.
+ */
+export const ESCALA = [
+  { desde: 3, precio: 10_000 },
+  { desde: 12, precio: 6_000 },
+  { desde: 24, precio: 5_400 },
+] as const;
+export const PRECIO_ANCLA = ESCALA[0].precio;
 export const DESDE_ENVIO_GRATIS = 12;
 export const ENVIO_AM = 8_000;
 export const ENVIO_FUERA = 25_000;
@@ -65,7 +79,20 @@ export function normalizarCantidad(valor: unknown): number {
 }
 
 export function precioUnidad(cantidad: number): number {
-  return cantidad >= DESDE_PRECIO_24 ? PRECIO_UNIDAD_24 : PRECIO_UNIDAD;
+  return [...ESCALA].reverse().find((t) => cantidad >= t.desde)?.precio ?? PRECIO_ANCLA;
+}
+
+/** Ahorro por lámina frente al paquete de 3 (0 en el tramo del ancla). */
+export function ahorroPorLamina(cantidad: number): number {
+  return PRECIO_ANCLA - precioUnidad(cantidad);
+}
+
+/**
+ * Calculadora "¿Cuántas necesito?": 1-3 → 3, 4-12 → docena, 13-24 → 24.
+ * Más de 24 → las que necesita (el de 24 más las extra, todas a $5.400).
+ */
+export function paqueteSugerido(necesarias: number): number {
+  return PAQUETES.find((p) => necesarias <= p) ?? Math.min(MAXIMO, Math.ceil(necesarias));
 }
 
 export function envioDe(cantidad: number, zona: Zona): number {
@@ -84,24 +111,27 @@ export function money(n: number): string {
   return `$${n.toLocaleString('es-CO')}`;
 }
 
+/** Hasta cuánto más se sugiere pasar al paquete siguiente (21 → 24 costaba $6.000 más y se aprobó el 9-nov). */
+const UMBRAL_EMPUJON = 6_000;
+
 /**
- * Empuje a un paquete mayor cuando el siguiente sale casi igual o más barato.
- * - 11 en el área: con 1 más, envío gratis (brief).
- * - 22 y 23: 24 cuestan menos (brief).
- * - 21: 24 cuestan apenas $6.000 más (agregado, aprobado sin objeción el 9-nov).
+ * Empuje al paquete siguiente (12 o 24) cuando sale más barato o casi igual.
+ * Con la escala del 17-nov, de 7 a 11 láminas en el área cuestan más que la
+ * docena con envío gratis, y 22-23 más que 24: sin este aviso el selector de
+ * cantidad le cobraría más a quien lleva menos. Se comparan totales con envío.
  */
 export function empujon(cantidad: number, zona: Zona): { objetivo: number; texto: string } | null {
-  const doce = cotizar(DESDE_ENVIO_GRATIS, zona).total;
-  if (zona === 'am' && cantidad === DESDE_ENVIO_GRATIS - 1) {
-    return { objetivo: DESDE_ENVIO_GRATIS, texto: `Con 1 más, envío gratis: docena por ${money(doce)}.` };
+  const objetivo = PAQUETES.find((p) => p > cantidad && p > MINIMO);
+  if (!objetivo) return null;
+  const actual = cotizar(cantidad, zona).total;
+  const destino = cotizar(objetivo, zona);
+  const gratis = zona === 'am' && destino.envio === 0 && envioDe(cantidad, zona) > 0 ? ' con envío gratis' : '';
+  if (destino.total <= actual) {
+    return { objetivo, texto: `${objetivo} láminas cuestan ${money(destino.total)}${gratis}: menos que ${cantidad} (${money(actual)}).` };
   }
-  const p24 = cotizar(DESDE_PRECIO_24, zona).producto;
-  if (cantidad === 22 || cantidad === 23) {
-    const actual = cantidad * PRECIO_UNIDAD;
-    return { objetivo: 24, texto: `24 láminas cuestan ${money(p24)}: menos que ${cantidad} (${money(actual)}).` };
-  }
-  if (cantidad === 21) {
-    return { objetivo: 24, texto: `Por ${money(p24 - 21 * PRECIO_UNIDAD)} más lleva 24 láminas (${money(p24)}).` };
+  const diferencia = destino.total - actual;
+  if (diferencia <= UMBRAL_EMPUJON) {
+    return { objetivo, texto: `Por ${money(diferencia)} más lleva ${objetivo} láminas${gratis} (${money(destino.total)}).` };
   }
   return null;
 }

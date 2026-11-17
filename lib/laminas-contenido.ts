@@ -7,7 +7,7 @@
 // fumigación, inspección, promesas de capturas o resultados. lib/laminas-contenido.test.ts lo vigila.
 
 import { BUSINESS } from './constants';
-import { ENTREGA_AM, ENVIO_AM, ENVIO_FUERA, GARANTIA, RECLAMO, money } from './laminas';
+import { DESDE_ENVIO_GRATIS, ENTREGA_AM, ENVIO_AM, ENVIO_FUERA, GARANTIA, MINIMO, RECLAMO, money } from './laminas';
 
 export interface Pregunta {
   pregunta: string;
@@ -80,7 +80,7 @@ export const PREGUNTAS: Pregunta[] = [
   },
   {
     pregunta: '¿Cuánto cuesta el envío?',
-    respuesta: `En el área metropolitana: ${money(ENVIO_AM)} de 6 a 11 láminas y gratis desde 12. Fuera del área metropolitana: ${money(ENVIO_FUERA)} por pedido.`,
+    respuesta: `En el área metropolitana: ${money(ENVIO_AM)} de ${MINIMO} a ${DESDE_ENVIO_GRATIS - 1} láminas y gratis desde ${DESDE_ENVIO_GRATIS}. Fuera del área metropolitana: ${money(ENVIO_FUERA)} por pedido.`,
   },
   {
     pregunta: '¿Cómo puedo pagar?',

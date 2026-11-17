@@ -2,7 +2,7 @@
 
 import { useCantidad } from './Cantidad';
 
-// Botón de las tarjetas 6 / 12 / 24 de "Cuántas necesita": fija la cantidad y
+// Botón de las tarjetas 3 / 12 / 24 de "Cuántas necesita": fija la cantidad y
 // sube a la caja de compra.
 export default function ElegirPaquete({ cantidad }: { cantidad: number }) {
   const { setCantidad } = useCantidad();

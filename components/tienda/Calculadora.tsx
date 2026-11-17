@@ -2,14 +2,22 @@
 
 import { useState } from 'react';
 import { Calculator } from 'lucide-react';
-import { MAXIMO, MINIMO } from '@/lib/laminas';
+import { MAXIMO, PAQUETES, cotizar, money, paqueteSugerido } from '@/lib/laminas';
 import { useCantidad } from './Cantidad';
 
 // Regla de la página 5 de la guía: 1 lámina cada 3 m de pared + 1 por puerta.
 // Reemplaza el video A mientras no exista: se lee en 10 segundos.
 export function recomendadas(metrosPared: number, puertas: number): number {
   const n = Math.ceil(Math.max(0, metrosPared) / 3) + Math.max(0, Math.floor(puertas));
-  return Math.min(MAXIMO, Math.max(MINIMO, n));
+  return Math.min(MAXIMO, Math.max(1, n));
+}
+
+// Lo que se recomienda llevar (escala del 17-nov): el paquete que cubre lo
+// necesario; pasado 24, el de 24 más las extra al mismo precio.
+function recomendacion(necesarias: number): string {
+  const p = paqueteSugerido(necesarias);
+  if ((PAQUETES as readonly number[]).includes(p)) return p === 12 ? 'Le recomendamos la docena' : `Le recomendamos el paquete de ${p}`;
+  return `Le recomendamos el paquete de 24 + ${p - 24} láminas extra a ${money(cotizar(p, 'am').precioUnidad)} c/u`;
 }
 
 export default function Calculadora() {
@@ -20,6 +28,7 @@ export default function Calculadora() {
   const p = Number(puertas);
   const listo = metros !== '' && Number.isFinite(m) && m > 0 && Number.isFinite(p);
   const n = listo ? recomendadas(m, p) : 0;
+  const llevar = listo ? paqueteSugerido(n) : 0;
   const campo =
     'mt-1 w-full rounded-lg border border-brand-black/15 bg-white px-3 py-2.5 text-body focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/25';
 
@@ -47,10 +56,11 @@ export default function Calculadora() {
         {listo && (
           <div className="mt-3 flex items-center justify-between gap-3 rounded-xl bg-brand-mint px-3.5 py-3">
             <p className="text-body-sm text-brand-black">
-              Necesita <strong className="font-heading text-body text-brand-green">{n} láminas</strong>
+              Necesita <strong className="font-heading text-body text-brand-green">{n} {n === 1 ? 'lámina' : 'láminas'}</strong>
+              <span className="block text-[13px] leading-snug text-brand-black/75">{recomendacion(n)}</span>
             </p>
-            <button type="button" onClick={() => setCantidad(n)} className="rounded-full bg-brand-green px-3.5 py-1.5 text-[13px] font-bold text-white">
-              Usar {n}
+            <button type="button" onClick={() => setCantidad(llevar)} className="flex-none rounded-full bg-brand-green px-3.5 py-1.5 text-[13px] font-bold text-white">
+              Usar {llevar}
             </button>
           </div>
         )}

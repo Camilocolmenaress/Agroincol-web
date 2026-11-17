@@ -26,7 +26,7 @@ function archivos(dir: string): string[] {
 }
 
 test('ningún texto de la tienda usa las frases prohibidas por el brief', () => {
-  const fuentes = [...archivos('components/tienda'), ...archivos('app/tienda'), 'lib/laminas.ts', 'lib/laminas-contenido.ts'];
+  const fuentes = [...archivos('components/tienda'), ...archivos('app/(actual)/tienda'), 'lib/laminas.ts', 'lib/laminas-contenido.ts'];
   for (const f of fuentes) {
     // El encabezado de lib/laminas-contenido.ts las nombra para documentarlas.
     const texto = readFileSync(f, 'utf8').replace(/\/\/ PROHIBIDO[\s\S]*?lo vigila\./, '');
@@ -35,7 +35,7 @@ test('ningún texto de la tienda usa las frases prohibidas por el brief', () => 
 });
 
 test('la garantía no se parafrasea: el sello dice "Garantía" y el texto exacto va al lado', () => {
-  const fuentes = [...archivos('components/tienda'), ...archivos('app/tienda')];
+  const fuentes = [...archivos('components/tienda'), ...archivos('app/(actual)/tienda')];
   for (const f of fuentes) assert.doesNotMatch(readFileSync(f, 'utf8'), /garant[ií]a de reposici[oó]n/i, f);
 });
 

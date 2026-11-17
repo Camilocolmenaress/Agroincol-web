@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { ArrowRight, Check, Eye, GraduationCap, Minus, RotateCcw, ShieldCheck, X } from 'lucide-react';
 import { BUSINESS } from '@/lib/constants';
-import { ENTREGA_AM, ENVIO_FUERA, GARANTIA, MUNICIPIOS_AM, RECLAMO, money } from '@/lib/laminas';
+import { ENTREGA_AM, ENVIO_FUERA, ETIQUETA_PAQUETE, GARANTIA, MUNICIPIOS_AM, PAQUETES, RECLAMO, money } from '@/lib/laminas';
 import { COMPARACION, ESTUDIO, FUENTES_COMPARACION, NO_ATRAPO, PREGUNTAS, PRIMEROS_DIAS, PUNTOS, TESTIMONIOS, whatsappLaminas } from '@/lib/laminas-contenido';
 import ElegirPaquete from './ElegirPaquete';
 import { Logo, fondoPatron } from './Marca';
@@ -125,11 +125,7 @@ export function CuentaParedes() {
         </div>
 
         <div className="mt-5 grid grid-cols-3 gap-2.5">
-          {[
-            { n: 6, t: 'Cocina de apartamento o local pequeño' },
-            { n: 12, t: 'Restaurante: cocina y bodega pequeña' },
-            { n: 24, t: 'Bodega grande o local con varias áreas' },
-          ].map((p) => (
+          {PAQUETES.map((n) => ({ n, t: ETIQUETA_PAQUETE[n] })).map((p) => (
             <div key={p.n} className={`flex flex-col rounded-2xl bg-white p-3 text-center ${p.n === 12 ? 'ring-2 ring-brand-orange' : ''}`}>
               <p className={`font-heading text-[2rem] font-bold leading-none ${p.n === 12 ? 'text-brand-orange' : 'text-brand-green'}`}>{p.n}</p>
               <p className="mt-1.5 flex-1 text-[12px] leading-tight text-brand-black/70">{p.t}</p>
