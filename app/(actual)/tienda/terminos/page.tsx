@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { BUSINESS } from '@/lib/constants';
-import { DESDE_ENVIO_GRATIS, DESDE_PRECIO_24, ENTREGA_AM, ENVIO_AM, ENVIO_FUERA, GARANTIA, MINIMO, PRECIO_UNIDAD, PRECIO_UNIDAD_24, RECLAMO, URL_PRODUCTO, money } from '@/lib/laminas';
+import { DESDE_ENVIO_GRATIS, ENTREGA_AM, ENVIO_AM, ENVIO_FUERA, ESCALA, GARANTIA, MINIMO, RECLAMO, URL_PRODUCTO, money } from '@/lib/laminas';
 import { Pie } from '@/components/tienda/Secciones';
 import { Logo } from '@/components/tienda/Marca';
 
@@ -13,7 +13,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-const ACTUALIZADO = '9 de noviembre de 2026';
+const ACTUALIZADO = '17 de noviembre de 2026';
+
+// "De 3 a 11 láminas, $10.000 cada una; de 12 a 23, $6.000 cada una; desde 24, $5.400 cada una."
+const TRAMOS = ESCALA.map((t, i) => {
+  const siguiente = ESCALA[i + 1];
+  const rango = siguiente ? `de ${t.desde} a ${siguiente.desde - 1}${i === 0 ? ' láminas' : ''}` : `desde ${t.desde}`;
+  return `${rango}, ${money(t.precio)} cada una`;
+}).join('; ');
 
 export default function TerminosTiendaPage() {
   const secciones: { titulo: string; parrafos: string[] }[] = [
@@ -24,7 +31,7 @@ export default function TerminosTiendaPage() {
     {
       titulo: 'Precios',
       parrafos: [
-        `Precios en pesos colombianos. Compra mínima: ${MINIMO} láminas. De ${MINIMO} a ${DESDE_PRECIO_24 - 1} láminas, ${money(PRECIO_UNIDAD)} cada una; desde ${DESDE_PRECIO_24}, ${money(PRECIO_UNIDAD_24)} cada una.`,
+        `Precios en pesos colombianos. Compra mínima: ${MINIMO} láminas. ${TRAMOS.charAt(0).toUpperCase()}${TRAMOS.slice(1)}.`,
         'El precio es el mismo con cualquier forma de pago. El total final, con el envío, se muestra antes de confirmar el pedido. Emitimos factura electrónica.',
       ],
     },

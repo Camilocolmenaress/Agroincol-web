@@ -17,7 +17,7 @@ test('reintento tras fallo de Mercado Pago: actualiza TODOS los datos del compra
   assert.equal(e.cambios.ciudad, 'Floridablanca');
   assert.equal(e.cambios.direccion, 'Carrera 9 # 4-20, Cañaveral');
   assert.equal(e.cambios.nombre, 'Otro Nombre');
-  assert.equal(e.cambios.total, 120_000);
+  assert.equal(e.cambios.total, 72_000);
   // La fecha, el id y la atribución del pedido original no se tocan.
   assert.equal('fecha' in e.cambios, false);
   assert.equal('pedidoId' in e.cambios, false);
@@ -59,10 +59,11 @@ test('pedido completo en el área: válido, zona am, celular y NIT normalizados'
   }
 });
 
-test('menos de 6 láminas no pasa', () => {
-  const r = validarPedidoLaminas({ ...base, cantidad: 5 });
+test('menos de 3 láminas no pasa; 3 sí', () => {
+  const r = validarPedidoLaminas({ ...base, cantidad: 2 });
   assert.equal(r.ok, false);
-  if (!r.ok) assert.match(r.errores.cantidad, /6/);
+  if (!r.ok) assert.match(r.errores.cantidad, /3/);
+  assert.equal(validarPedidoLaminas({ ...base, cantidad: 3 }).ok, true);
 });
 
 test('cantidad que no es entero no pasa', () => {

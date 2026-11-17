@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { BookOpen } from 'lucide-react';
-import { ENTREGA_AM, ENVIO_AM, ENVIO_FUERA, GUIA_PDF, NOMBRE, money } from '@/lib/laminas';
+import { DESDE_ENVIO_GRATIS, ENTREGA_AM, ENVIO_AM, ENVIO_FUERA, GUIA_PDF, MINIMO, NOMBRE, money } from '@/lib/laminas';
 import { CUIDADOS, PASOS } from '@/lib/laminas-contenido';
 import { videoSlot } from '@/lib/laminas-medios';
 import { CantidadProvider } from '@/components/tienda/Cantidad';
@@ -84,8 +84,8 @@ export default function LaminasPage() {
               </Acordeon>
               <Acordeon titulo="Envíos y pagos">
                 <p>
-                  <strong>Área metropolitana</strong> (Bucaramanga, Floridablanca, Girón y Piedecuesta): {money(ENVIO_AM)} de 6 a 11 láminas, gratis
-                  desde 12. {ENTREGA_AM}.
+                  <strong>Área metropolitana</strong> (Bucaramanga, Floridablanca, Girón y Piedecuesta): {money(ENVIO_AM)} de {MINIMO} a {DESDE_ENVIO_GRATIS - 1} láminas,
+                  gratis desde {DESDE_ENVIO_GRATIS}. {ENTREGA_AM}.
                 </p>
                 <p className="mt-2">
                   <strong>Resto del país:</strong> {money(ENVIO_FUERA)} por pedido, por transportadora.

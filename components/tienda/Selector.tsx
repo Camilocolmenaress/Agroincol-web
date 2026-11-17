@@ -1,25 +1,21 @@
 'use client';
 
 import { Check, Tag } from 'lucide-react';
-import { DESDE_ENVIO_GRATIS, ENVIO_AM, GARANTIA, PAQUETES, PRECIO_UNIDAD, RECOMENDADO, cotizar, money } from '@/lib/laminas';
+import { ENVIO_AM, ETIQUETA_PAQUETE, GARANTIA, MINIMO, PAQUETES, RECOMENDADO, ahorroPorLamina, cotizar, money } from '@/lib/laminas';
 import { useCantidad } from './Cantidad';
 import Stepper from './Stepper';
 
 // Las tarjetas de Grüns ("Subscribe & Save" / "One time"): la elegida se pinta
-// y abre por dentro lo que trae. Los usos salen de la página 5 de la guía.
-const USO: Record<number, string> = {
-  6: 'Cocina pequeña o local pequeño',
-  12: 'Restaurante: cocina y bodega pequeña',
-  24: 'Bodega grande o local con varias áreas',
-};
+// y abre por dentro lo que trae. Protagonista: el precio por lámina; el
+// paquete de 3 va primero como ancla y el ahorro se mide contra él (17-nov).
 
-function Incluye({ cantidad }: { cantidad: number }) {
-  const { envio } = cotizar(cantidad, 'am');
-  const items = [
-    envio === 0 ? 'Envío gratis en el área metropolitana' : `Envío ${money(ENVIO_AM)} en el área metropolitana`,
-    'Guía de ubicación y uso incluida',
-    GARANTIA,
-  ];
+/** El envío va en cada tarjeta, elegida o no: en la de 24 evita que alguien de una finca crea que el suyo es gratis. */
+function envioTexto(cantidad: number): string {
+  return cotizar(cantidad, 'am').envio === 0 ? 'Envío gratis en el área metropolitana' : `Envío ${money(ENVIO_AM)} en el área metropolitana`;
+}
+
+function Incluye() {
+  const items = ['Guía de ubicación y uso incluida', GARANTIA];
   return (
     <ul className="mt-3 space-y-1.5 border-t border-brand-green/15 pt-3">
       {items.map((t) => (
@@ -49,7 +45,7 @@ export default function Selector() {
         {PAQUETES.map((n) => {
           const c = cotizar(n, 'am');
           const activo = cantidad === n;
-          const lista = n * PRECIO_UNIDAD;
+          const ahorro = ahorroPorLamina(n);
           return (
             <div
               key={n}
@@ -69,7 +65,7 @@ export default function Selector() {
             >
               {n === RECOMENDADO && (
                 <p className="-mx-4 -mt-4 mb-3 bg-brand-green py-1.5 text-center text-[12px] font-bold uppercase tracking-wide text-white">
-                  Recomendado · envío gratis en el área
+                  Recomendado
                 </p>
               )}
               <div className="flex items-start gap-3">
@@ -81,19 +77,23 @@ export default function Selector() {
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="font-heading text-[1.15rem] font-bold leading-tight text-brand-black">{n} láminas</p>
-                  <p className="mt-0.5 text-body-sm leading-snug text-brand-black/70">{USO[n]}</p>
+                  <p className="mt-0.5 text-body-sm leading-snug text-brand-black/70">{ETIQUETA_PAQUETE[n]}</p>
+                  {ahorro > 0 && (
+                    <p className="mt-1.5 inline-block rounded-md bg-brand-green px-1.5 py-0.5 text-[12px] font-bold leading-tight text-white">
+                      Ahorra {money(ahorro)} por lámina
+                    </p>
+                  )}
+                  <p className="mt-1 text-[12px] leading-snug text-brand-black/70">{envioTexto(n)}</p>
                 </div>
-                <div className="text-right">
-                  <p className="font-heading text-[1.15rem] font-bold leading-tight text-brand-black">
-                    {c.precioUnidad < PRECIO_UNIDAD && <s className="mr-1.5 text-body-sm font-normal text-brand-black/70">{money(lista)}</s>}
-                    {money(c.producto)}
+                <div className="flex-none text-right">
+                  <p className="font-heading text-[1.6rem] font-bold leading-none text-brand-black">
+                    {money(c.precioUnidad)}
+                    <span className="ml-0.5 text-body-sm font-semibold text-brand-black/70">c/u</span>
                   </p>
-                  <p className={`text-[12px] ${c.precioUnidad < PRECIO_UNIDAD ? 'font-bold text-brand-green' : 'text-brand-black/70'}`}>
-                    {money(c.precioUnidad)} c/u
-                  </p>
+                  <p className="mt-1 text-[13px] text-brand-black/70">Total {money(c.producto)}</p>
                 </div>
               </div>
-              {activo && <Incluye cantidad={n} />}
+              {activo && <Incluye />}
             </div>
           );
         })}
@@ -106,7 +106,8 @@ export default function Selector() {
           <div>
             <p className="font-heading text-body font-bold text-brand-black">Otra cantidad</p>
             <p className="text-[12px] text-brand-black/70">
-              Mínimo 6 · {cantidad >= DESDE_ENVIO_GRATIS ? 'envío gratis en el área' : `envío ${money(ENVIO_AM)}`}
+              Mínimo {MINIMO} · {money(cotizar(cantidad, 'am').precioUnidad)} c/u ·{' '}
+              {cotizar(cantidad, 'am').envio === 0 ? 'envío gratis en el área' : `envío ${money(ENVIO_AM)}`}
             </p>
           </div>
           <Stepper valor={cantidad} onChange={setCantidad} />

@@ -3,8 +3,8 @@
 import { Minus, Plus } from 'lucide-react';
 import { MAXIMO, MINIMO } from '@/lib/laminas';
 
-// − 12 + como el carrito de Grüns. Sin campo de texto: con el mínimo de 6,
-// escribir "12" pasaría por "1" y saltaría a 6 a mitad de la escritura.
+// − 12 + como el carrito de Grüns. Sin campo de texto: con el mínimo de 3,
+// escribir "12" pasaría por "1" y saltaría a 3 a mitad de la escritura.
 export default function Stepper({ valor, onChange, tamano = 'md' }: { valor: number; onChange: (n: number) => void; tamano?: 'sm' | 'md' }) {
   const alto = tamano === 'sm' ? 'h-9' : 'h-11';
   const boton = `flex ${alto} w-10 items-center justify-center rounded-full text-brand-green disabled:text-brand-black/25`;
