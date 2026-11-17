@@ -15,6 +15,7 @@ const FORM_ID: Record<string, string> = {
   '/servicios/control-comejen-termitas': 'comejen-contact',
   '/servicios/eliminacion-abejas-avispas': 'abejas-contact',
   '/servicios/control-chinches': 'chinches-contact',
+  '/servicios/control-cucarachas': 'cucarachas-contact',
   '/zonas/fumigacion-bucaramanga': 'bucaramanga-contact',
   '/zonas/fumigacion-floridablanca': 'floridablanca-contact',
   '/zonas/fumigacion-piedecuesta': 'piedecuesta-contact',

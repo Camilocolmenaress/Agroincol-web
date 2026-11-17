@@ -120,6 +120,19 @@ const NUEVAS: Record<string, () => Record<string, unknown>[]> = {
     },
     migas([['Inicio', 'https://agroincol.com'], ['Empresas']]),
   ],
+  '/servicios/control-cucarachas': () => [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'Fumigación y control de cucarachas en Bucaramanga',
+      serviceType: 'Control de cucarachas',
+      description: 'Control de cucarachas con gel cucarachicida, aspersión perimetral y seguimiento, para casas, apartamentos y negocios en Bucaramanga y el Área Metropolitana.',
+      provider: ORG,
+      areaServed: ['Bucaramanga', 'Floridablanca', 'Piedecuesta', 'Girón'].map((name) => ({ '@type': 'City', name })),
+      url: 'https://agroincol.com/servicios/control-cucarachas',
+    },
+    migas([['Inicio', 'https://agroincol.com'], ['Servicios', 'https://agroincol.com/servicios'], ['Control de cucarachas']]),
+  ],
   '/herramientas': () => [migas([['Inicio', 'https://agroincol.com'], ['Herramientas']])],
   '/herramientas/plaga': () => [
     {

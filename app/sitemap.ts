@@ -51,6 +51,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: 'https://agroincol.com/servicios/control-cucarachas',
+      lastModified: new Date('2026-11-17'),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
       url: 'https://agroincol.com/servicios/control-comejen-termitas',
       lastModified: new Date('2026-06-09'),
       changeFrequency: 'monthly',

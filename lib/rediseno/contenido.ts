@@ -5,9 +5,11 @@
 import paginas from '@/content/rediseno/paginas.json';
 import cromo from '@/content/rediseno/cromo.json';
 import { MENSAJE_GENERAL, conMensaje } from './whatsapp';
+import { PAGINAS_NUEVAS } from './paginas-nuevas';
 
 type PaginaPrototipo = { ruta: string; title: string | null; description: string | null; main: string | null };
-const PAGINAS = paginas as Record<string, PaginaPrototipo>;
+// Las del prototipo y las creadas después (lib/rediseno/paginas-nuevas.ts).
+const PAGINAS = { ...(paginas as Record<string, PaginaPrototipo>), ...PAGINAS_NUEVAS } as Record<string, PaginaPrototipo>;
 
 // Mapa de URL del README §5: archivo del prototipo -> ruta de producción.
 const RUTA_DE_ARCHIVO: Record<string, string> = Object.fromEntries(
